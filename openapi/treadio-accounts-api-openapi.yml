@@ -1,0 +1,3227 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Accounts API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Accounts
+paths:
+  /v1/accounts:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a new Account
+      operationId: post-v1-accounts
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: 85gw0eby5khks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account-Create'
+      description: 'Create a new `Account`
+
+
+        This endpoint requires the `create_account` permission'
+      tags:
+      - Accounts
+    get:
+      summary: Retrieve all Accounts visible to the current Company
+      operationId: get-v1-accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    x-stoplight:
+                      id: nrsnmuc7twn2k
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account-Read'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: vw1abhy4q38wk
+      tags:
+      - Accounts
+      description: "Retrieve `Accounts` visible to the currently authenticated `Company`.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `name`\n\nFilter usage:\n * to filter a single state: `filter[account_types][]=customer`\n * to filter multiple states: `filter[account_types][]=customer&filter[account_types][]=vendor`"
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-account_types'
+      - $ref: '#/components/parameters/filter-material_rates'
+      - $ref: '#/components/parameters/filter-discarded'
+      - $ref: '#/components/parameters/filter-department_ids'
+      - $ref: '#/components/parameters/filter-connected_company-company_types'
+      - $ref: '#/components/parameters/filter-auto_add_ons'
+      - $ref: '#/components/parameters/filter-label_ids'
+  /v1/accounts/bulk_update:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Bulk update Accounts
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 043ctqwh4vocf
+                    items:
+                      $ref: '#/components/schemas/Account-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-accounts-bulk_update
+      x-stoplight:
+        id: 9sf3s62gim4pp
+      description: 'Perform select bulk updates to `Accounts`.
+
+
+        Requires the `edit_account` permission.'
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - data
+              properties:
+                data:
+                  type: array
+                  x-stoplight:
+                    id: czk9oddnxv50n
+                  items:
+                    $ref: '#/components/schemas/Account-Update-Bulk'
+  /v1/accounts/connected:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a connected Account
+      tags:
+      - Accounts
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-accounts-connected
+      x-stoplight:
+        id: ee581r2nsvq13
+      description: "Create a connected `Account` between two `Companies`. \n\nThis endpoint creates two complimentary connected `Accounts`:\n * a \"sender\" `Account` owned by the `Company` specified by `sender_company_id` which has the provided `sender_account_types`\n * a \"receiver\" `Account` owned by the `Company` specified by `receiver_company_id` which has the opposite `account_types`\n \nThe newly created \"sender\" `Account` is returned.\n\nThis endpoint requires the `platform_admin` `IamRole`. "
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account-Connected-Platform-Admin-Create'
+    get:
+      summary: Retrieve all connected Accounts visible to the current Company
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: soszlt7ej40ta
+                    items:
+                      $ref: '#/components/schemas/Account-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-accounts-connected
+      x-stoplight:
+        id: 19p2w6pnte1t2
+      description: Retrieve all connected `Accounts` visible to the currently authenticated `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/accounts/invite:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Invite a Company to connect through an Account
+      operationId: post-v1-accounts-invite
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: o9p7fcv3vchcq
+      description: "Invite a `Company` which is not yet on the `Tread` platform to connect through an `Account`.\n\nThis will create:\n * a new `Company` named `name` using `contact` data for `primary_contact ` and `billing_contact` \n * a new `User` with information from `contact` that has the `Company Admin` `IamRole`\n * a new `Account` owned by the currently authenticated `User`'s `Company` and connected to the newly created `Company`\n\nNote that all fields in `contact` are required.\n\nThe following unique constraints must be met or a `422` will be returned:\n * `name` must be globally unique to `Companies` \n * `contact.email` and `contact.phone` must be globally unique to `Users`\n\nIf successful the newly created `Account` will be returned.\n \nThis endpoint requires the `create_account` `IamPermission`\n \n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account-Invite'
+      tags:
+      - Accounts
+  /v1/accounts/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Accounts
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: wvfdabnd4w4ar
+                    items:
+                      $ref: '#/components/schemas/Account-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-accounts-typeahead
+      x-stoplight:
+        id: 249lre4wlspeo
+      description: 'Typeahead search against the `name` property for `Accounts` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_types'
+      - $ref: '#/components/parameters/filter-connected'
+      - $ref: '#/components/parameters/filter-date'
+  /v1/accounts/{account-id}/scheduled_time_offs:
+    parameters:
+    - schema:
+        type: string
+      name: account-id
+      in: path
+      required: true
+      description: Account Id
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create Scheduled Time Off
+      tags:
+      - Accounts
+      responses:
+        '201':
+          description: Create Schedule Time off
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Scheduled-Time-Off-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-accounts-id-scheduled_time_offs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Scheduled-Time-Off-Create'
+      description: Create a Scheduled Time Off for an `Account`
+      x-stoplight:
+        id: 1olm57uqimcn6
+    get:
+      summary: Retrieve Scheduled Time Offs for an Account
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Scheduled-Time-Off-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-accounts-account-id-scheduled-time-offs
+      description: Retrieve all active `ScheduledTimeOffs` visible to your `Company` for an `Account`
+      tags:
+      - Accounts
+      x-stoplight:
+        id: jgfv1mbmm1pbz
+  /v1/accounts/{account-id}/scheduled_time_offs/available:
+    parameters:
+    - schema:
+        type: string
+      name: account-id
+      in: path
+      required: true
+      description: Account Id
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Mark Schedule Available
+      tags:
+      - Accounts
+      responses:
+        '202':
+          description: Shared Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: put-v1-accounts-account-id-scheduled_time_offs-available
+      description: Mark current `Account` as available and disable any `Scheduled Time Off`
+      x-stoplight:
+        id: j5d2axo7kl23u
+  /v1/accounts/{account-id}/scheduled_time_offs/unavailable:
+    parameters:
+    - schema:
+        type: string
+      name: account-id
+      in: path
+      required: true
+      description: Account Id
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Mark Schedule Unavailable
+      tags:
+      - Accounts
+      responses:
+        '202':
+          description: Shared Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: put-v1-accounts-account-id-scheduled_time_offs-unavailable
+      description: Mark current `Account` as unavailable and create a new `Scheduled time off`
+      x-stoplight:
+        id: vyxq886egaykj
+  /v1/accounts/{account-id}/scheduled_time_offs/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Scheduled time off id
+    - schema:
+        type: string
+      name: account-id
+      in: path
+      required: true
+      description: Account Id
+    - $ref: '#/components/parameters/Accept-Language'
+    delete:
+      summary: Delete a Scheduled Time Off
+      tags:
+      - Accounts
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: delete-v1-accounts-account-id-scheduled_time_offs-id
+      description: Delete Scheduled Time Off for an `Account`
+      x-stoplight:
+        id: d6xald6a3166r
+  /v1/accounts/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Account ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single Account
+      operationId: get-v1-accounts-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      x-stoplight:
+        id: z83cux1tsowcw
+      description: Retrieve `Account` by ID
+      tags:
+      - Accounts
+    patch:
+      summary: Update an Account
+      operationId: patch-v1-accounts-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: zsfr920ta0thd
+      description: 'Update an `Account` by ID.
+
+
+        This endpoint requires the `edit_account` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account-Update'
+      tags:
+      - Accounts
+    delete:
+      summary: Delete an Account
+      operationId: delete-v1-accounts-id
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: xrjr1vnm5auyn
+      tags:
+      - Accounts
+      description: 'Delete an `Account` by ID
+
+
+        This endpoint requires the `delete_account` permission'
+  /v1/agave/linked_accounts/{linked-account-id}/customers/accounts/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: linked-account-id
+      in: path
+      required: true
+      description: Agave-LinkedAccount ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    get:
+      summary: Typeahead search on customer Accounts scoped to an Agave-LinkedAccount
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 1h86is9cxx3ug
+                    items:
+                      $ref: '#/components/schemas/Account-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-linked_accounts-linked-account-id-customers-accounts-typeahead
+      x-stoplight:
+        id: njqxhggv410ww
+      x-internal: true
+      description: '`Typeahead` search on customer `Accounts` scoped to an `Agave-LinkedAccount`.
+
+
+        This endpoint requires the `manage_accounting_integration` `IamPermission`.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/agave/linked_accounts/{linked-account-id}/vendors/accounts/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: linked-account-id
+      in: path
+      required: true
+      description: Agave-LinkedAccount ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on vendor Accounts scoped to an Agave-LinkedAccount
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: jg82x33oj649k
+                    items:
+                      $ref: '#/components/schemas/Account-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-linked_accounts-linked-account-id-vendors-accounts-typeahead
+      x-stoplight:
+        id: wzm19zmjd4piz
+      x-internal: true
+      description: '`Typeahead` search on vendor `Accounts` scoped to an `Agave-LinkedAccount`.
+
+
+        This endpoint requires the `manage_accounting_integration` `IamPermission`.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/accounts:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Accounts that belong to a Company
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: qrkdu1jkmgt50
+                    items:
+                      $ref: '#/components/schemas/Account-Read'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-accounts
+      x-stoplight:
+        id: dn0zfz8ziwm6x
+      description: "Retrieve `Accounts` for a `Company`.\n\nFilter usage:\n * to filter a single state: `filter[account_types][]=customer`\n * to filter multiple states: `filter[account_types][]=customer&filter[account_types][]=vendor`"
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-account_types'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-material_rates'
+      - $ref: '#/components/parameters/filter-discarded'
+      - $ref: '#/components/parameters/filter-department_ids'
+      - $ref: '#/components/parameters/filter-connected_company-company_types'
+      - $ref: '#/components/parameters/filter-auto_add_ons'
+      x-internal: false
+  /v1/companies/{company-id}/accounts/capacity/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Accounts for a Company with with Capacity Data
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account-Read-Capacity-Typeahead'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-accounts-capacity-typeahead
+      description: 'Typeahead search against the `name` property on `Accounts` for a `Company`.
+
+
+        Unlike the standard typeahead, this endpoint includes additional fields with capacity data.
+
+
+        Additionally, this endpoint automatically filters to:
+
+
+        - Connnected Accoubts
+
+        - Vendor-type Accounts
+
+        - Accounts that are currently scheduled on
+
+
+        The `availability` filter can be set to true/false to only include Accounts that are scheduled on or off for the `date` specified. If no `date` is specified then the current day is used.'
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-availability'
+      - $ref: '#/components/parameters/filter-show_all'
+      - $ref: '#/components/parameters/filter-label_ids'
+      - schema:
+          type: string
+        in: query
+        name: date
+        description: The date to query for regarding capacity. In YYYY-MM-DD format.
+        required: true
+      x-stoplight:
+        id: ki83zc9q4cndp
+  /v1/companies/{company-id}/accounts/connected:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a connected Account
+      tags:
+      - Accounts
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-accounts-connected
+      x-stoplight:
+        id: et13o92j8q1dx
+      description: "Create a connected `Account` between two `Companies` by use of a `tread_id`.\n\nThis endpoint creates two complimentary connected `Accounts`:\n * a \"sender\" `Account` owned by the `Company` specified in the `company-id` path param which has the provided `account_types`.\n * a \"receiver\" `Account` owned by the `Company` specified in the `tread_id` which has the opposite `account_types`\n \nThe newly created \"sender\" `Account` is returned.\n\nThis endpoint must be called by a principal authorized to act on behalf of the \"sender\" `Company`.\n\nThis endpoint requires the `connect_companies` `IamPermission`."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account-Connected-Customer-Create'
+      x-internal: true
+    get:
+      summary: Retrieve connected Accounts that belong to a Company
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: tm4j0ddqabdz8
+                    items:
+                      $ref: '#/components/schemas/Account-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-accounts-connected
+      x-stoplight:
+        id: pcg42w16g8q9d
+      description: Retrieve connected `Accounts` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-account_types'
+      - $ref: '#/components/parameters/filter-discarded'
+  /v1/companies/{company-id}/accounts/invite:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Invite a Company to connect through an Account for a Company
+      tags:
+      - Accounts
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-accounts-invite
+      x-stoplight:
+        id: v3m14cav2nznz
+      description: "Invite a `Company` which is not yet on the `Tread` platform to connect through an `Account` for a `Company`.\n\nThis will create:\n * a new `Company` named `name` using `contact` data for `primary_contact ` and `billing_contact` \n * a new `User` with information from `contact` that has the `Company Admin` `IamRole`\n * a new `Account` owned by the currently authenticated `User`'s `Company` and connected to the newly created `Company`\n\nNote that all fields in `contact` are required.\n\nThe following unique constraints must be met or a `422` will be returned:\n * `name` must be globally unique to `Companies` \n * `contact.email` and `contact.phone` must be globally unique to `Users`\n\nIf successful the newly created `Account` will be returned.\n \nThis endpoint requires the `create_account` `IamPermission`\n \n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/Account-Invite'
+  /v1/companies/{company-id}/accounts/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Accounts for a Company
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: rao3u2ilhbt61
+                    items:
+                      $ref: '#/components/schemas/Account-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-accounts-typeahead
+      x-stoplight:
+        id: 0wetlqfv1ru46
+      description: Typeahead search against the `name` property on `Accounts` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_types'
+      - $ref: '#/components/parameters/filter-connected'
+      - $ref: '#/components/parameters/filter-date'
+      x-internal: true
+  /v1/companies/{company-id}/data_export/tickets/day/{date}:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+      name: date
+      in: path
+      required: true
+      description: Date of daily report
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Daily Ticket Data Export
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DailyExport-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/ModelError'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-daily-export-tickets-day
+      description: "Returns a daily export of `tickets` for given company. Please\nnote, this endpoint is only available to users authenticating\nan `m2m_client`. This endpoint must be configured for customer\nby Tread. The file_url is signed and will be valid for 1 hour \nfrom time of api call."
+      x-internal: true
+      x-stoplight:
+        id: p3jfje1rwgtac
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/accounts/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: Account ID
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Update Account for a Managed Company
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-companies-company-id-managed_companies-managed-company-id-accounts-id
+      x-stoplight:
+        id: 75rfxjepk4523
+      description: 'Update `Account` by ID for a Managed Company
+
+
+        This endpoint requires the `edit_account` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account-Update'
+components:
+  parameters:
+    filter-material_rates:
+      name: filter[material_rates]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter on whether the Account has associated MaterialRates
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    filter-connected:
+      name: filter[connected]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Only show connected Accounts
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    filter-department_ids:
+      name: filter[department_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Department IDs. Use 'none' to filter for records without a Department.
+    filter-availability:
+      name: filter[availability]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter based on record availability based on the `date` parameter/filter, defaulting to the current day.
+    filter-discarded:
+      name: filter[discarded]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Only show discarded Accounts
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    filter-show_all:
+      name: filter[show_all]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Show all records. Deprecated in favor of `filter[availability]`
+      deprecated: true
+    filter-auto_add_ons:
+      name: filter[auto_add_ons]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter on whether the resource (e.g. Account, User) has associated AutoAddOns
+    filter-connected_company-company_types:
+      name: filter[connected_company][company_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: Connected Company Type enum filters (see CompanyType enum for the list of values)
+    filter-account_types:
+      name: filter[account_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: AccountType filter
+    filter-label_ids:
+      name: filter[label_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uuid
+      description: Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic).
+    filter-date:
+      name: filter[date]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+      description: Single Date Filter
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    EquipmentState:
+      title: EquipmentState
+      x-stoplight:
+        id: eh1fgavft82kx
+      enum:
+      - active
+      - inactive
+      default: active
+      example: active
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    AccountType:
+      title: AccountType
+      x-stoplight:
+        id: i4vfmd4rwrq8p
+      enum:
+      - customer
+      - vendor
+      example: customer
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    DailyExport-Read:
+      title: DailyExport-Read
+      x-stoplight:
+        id: omxur2zom8vrl
+      type: object
+      required:
+      - day
+      - created_at
+      - file_url
+      properties:
+        day:
+          type: string
+          x-stoplight:
+            id: 4ptbcq6ryqkfo
+          format: date
+        created_at:
+          type: string
+          x-stoplight:
+            id: dio0ll8zgt6g7
+          format: date-time
+        file_url:
+          type: string
+          x-stoplight:
+            id: 38lhuxnqd1xgx
+      additionalProperties: false
+    Address-Create:
+      title: Address-Create
+      x-stoplight:
+        id: 9wmd46rzgjxh7
+      type: object
+      required:
+      - thoroughfare
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: zkh46rwwvpuca
+          description: Street address
+          example: 123 Fake St.
+        premise:
+          type: string
+          x-stoplight:
+            id: bkcia8yh59wzf
+          description: Apartment, Suite, Box number, etc.
+          example: 3rd Floor
+        locality:
+          type: string
+          x-stoplight:
+            id: e40nnuxgub7ug
+          description: City / Town
+          example: New York
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: 2bfqcapyozkpp
+          description: State / Province / Region (ISO code when available)
+          example: NY
+        postal_code:
+          type: string
+          x-stoplight:
+            id: a9m9rbcbsa635
+          description: Postal code / ZIP Code
+          example: '10011'
+        country:
+          type: string
+          x-stoplight:
+            id: gud5s8ypb8oam
+          minLength: 2
+          maxLength: 2
+          pattern: ^[A-Z]{2}
+          example: US
+          description: 2 character country ISO code
+        lat:
+          type: string
+          x-stoplight:
+            id: nwg5be93gvmkd
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+        lon:
+          type: string
+          x-stoplight:
+            id: rcvsjw8cbs4hs
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+        place_id:
+          type: string
+          x-stoplight:
+            id: xtuyrwo0rqzkh
+          description: NextBillion placeID
+      additionalProperties: false
+    Label-Read-Nested:
+      title: Label-Read-Nested
+      x-stoplight:
+        id: lbl1readnest01
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: lbl1nestnm0001
+            description: Label name
+          color:
+            type: string
+            x-stoplight:
+              id: lbl1nestcol001
+            description: Hex color code for the label
+            pattern: ^#[0-9A-Fa-f]{6}$
+        required:
+        - name
+        - color
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type: string
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    Account-Invite:
+      title: Account-Invite
+      x-stoplight:
+        id: 8btqvy3ojzvxj
+      type: object
+      required:
+      - name
+      - contact
+      - address
+      - account_types
+      - auto_accept_orders
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: szxvxy8gtcs4d
+          description: name for the `Account` and `Company`
+        contact:
+          $ref: '#/components/schemas/Contact-Create'
+        address:
+          $ref: '#/components/schemas/Address-Create'
+        account_types:
+          type: array
+          x-stoplight:
+            id: xqelgawt2nuia
+          description: Account type allowing for multiple values
+          items:
+            $ref: '#/components/schemas/AccountType'
+        company_id:
+          type: string
+          x-stoplight:
+            id: vi6xr68lbj1ln
+          format: uuid
+          nullable: true
+        department:
+          type: string
+          x-stoplight:
+            id: bg894oo5aem0d
+          deprecated: true
+          nullable: true
+        department_id:
+          type: string
+          x-stoplight:
+            id: 7k6resx8we6g2
+          format: uuid
+          description: 'The ID of the associated **Department**.
+
+
+            This should be used instead of `department`.'
+          nullable: true
+        notes:
+          type: string
+          x-stoplight:
+            id: mozoefi7tn3vn
+          nullable: true
+        external_id:
+          type: string
+          x-stoplight:
+            id: ghv5udvm51jkh
+          description: Identifier used to associate an account to any external system
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: hgv5udvm51jkh
+          description: The accounting ID of the Account mapping to any accounting system
+          nullable: true
+        truck_count:
+          type: integer
+          x-stoplight:
+            id: xxujn60891ma2
+          description: The allowable number of trucks that is dispatchable to the customer of this account.
+          nullable: true
+        auto_accept_orders:
+          type: boolean
+          x-stoplight:
+            id: osbpw6who0ya6
+          description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
+        send_invite:
+          $ref: '#/components/schemas/SendInvite'
+        company_type:
+          x-stoplight:
+            id: xbozhh7e5fbt9
+          enum:
+          - broker
+          - contractor
+          - hauler
+          - owner_operator
+          - producer
+          default: producer
+        equipment:
+          $ref: '#/components/schemas/Account-Invite-Equipment-Create'
+        time_zone:
+          $ref: '#/components/schemas/TimeZone'
+        scoped_company_id:
+          type: string
+          x-stoplight:
+            id: 9sfcuew1u5enw
+          format: uuid
+          nullable: true
+        internal_equipment:
+          $ref: '#/components/schemas/Account-Invite-Internal-Equipment-Create'
+        label_ids:
+          type: array
+          x-stoplight:
+            id: lbl1d5cr8inv1
+          description: Array of Label IDs to assign to this account.
+          items:
+            type: string
+            format: uuid
+      additionalProperties: false
+    Department-Read-Nested:
+      title: Department-Read-Nested
+      x-stoplight:
+        id: gv9tfg4scr2yx
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 4y3gfdgq1brqf
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 3718c2tvwwqsn
+            description: Department name.
+        required:
+        - name
+    Contact-Create:
+      title: Contact-Create
+      x-stoplight:
+        id: dhro09gmoiqgw
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: ehb4vhlggledw
+        email:
+          type: string
+          x-stoplight:
+            id: kxjggao5fm38r
+        phone:
+          type: string
+          x-stoplight:
+            id: 3dxv517oimpb1
+          example: '+18885551234'
+          description: Contact's E.164 formatted phone number
+      additionalProperties: false
+    Account-Read-Typeahead:
+      title: Account-Read-Typeahead
+      x-stoplight:
+        id: 0jtlv216ot4og
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: zinx4pmrlrvkg
+        required:
+        - name
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 675oqyzkv2xvp
+            description: Account name
+          connected_company:
+            type: object
+            x-stoplight:
+              id: 9e36j656fhsso
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: 8nxy7z0w3h51m
+                format: uuid
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 4yv7e5z57qmn2
+      x-internal: true
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    Scheduled-Time-Off-Read:
+      title: Scheduled-Time-Off-Read
+      x-stoplight:
+        id: u331truw5dg23
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: h8hb87yfchf0u
+        required:
+        - start_date
+        properties:
+          start_date:
+            type: string
+            x-stoplight:
+              id: ykovozns0x8k2
+            format: date-time
+          end_date:
+            type: string
+            x-stoplight:
+              id: rpad7acd8im3j
+            nullable: true
+      description: Scheduled Time Off
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Scheduled-Time-Off-Create:
+      title: Scheduled-Time-Off-Create
+      x-stoplight:
+        id: kg82d261cjr4w
+      description: Scheduled Time Off - Create
+      type: object
+      required:
+      - start_date
+      - end_date
+      properties:
+        start_date:
+          type: string
+          x-stoplight:
+            id: gse6o5a3nswlz
+          format: date-time
+        end_date:
+          type: string
+          x-stoplight:
+            id: jxpl58y44m2kh
+          format: date-time
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Account-Connected-Platform-Admin-Create:
+      title: Account-Connected-Platform-Admin-Create
+      x-stoplight:
+        id: wxdp7kwawtfvy
+      type: object
+      x-internal: true
+      required:
+      - sender_company_id
+      - receiver_company_id
+      - sender_account_types
+      properties:
+        sender_company_id:
+          type: string
+          x-stoplight:
+            id: qlhllclu1mlik
+          format: uuid
+        receiver_company_id:
+          type: string
+          x-stoplight:
+            id: lhfwxs74141ue
+          format: uuid
+        sender_account_types:
+          type: array
+          x-stoplight:
+            id: 0map8tgws15zb
+          items:
+            $ref: '#/components/schemas/AccountType'
+      additionalProperties: false
+    TimeZone:
+      title: TimeZone
+      x-stoplight:
+        id: 23bilsa9wx5xx
+      enum:
+      - Africa/Abidjan
+      - Africa/Accra
+      - Africa/Addis_Ababa
+      - Africa/Algiers
+      - Africa/Asmara
+      - Africa/Asmera
+      - Africa/Bamako
+      - Africa/Bangui
+      - Africa/Banjul
+      - Africa/Bissau
+      - Africa/Blantyre
+      - Africa/Brazzaville
+      - Africa/Bujumbura
+      - Africa/Cairo
+      - Africa/Casablanca
+      - Africa/Ceuta
+      - Africa/Conakry
+      - Africa/Dakar
+      - Africa/Dar_es_Salaam
+      - Africa/Djibouti
+      - Africa/Douala
+      - Africa/El_Aaiun
+      - Africa/Freetown
+      - Africa/Gaborone
+      - Africa/Harare
+      - Africa/Johannesburg
+      - Africa/Juba
+      - Africa/Kampala
+      - Africa/Khartoum
+      - Africa/Kigali
+      - Africa/Kinshasa
+      - Africa/Lagos
+      - Africa/Libreville
+      - Africa/Lome
+      - Africa/Luanda
+      - Africa/Lubumbashi
+      - Africa/Lusaka
+      - Africa/Malabo
+      - Africa/Maputo
+      - Africa/Maseru
+      - Africa/Mbabane
+      - Africa/Mogadishu
+      - Africa/Monrovia
+      - Africa/Nairobi
+      - Africa/Ndjamena
+      - Africa/Niamey
+      - Africa/Nouakchott
+      - Africa/Ouagadougou
+      - Africa/Porto-Novo
+      - Africa/Sao_Tome
+      - Africa/Timbuktu
+      - Africa/Tripoli
+      - Africa/Tunis
+      - Africa/Windhoek
+      - America/Adak
+      - America/Anchorage
+      - America/Anguilla
+      - America/Antigua
+      - America/Araguaina
+      - America/Argentina/Buenos_Aires
+      - America/Argentina/Catamarca
+      - America/Argentina/ComodRivadavia
+      - America/Argentina/Cordoba
+      - America/Argentina/Jujuy
+      - America/Argentina/La_Rioja
+      - America/Argentina/Mendoza
+      - America/Argentina/Rio_Gallegos
+      - America/Argentina/Salta
+      - America/Argentina/San_Juan
+      - America/Argentina/San_Luis
+      - America/Argentina/Tucuman
+      - America/Argentina/Ushuaia
+      - America/Aruba
+      - America/Asuncion
+      - America/Atikokan
+      - America/Atka
+      - America/Bahia
+      - America/Bahia_Banderas
+      - America/Barbados
+      - America/Belem
+      - America/Belize
+      - America/Blanc-Sablon
+      - America/Boa_Vista
+      - America/Bogota
+      - America/Boise
+      - America/Buenos_Aires
+      - America/Cambridge_Bay
+      - America/Campo_Grande
+      - America/Cancun
+      - America/Caracas
+      - America/Catamarca
+      - America/Cayenne
+      - America/Cayman
+      - America/Chicago
+      - America/Chihuahua
+      - America/Ciudad_Juarez
+      - America/Coral_Harbour
+      - America/Cordoba
+      - America/Costa_Rica
+      - America/Coyhaique
+      - America/Creston
+      - America/Cuiaba
+      - America/Curacao
+      - America/Danmarkshavn
+      - America/Dawson
+      - America/Dawson_Creek
+      - America/Denver
+      - America/Detroit
+      - America/Dominica
+      - America/Edmonton
+      - America/Eirunepe
+      - America/El_Salvador
+      - America/Ensenada
+      - America/Fort_Nelson
+      - America/Fort_Wayne
+      - America/Fortaleza
+      - America/Glace_Bay
+      - America/Godthab
+      - America/Goose_Bay
+      - America/Grand_Turk
+      - America/Grenada
+      - America/Guadeloupe
+      - America/Guatemala
+      - America/Guayaquil
+      - America/Guyana
+      - America/Halifax
+      - America/Havana
+      - America/Hermosillo
+      - America/Indiana/Indianapolis
+      - America/Indiana/Knox
+      - America/Indiana/Marengo
+      - America/Indiana/Petersburg
+      - America/Indiana/Tell_City
+      - America/Indiana/Vevay
+      - America/Indiana/Vincennes
+      - America/Indiana/Winamac
+      - America/Indianapolis
+      - America/Inuvik
+      - America/Iqaluit
+      - America/Jamaica
+      - America/Jujuy
+      - America/Juneau
+      - America/Kentucky/Louisville
+      - America/Kentucky/Monticello
+      - America/Knox_IN
+      - America/Kralendijk
+      - America/La_Paz
+      - America/Lima
+      - America/Los_Angeles
+      - America/Louisville
+      - America/Lower_Princes
+      - America/Maceio
+      - America/Managua
+      - America/Manaus
+      - America/Marigot
+      - America/Martinique
+      - America/Matamoros
+      - America/Mazatlan
+      - America/Mendoza
+      - America/Menominee
+      - America/Merida
+      - America/Metlakatla
+      - America/Mexico_City
+      - America/Miquelon
+      - America/Moncton
+      - America/Monterrey
+      - America/Montevideo
+      - America/Montreal
+      - America/Montserrat
+      - America/Nassau
+      - America/New_York
+      - America/Nipigon
+      - America/Nome
+      - America/Noronha
+      - America/North_Dakota/Beulah
+      - America/North_Dakota/Center
+      - America/North_Dakota/New_Salem
+      - America/Nuuk
+      - America/Ojinaga
+      - America/Panama
+      - America/Pangnirtung
+      - America/Paramaribo
+      - America/Phoenix
+      - America/Port-au-Prince
+      - America/Port_of_Spain
+      - America/Porto_Acre
+      - America/Porto_Velho
+      - America/Puerto_Rico
+      - America/Punta_Arenas
+      - America/Rainy_River
+      - America/Rankin_Inlet
+      - America/Recife
+      - America/Regina
+      - America/Resolute
+      - America/Rio_Branco
+      - America/Rosario
+      - America/Santa_Isabel
+      - America/Santarem
+      - America/Santiago
+      - America/Santo_Domingo
+      - America/Sao_Paulo
+      - America/Scoresbysund
+      - America/Shiprock
+      - America/Sitka
+      - America/St_Barthelemy
+      - America/St_Johns
+      - America/St_Kitts
+      - America/St_Lucia
+      - America/St_Thomas
+      - America/St_Vincent
+      - America/Swift_Current
+      - America/Tegucigalpa
+      - America/Thule
+      - America/Thunder_Bay
+      - America/Tijuana
+      - America/Toronto
+      - America/Tortola
+      - America/Vancouver
+      - America/Virgin
+      - America/Whitehorse
+      - America/Winnipeg
+      - America/Yakutat
+      - America/Yellowknife
+      - Antarctica/Casey
+      - Antarctica/Davis
+      - Antarctica/DumontDUrville
+      - Antarctica/Macquarie
+      - Antarctica/Mawson
+      - Antarctica/McMurdo
+      - Antarctica/Palmer
+      - Antarctica/Rothera
+      - Antarctica/South_Pole
+      - Antarctica/Syowa
+      - Antarctica/Troll
+      - Antarctica/Vostok
+      - Arctic/Longyearbyen
+      - Asia/Aden
+      - Asia/Almaty
+      - Asia/Amman
+      - Asia/Anadyr
+      - Asia/Aqtau
+      - Asia/Aqtobe
+      - Asia/Ashgabat
+      - Asia/Ashkhabad
+      - Asia/Atyrau
+      - Asia/Baghdad
+      - Asia/Bahrain
+      - Asia/Baku
+      - Asia/Bangkok
+      - Asia/Barnaul
+      - Asia/Beirut
+      - Asia/Bishkek
+      - Asia/Brunei
+      - Asia/Calcutta
+      - Asia/Chita
+      - Asia/Choibalsan
+      - Asia/Chongqing
+      - Asia/Chungking
+      - Asia/Colombo
+      - Asia/Dacca
+      - Asia/Damascus
+      - Asia/Dhaka
+      - Asia/Dili
+      - Asia/Dubai
+      - Asia/Dushanbe
+      - Asia/Famagusta
+      - Asia/Gaza
+      - Asia/Harbin
+      - Asia/Hebron
+      - Asia/Ho_Chi_Minh
+      - Asia/Hong_Kong
+      - Asia/Hovd
+      - Asia/Irkutsk
+      - Asia/Istanbul
+      - Asia/Jakarta
+      - Asia/Jayapura
+      - Asia/Jerusalem
+      - Asia/Kabul
+      - Asia/Kamchatka
+      - Asia/Karachi
+      - Asia/Kashgar
+      - Asia/Kathmandu
+      - Asia/Katmandu
+      - Asia/Khandyga
+      - Asia/Kolkata
+      - Asia/Krasnoyarsk
+      - Asia/Kuala_Lumpur
+      - Asia/Kuching
+      - Asia/Kuwait
+      - Asia/Macao
+      - Asia/Macau
+      - Asia/Magadan
+      - Asia/Makassar
+      - Asia/Manila
+      - Asia/Muscat
+      - Asia/Nicosia
+      - Asia/Novokuznetsk
+      - Asia/Novosibirsk
+      - Asia/Omsk
+      - Asia/Oral
+      - Asia/Phnom_Penh
+      - Asia/Pontianak
+      - Asia/Pyongyang
+      - Asia/Qatar
+      - Asia/Qostanay
+      - Asia/Qyzylorda
+      - Asia/Rangoon
+      - Asia/Riyadh
+      - Asia/Saigon
+      - Asia/Sakhalin
+      - Asia/Samarkand
+      - Asia/Seoul
+      - Asia/Shanghai
+      - Asia/Singapore
+      - Asia/Srednekolymsk
+      - Asia/Taipei
+      - Asia/Tashkent
+      - Asia/Tbilisi
+      - Asia/Tehran
+      - Asia/Tel_Aviv
+      - Asia/Thimbu
+      - Asia/Thimphu
+      - Asia/Tokyo
+      - Asia/Tomsk
+      - Asia/Ujung_Pandang
+      - Asia/Ulaanbaatar
+      - Asia/Ulan_Bator
+      - Asia/Urumqi
+      - Asia/Ust-Nera
+      - Asia/Vientiane
+      - Asia/Vladivostok
+      - Asia/Yakutsk
+      - Asia/Yangon
+      - Asia/Yekaterinburg
+      - Asia/Yerevan
+      - Atlantic/Azores
+      - Atlantic/Bermuda
+      - Atlantic/Canary
+      - Atlantic/Cape_Verde
+      - Atlantic/Faeroe
+      - Atlantic/Faroe
+      - Atlantic/Jan_Mayen
+      - Atlantic/Madeira
+      - Atlantic/Reykjavik
+      - Atlantic/South_Georgia
+      - Atlantic/St_Helena
+      - Atlantic/Stanley
+      - Australia/ACT
+      - Australia/Adelaide
+      - Australia/Brisbane
+      - Australia/Broken_Hill
+      - Australia/Canberra
+      - Australia/Currie
+      - Australia/Darwin
+      - Australia/Eucla
+      - Australia/Hobart
+      - Australia/LHI
+      - Australia/Lindeman
+      - Australia/Lord_Howe
+      - Australia/Melbourne
+      - Australia/NSW
+      - Australia/North
+      - Australia/Perth
+      - Australia/Queensland
+      - Australia/South
+      - Australia/Sydney
+      - Australia/Tasmania
+      - Australia/Victoria
+      - Australia/West
+      - Australia/Yancowinna
+      - Brazil/Acre
+      - Brazil/DeNoronha
+      - Brazil/East
+      - Brazil/West
+      - CET
+      - CST6CDT
+      - Canada/Atlantic
+      - Canada/Central
+      - Canada/Eastern
+      - Canada/Mountain
+      - Canada/Newfoundland
+      - Canada/Pacific
+      - Canada/Saskatchewan
+      - Canada/Yukon
+      - Chile/Continental
+      - Chile/EasterIsland
+      - Cuba
+      - EET
+      - EST
+      - EST5EDT
+      - Egypt
+      - Eire
+      - Etc/GMT
+      - Etc/GMT+0
+      - Etc/GMT+1
+      - Etc/GMT+10
+      - Etc/GMT+11
+      - Etc/GMT+12
+      - Etc/GMT+2
+      - Etc/GMT+3
+      - Etc/GMT+4
+      - Etc/GMT+5
+      - Etc/GMT+6
+      - Etc/GMT+7
+      - Etc/GMT+8
+      - Etc/GMT+9
+      - Etc/GMT-0
+      - Etc/GMT-1
+      - Etc/GMT-10
+      - Etc/GMT-11
+      - Etc/GMT-12
+      - Etc/GMT-13
+      - Etc/GMT-14
+      - Etc/GMT-2
+      - Etc/GMT-3
+      - Etc/GMT-4
+      - Etc/GMT-5
+      - Etc/GMT-6
+      - Etc/GMT-7
+      - Etc/GMT-8
+      - Etc/GMT-9
+      - Etc/GMT0
+      - Etc/Greenwich
+      - Etc/UCT
+      - Etc/UTC
+      - Etc/Universal
+      - Etc/Zulu
+      - Europe/Amsterdam
+      - Europe/Andorra
+      - Europe/Astrakhan
+      - Europe/Athens
+      - Europe/Belfast
+      - Europe/Belgrade
+      - Europe/Berlin
+      - Europe/Bratislava
+      - Europe/Brussels
+      - Europe/Bucharest
+      - Europe/Budapest
+      - Europe/Busingen
+      - Europe/Chisinau
+      - Europe/Copenhagen
+      - Europe/Dublin
+      - Europe/Gibraltar
+      - Europe/Guernsey
+      - Europe/Helsinki
+      - Europe/Isle_of_Man
+      - Europe/Istanbul
+      - Europe/Jersey
+      - Europe/Kaliningrad
+      - Europe/Kiev
+      - Europe/Kirov
+      - Europe/Kyiv
+      - Europe/Lisbon
+      - Europe/Ljubljana
+      - Europe/London
+      - Europe/Luxembourg
+      - Europe/Madrid
+      - Europe/Malta
+      - Europe/Mariehamn
+      - Europe/Minsk
+      - Europe/Monaco
+      - Europe/Moscow
+      - Europe/Nicosia
+      - Europe/Oslo
+      - Europe/Paris
+      - Europe/Podgorica
+      - Europe/Prague
+      - Europe/Riga
+      - Europe/Rome
+      - Europe/Samara
+      - Europe/San_Marino
+      - Europe/Sarajevo
+      - Europe/Saratov
+      - Europe/Simferopol
+      - Europe/Skopje
+      - Europe/Sofia
+      - Europe/Stockholm
+      - Europe/Tallinn
+      - Europe/Tirane
+      - Europe/Tiraspol
+      - Europe/Ulyanovsk
+      - Europe/Uzhgorod
+      - Europe/Vaduz
+      - Europe/Vatican
+      - Europe/Vienna
+      - Europe/Vilnius
+      - Europe/Volgograd
+      - Europe/Warsaw
+      - Europe/Zagreb
+      - Europe/Zaporozhye
+      - Europe/Zurich
+      - Factory
+      - GB
+      - GB-Eire
+      - GMT
+      - GMT+0
+      - GMT-0
+      - GMT0
+      - Greenwich
+      - HST
+      - Hongkong
+      - Iceland
+      - Indian/Antananarivo
+      - Indian/Chagos
+      - Indian/Christmas
+      - Indian/Cocos
+      - Indian/Comoro
+      - Indian/Kerguelen
+      - Indian/Mahe
+      - Indian/Maldives
+      - Indian/Mauritius
+      - Indian/Mayotte
+      - Indian/Reunion
+      - Iran
+      - Israel
+      - Jamaica
+      - Japan
+      - Kwajalein
+      - Libya
+      - MET
+      - MST
+      - MST7MDT
+      - Mexico/BajaNorte
+      - Mexico/BajaSur
+      - Mexico/General
+      - NZ
+      - NZ-CHAT
+      - Navajo
+      - PRC
+      - PST8PDT
+      - Pacific/Apia
+      - Pacific/Auckland
+      - Pacific/Bougainville
+      - Pacific/Chatham
+      - Pacific/Chuuk
+      - Pacific/Easter
+      - Pacific/Efate
+      - Pacific/Enderbury
+      - Pacific/Fakaofo
+      - Pacific/Fiji
+      - Pacific/Funafuti
+      - Pacific/Galapagos
+      - Pacific/Gambier
+      - Pacific/Guadalcanal
+      - Pacific/Guam
+      - Pacific/Honolulu
+      - Pacific/Johnston
+      - Pacific/Kanton
+      - Pacific/Kiritimati
+      - Pacific/Kosrae
+      - Pacific/Kwajalein
+      - Pacific/Majuro
+      - Pacific/Marquesas
+      - Pacific/Midway
+      - Pacific/Nauru
+      - Pacific/Niue
+      - Pacific/Norfolk
+      - Pacific/Noumea
+      - Pacific/Pago_Pago
+      - Pacific/Palau
+      - Pacific/Pitcairn
+      - Pacific/Pohnpei
+      - Pacific/Ponape
+      - Pacific/Port_Moresby
+      - Pacific/Rarotonga
+      - Pacific/Saipan
+      - Pacific/Samoa
+      - Pacific/Tahiti
+      - Pacific/Tarawa
+      - Pacific/Tongatapu
+      - Pacific/Truk
+      - Pacific/Wake
+      - Pacific/Wallis
+      - Pacific/Yap
+      - Poland
+      - Portugal
+      - ROC
+      - ROK
+      - Singapore
+      - Turkey
+      - UCT
+      - US/Alaska
+      - US/Aleutian
+      - US/Arizona
+      - US/Central
+      - US/East-Indiana
+      - US/Eastern
+      - US/Hawaii
+      - US/Indiana-Starke
+      - US/Michigan
+      - US/Mountain
+      - US/Pacific
+      - US/Samoa
+      - UTC
+      - Universal
+      - W-SU
+      - WET
+      - Zulu
+      example: America/New_York
+      default: America/New_York
+    EquipmentOwnership:
+      title: EquipmentOwnership
+      x-stoplight:
+        id: p5e75ayo8y6n5
+      enum:
+      - internal
+      - external
+      default: internal
+      example: internal
+    AutoAddOn-BulkAssign:
+      title: AutoAddOn-BulkAssign
+      x-stoplight:
+        id: 0zlb8y4dqn6iu
+      type: object
+      description: 'Note: `auto_add_on_account_type` is `required` when assigning to an `Account`'
+      properties:
+        auto_add_on_account_type:
+          $ref: '#/components/schemas/AccountType'
+        additional_auto_add_on_ids:
+          type: array
+          x-stoplight:
+            id: 6pls2iqathkik
+          items:
+            x-stoplight:
+              id: rrt11kfb86o87
+            type: string
+            format: uuid
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Account-Invite-Equipment-Create:
+      title: Account-Connected-Equipment-Create
+      x-stoplight:
+        id: 96z7vtoxp435z
+      type: object
+      required:
+      - name
+      - equipment_type_name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 79jp1s2je16pq
+        external_id:
+          type: string
+          x-stoplight:
+            id: k8wmn7qq9njbq
+        license_number:
+          type: string
+          x-stoplight:
+            id: 7sjz7irjuf0ii
+        equipment_type_name:
+          type: string
+          x-stoplight:
+            id: lse1trsvxmrn0
+        company_share_external_id:
+          type: string
+          x-stoplight:
+            id: pmf52ug1jsgn0
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - email
+        - phone
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: sd80y9pbgvkok
+            nullable: true
+          email:
+            type: string
+            x-stoplight:
+              id: 883fmt34pdeaj
+            nullable: true
+          phone:
+            type: string
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+            nullable: true
+      description: ''
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    Account-Update-Bulk:
+      title: Account-Update-Bulk
+      x-stoplight:
+        id: qksofp8c4556h
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 9kzx7a4764y6u
+        properties:
+          available:
+            type: boolean
+            description: Used to set the Account's scheduled time off/on status
+            x-stoplight:
+              id: lp2inoi5upycw
+          connected_account:
+            $ref: '#/components/schemas/Account-Update-Connected'
+      description: The bulk updates allowed for a single Account
+      x-internal: true
+    Account-Update-Connected:
+      title: Account-Update
+      x-stoplight:
+        id: tqoelbcljuj2k
+      type: object
+      description: Update model for `Account`
+      properties:
+        truck_count:
+          type: integer
+          description: The allowable number of trucks that is dispatchable to the customer of this account.
+          default: 0
+      additionalProperties: false
+    Contact-Update:
+      title: Contact-Update
+      x-stoplight:
+        id: p2ny8u55sfpcx
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: wm2na5bv2uvvv
+        email:
+          x-stoplight:
+            id: mdv25imtbstfh
+          type: string
+        phone:
+          type: string
+          x-stoplight:
+            id: rtf4rqlgwt35i
+          example: '+18885551234'
+      additionalProperties: false
+    Account-Invite-Internal-Equipment-Create:
+      title: Account-Invite-Internal-Equipment-Create
+      x-stoplight:
+        id: vc772nrou4cni
+      type: object
+      required:
+      - name
+      - equipment_type_id
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 26xxohy7ema3a
+        equipment_type_id:
+          type: string
+          x-stoplight:
+            id: 6vdvg75fmsz5w
+          format: uuid
+        ownership:
+          $ref: '#/components/schemas/EquipmentOwnership'
+        state:
+          $ref: '#/components/schemas/EquipmentState'
+        home_base_id:
+          type: string
+          x-stoplight:
+            id: m3vqw8fx2k7nt
+          format: uuid
+          nullable: true
+      additionalProperties: false
+    Account-Read:
+      title: Account-Read
+      x-stoplight:
+        id: wei0biagg591t
+      allOf:
+      - $ref: '#/components/schemas/Account-Read-Nested'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        required:
+        - notes
+        - truck_count
+        - auto_accept_orders
+        - managed
+        - labels
+        properties:
+          primary_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+          address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          notes:
+            type: string
+            x-stoplight:
+              id: 2sjpg062n562q
+            description: Notes
+            nullable: true
+          truck_count:
+            type: integer
+            x-stoplight:
+              id: 3ha8rwl257389
+            description: The allowable number of trucks that is dispatchable to the customer of this account.
+          auto_accept_orders:
+            type: boolean
+            x-stoplight:
+              id: ktqejg58pns0n
+            default: false
+            description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
+          connected_account:
+            $ref: '#/components/schemas/Account-Connected-Read-Nested'
+          managed:
+            type: boolean
+            x-stoplight:
+              id: cbaejg58pns2s
+          department:
+            $ref: '#/components/schemas/Department-Read-Nested'
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this account
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    Account-Read-Capacity-Typeahead:
+      title: Account-Read-Capacity-Typeahead
+      x-stoplight:
+        id: y06sjzp3z6k4c
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - schedule_on
+        - current_assigned_count
+        - current_capacity_count
+        properties:
+          name:
+            type: string
+            description: Account name
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: hlfa8tn5znpsy
+            description: Boolean indicator of this Account's current availablity for being dispatched.
+          current_assigned_count:
+            type: number
+            x-stoplight:
+              id: bmr4fet0uassi
+            description: The truck capacity of this Account that is already assigned for the day.
+          current_capacity_count:
+            type: number
+            x-stoplight:
+              id: eyxnoph0ggkd0
+            description: The available truck capacity of this Account for the day.
+          connected_company:
+            type: object
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                format: uuid
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this account
+      x-internal: true
+    Account-Update:
+      title: Account-Update
+      x-stoplight:
+        id: 2zrntg5xhcmsd
+      description: Update model for `Account`
+      allOf:
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: cv2ymke8sutek
+            description: Account name
+          department:
+            type: string
+            x-stoplight:
+              id: wtt5wqixu46yn
+            description: Department
+            deprecated: true
+            nullable: true
+          department_id:
+            type: string
+            x-stoplight:
+              id: tkd8y8kgx83mc
+            format: uuid
+            description: 'The ID of the associated **Department**.
+
+
+              This should be used instead of `department`.'
+            nullable: true
+          primary_contact:
+            $ref: '#/components/schemas/Contact-Update'
+          billing_contact:
+            $ref: '#/components/schemas/Contact-Update'
+          address:
+            $ref: '#/components/schemas/Address-Update'
+          billing_address:
+            $ref: '#/components/schemas/Address-Update'
+          notes:
+            type: string
+            x-stoplight:
+              id: tqs5b4rdilyyr
+            description: Notes
+            nullable: true
+          account_types:
+            type: array
+            x-stoplight:
+              id: o8crnsajrp9ii
+            description: Account type allowing for multiple values
+            items:
+              $ref: '#/components/schemas/AccountType'
+          external_id:
+            type: string
+            x-stoplight:
+              id: uormrtrev82c5
+            description: Identifier used to associate an account to any external system
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: uosmrurev83c5
+            description: The accounting ID of the Account mapping to any accounting system
+            nullable: true
+          truck_count:
+            type: integer
+            x-stoplight:
+              id: wlti4u29w4els
+            description: The allowable number of trucks that is dispatchable to the customer of this account.
+            default: 0
+          auto_accept_orders:
+            type: boolean
+            x-stoplight:
+              id: r2hvfvnc54wx9
+            default: false
+            description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
+          connected_account:
+            $ref: '#/components/schemas/Account-Update-Connected'
+          label_ids:
+            type: array
+            x-stoplight:
+              id: h6l1mjd3to0yg
+            description: Array of Label IDs to assign to this Account
+            items:
+              type: string
+              format: uuid
+      - $ref: '#/components/schemas/AutoAddOn-BulkAssign'
+    Account-Connected-Read-Nested:
+      title: Account-Connected-Read-Nested
+      x-stoplight:
+        id: pg8wjapp9i57b
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: afxdwofm2lvk9
+        required:
+        - account_types
+        - truck_count
+        - auto_accept_orders
+        properties:
+          account_types:
+            type: array
+            x-stoplight:
+              id: fuy2f5ufr4t1y
+            items:
+              $ref: '#/components/schemas/AccountType'
+          truck_count:
+            type: integer
+            x-stoplight:
+              id: qy4yfietl0bn9
+          auto_accept_orders:
+            type: boolean
+            x-stoplight:
+              id: 9i9aevgy5ke86
+      description: ''
+    Account-Read-Nested:
+      title: Account-Read-Nested
+      x-stoplight:
+        id: zo8r3gsz1tm5h
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: gl7hua7pv8xka
+        required:
+        - name
+        - account_types
+        - external_id
+        - accounting_id
+        - company
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: a7g065w5byfcf
+          account_types:
+            type: array
+            x-stoplight:
+              id: a0e9c3lpr1wad
+            items:
+              $ref: '#/components/schemas/AccountType'
+          external_id:
+            type: string
+            x-stoplight:
+              id: yfrec4y0a90cb
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: yfsec5y0a91cb
+            nullable: true
+          company:
+            type: object
+            x-stoplight:
+              id: 9loqtu14mvlnq
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: udjkdjrz08pzr
+                format: uuid
+          billing_address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 0g9kx77zym4ok
+          connected_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          billing_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+    Address-Read:
+      title: Address-Read
+      x-stoplight:
+        id: v1mcd2qgns2tf
+      type: object
+      required:
+      - thoroughfare
+      - premise
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      - lat
+      - lon
+      - place_id
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: 8wrr7qkc9ilqn
+        premise:
+          type: string
+          x-stoplight:
+            id: z4jth408out1q
+          nullable: true
+        locality:
+          type: string
+          x-stoplight:
+            id: kfby6wqpgvxbz
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: c9bkrloxf4t8d
+        postal_code:
+          type: string
+          x-stoplight:
+            id: 7zq51k1mof3o3
+        country:
+          type: string
+          x-stoplight:
+            id: iydw9q619ya01
+          pattern: ^[A-Z]{2}
+          example: US
+          minLength: 2
+          maxLength: 2
+        lat:
+          type: string
+          x-stoplight:
+            id: kqu1qtf9rivh1
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+          nullable: true
+        lon:
+          type: string
+          x-stoplight:
+            id: oly2yabkzpk9g
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+          nullable: true
+        place_id:
+          type: string
+          x-stoplight:
+            id: im1fdq7qqxdij
+          description: NextBillion placeID
+          nullable: true
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    SendInvite:
+      title: SendInvite
+      x-stoplight:
+        id: 85j5tkeowjyx9
+      type: object
+      properties:
+        email:
+          type: boolean
+          default: false
+          description: 'Whether to send an invitation via email along with the creation of the `User`.
+
+
+            Requires the `email` field to be present.'
+        sms:
+          type: boolean
+          default: false
+          description: "Whether to send an invitation via sms along with the creation of the `User`. \n\nRequires the `phone` field to be present."
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Account-Connected-Customer-Create:
+      title: Account-Connected-Customer-Create
+      x-stoplight:
+        id: 8k1ulz2srbdfc
+      allOf:
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        x-stoplight:
+          id: 43gxez0djvi2s
+        required:
+        - account_types
+        properties:
+          account_types:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountType'
+    Address-Update:
+      title: Address-Update
+      x-stoplight:
+        id: 9btd83m0o0tsa
+      properties:
+        thoroughfare:
+          type: string
+          description: Street address
+          example: 123 Fake St.
+        premise:
+          type: string
+          description: Apartment, Suite, Box number, etc.
+          example: 3rd Floor
+        locality:
+          type: string
+          description: City / Town
+          example: New York
+        administrative_area:
+          type: string
+          description: State / Province / Region (ISO code when available)
+          example: NY
+        postal_code:
+          type: string
+          description: Postal code / ZIP Code
+          example: '10011'
+        country:
+          type: string
+          minLength: 2
+          maxLength: 2
+          pattern: ^[A-Z]{2}
+          example: US
+          description: 2 character country ISO code
+        lat:
+          type: string
+          x-stoplight:
+            id: 5uu3ex2lbmyzj
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+        lon:
+          type: string
+          x-stoplight:
+            id: y8xd9dp6rwfeu
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+        place_id:
+          type: string
+          x-stoplight:
+            id: ujv5qpg067ycc
+          description: NextBillion placeID
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 48a0is0umjabv
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this `Address` will be deleted. The `id` must be set.'
+      type: object
+      additionalProperties: false
+    Account-Create:
+      title: Account-Create
+      x-stoplight:
+        id: gxkg5vrqlzq89
+      type: object
+      required:
+      - name
+      - account_types
+      - auto_accept_orders
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 5298s0s0peapc
+          description: Account name
+        department:
+          type: string
+          x-stoplight:
+            id: jcmgf3qz70e9w
+          description: Department
+          deprecated: true
+          nullable: true
+        department_id:
+          type: string
+          x-stoplight:
+            id: ewd9im004flot
+          format: uuid
+          description: 'The ID of the associated **Department**.
+
+
+            This should be used instead of `department`.'
+          nullable: true
+        primary_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        billing_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        address:
+          $ref: '#/components/schemas/Address-Create'
+        billing_address:
+          $ref: '#/components/schemas/Address-Create'
+        notes:
+          type: string
+          x-stoplight:
+            id: cekepr6fg19fx
+          description: Notes
+          nullable: true
+        account_types:
+          type: array
+          x-stoplight:
+            id: fz4g38ct2r9l3
+          description: Account type allowing for multiple values
+          items:
+            $ref: '#/components/schemas/AccountType'
+        external_id:
+          type: string
+          x-stoplight:
+            id: ck449dcgiige8
+          description: Identifier used to associate an account to any external system
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: ck459dchijge8
+          description: The accounting ID of the Account mapping to any accounting system
+          nullable: true
+        company_id:
+          type: string
+          x-stoplight:
+            id: x9ow3nfelos0a
+          format: uuid
+        truck_count:
+          type: integer
+          x-stoplight:
+            id: qzekegh1h2ztd
+          description: The allowable number of trucks that is dispatchable to the customer of this account.
+          default: 0
+          nullable: true
+        auto_accept_orders:
+          type: boolean
+          x-stoplight:
+            id: tjzapla5k8r8f
+          default: false
+          description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
+        label_ids:
+          type: array
+          x-stoplight:
+            id: lbl1d5cr8acc1
+          description: Array of Label IDs to assign to this account.
+          items:
+            type: string
+            format: uuid
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

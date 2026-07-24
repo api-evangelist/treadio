@@ -1,0 +1,1075 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier AddOns API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: AddOns
+paths:
+  /v1/accounts/{account-id}/auto_add_ons:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: account-id
+      in: path
+      required: true
+      description: Account ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve AutoAddOns for an Account
+      tags:
+      - AddOns
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: vyjucvtfbwnvl
+                    items:
+                      $ref: '#/components/schemas/AddOn-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-accounts-account-id-auto_add_ons
+      x-stoplight:
+        id: 1qza5utua6bdk
+      description: Retrieve `AutoAddOns` for an `Account`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-account_type'
+      x-internal: true
+      deprecated: true
+  /v1/accounts/{account-id}/auto_add_ons/{auto-add-on-id}/customer_add_on:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: account-id
+      in: path
+      required: true
+      description: Account ID
+    - schema:
+        type: string
+      name: auto-add-on-id
+      in: path
+      required: true
+      description: AddOn ID
+    - $ref: '#/components/parameters/Accept-Language'
+    delete:
+      summary: Delete AutoAddOn for a Customer Account
+      tags:
+      - AddOns
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-accounts-account-id-auto_add_ons-id-customer_add_on
+      x-stoplight:
+        id: ajwamzzkzdgtk
+      description: Delete `AutoAddOn` for a `Customer Account`
+      x-internal: true
+  /v1/accounts/{account-id}/auto_add_ons/{auto-add-on-id}/vendor_add_on:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: account-id
+      in: path
+      required: true
+      description: Account ID
+    - schema:
+        type: string
+        format: uuid
+      name: auto-add-on-id
+      in: path
+      required: true
+      description: AddOn ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    delete:
+      summary: Delete AutoAddOn for a Vendor Account
+      tags:
+      - AddOns
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-accounts-account-id-auto_add_ons-id-vendor_add_on
+      x-stoplight:
+        id: wauvt42ki31sr
+      x-internal: true
+      description: Delete `AutoAddOn` for a `Vendor Account`
+  /v1/add_ons:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an AddOn
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOn-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-add_ons
+      x-stoplight:
+        id: 1936ko4biwm2y
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddOn-Create'
+      description: Create an `AddOn`
+      tags:
+      - AddOns
+    get:
+      summary: Retrieve AddOns visible to the current Company
+      tags:
+      - AddOns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: var9pbjickujx
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AddOn-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-add_ons
+      x-stoplight:
+        id: b40oql5ljsouo
+      description: Retrieve `AddOns` visible to the current authenticated `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/add_ons/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: AddOn ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single AddOn
+      tags:
+      - AddOns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOn-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-add_ons-id
+      x-stoplight:
+        id: qk790biaszx9h
+      description: Retrieve `AddOn` by ID
+    patch:
+      summary: Update an AddOn
+      tags:
+      - AddOns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOn-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-add_ons-id
+      x-stoplight:
+        id: n12ul7z8p1eb0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddOn-Update'
+      description: Update an `AddOn` by ID.
+  /v1/companies/{company-id}/add_ons:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an AddOn for a Company
+      tags:
+      - AddOns
+      operationId: post-v1-companies-company-id-add_ons
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOn-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddOn-Create'
+      description: Create an `AddOn` for a `Company`
+    get:
+      summary: Retrieve AddOns that belong to a Company
+      tags:
+      - AddOns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: a6yke4sq5mcv1
+                    items:
+                      $ref: '#/components/schemas/AddOn-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-add_ons
+      x-stoplight:
+        id: gfirj6p5mz0qj
+      description: Retrieve `AddOns` that belong to a `Company`.
+  /v1/companies/{company-id}/add_ons/{id}/fuel_surcharge_rate:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: AddOn ID
+    get:
+      summary: Retrieve fuel surcharge rate for an AddOn
+      tags:
+      - AddOns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOnFuelSurchargeRate-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-add_ons-id-fuel_surcharge_rate
+      description: Retrieve fuel surcharge rate for a FuelSurcharge type AddOn for a given date. The AddOn must have `add_on_rate_type` of `FuelSurcharge` and have an associated `fuel_surcharge_schedule`.
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      - schema:
+          type: string
+          format: date
+        name: filter[date]
+        in: query
+        required: false
+        description: Date to fetch the fuel surcharge rate for. Defaults to current date if not provided.
+  /v1/drivers/{driver-id}/auto_add_ons:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: driver-id
+      in: path
+      required: true
+      description: Driver ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve AutoAddOns for a Driver
+      tags:
+      - AddOns
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 0fugxh6ieixfm
+                    items:
+                      $ref: '#/components/schemas/AddOn-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-drivers-driver-id-auto_add_ons
+      x-stoplight:
+        id: v45j700v4mjgo
+      description: Retrieve `AutoAddOns` for a `Driver`
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      deprecated: true
+  /v1/drivers/{driver-id}/auto_add_ons/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: driver-id
+      in: path
+      required: true
+      description: Driver ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: AddOn ID
+    - $ref: '#/components/parameters/Accept-Language'
+    delete:
+      summary: Delete AutoAddOn for a Driver
+      tags:
+      - AddOns
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-drivers-driver-id-auto_add_ons-id
+      x-stoplight:
+        id: 4y3lveq5ipi71
+      x-internal: true
+      description: Delete `AutoAddOn` for a `Driver`
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    filter-account_type:
+      name: filter[account_type]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: AccountType filter. See `AccountType` enum for accepted values.
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  schemas:
+    FuelSurchargeSchedule-Read-Nested:
+      title: FuelSurchargeSchedule-Read-Nested
+      x-stoplight:
+        id: cfxi1bfv03rdl
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: ug5goi9re1abe
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 2izdii9s4bcmr
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    AddOnFuelSurchargeRate-Read:
+      title: AddOnFuelSurchargeRate-Read
+      type: object
+      required:
+      - surcharge
+      - surcharge_percentage
+      properties:
+        surcharge:
+          type: string
+          nullable: true
+          description: The surcharge value from the fuel surcharge schedule price.
+        surcharge_percentage:
+          type: string
+          nullable: true
+          description: The surcharge percentage value from the fuel surcharge schedule price.
+      additionalProperties: false
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    AddOn-Update:
+      title: AddOn-Update
+      x-stoplight:
+        id: pmbikrt2texf4
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 8d83x31yubex2
+        cost_rate_value:
+          type: number
+          x-stoplight:
+            id: c759eo8wadm7g
+          description: The cost rate or buy price of the add on.
+          nullable: true
+        revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: b6q0qnut6yezp
+          description: The revenue rate or sell price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        add_on_types:
+          type: array
+          x-stoplight:
+            id: y8rdc126a6oco
+          items:
+            $ref: '#/components/schemas/AddOnType'
+        quantity:
+          type: number
+          x-stoplight:
+            id: b1sgao2v2tluo
+        external_id:
+          type: string
+          x-stoplight:
+            id: o7p8hcbvq6b5n
+          nullable: true
+        percentage:
+          type: number
+          x-stoplight:
+            id: ci4nu80irnyoc
+          minimum: -100
+          maximum: 100
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: bay8r8dj9cv1r
+          nullable: true
+        rate:
+          type: number
+          x-stoplight:
+            id: 0ghnvu2cty0zl
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+          deprecated: true
+          description: Deprecated in favor of `revenue_cost_rate_type`.
+        fuel_surcharge_schedule_id:
+          type: string
+          x-stoplight:
+            id: ms29nqmq7yzc3
+          format: uuid
+          nullable: true
+        taxable:
+          x-stoplight:
+            id: k1m3p5r7t9w1y
+          type: boolean
+          default: false
+          description: Whether this add-on is eligible for taxation
+      additionalProperties: false
+    AddOnType:
+      title: AddOnType
+      x-stoplight:
+        id: d2h2dx8n8qui8
+      enum:
+      - driver_pay
+      - invoicing
+      - job
+      - settlement
+      - driver_day
+      example: driver_pay
+      default: driver_pay
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    AddOn-Create:
+      title: AddOn-Create
+      x-stoplight:
+        id: o1ksmtglap661
+      type: object
+      required:
+      - name
+      - add_on_types
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: cl67dsx43nmu0
+        cost_rate_value:
+          type: number
+          x-stoplight:
+            id: 8js81cp6tx9v8
+          description: The cost rate or buy price of the add on.
+          nullable: true
+        revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: 8bzixu62d0ste
+          description: The revenue rate or sell price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        add_on_types:
+          type: array
+          x-stoplight:
+            id: v579mppyl55o8
+          items:
+            $ref: '#/components/schemas/AddOnType'
+        quantity:
+          type: number
+          x-stoplight:
+            id: hrcd34s69tbga
+        external_id:
+          type: string
+          x-stoplight:
+            id: nzp3xodjxp6hi
+          nullable: true
+        percentage:
+          type: number
+          x-stoplight:
+            id: 7vjgltw0fe1mf
+          description: '`RatePercentTotal` specific field'
+          minimum: -100
+          maximum: 100
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: tq2drhrlerp5u
+          nullable: true
+        rate:
+          type: number
+          x-stoplight:
+            id: v9fh5ndjeowwc
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+          deprecated: true
+          description: Deprecated in favor of `revenue_cost_rate_type`.
+        fuel_surcharge_schedule_id:
+          type: string
+          x-stoplight:
+            id: rl4h6y4fwbfhc
+          format: uuid
+          nullable: true
+        taxable:
+          x-stoplight:
+            id: f6h8j0m2n4q6s
+          type: boolean
+          default: false
+          description: Whether this add-on is eligible for taxation
+      additionalProperties: false
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    AddOn-Read:
+      title: AddOn-Read
+      x-stoplight:
+        id: pv5vims1nc6wu
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - add_on_types
+        - quantity
+        - cost_rate_value
+        - revenue_rate_value
+        - revenue_cost_rate_type
+        - external_id
+        - percentage
+        - company
+        - accounting_id
+        - rate
+        - add_on_rate_type
+        - taxable
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: qmldk5115vb6g
+          add_on_types:
+            type: array
+            x-stoplight:
+              id: 00d1prh7o0dn0
+            items:
+              $ref: '#/components/schemas/AddOnType'
+          quantity:
+            type: string
+            x-stoplight:
+              id: etwqachefxyi2
+          cost_rate_value:
+            type: string
+            x-stoplight:
+              id: 02z1yb6pwqgiw
+            description: The cost rate or buy price of the add on
+            nullable: true
+          revenue_rate_value:
+            type: string
+            x-stoplight:
+              id: pq16i16y4jqig
+            description: The revenue rate or sell price of the add on
+          revenue_cost_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+          external_id:
+            type: string
+            x-stoplight:
+              id: loqwlx3ud5ar3
+            nullable: true
+          percentage:
+            type: string
+            x-stoplight:
+              id: vv7o18vi8pzce
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: t76oqekhuly4n
+            nullable: true
+          rate:
+            type: string
+            x-stoplight:
+              id: 3b7ro6cldcik7
+            deprecated: true
+            description: Deprecated in favor of `revenue_rate_value`.
+          add_on_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+            deprecated: true
+            description: Deprecated in favor of `revenue_cost_rate_type`.
+          fuel_surcharge_schedule:
+            $ref: '#/components/schemas/FuelSurchargeSchedule-Read-Nested'
+          taxable:
+            x-stoplight:
+              id: u8w0y2b4d6g9i
+            type: boolean
+            default: false
+            description: Whether this add-on is eligible for taxation
+      - $ref: '#/components/schemas/Timestamps'
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    AddOnRateType:
+      title: AddOnRateType
+      x-stoplight:
+        id: 1c3m0qj0ofdao
+      enum:
+      - RateForEach
+      - RatePercentOfTotal
+      - PerLoad
+      - FuelSurcharge
+      example: RateForEach
+      default: RateForEach
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

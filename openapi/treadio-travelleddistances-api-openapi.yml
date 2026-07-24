@@ -1,0 +1,511 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier TravelledDistances API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: TravelledDistances
+paths:
+  /v1/companies/{company-id}/driver_days/{driver-day-id}/travelled_distances:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: driver-day-id
+      in: path
+      required: true
+      description: DriverDay ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve TravelledDistances that belong to a DriverDay
+      tags:
+      - TravelledDistances
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TravelledDistance-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-driver_days-driver-day-id-travelled_distances
+      x-stoplight:
+        id: tdd1drvday7x9k2
+      description: Retrieve `TravelledDistances` that belong to a `DriverDay`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/companies/{company-id}/jobs/{job-id}/travelled_distances:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: job-id
+      in: path
+      required: true
+      description: Job ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve TravelledDistances that belong to a Job
+      tags:
+      - TravelledDistances
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TravelledDistance-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-jobs-job-id-travelled_distances
+      x-stoplight:
+        id: tdj1job7x9k2
+      description: Retrieve `TravelledDistances` that belong to a `Job`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/companies/{company-id}/loads/{load-id}/travelled_distances:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: load-id
+      in: path
+      required: true
+      description: Load ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve TravelledDistances that belong to a Load
+      tags:
+      - TravelledDistances
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TravelledDistance-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-loads-load-id-travelled_distances
+      x-stoplight:
+        id: tdl1load7x9k2
+      description: Retrieve `TravelledDistances` that belong to a `Load`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/companies/{company-id}/orders/{order-id}/travelled_distances:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve TravelledDistances that belong to an Order
+      tags:
+      - TravelledDistances
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TravelledDistance-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-orders-order-id-travelled_distances
+      x-stoplight:
+        id: tdo1order7x9k2
+      description: Retrieve `TravelledDistances` that belong to an `Order`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+components:
+  schemas:
+    TravelledDistanceType:
+      title: TravelledDistanceType
+      x-stoplight:
+        id: tdtdr7x9k2abc
+      type: string
+      enum:
+      - off_job
+      - unloaded
+      - loaded
+      description: Type of travelled distance based on load state
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    TravelledDistance-Read:
+      title: TravelledDistance-Read
+      x-stoplight:
+        id: tdddr7x9k2abc
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        required:
+        - administrative_area
+        - travelled_distance_meters
+        - travelled_distance_type
+        properties:
+          administrative_area:
+            $ref: '#/components/schemas/AdministrativeArea'
+          travelled_distance_meters:
+            type: string
+          travelled_distance_type:
+            $ref: '#/components/schemas/TravelledDistanceType'
+          equipment:
+            $ref: '#/components/schemas/Equipment-Read-Minimal'
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    AdministrativeArea:
+      title: AdministrativeArea
+      x-stoplight:
+        id: aadr7x9k2abc
+      type: string
+      enum:
+      - Unknown
+      - Alabama
+      - Alaska
+      - American Samoa
+      - Arizona
+      - Arkansas
+      - California
+      - Colorado
+      - Commonwealth of the Northern Mariana Islands
+      - Connecticut
+      - Delaware
+      - District of Columbia
+      - Florida
+      - Georgia
+      - Guam
+      - Hawaii
+      - Idaho
+      - Illinois
+      - Indiana
+      - Iowa
+      - Kansas
+      - Kentucky
+      - Louisiana
+      - Maine
+      - Maryland
+      - Massachusetts
+      - Michigan
+      - Minnesota
+      - Mississippi
+      - Missouri
+      - Montana
+      - Nebraska
+      - Nevada
+      - New Hampshire
+      - New Jersey
+      - New Mexico
+      - New York
+      - North Carolina
+      - North Dakota
+      - Ohio
+      - Oklahoma
+      - Oregon
+      - Pennsylvania
+      - Puerto Rico
+      - Rhode Island
+      - South Carolina
+      - South Dakota
+      - Tennessee
+      - Texas
+      - United States Virgin Islands
+      - Utah
+      - Vermont
+      - Virginia
+      - Washington
+      - West Virginia
+      - Wisconsin
+      - Wyoming
+      - Alberta
+      - British Columbia
+      - Manitoba
+      - New Brunswick
+      - Newfoundland and Labrador
+      - Northwest Territories
+      - Nova Scotia
+      - Nunavut
+      - Ontario
+      - Prince Edward Island
+      - Québec
+      - Saskatchewan
+      - Yukon
+      description: State, province, or region
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Equipment-Read-Minimal:
+      title: Equipment-Read-Minimal
+      x-stoplight:
+        id: m3uxip3u2g73e
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 8j8x3f9jezxeq
+          external_id:
+            type: string
+            x-stoplight:
+              id: y33jc1a9rphsf
+            nullable: true
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+  responses:
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  parameters:
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

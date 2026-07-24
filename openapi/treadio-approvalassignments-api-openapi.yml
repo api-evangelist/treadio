@@ -1,0 +1,1913 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier ApprovalAssignments API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: ApprovalAssignments
+paths:
+  /v1/companies/{company-id}/driver_days/{driver-day-id}/approval_status:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: driver-day-id
+      in: path
+      required: true
+      description: Driver Day Id
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalStatus for a Driver Day for a Company
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Approval-Status'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-driver-days-driver-day-id-driver_status
+      description: Retrieve  `ApprovalStatus` for a visible `DriverDay` for a specific `Company`
+      tags:
+      - ApprovalAssignments
+      x-stoplight:
+        id: 2nwlpo1o4637v
+  /v1/companies/{company-id}/driver_days/{driver-day-id}/approvals:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: driver-day-id
+      in: path
+      required: true
+      description: DriverDay ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalAssignments for a DriverDay as a Company
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: h8hgsi1nvlpxz
+                    items:
+                      $ref: '#/components/schemas/ApprovalAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-driver_days-driver-day-id-approvals
+      x-stoplight:
+        id: 9tqoz2dxf9td3
+      x-internal: true
+      description: Retrieve `ApprovalAssignments` for a `DriverDay` as a `Company`
+      tags:
+      - ApprovalAssignments
+  /v1/companies/{company-id}/driver_days/{driver-day-id}/approve:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: driver-day-id
+      in: path
+      required: true
+      description: DriverDay ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Approve a DriverDay as a Company
+      tags:
+      - ApprovalAssignments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DriverDay-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: put-v1-companies-company-id-driver_days-driver-day-id-approve
+      x-stoplight:
+        id: qcgf2529culuc
+      x-internal: true
+      description: 'Approve a `DriverDay` by ID as a `Company`
+
+
+        This endpoint requires the `approve_driver_day` permission.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Approval-Approve'
+  /v1/companies/{company-id}/driver_days/{driver-day-id}/unapprove:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: driver-day-id
+      in: path
+      required: true
+      description: DriverDay ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Unapprove a DriverDay as a Company
+      tags:
+      - ApprovalAssignments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DriverDay-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: put-v1-companies-company-id-driver_days-driver-day-id-unapprove
+      x-stoplight:
+        id: or0ir2wc8pnje
+      x-internal: true
+      description: 'Unapprove a `DriverDay` by ID as a `Company`
+
+
+
+        This endpoint requires the `approve_driver_day` permission.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /v1/companies/{company-id}/jobs/{job-id}/approval_status:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: job-id
+      in: path
+      required: true
+      description: Job Id
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalStatus for a Job for a Company
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Approval-Status'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-jobs-job-id-driver_status
+      description: Retrieve  `ApprovalStatus` for a visible `Job` for a specific `Company`
+      tags:
+      - ApprovalAssignments
+      x-stoplight:
+        id: amdv2nn5zoknz
+  /v1/companies/{company-id}/jobs/{job-id}/approvals:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: job-id
+      in: path
+      required: true
+      description: Job ID
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalAssignments for a Job for a Company
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApprovalAssignment-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-jobs-job-id-job_approvals
+      description: Retrieve all `ApprovalAssignments` visible to the specified `Company` for a `Job`
+      x-stoplight:
+        id: wpvi2o1l6w7d8
+      tags:
+      - ApprovalAssignments
+  /v1/companies/{company-id}/loads/{load-id}/approvals:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: load-id
+      in: path
+      required: true
+      description: Load ID
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalAssignments for a Load for a Company
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApprovalAssignment-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-loads-load-id-load_approvals
+      description: Retrieve all `ApprovalAssignments` visible to the specified `Company` for a `Load`
+      tags:
+      - ApprovalAssignments
+      x-stoplight:
+        id: uazfhzq623xqz
+  /v1/driver_days/{driver-day-id}/approval_status:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: driver-day-id
+      in: path
+      required: true
+      description: Driver Day Id
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalStatus for a Driver Day
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Approval-Status'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-driver-days-driver-day-id-driver_status
+      description: 'Deprecated in favor of "Retrieve  `ApprovalStatus` for a visible `DriverDay` for a Company"
+
+
+        Retrieve  `ApprovalStatus` for a visible `DriverDay`'
+      tags:
+      - ApprovalAssignments
+      x-stoplight:
+        id: 2nvlpn1o4537v
+      deprecated: true
+  /v1/driver_days/{driver-day-id}/approvals:
+    parameters:
+    - schema:
+        type: string
+      name: driver-day-id
+      in: path
+      required: true
+      description: Driver Day Id
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalAssignments for a Driver Day
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApprovalAssignment-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-driver-days-driver-day-id-driver_day_approvals
+      description: 'Deprecated in favor of "Retrieve `ApprovalAssignments` for a `DriverDay` as a `Company`"
+
+
+        Retrieve all `ApprovalAssignments` visible to your `Company` for a `DriverDay`'
+      tags:
+      - ApprovalAssignments
+      x-stoplight:
+        id: f3xryhg69wok0
+      deprecated: true
+  /v1/jobs/{job-id}/approval_status:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: job-id
+      in: path
+      required: true
+      description: Job Id
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalStatus for a Job
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Approval-Status'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-job-job-id-driver_status
+      description: 'Deprecated in favor of "Retrieve  `ApprovalStatus` for a visible `Job` for a Company"
+
+
+        Retrieve  `ApprovalStatus` for a visible `Job`'
+      tags:
+      - ApprovalAssignments
+      x-stoplight:
+        id: amcv2nm5zojnz
+      deprecated: true
+  /v1/jobs/{job-id}/approvals:
+    parameters:
+    - schema:
+        type: string
+      name: job-id
+      in: path
+      required: true
+      description: Job ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalAssignments for a Job
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApprovalAssignment-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-jobs-job-id-job_approvals
+      description: 'Deprecated in favor of "Retrieve ApprovalAssignments for a Job for a Company"
+
+
+        Retrieve all `ApprovalAssignments` visible to your `Company` for a `Job`'
+      x-stoplight:
+        id: wpui2o9l6q7d8
+      tags:
+      - ApprovalAssignments
+      deprecated: true
+  /v1/loads/{load-id}/approvals:
+    parameters:
+    - schema:
+        type: string
+      name: load-id
+      in: path
+      required: true
+      description: Load ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve ApprovalAssignments for a Load
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApprovalAssignment-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-loads-load-id-load_approvals
+      description: 'Deprecated in favor of "Retrieve ApprovalAssignments for a Load for a Company"
+
+
+        Retrieve all `ApprovalAssignments` visible to your `Company` for a `Load`'
+      tags:
+      - ApprovalAssignments
+      x-stoplight:
+        id: uazehzp622xqz
+      deprecated: true
+components:
+  schemas:
+    GpsStatus:
+      title: GpsStatus
+      x-stoplight:
+        id: 3b02180lfd6ve
+      description: GPS Ping status for a record
+      type: object
+      required:
+      - status
+      - last_ping_at
+      properties:
+        status:
+          x-stoplight:
+            id: 7f6aqydupq3ac
+          enum:
+          - online
+          - offline
+          - idle
+          - no_signal
+        last_ping_at:
+          type: string
+          x-stoplight:
+            id: 1ikh7blmxdqcz
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    RoleApprovable:
+      title: RoleApprovable
+      x-stoplight:
+        id: fie0647l1zmho
+      type: object
+      required:
+      - approved
+      - approvable
+      - unapprovable
+      - billing_approved_at
+      - field_approved_at
+      properties:
+        approved:
+          type: boolean
+          x-stoplight:
+            id: je3f3e9kzi9d8
+        approvable:
+          type: boolean
+          x-stoplight:
+            id: 3e8gmlshlm661
+        unapprovable:
+          type: boolean
+          x-stoplight:
+            id: 7t2cltf0njxtj
+        billing_approved_at:
+          type: string
+          x-stoplight:
+            id: f2bkkw0znb1uy
+          format: date-time
+          nullable: true
+        field_approved_at:
+          type: string
+          x-stoplight:
+            id: 78l5n1sakfgl3
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: c9ls3nrhbih3v
+            nullable: true
+          ticket_match_id:
+            type: string
+            x-stoplight:
+              id: a1cd3nrhbih3v
+            nullable: true
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type: string
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+            nullable: true
+    Equipment-Read-Typeahead:
+      title: Equipment-Read-Typeahead
+      x-stoplight:
+        id: sv94osohm5xhg
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - equipment_type
+        - external_id
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          external_id:
+            type: string
+            x-stoplight:
+              id: jrkz95htilck3
+            nullable: true
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: fkr9fkdtl996f
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    MaterialDeliveredQuantity:
+      title: MaterialDeliveredQuantity
+      x-stoplight:
+        id: x8zbak180ua1x
+      type: object
+      x-internal: true
+      required:
+      - material_id
+      properties:
+        material_id:
+          type: string
+          x-stoplight:
+            id: eww32a0dqwhel
+          format: uuid
+        unit_quantities:
+          type: array
+          x-stoplight:
+            id: yergzsohqrwmd
+          items:
+            $ref: '#/components/schemas/QuantityUnit'
+      additionalProperties: false
+    ApprovalAssignment-Read:
+      title: ApprovalAssignment-Read
+      x-stoplight:
+        id: j2fcwgvbf8qjm
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: ehtvb5mvqfibq
+        required:
+        - approval_category
+        properties:
+          approval_type:
+            x-stoplight:
+              id: 7xzbj92ggrge9
+            enum:
+            - foreman
+            - biller
+            - company_admin
+            - platform_admin
+          approver_id:
+            type: string
+            x-stoplight:
+              id: kiva0q8kik4ph
+            format: uuid
+          external_approver_name:
+            type: string
+            x-stoplight:
+              id: mzm4cqlaqkbhz
+            nullable: true
+          approver_type:
+            x-stoplight:
+              id: hg7tm679i5kjp
+            enum:
+            - User
+            - Company
+            - Impersonation
+            - M2MClient
+          approval_action:
+            $ref: '#/components/schemas/ApprovalAction'
+          approval_category:
+            $ref: '#/components/schemas/ApprovalCategory'
+      x-tags:
+      - Approvals
+    DriverStateEvent-Read:
+      title: DriverStateEvent-Read
+      x-stoplight:
+        id: 813jz0m2wvdpm
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          user_id:
+            type: string
+            format: uuid
+            x-stoplight:
+              id: azx0we0941wlr
+          state:
+            $ref: '#/components/schemas/DriverState'
+          started_at:
+            x-stoplight:
+              id: k97zhsrha4zvo
+            type: string
+            format: date-time
+          ended_at:
+            x-stoplight:
+              id: xqde66xx0nitc
+            type: string
+            format: date-time
+            nullable: true
+        required:
+        - user_id
+        - state
+        - started_at
+      - $ref: '#/components/schemas/Timestamps'
+      description: Model for driver_state_event
+      x-tags:
+      - DriverStateEvent
+      x-internal: true
+    AccountType:
+      title: AccountType
+      x-stoplight:
+        id: i4vfmd4rwrq8p
+      enum:
+      - customer
+      - vendor
+      example: customer
+    ApprovalCategory:
+      title: ApprovalCategory
+      x-stoplight:
+        id: qhkzxgj1hqou5
+      enum:
+      - field
+      - billing
+      default: field
+      example: field
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    Label-Read-Nested:
+      title: Label-Read-Nested
+      x-stoplight:
+        id: lbl1readnest01
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: lbl1nestnm0001
+            description: Label name
+          color:
+            type: string
+            x-stoplight:
+              id: lbl1nestcol001
+            description: Hex color code for the label
+            pattern: ^#[0-9A-Fa-f]{6}$
+        required:
+        - name
+        - color
+    QuantityUnit:
+      title: QuantityUnit
+      x-stoplight:
+        id: c6w3qflofaihr
+      type: object
+      required:
+      - quantity
+      - unit_of_measure
+      properties:
+        quantity:
+          type: string
+          x-stoplight:
+            id: xf9z9w59yb0cv
+        unit_of_measure:
+          $ref: '#/components/schemas/OrderUnitOfMeasure'
+      x-internal: true
+      additionalProperties: false
+    DriverDay-Read:
+      title: DriverDay-Read
+      x-stoplight:
+        id: x3uyxssr62k8m
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - started_shift_at
+        - ended_shift_at
+        - jobs_count
+        - loads_count
+        - tickets_count
+        - first_geofence_entry_at
+        - last_geofence_exit_at
+        - first_homebase_exit_at
+        - last_homebase_entry_at
+        - first_ticket_at
+        - last_ticket_at
+        - total_break_minutes
+        - total_gps_minutes
+        - total_delivered_quantities
+        - driver
+        - company
+        - driver_day_date
+        - equipment_external_ids
+        - shift_adjustment_minutes
+        - shift_adjustment_type
+        - total_shift_minutes
+        - total_on_duty_minutes
+        - external_id
+        - driver_day_id
+        - editable
+        - times_editable
+        - adjusted_started_shift_at
+        - adjusted_ended_shift_at
+        - delivered_quantities
+        - travelled_distance_meters
+        properties:
+          started_shift_at:
+            type: string
+            x-stoplight:
+              id: jyxnpz12glvic
+            format: date-time
+            nullable: true
+          ended_shift_at:
+            type: string
+            x-stoplight:
+              id: erxxhi8q861f3
+            format: date-time
+            nullable: true
+          jobs_count:
+            type: integer
+            x-stoplight:
+              id: hh1rgudjzyz80
+          loads_count:
+            type: integer
+            x-stoplight:
+              id: uli2dn8an8w7r
+          tickets_count:
+            type: integer
+            x-stoplight:
+              id: 9px12c8gnfo0v
+          first_geofence_entry_at:
+            type: string
+            x-stoplight:
+              id: kdvvk1bmxcjcs
+            format: date-time
+            nullable: true
+          last_geofence_exit_at:
+            type: string
+            x-stoplight:
+              id: ljnrxb4f9nf4j
+            format: date-time
+            nullable: true
+          first_homebase_exit_at:
+            type: string
+            x-stoplight:
+              id: fhex01234abcd
+            format: date-time
+            nullable: true
+            description: The earliest time equipment exited its home base during the driver's on-duty time
+          last_homebase_entry_at:
+            type: string
+            x-stoplight:
+              id: lhen56789efgh
+            format: date-time
+            nullable: true
+            description: The latest time equipment entered its home base during the driver's on-duty time
+          first_ticket_at:
+            type: string
+            x-stoplight:
+              id: efp3h7z5ymr5v
+            format: date-time
+            nullable: true
+          last_ticket_at:
+            type: string
+            x-stoplight:
+              id: ve7lma3tf2eqh
+            format: date-time
+            nullable: true
+          total_break_minutes:
+            type: integer
+            x-stoplight:
+              id: 3uinxutb9eigk
+            nullable: true
+          total_gps_minutes:
+            type: integer
+            x-stoplight:
+              id: 53qb3y1wrtmgz
+          total_delivered_quantities:
+            x-stoplight:
+              id: wa46amxr07q26
+            type: array
+            items:
+              $ref: '#/components/schemas/MaterialDeliveredQuantity'
+          driver:
+            $ref: '#/components/schemas/Driver-Read-Nested'
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          driver_day_date:
+            type: string
+            x-stoplight:
+              id: 15n3k7oiut8o8
+            format: date
+          vendor_account:
+            $ref: '#/components/schemas/Account-Read-Nested'
+          equipment_external_ids:
+            type: array
+            x-stoplight:
+              id: 7bic77dhx0hqe
+            items:
+              x-stoplight:
+                id: d27mh52vjf5dq
+              type: string
+          shift_adjustment_minutes:
+            type: integer
+            x-stoplight:
+              id: kqqg46ypfm3i2
+          shift_adjustment_type:
+            $ref: '#/components/schemas/NullableShiftAdjustmentType'
+          total_shift_minutes:
+            type: integer
+            x-stoplight:
+              id: opw4karobx252
+            nullable: true
+          total_on_duty_minutes:
+            type: integer
+            x-stoplight:
+              id: p4craugui1zmy
+            nullable: true
+          external_id:
+            type: string
+            x-stoplight:
+              id: p2viy5es0xhab
+            nullable: true
+          driver_day_id:
+            type: string
+            x-stoplight:
+              id: 4eo8bb1c0o7ni
+          editable:
+            type: boolean
+            x-stoplight:
+              id: w5ugpdzu8qo1p
+          times_editable:
+            type: boolean
+            description: Whether the driver can edit shift times, captured from the edit_job_times feature flag at creation time
+          adjusted_started_shift_at:
+            type: string
+            x-stoplight:
+              id: xxxnpz12glvic
+            format: date-time
+            nullable: true
+          adjusted_ended_shift_at:
+            type: string
+            x-stoplight:
+              id: xxxxhi8q861f3
+            format: date-time
+            nullable: true
+          approval_status:
+            $ref: '#/components/schemas/Approval-Status'
+          delivered_quantities:
+            type: array
+            x-stoplight:
+              id: xa3113eklmosr
+            items:
+              $ref: '#/components/schemas/DeliveredQuantity-Read'
+          current_driver_state_event:
+            $ref: '#/components/schemas/DriverStateEvent-Read'
+          travelled_distance_meters:
+            type: string
+            x-stoplight:
+              id: td1a2b3c4d5e6f
+            nullable: true
+          has_dropoff_signature:
+            type: boolean
+            description: Whether a dropoff signature exists for this driver day
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        $ref: '#/components/schemas/RoleApprovable'
+      x-internal: true
+      description: 'NOTE:
+
+        - `total_delivered_quantities` is now `deprecated`. Use `delivered_quantities` instead.'
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type: string
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    Approval-Approve:
+      title: Approval-Approve
+      x-stoplight:
+        id: pib85xwqwgrex
+      type: object
+      properties:
+        external_approver_name:
+          type: string
+          x-stoplight:
+            id: 7lmlml5incies
+          nullable: true
+        approval_type:
+          $ref: '#/components/schemas/RequestedApprovalType'
+      additionalProperties: false
+    CompanyDayDriverStat-Read:
+      title: CompanyDayDriverStat-Read
+      x-stoplight:
+        id: 3grxlvq5qo470
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: e0k1y5lyccj7x
+        properties:
+          day:
+            type: string
+            x-stoplight:
+              id: tq2kbgspesbyq
+            format: date
+          jobs_count:
+            type: integer
+            x-stoplight:
+              id: lq3o1iorx79vx
+      description: CompanyDayDriverStat
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
+      x-stoplight:
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type: string
+          x-stoplight:
+            id: ttaijg77qmbgk
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: s4rscgptv68x3
+          nullable: true
+      additionalProperties: false
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    Equipment-Read-Nested:
+      title: Equipment-Read-Nested
+      x-stoplight:
+        id: 7ezenec7ycv5l
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
+      - type: object
+        required:
+        - license_number
+        - zone
+        - accounting_id
+        - equipment_id
+        properties:
+          license_number:
+            type: string
+            x-stoplight:
+              id: hw1ooa17wsadq
+            nullable: true
+          zone:
+            type: string
+            x-stoplight:
+              id: 81hr4p8yp8btv
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: ere9qhs4cuwhi
+            nullable: true
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: gt7r3iqzx2w0u
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    GpsStatusable:
+      title: GpsStatusable
+      x-stoplight:
+        id: o6oprcupw6ep7
+      type: object
+      required:
+      - gps_status
+      properties:
+        gps_status:
+          $ref: '#/components/schemas/GpsStatus'
+      additionalProperties: false
+    RequestedApprovalType:
+      title: RequestedApprovalType
+      x-stoplight:
+        id: 2qzekamelz3vv
+      enum:
+      - driver
+      - foreman
+      - biller
+      - company_admin
+      nullable: true
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    NullableShiftAdjustmentType:
+      title: NullableShiftAdjustmentType
+      x-stoplight:
+        id: c1sp89eu3bgoa
+      allOf:
+      - $ref: '#/components/schemas/ShiftAdjustmentType'
+      nullable: true
+      type: string
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Equipment-Read-Default-Nested:
+      title: Equipment-Read-Default-Nested
+      x-stoplight:
+        id: kojte9y4g6t9v
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        - equipment_type
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          external_id:
+            type: string
+            nullable: true
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: v25n5jka8apv0
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    ApprovalAction:
+      title: ApprovalAction
+      x-stoplight:
+        id: 8rmckareb7tfg
+      enum:
+      - approve
+      - unapprove
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Driver-Read-Nested:
+      title: Driver-Read-Nested
+      x-stoplight:
+        id: lcevfprple1sa
+      allOf:
+      - $ref: '#/components/schemas/Driver-Read-Typeahead'
+      - type: object
+        x-stoplight:
+          id: 19sn21xqtmd0w
+        required:
+        - email
+        properties:
+          email:
+            type: string
+            x-stoplight:
+              id: ekvo9chmdhjkp
+            nullable: true
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - email
+        - phone
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: sd80y9pbgvkok
+            nullable: true
+          email:
+            type: string
+            x-stoplight:
+              id: 883fmt34pdeaj
+            nullable: true
+          phone:
+            type: string
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+            nullable: true
+      description: ''
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
+      x-stoplight:
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    ShiftAdjustmentType:
+      title: ShiftAdjustmentType
+      x-stoplight:
+        id: pjqvol5eso8aa
+      enum:
+      - break
+      - breakdown
+      - lunch
+      - wait_time
+      example: break
+    Account-Read-Nested:
+      title: Account-Read-Nested
+      x-stoplight:
+        id: zo8r3gsz1tm5h
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: gl7hua7pv8xka
+        required:
+        - name
+        - account_types
+        - external_id
+        - accounting_id
+        - company
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: a7g065w5byfcf
+          account_types:
+            type: array
+            x-stoplight:
+              id: a0e9c3lpr1wad
+            items:
+              $ref: '#/components/schemas/AccountType'
+          external_id:
+            type: string
+            x-stoplight:
+              id: yfrec4y0a90cb
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: yfsec5y0a91cb
+            nullable: true
+          company:
+            type: object
+            x-stoplight:
+              id: 9loqtu14mvlnq
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: udjkdjrz08pzr
+                format: uuid
+          billing_address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 0g9kx77zym4ok
+          connected_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          billing_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+    Address-Read:
+      title: Address-Read
+      x-stoplight:
+        id: v1mcd2qgns2tf
+      type: object
+      required:
+      - thoroughfare
+      - premise
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      - lat
+      - lon
+      - place_id
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: 8wrr7qkc9ilqn
+        premise:
+          type: string
+          x-stoplight:
+            id: z4jth408out1q
+          nullable: true
+        locality:
+          type: string
+          x-stoplight:
+            id: kfby6wqpgvxbz
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: c9bkrloxf4t8d
+        postal_code:
+          type: string
+          x-stoplight:
+            id: 7zq51k1mof3o3
+        country:
+          type: string
+          x-stoplight:
+            id: iydw9q619ya01
+          pattern: ^[A-Z]{2}
+          example: US
+          minLength: 2
+          maxLength: 2
+        lat:
+          type: string
+          x-stoplight:
+            id: kqu1qtf9rivh1
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+          nullable: true
+        lon:
+          type: string
+          x-stoplight:
+            id: oly2yabkzpk9g
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+          nullable: true
+        place_id:
+          type: string
+          x-stoplight:
+            id: im1fdq7qqxdij
+          description: NextBillion placeID
+          nullable: true
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    DeliveredQuantity-Read:
+      title: DeliveredQuantity-Read
+      x-stoplight:
+        id: trwwil0vsjrtn
+      type: object
+      required:
+      - delivered
+      - unit_of_measure
+      - material_name
+      - total
+      - ticketed
+      properties:
+        delivered:
+          type: string
+          x-stoplight:
+            id: xqo11su8z94my
+        unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        material_name:
+          type: string
+          x-stoplight:
+            id: h7jmwwi6jx02h
+          nullable: true
+        total:
+          type: string
+          x-stoplight:
+            id: 8ghxe07yz102y
+        ticketed:
+          type: boolean
+          nullable: true
+          x-stoplight:
+            id: hxg8e07yz102y
+      additionalProperties: false
+    CompanyShare-Read-User-Nested:
+      title: CompanyShare-Read-User-Nested
+      x-stoplight:
+        id: 8czythac5qhgz
+      allOf:
+      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - type: object
+        properties:
+          default_equipment:
+            $ref: '#/components/schemas/Equipment-Read-Default-Nested'
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    NullableOrderUnitOfMeasure:
+      title: NullableOrderUnitOfMeasure
+      x-stoplight:
+        id: rtlna368z495u
+      allOf:
+      - $ref: '#/components/schemas/OrderUnitOfMeasure'
+      type: string
+      nullable: true
+    Approval-Status:
+      title: Approval-Status
+      x-stoplight:
+        id: aegeztn5w5roc
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - biller_approved
+        - company_admin_approved
+        - driver_approved
+        - foreman_approved
+        - billing_approved_at
+        - field_approved_at
+        properties:
+          biller_approved:
+            type: boolean
+            x-stoplight:
+              id: nfc3nt03sl8bb
+          company_admin_approved:
+            type: boolean
+            x-stoplight:
+              id: 7h8yut8t1gc5m
+          driver_approved:
+            type: boolean
+            x-stoplight:
+              id: a5dbhqhyfjyvc
+          foreman_approved:
+            type: boolean
+            x-stoplight:
+              id: s1mr5k2nb6pp9
+          billing_approved_at:
+            type: string
+            x-stoplight:
+              id: igwmhwlt4rljp
+            format: date-time
+            nullable: true
+          field_approved_at:
+            type: string
+            x-stoplight:
+              id: ewrpq44soitt8
+            format: date-time
+            nullable: true
+      description: Approval status
+    Driver-Read-Typeahead:
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 5vacab4kzhkj4
+        required:
+        - first_name
+        - last_name
+        - schedule_on
+        - phone
+        - managed
+        - company
+        properties:
+          first_name:
+            type: string
+            x-stoplight:
+              id: 4gb9hhpizab3h
+            description: First name
+          last_name:
+            type: string
+            x-stoplight:
+              id: my6q150nen1kb
+            description: Last name
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-User-Nested'
+          equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+          default_equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 7dq6dvne8bqcr
+          company_day_driver_stat:
+            $ref: '#/components/schemas/CompanyDayDriverStat-Read'
+          phone:
+            type: string
+            x-stoplight:
+              id: y4l44re1zfaa9
+            description: User's E.164 formatted phone number
+            nullable: true
+          managed:
+            type: boolean
+            x-stoplight:
+              id: k8m3xq0sz6wt4
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this driver
+      - $ref: '#/components/schemas/GpsStatusable'
+      title: Driver-Read-Typeahead
+    DriverState:
+      title: DriverState
+      x-stoplight:
+        id: ibubibnkuzq3g
+      enum:
+      - on_duty
+      - off_duty
+      - break
+      example: on_duty
+      description: These are the states of driver to display their availability
+      x-internal: true
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

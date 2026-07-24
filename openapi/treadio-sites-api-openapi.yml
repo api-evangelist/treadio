@@ -1,0 +1,3208 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Sites API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Sites
+paths:
+  /v1/companies/{company-id}/orders/{order-id}/default_sites/{waypoint-type}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - schema:
+        type: string
+        enum:
+        - pickup
+        - drop_off
+      name: waypoint-type
+      in: path
+      required: true
+      description: Waypoint type
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve default sites for an order, given a waypoint type.
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Nested'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-orders-order-id-default-sites
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      description: 'Retrieve the `Sites` that belong to the default list of an `Order`, given a particular ''WaypointType''.
+
+        '
+      x-internal: true
+      x-stoplight:
+        id: ol22e12bbdlir
+  /v1/companies/{company-id}/orders/{order-id}/default_sites/{waypoint-type}/{site-id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - schema:
+        type: string
+        enum:
+        - pickup
+        - drop_off
+      name: waypoint-type
+      in: path
+      required: true
+      description: Waypoint type
+    - schema:
+        type: string
+        format: uuid
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Add a site to default site list on order
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Site-Read-Nested'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: put-v1-companies-company-id-orders-order-id-default_sites-waypoint-type-site-id
+      x-stoplight:
+        id: 3dklcp6i2iauu
+      description: "Add a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'.\n\nNote: The underlying site grouping will be created automatically when the first \nsite is added for a given order. "
+      x-internal: true
+    delete:
+      summary: Delete a single site from a default list of an order.
+      tags:
+      - Sites
+      responses:
+        '204':
+          description: Shared Response
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-companies-company-id-orders-order-id-default_sites-waypoint-type-site-id
+      x-stoplight:
+        id: 4ge4go0471034
+      description: Delete a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'.
+      x-internal: true
+  /v1/companies/{company-id}/orders/{order-id}/sites/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Sites that belong to Order's Company
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: kiktkjftpqqlc
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-orders-order-id-sites-typeahead
+      x-stoplight:
+        id: mi17lfpvzrzfk
+      description: Typeahead search against the `name`, or `external_id` property for `Sites` that belong to the `Order`'s `Company`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-states'
+  /v1/companies/{company-id}/sites:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Sites that belong to a Company
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-sites
+      x-stoplight:
+        id: 9awynfd74xo81
+      description: Retrieve `Sites` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-department_ids'
+      - $ref: '#/components/parameters/filter-site_types'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-sender_company_ids'
+  /v1/companies/{company-id}/sites/dispatch:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    get:
+      summary: Retrieve Sites based on the current Dispatch results for a Company
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-sites-dispatch-index
+      description: Returns `Sites`, but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/search-job-datagrid'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      - $ref: '#/components/parameters/facet-filter-waypoint-type'
+      x-stoplight:
+        id: 4sw2sqdp0ofig
+  /v1/companies/{company-id}/sites/dispatch/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Sites based on the current Dispatch results for a Company
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 8y3ie0nhvchzr
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-sites-dispatch-typeahead
+      x-stoplight:
+        id: ln1vlnl01hf87
+      description: Returns `Sites` in a typeahead style but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/search-job-datagrid'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      - $ref: '#/components/parameters/facet-filter-waypoint-type'
+  /v1/companies/{company-id}/sites/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Sites for a Company
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-site-typeahead
+      description: Typeahead search against the `name`, or `external_id` property on `Sites` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-states'
+      - $ref: '#/components/parameters/filter-site_types'
+      x-stoplight:
+        id: xbth42mtawc3k
+      x-internal: true
+  /v1/companies/{company-id}/sites/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single Site for a Company
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Site-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-sites-id
+      description: Retrieve a `Site` by ID for a `Company`
+  /v1/companies/{company-id}/sites/{site-id}/additional_geofences:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve additional geofences for a Site
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NextBillionGeofence-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-sites-site_id-additional_geofences
+      description: Retrieve additional `geofences` for a `Site` by `site_id`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/companies/{company-id}/sites/{site-id}/contacts:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Contacts for a Site within a Company
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact-Read-Nested'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-sites-site-id-contacts
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      description: Retrieve all `Contacts` for a `Site` within a specific `Company`. This endpoint includes explicit company-level authorization to ensure the site belongs to the specified company.
+  /v1/companies/{company-id}/sites/{site-id}/stats:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve SiteEquipmentStats for given Site
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SiteEquipmentStats-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-site-id-stats
+      x-stoplight:
+        id: qh30wcbj1agpo
+      description: Retrieve `SiteEquipmentStats` for given `Site` by `ID`.
+  /v1/orders/{order-id}/default_sites/{waypoint-type}:
+    parameters:
+    - schema:
+        type: string
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - schema:
+        type: string
+        enum:
+        - pickup
+        - drop_off
+      name: waypoint-type
+      in: path
+      required: true
+      description: Waypoint type
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve default sites for an order, given a waypoint type.
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Nested'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-orders-order-id-default-sites
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      description: 'Retrieve the `Sites` that belong to the default list of an `Order`, given a particular ''WaypointType''.
+
+        '
+      x-internal: true
+      x-stoplight:
+        id: wguhj02d3b7rh
+      deprecated: true
+  /v1/orders/{order-id}/default_sites/{waypoint-type}/{site-id}:
+    parameters:
+    - schema:
+        type: string
+      name: order-id
+      in: path
+      required: true
+      description: Order id
+    - schema:
+        type: string
+        enum:
+        - pickup
+        - drop_off
+      name: waypoint-type
+      in: path
+      required: true
+      description: Waypoint type
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site id
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Add a site to default site list on order
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Site-Read-Nested'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: put-v1-orders-order-id-default_sites-waypoint-type-site-id
+      x-stoplight:
+        id: bgblx8ozfx49v
+      description: "Add a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'.\n\nNote: The underlying site grouping will be created automatically when the first \nsite is added for a given order. "
+      x-internal: true
+      deprecated: true
+    delete:
+      summary: Delete a single site from a default list of an order.
+      tags:
+      - Sites
+      responses:
+        '204':
+          description: Shared Response
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-orders-order-id-default_sites-waypoint-type-site-id
+      x-stoplight:
+        id: 0xv7jo7tt2k44
+      description: Delete a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'.
+      x-internal: true
+      deprecated: true
+  /v1/orders/{order-id}/sites/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Sites that belong to Order's Company
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: kiktkjftpqqlc
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-orders-order-id-sites-typeahead
+      x-stoplight:
+        id: g8ff3h891sb9p
+      description: Typeahead search against the `name`, or `external_id` property for `Sites` that belong to the `Order`'s `Company`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-states'
+      deprecated: true
+  /v1/projects/{project-id}/default_sites/{waypoint-type}:
+    parameters:
+    - schema:
+        type: string
+        enum:
+        - pickup
+        - drop_off
+      name: waypoint-type
+      in: path
+      required: true
+      description: Waypoint type
+    - schema:
+        type: string
+      name: project-id
+      in: path
+      required: true
+      description: Project Id
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve default sites for a project, given a waypoint type.
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Nested'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-projects-project-id-default-sites
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      description: 'Retrieve the `Sites` that belong to the default list of an `Project`, given a particular ''WaypointType''.
+
+        '
+      x-stoplight:
+        id: x9tdnf2b680k9
+      x-internal: true
+  /v1/projects/{project-id}/default_sites/{waypoint-type}/{site-id}:
+    parameters:
+    - schema:
+        type: string
+        enum:
+        - pickup
+        - drop_off
+      name: waypoint-type
+      in: path
+      required: true
+      description: Waypoint type
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site id
+    - schema:
+        type: string
+      name: project-id
+      in: path
+      required: true
+      description: Project id
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Add a site to default site list on order
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Site-Read-Nested'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: put-v1-projects-project-id-default_sites-waypoint-type-site-id
+      description: "Add a `Site` to the default_site list for an `Project`, given a particular 'WaypointType'.\n\nNote: The underlying site grouping will be created automatically when the first \nsite is added for a given project. "
+      x-internal: true
+      x-stoplight:
+        id: ucjvqgmfu1q80
+    delete:
+      summary: Delete a single site from a default list of an order.
+      tags:
+      - Sites
+      responses:
+        '204':
+          description: Shared Response
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-projects-project-id-default_sites-waypoint-type-site-id
+      description: Delete a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'.
+      x-internal: true
+      x-stoplight:
+        id: kpx387ps3xdlg
+  /v1/sites:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a new Site
+      operationId: post-v1-sites
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Site-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: k7lhkqzzwuk2f
+      description: Create a new `Site`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Site-Create'
+      tags:
+      - Sites
+    get:
+      summary: Retrieve Sites that belong to the current Company
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-sites
+      description: Retrieve `Site` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-department_ids'
+      - $ref: '#/components/parameters/filter-site_types'
+      x-stoplight:
+        id: vn5123d2arw9q
+      tags:
+      - Sites
+  /v1/sites/dispatch:
+    parameters:
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    get:
+      summary: Retrieve Sites based on the current Dispatch results
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-sites-dispatch-index
+      parameters:
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/search-job-datagrid'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      - $ref: '#/components/parameters/facet-filter-waypoint-type'
+      x-internal: true
+      description: 'Returns `Sites`, but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs.
+
+        '
+      x-stoplight:
+        id: 7hw1qdoh30cza
+  /v1/sites/dispatch/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Sites based on the current Dispatch results
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-sites-dispatch
+      x-stoplight:
+        id: hzrkjbdk62679
+      parameters:
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/search-job-datagrid'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      - $ref: '#/components/parameters/facet-filter-waypoint-type'
+      x-internal: true
+      description: Returns `Sites` in a typeahead style but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs.
+  /v1/sites/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Sites
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-sites-typeahead
+      description: Typeahead search against the `name`, or `external_id` property for `Sites` visible to the currently authenticated `Company`.
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-states'
+      x-stoplight:
+        id: jrkvfu8c3q0vl
+  /v1/sites/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single Site
+      deprecated: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Site-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-sites-id
+      description: Retrieve a `Site` by ID
+      x-stoplight:
+        id: uuekoybwm7wzt
+      tags:
+      - Sites
+    patch:
+      summary: Update a Site
+      operationId: patch-v1-sites-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Site-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: febb3uxt2nw10
+      tags:
+      - Sites
+      description: 'Update `Site` by ID
+
+
+        This endpoint required the ''edit_site'' permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Site-Update'
+    delete:
+      summary: Delete a Site by ID
+      operationId: delete-v1-sites-id
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: v9asxa8m1ssxo
+      description: 'Delete a `Site` by ID
+
+
+        This endpoint requires the `delete_site` permission'
+      tags:
+      - Sites
+  /v1/sites/{site-id}/activate:
+    parameters:
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Activate a Site
+      operationId: put-v1-sites-site-id-activate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Site-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/StateError'
+        '415':
+          $ref: '#/components/responses/Error'
+      x-stoplight:
+        id: njjuuzuk14xuj
+      tags:
+      - Sites
+      description: 'Activate a `Site` by ID
+
+
+        This endpoint requires the `edit_site` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /v1/sites/{site-id}/additional_geofences:
+    parameters:
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an Additional Geofence for a Site
+      tags:
+      - Sites
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/NextBillionGeofence-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-sites-site_id-additional_geofences
+      x-stoplight:
+        id: b27gvueac52km
+      description: Create an `Additional Geofence` for a `Site`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NextBillionGeofence-Create'
+    get:
+      summary: Retrieve additional geofences for a Site
+      deprecated: true
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: madrvw3rqaljm
+                    items:
+                      $ref: '#/components/schemas/NextBillionGeofence-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-sites-site_id-additional_geofences
+      x-stoplight:
+        id: n1fyym0b7sdfh
+      description: Retrieve additional `geofences` for a `Site` by `site_id`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/sites/{site-id}/additional_geofences/bulk_assign:
+    parameters:
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Bulk assign Additional Geofences for a Site
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: fr7ix9vpc898h
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NextBillionGeofence-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-sites-site_id-additional_geofences-bulk_assign
+      x-stoplight:
+        id: 410kclq9qaaba
+      description: 'Bulk assign `Additional Geofences` for a `Site` by `ID`
+
+
+        This will rewrite all `Additional Geofences` for the `Site` with payload data.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - additional_geofences
+              properties:
+                additional_geofences:
+                  type: array
+                  x-stoplight:
+                    id: zxyq8ml6adtgl
+                  items:
+                    $ref: '#/components/schemas/NextBillionGeofence-Create'
+  /v1/sites/{site-id}/additional_geofences/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Additional Geofence ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve an Additional Geofence by ID
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/NextBillionGeofence-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-sites-site_id-additional_geofences-id
+      x-stoplight:
+        id: 7wzninmlccg3q
+      description: Retrieve an `Geofence` for a `Site` by `ID`
+    patch:
+      summary: Update an Additional Geofence for a Site
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/NextBillionGeofence-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-sites-site_id-additional_geofences-id
+      x-stoplight:
+        id: vd10iqcccr6zu
+      description: Update an `Additional Geofence` for a `Site` by `ID`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NextBillionGeofence-Update'
+  /v1/sites/{site-id}/contacts:
+    parameters:
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Contacts for a Site
+      deprecated: true
+      tags:
+      - Sites
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: jmaedpgurmz8e
+                    items:
+                      $ref: '#/components/schemas/Contact-Read-Nested'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-sites-site-id-contacts
+      x-stoplight:
+        id: m6ftngksysg17
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      description: Retrieve all `Contacts` visible to your `Company` for a `Site`
+  /v1/sites/{site-id}/contacts/bulk_assign:
+    parameters:
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Assign Contacts for a Site
+      tags:
+      - Sites
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-sites-site-id-contacts-bulk_assign
+      x-stoplight:
+        id: le5cnpnn3ewom
+      description: Assigns `Contacts` for a `Site`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactBulkAssign-Create'
+  /v1/sites/{site-id}/deactivate:
+    parameters:
+    - schema:
+        type: string
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Deactivate a Site
+      operationId: put-v1-sites-site-id-deactivate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Site-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/StateError'
+        '415':
+          $ref: '#/components/responses/Error'
+      tags:
+      - Sites
+      description: 'Deactivate a `Site` by ID
+
+
+        This endpoint requires the `edit_site` permission'
+      x-stoplight:
+        id: h0koklrlsanml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+components:
+  schemas:
+    StateError-Response:
+      title: StateError-Response
+      x-stoplight:
+        id: i0wsk2gmnaqup
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/StateError'
+      additionalProperties: false
+    MovingSite-Read:
+      title: MovingSite-Read
+      x-stoplight:
+        id: yaf7dbodbspna
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: tf4brd0yshw5e
+        required:
+        - equipment_id
+        - site_id
+        - polling_interval_seconds
+        properties:
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: bucjeefefqu2t
+            format: uuid
+          site_id:
+            type: string
+            x-stoplight:
+              id: nxcmrn80s2rqj
+            format: uuid
+          polling_interval_seconds:
+            type: integer
+            x-stoplight:
+              id: 72glfhxls2dqw
+    NextBillionGeofence-Read:
+      title: NextBillionGeofence-Read
+      x-stoplight:
+        id: 60y0z4bb3pu6m
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Geofence-Data'
+    Address-Create:
+      title: Address-Create
+      x-stoplight:
+        id: 9wmd46rzgjxh7
+      type: object
+      required:
+      - thoroughfare
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: zkh46rwwvpuca
+          description: Street address
+          example: 123 Fake St.
+        premise:
+          type: string
+          x-stoplight:
+            id: bkcia8yh59wzf
+          description: Apartment, Suite, Box number, etc.
+          example: 3rd Floor
+        locality:
+          type: string
+          x-stoplight:
+            id: e40nnuxgub7ug
+          description: City / Town
+          example: New York
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: 2bfqcapyozkpp
+          description: State / Province / Region (ISO code when available)
+          example: NY
+        postal_code:
+          type: string
+          x-stoplight:
+            id: a9m9rbcbsa635
+          description: Postal code / ZIP Code
+          example: '10011'
+        country:
+          type: string
+          x-stoplight:
+            id: gud5s8ypb8oam
+          minLength: 2
+          maxLength: 2
+          pattern: ^[A-Z]{2}
+          example: US
+          description: 2 character country ISO code
+        lat:
+          type: string
+          x-stoplight:
+            id: nwg5be93gvmkd
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+        lon:
+          type: string
+          x-stoplight:
+            id: rcvsjw8cbs4hs
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+        place_id:
+          type: string
+          x-stoplight:
+            id: xtuyrwo0rqzkh
+          description: NextBillion placeID
+      additionalProperties: false
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type: string
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    Contact-Create:
+      title: Contact-Create
+      x-stoplight:
+        id: dhro09gmoiqgw
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: ehb4vhlggledw
+        email:
+          type: string
+          x-stoplight:
+            id: kxjggao5fm38r
+        phone:
+          type: string
+          x-stoplight:
+            id: 3dxv517oimpb1
+          example: '+18885551234'
+          description: Contact's E.164 formatted phone number
+      additionalProperties: false
+    Destroyable:
+      title: Destroyable
+      x-stoplight:
+        id: 2uftzhptd2l14
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: gx1ww996hmzqm
+          format: uuid
+          description: Required if `_destroy` is set
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 0xjwztkz4fmcr
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    SiteType:
+      title: SiteType
+      x-stoplight:
+        id: 31h267btxh667
+      enum:
+      - Plant
+      - Quarry
+      - JobSite
+      - Depot
+      - Other
+      - Daily
+      - EquipmentHomeBase
+      example: Plant
+    StateError-Item:
+      title: StateError-Item
+      x-stoplight:
+        id: dgw2jdmi7ozjj
+      allOf:
+      - $ref: '#/components/schemas/ModelError-Item'
+      - type: object
+        x-stoplight:
+          id: jrgi7oapao3e5
+        required:
+        - state
+        - event
+        properties:
+          state:
+            type: string
+            x-stoplight:
+              id: mah8jye43io32
+            description: The current state value of the field on this Model
+          event:
+            type: string
+            x-stoplight:
+              id: dtgu62ni9ofuh
+            description: The failed state event called on the Model
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Department-Read-Nested:
+      title: Department-Read-Nested
+      x-stoplight:
+        id: gv9tfg4scr2yx
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 4y3gfdgq1brqf
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 3718c2tvwwqsn
+            description: Department name.
+        required:
+        - name
+    GeofenceTag:
+      title: GeofenceTag
+      x-stoplight:
+        id: anytkmb3ydi6c
+      enum:
+      - scaling
+      - site
+      - loading
+      - unloading
+      - check_in
+      - ticketing
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    SiteEquipmentStats-Read:
+      title: SiteEquipmentStats-Read
+      x-stoplight:
+        id: 8etpjf1w69aeh
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: umr8uj9uqqp2m
+        required:
+        - site
+        - on_site_equipment_count
+        - en_route_equipment_count
+        - avg_onsite_time_minutes
+        - last_geofence_at
+        properties:
+          site:
+            $ref: '#/components/schemas/Site-Read-Nested'
+          on_site_equipment_count:
+            type: integer
+            x-stoplight:
+              id: n578cd4x7x5ly
+          en_route_equipment_count:
+            type: integer
+            x-stoplight:
+              id: taffu015bgyym
+          avg_onsite_time_minutes:
+            type: integer
+            x-stoplight:
+              id: 9jex5jl9vxnd8
+          last_geofence_at:
+            type: string
+            x-stoplight:
+              id: inoyxurh9q96l
+            format: date-time
+            nullable: true
+      - $ref: '#/components/schemas/Timestamps'
+    NullableGeofenceType:
+      title: NullableGeofenceType
+      x-stoplight:
+        id: ii94t82oqh5xo
+      allOf:
+      - $ref: '#/components/schemas/GeofenceType'
+      nullable: true
+      type: string
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    ContactBulkAssign-Create:
+      title: ContactBulkAssign-Create
+      x-stoplight:
+        id: 3pwniqkij3ood
+      type: object
+      properties:
+        contacts:
+          x-stoplight:
+            id: llj1j5ykny1hy
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact-Update-Destroyable'
+      additionalProperties: false
+    SiteState:
+      title: SiteState
+      x-stoplight:
+        id: tk96rwiactdrj
+      enum:
+      - active
+      - inactive
+      default: active
+      description: ''
+    Site-Update:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address-Update-Destroyable'
+        name:
+          type: string
+          x-stoplight:
+            id: lo3hj3abput7a
+          description: Name of the site. Must be unique for a company.
+        lat:
+          type: string
+          x-stoplight:
+            id: 23p5rsebwbg2j
+        lon:
+          type: string
+          x-stoplight:
+            id: 2ddagc7aogltz
+        site_type:
+          $ref: '#/components/schemas/SiteType'
+        notes:
+          type: string
+          x-stoplight:
+            id: ibg3whjp8vhwq
+          nullable: true
+        next_billion_geofence:
+          $ref: '#/components/schemas/NextBillionGeofence-Update'
+        external_id:
+          type: string
+          x-stoplight:
+            id: m39zwkfuo9cv6
+          nullable: true
+        moving_site:
+          $ref: '#/components/schemas/MovingSite-Update-Destroyable'
+        department_id:
+          type: string
+          x-stoplight:
+            id: guv07r4rnifrt
+          format: uuid
+          nullable: true
+        contacts:
+          type: array
+          x-stoplight:
+            id: 5ul0ykwiwlm50
+          items:
+            $ref: '#/components/schemas/Contact-Update-Destroyable'
+      additionalProperties: false
+    NextBillionGeofence-Update:
+      title: Geofence-Update
+      x-stoplight:
+        id: vt2z5btwhm5of
+      allOf:
+      - $ref: '#/components/schemas/Geofence-Data'
+      - $ref: '#/components/schemas/Destroyable'
+    MovingSite-Update-Destroyable:
+      title: MovingSite-Update-Destroyable
+      x-stoplight:
+        id: bgj4d7e1o9nah
+      allOf:
+      - type: object
+        properties:
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: 45ebzcj4axwrw
+            format: uuid
+          polling_interval_seconds:
+            type: integer
+            x-stoplight:
+              id: jw6hggxdn53m9
+      - $ref: '#/components/schemas/Destroyable'
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: c9ls3nrhbih3v
+            nullable: true
+          ticket_match_id:
+            type: string
+            x-stoplight:
+              id: a1cd3nrhbih3v
+            nullable: true
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type: string
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+            nullable: true
+    NextBillionGeofence-Create:
+      $ref: '#/components/schemas/Geofence-Data'
+      x-stoplight:
+        id: 8b9d859e5388e
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    MovingSite-Create:
+      title: MovingSite-Create
+      x-stoplight:
+        id: pvplwuazt5c5k
+      type: object
+      required:
+      - equipment_id
+      properties:
+        equipment_id:
+          type: string
+          x-stoplight:
+            id: v20yjls9jl546
+          format: uuid
+        polling_interval_seconds:
+          type: integer
+          x-stoplight:
+            id: 0nthm1r0wvy4h
+      additionalProperties: false
+    Address-Update-Destroyable:
+      title: Address-Update-Destroyable
+      x-stoplight:
+        id: htxekmvzcymfb
+      allOf:
+      - $ref: '#/components/schemas/Address-Update'
+      - $ref: '#/components/schemas/Destroyable'
+    Site-Read-Typeahead:
+      title: Site-Read-Typeahead
+      x-stoplight:
+        id: wnzkdq5df4apa
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        properties:
+          name:
+            type: string
+            description: Site name
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          external_id:
+            type: string
+            x-stoplight:
+              id: tt6lx8lw29aiu
+            nullable: true
+    Site-Create:
+      title: Site-Create
+      x-stoplight:
+        id: jeymxc4hi5p5l
+      type: object
+      required:
+      - name
+      - lat
+      - lon
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: zq3t2uddm30pt
+        address:
+          $ref: '#/components/schemas/Address-Create'
+        lat:
+          type: string
+          x-stoplight:
+            id: ff0brii5lm5ap
+          nullable: true
+          description: Latitude of the site. If not provided, the latitude from the address will be used.
+        lon:
+          type: string
+          x-stoplight:
+            id: x829mvlcec3ab
+          nullable: true
+          description: Longitude of the site. If not provided, the longitude from the address will be used.
+        notes:
+          type: string
+          x-stoplight:
+            id: zredyk0m5jrzy
+        site_type:
+          $ref: '#/components/schemas/SiteType'
+        company_id:
+          type: string
+          x-stoplight:
+            id: hsbfalng7gfy7
+          format: uuid
+        next_billion_geofence:
+          $ref: '#/components/schemas/NextBillionGeofence-Create'
+        external_id:
+          type: string
+          x-stoplight:
+            id: wpo53gfpsxx29
+          nullable: true
+        full_address:
+          type: string
+          x-stoplight:
+            id: 1kqd8udhq1sk8
+        moving_site:
+          $ref: '#/components/schemas/MovingSite-Create'
+        department_id:
+          type: string
+          x-stoplight:
+            id: wvg3y5vwxabsm
+          format: uuid
+          nullable: true
+        contacts:
+          type: array
+          x-stoplight:
+            id: 1qiq49auf1qn8
+          items:
+            $ref: '#/components/schemas/Contact-Create'
+      additionalProperties: false
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    StateError:
+      title: StateError
+      x-stoplight:
+        id: zgcsl4t8bsn3c
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: ntvt2atfotcge
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: noi1jg6o8psl7
+            items:
+              $ref: '#/components/schemas/StateError-Item'
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - email
+        - phone
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: sd80y9pbgvkok
+            nullable: true
+          email:
+            type: string
+            x-stoplight:
+              id: 883fmt34pdeaj
+            nullable: true
+          phone:
+            type: string
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+            nullable: true
+      description: ''
+    Contact-Update:
+      title: Contact-Update
+      x-stoplight:
+        id: p2ny8u55sfpcx
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: wm2na5bv2uvvv
+        email:
+          x-stoplight:
+            id: mdv25imtbstfh
+          type: string
+        phone:
+          type: string
+          x-stoplight:
+            id: rtf4rqlgwt35i
+          example: '+18885551234'
+      additionalProperties: false
+    Site-Read-Nested:
+      title: Site-Read-Nested
+      x-stoplight:
+        id: rt6xqxsfzf4iv
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - lat
+        - lon
+        - full_address
+        - routable
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 7r0x7wicrvwyy
+          lat:
+            type: string
+            x-stoplight:
+              id: cr6y5v0hdl5oo
+            nullable: true
+          lon:
+            type: string
+            x-stoplight:
+              id: f23mkvamncbuw
+            nullable: true
+          address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          full_address:
+            type: string
+            x-stoplight:
+              id: uxixxnmgfi47i
+            nullable: true
+          routable:
+            type: boolean
+            x-stoplight:
+              id: uobfxkm0hujhv
+          next_billion_geofence:
+            $ref: '#/components/schemas/NextBillionGeofence-Read'
+      - $ref: '#/components/schemas/Discardable'
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    GeofenceType:
+      title: GeofenceType
+      x-stoplight:
+        id: geahowr9r8ly1
+      nullable: true
+      enum:
+      - moving
+      - circle
+      - polygon
+      readOnly: true
+    Contact-Update-Destroyable:
+      title: Contact-Update-Destroyable
+      x-stoplight:
+        id: v9odqbnxcm0g2
+      allOf:
+      - $ref: '#/components/schemas/Contact-Update'
+      - $ref: '#/components/schemas/Destroyable'
+    Site-Read:
+      title: Site-Read
+      x-stoplight:
+        id: d3bw9em1ibuq1
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - company
+        - name
+        - lat
+        - lon
+        - notes
+        - state
+        - external_id
+        - full_address
+        - routable
+        properties:
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          name:
+            type: string
+            x-stoplight:
+              id: qetgw5ugccnx3
+          lat:
+            type: string
+            x-stoplight:
+              id: f85y4jij1rblz
+            nullable: true
+          lon:
+            type: string
+            x-stoplight:
+              id: 12zny9anzmdv1
+            nullable: true
+          site_type:
+            $ref: '#/components/schemas/SiteType'
+          notes:
+            type: string
+            x-stoplight:
+              id: x8fcflv4sr9qu
+            nullable: true
+          state:
+            $ref: '#/components/schemas/SiteState'
+          next_billion_geofence:
+            $ref: '#/components/schemas/NextBillionGeofence-Read'
+          external_id:
+            type: string
+            x-stoplight:
+              id: 89q7a12oipvs7
+            nullable: true
+          full_address:
+            type: string
+            x-stoplight:
+              id: 5yo2vmvrpdqhs
+            nullable: true
+          routable:
+            type: boolean
+            x-stoplight:
+              id: 1wpkny0oz7ju1
+          moving_site:
+            $ref: '#/components/schemas/MovingSite-Read'
+          department:
+            $ref: '#/components/schemas/Department-Read-Nested'
+          contacts:
+            type: array
+            x-stoplight:
+              id: iln7bn31b1mdo
+            items:
+              $ref: '#/components/schemas/Contact-Read-Nested'
+          editable:
+            type: boolean
+            description: Whether the current user can edit this site
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - $ref: '#/components/schemas/Timestamps'
+      - $ref: '#/components/schemas/Discardable'
+      x-tags:
+      - Sites
+    Geofence-Data:
+      title: Geofence-Data
+      x-stoplight:
+        id: ay73k76oae8gm
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          x-stoplight:
+            id: m9n8p7q6r5s4t
+          description: NextBillionGeofence ID
+        geofence:
+          type: object
+          x-stoplight:
+            id: bo67u046r1ibk
+          required:
+          - name
+          - type
+          properties:
+            id:
+              type: string
+              x-stoplight:
+                id: nm2o97jli2zqm
+              format: uuid
+              description: NextBillion Geofence ID
+            name:
+              type: string
+              x-stoplight:
+                id: x5sp8wq8d2ack
+            type:
+              type: string
+              x-stoplight:
+                id: d91rv1gbtfkm0
+              description: '`circle` or `polygon`'
+            geojson:
+              type: object
+              x-stoplight:
+                id: vk7dx7ipdbuxa
+              required:
+              - type
+              - coordinates
+              properties:
+                type:
+                  type: string
+                  x-stoplight:
+                    id: 65qatpxdox3e9
+                  description: type should be `Polygon`
+                coordinates:
+                  type: array
+                  x-stoplight:
+                    id: 3an8g587wblcs
+                  description: 'This should be an enclosed polygon.
+
+
+                    Example format:
+
+                    [[[-118.226140484,34.048200454],[-118.22616052,34.046872766],[-118.226198738,34.04952736],[-118.226140484,34.048200454]]]'
+                  items:
+                    x-stoplight:
+                      id: 2kltvjxl5xks6
+                    type: array
+                    items:
+                      x-stoplight:
+                        id: k93dt39dghru4
+                      type: array
+                      items: {}
+            circle_center:
+              type: object
+              x-stoplight:
+                id: 6xr3h683f7cl9
+              required:
+              - lat
+              - lon
+              properties:
+                lat:
+                  type: number
+                  x-stoplight:
+                    id: y70xc1ptapv1g
+                lon:
+                  type: number
+                  x-stoplight:
+                    id: uy3twrpcueq9m
+            circle_radius:
+              type: number
+              x-stoplight:
+                id: qrnq301sqfl3d
+            tag:
+              x-stoplight:
+                id: debfy3x1l48zc
+              enum:
+              - pickup
+              - loading
+              - drop_off
+              - unloading
+              - check_in
+              - scaling
+              - ticketing
+              deprecated: true
+        moving_geofence:
+          type: boolean
+          x-stoplight:
+            id: y15533dbr62js
+          default: false
+        tag:
+          $ref: '#/components/schemas/GeofenceTag'
+        geofence_type:
+          $ref: '#/components/schemas/NullableGeofenceType'
+      additionalProperties: false
+    Address-Read:
+      title: Address-Read
+      x-stoplight:
+        id: v1mcd2qgns2tf
+      type: object
+      required:
+      - thoroughfare
+      - premise
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      - lat
+      - lon
+      - place_id
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: 8wrr7qkc9ilqn
+        premise:
+          type: string
+          x-stoplight:
+            id: z4jth408out1q
+          nullable: true
+        locality:
+          type: string
+          x-stoplight:
+            id: kfby6wqpgvxbz
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: c9bkrloxf4t8d
+        postal_code:
+          type: string
+          x-stoplight:
+            id: 7zq51k1mof3o3
+        country:
+          type: string
+          x-stoplight:
+            id: iydw9q619ya01
+          pattern: ^[A-Z]{2}
+          example: US
+          minLength: 2
+          maxLength: 2
+        lat:
+          type: string
+          x-stoplight:
+            id: kqu1qtf9rivh1
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+          nullable: true
+        lon:
+          type: string
+          x-stoplight:
+            id: oly2yabkzpk9g
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+          nullable: true
+        place_id:
+          type: string
+          x-stoplight:
+            id: im1fdq7qqxdij
+          description: NextBillion placeID
+          nullable: true
+      additionalProperties: false
+    Address-Update:
+      title: Address-Update
+      x-stoplight:
+        id: 9btd83m0o0tsa
+      properties:
+        thoroughfare:
+          type: string
+          description: Street address
+          example: 123 Fake St.
+        premise:
+          type: string
+          description: Apartment, Suite, Box number, etc.
+          example: 3rd Floor
+        locality:
+          type: string
+          description: City / Town
+          example: New York
+        administrative_area:
+          type: string
+          description: State / Province / Region (ISO code when available)
+          example: NY
+        postal_code:
+          type: string
+          description: Postal code / ZIP Code
+          example: '10011'
+        country:
+          type: string
+          minLength: 2
+          maxLength: 2
+          pattern: ^[A-Z]{2}
+          example: US
+          description: 2 character country ISO code
+        lat:
+          type: string
+          x-stoplight:
+            id: 5uu3ex2lbmyzj
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+        lon:
+          type: string
+          x-stoplight:
+            id: y8xd9dp6rwfeu
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+        place_id:
+          type: string
+          x-stoplight:
+            id: ujv5qpg067ycc
+          description: NextBillion placeID
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 48a0is0umjabv
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this `Address` will be deleted. The `id` must be set.'
+      type: object
+      additionalProperties: false
+  parameters:
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    filter-job-customer_account_ids:
+      name: filter[job][customer_account_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Customer Account IDs for the Job
+    search-job-datagrid:
+      name: search[job][datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    filter-job-dropoff_site_ids:
+      name: filter[job][dropoff_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Dropoff Site IDs for the Job
+    filter-job-company_ids:
+      name: filter[job][company_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Company IDs for the Job
+    filter-job-external_ids:
+      name: filter[job][external_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated External Project IDs for the Job
+    filter-job-site_types:
+      name: filter[job][site_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: SiteType enum filters for the Job (see SiteType enum for the list of values)
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    filter-site_types:
+      name: filter[site_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: SiteType enum filters (see SiteType enum for the list of values)
+    filter-states:
+      name: filter[states]
+      in: query
+      schema:
+        type: array
+      description: States based on the resource (e.g. Order states or Job states)
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    filter-job-service_ids:
+      name: filter[job][service_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Service IDs for the Job
+    filter-job-pickup_site_ids:
+      name: filter[job][pickup_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Pickup Site IDs for the Job
+    filter-sender_company_ids:
+      name: filter[sender_company_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Sender Company IDs
+    filter-dispatch_number_ids:
+      name: filter[dispatch_number_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated DispatchNumber IDs
+    filter-job-equipment_ids:
+      name: filter[job][equipment_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Equipment IDs for the Job
+    facet-search-query:
+      name: facet[search][query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The typeahead search query. Matches on the models's `name` field
+    filter-job-end_date:
+      name: filter[job][end_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: End date range for Job.job_start_at
+    filter-department_ids:
+      name: filter[department_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Department IDs. Use 'none' to filter for records without a Department.
+    filter-job-vendor_account_ids:
+      name: filter[job][vendor_account_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Vendor Account IDs for the Job
+    facet-filter-waypoint-type:
+      name: facet[filter][waypoint][type]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - pickup
+        - drop_off
+      description: A Waypoint type to filter on. Can be omitted to return all.
+    filter-job-driver_ids:
+      name: filter[job][driver_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The assigned Driver IDs for the Job
+    filter-job-material_ids:
+      name: filter[job][material_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Material IDs for the Job
+    filter-job-states:
+      name: filter[job][states]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: Job states
+    filter-job-start_date:
+      name: filter[job][start_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Start date range for Job.job_start_at
+    filter-shared:
+      name: filter[shared]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter shared CompanyShareable models
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    filter-job-project_ids:
+      name: filter[job][project_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Project IDs for the Job
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    StateError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/StateError-Response'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

@@ -1,0 +1,1929 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Equipment API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Equipment
+paths:
+  /v1/companies/{company-id}/equipment:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an Equipment for a Company
+      operationId: post-v1-companies-company-id-equipment
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: pz7cbtd73nq8l
+      description: 'Create an `Equipment` for a `Company`
+
+
+        This endpoint requires the `create_equipment` permission'
+      tags:
+      - Equipment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment-Create'
+    get:
+      summary: Retrieve Equipment that belong to a Company
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: rfa42v76i9ehj
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-:id-equipment
+      x-stoplight:
+        id: dai5d8v300f37
+      description: Retrieve `Equipment` for a `Company`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-equipment_type_ids'
+      - $ref: '#/components/parameters/filter-sender_company_ids'
+  /v1/companies/{company-id}/equipment/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Equipment for a Company
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-equipment-typeahead
+      description: Typeahead search against the `name` property on `Equipment` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-equipment_type_ids'
+      - $ref: '#/components/parameters/filter-sender_company_ids'
+      x-stoplight:
+        id: 6u9sp57komhev
+      x-internal: true
+  /v1/companies/{company-id}/equipment/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: Equipment ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Equipment by ID for a Company
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-equipment-id
+      x-stoplight:
+        id: n43u5p7ctgdj2
+      description: Retrieve `Equipment` by ID for a `Company`
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/equipment:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create Equipment for a Managed Company
+      operationId: post-v1-companies-company-id-managed_companies-managed-company-id-equipment
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: eq8mc9rq2w5xz
+      description: 'Create an `Equipment` for a Managed `Company`
+
+
+        This endpoint requires the `create_equipment` permission'
+      tags:
+      - Equipment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment-Create'
+    get:
+      summary: Retrieve Equipment for a Managed Company
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: eq7xk2mn3r9pz
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-equipment
+      x-stoplight:
+        id: mg3ht5kp8w2nr
+      description: Retrieve `Equipment` for a managed company. This includes both equipment owned by the managed company and equipment shared with the managed company.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-equipment_type_ids'
+      - $ref: '#/components/parameters/filter-sender_company_ids'
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/equipment/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Equipment for a Managed Company
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: eq8pm7nw4s1tx
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read-Typeahead'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-equipment-typeahead
+      x-stoplight:
+        id: eq9nh6tk2m4wz
+      description: Typeahead search against the `name` and `external_id` properties on `Equipment` for a managed company. This includes both equipment owned by the managed company and equipment shared with the managed company.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-internal: true
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/equipment/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: Equipment ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Equipment by ID for a Managed Company
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-equipment-id
+      x-stoplight:
+        id: eq8xk3mn4s0qa
+      description: Retrieve `Equipment` by ID for a Managed Company
+    patch:
+      summary: Update Equipment for a Managed Company
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-companies-company-id-managed_companies-managed-company-id-equipment-id
+      x-stoplight:
+        id: eq9yl4no5t1rb
+      description: 'Update `Equipment` by ID for a Managed Company
+
+
+        This endpoint requires the `edit_equipment` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment-Update'
+    delete:
+      summary: Delete Equipment for a Managed Company
+      tags:
+      - Equipment
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: delete-v1-companies-company-id-managed_companies-managed-company-id-equipment-id
+      x-stoplight:
+        id: eq0zm5op6u2sc
+      description: 'Delete `Equipment` by ID for a Managed Company
+
+
+        This endpoint requires the `delete_equipment` permission'
+  /v1/equipment:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an Equipment in the current Company
+      operationId: post-v1-equipment
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: ua1i3uzw7m2oh
+      description: 'Create an `Equipment` in the current `Company`
+
+
+        This endpoint requires the `create_equipment` permission'
+      tags:
+      - Equipment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment-Create'
+    get:
+      summary: Retrieve a list of Equipment
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: gsyxnf632qz6r
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-equipment
+      x-stoplight:
+        id: 1qsr8l6g7yebg
+      description: "Retrieve `Equipment` visible to a `Company`\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `external_id`\n * `license_number`\n * `name`\n"
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-equipment_type_ids'
+      - $ref: '#/components/parameters/filter-label_ids'
+      deprecated: true
+  /v1/equipment/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Equipment
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-equipment-typeahead
+      description: 'Typeahead search against the `name` property for `Equipment` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-equipment_type_ids'
+      x-stoplight:
+        id: d0zb2trrtqlx5
+      deprecated: true
+  /v1/equipment/{equipment-id}/activate:
+    parameters:
+    - schema:
+        type: string
+      name: equipment-id
+      in: path
+      required: true
+      description: Equipment ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Activate an Equipment
+      operationId: put-v1-equipment-equipment-id-activate
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/StateError'
+        '415':
+          $ref: '#/components/responses/Error'
+      x-stoplight:
+        id: af5z6dxvgjx9c
+      description: 'Activate an `Equipment`
+
+
+        This endpoint requires the `edit_equipment` permission'
+      tags:
+      - Equipment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /v1/equipment/{equipment-id}/deactivate:
+    parameters:
+    - schema:
+        type: string
+      name: equipment-id
+      in: path
+      required: true
+      description: Equipment ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Deactivate an Equipment
+      operationId: put-v1-equipment-equipment-id-deactivate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/StateError'
+        '415':
+          $ref: '#/components/responses/Error'
+      x-stoplight:
+        id: mfzw7sn0rkveq
+      description: 'Deactivate an `Equipment`
+
+
+        This endpoint requires the `edit_equipment` permission'
+      tags:
+      - Equipment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /v1/equipment/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Equipment ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single Equipment
+      tags:
+      - Equipment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-equipment-id
+      x-stoplight:
+        id: i4t2xnzra6464
+      description: 'Deprecated in favor of "Retrieve `Equipment` by ID for a `Company`"
+
+
+        Retrieve an `Equipment` by ID'
+      deprecated: true
+    patch:
+      summary: Update an Equipment
+      operationId: patch-v1-equipment-id
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: zrwuiu29hbut1
+      tags:
+      - Equipment
+      description: 'Update `Equipment` by ID
+
+
+        This endpoint required the `edit_equipment` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Equipment-Update'
+    delete:
+      summary: Delete an Equipment
+      operationId: delete-v1-equipment-id
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: 0bvmojmgiys2o
+      description: 'Delete an `Equipment`
+
+
+        This endpoint required the `delete_equipment` permission'
+      tags:
+      - Equipment
+  /v1/jobs/{job-id}/additional_equipment:
+    parameters:
+    - schema:
+        type: string
+      name: job-id
+      in: path
+      required: true
+      description: Job Id
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Assign Equipment to a Job
+      operationId: post-v1-jobs-job-id-additional_equipment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: ax8w576i4pazz
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      description: 'Assign additional `Equipment` to a `Job`
+
+
+        This endpoint requires the `edit_job_equipment` permission'
+      tags:
+      - Equipment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job-AssignAdditionalEquipment'
+      x-stoplight:
+        id: x3mtqqavqzj00
+      x-internal: true
+  /v1/jobs/{job-id}/equipment:
+    parameters:
+    - schema:
+        type: string
+      name: job-id
+      in: path
+      required: true
+      description: Job Id
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Assign Equipment to a Job
+      operationId: post-v1-jobs-job-id-equipment-assign
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Equipment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      description: 'Assign `Equipment` to a `Job`
+
+
+        This endpoint requires the `edit_job_equipment` permission'
+      tags:
+      - Equipment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job-AssignEquipment'
+      x-stoplight:
+        id: ice4dlmyxxef7
+      x-internal: true
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    StateError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/StateError-Response'
+  schemas:
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: c9ls3nrhbih3v
+            nullable: true
+          ticket_match_id:
+            type: string
+            x-stoplight:
+              id: a1cd3nrhbih3v
+            nullable: true
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type: string
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+            nullable: true
+    EquipmentState:
+      title: EquipmentState
+      x-stoplight:
+        id: eh1fgavft82kx
+      enum:
+      - active
+      - inactive
+      default: active
+      example: active
+    StateError-Response:
+      title: StateError-Response
+      x-stoplight:
+        id: i0wsk2gmnaqup
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/StateError'
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    GeofenceType:
+      title: GeofenceType
+      x-stoplight:
+        id: geahowr9r8ly1
+      nullable: true
+      enum:
+      - moving
+      - circle
+      - polygon
+      readOnly: true
+    NextBillionGeofence-Read:
+      title: NextBillionGeofence-Read
+      x-stoplight:
+        id: 60y0z4bb3pu6m
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Geofence-Data'
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    Label-Read-Nested:
+      title: Label-Read-Nested
+      x-stoplight:
+        id: lbl1readnest01
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: lbl1nestnm0001
+            description: Label name
+          color:
+            type: string
+            x-stoplight:
+              id: lbl1nestcol001
+            description: Hex color code for the label
+            pattern: ^#[0-9A-Fa-f]{6}$
+        required:
+        - name
+        - color
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type: string
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    GeofenceTag:
+      title: GeofenceTag
+      x-stoplight:
+        id: anytkmb3ydi6c
+      enum:
+      - scaling
+      - site
+      - loading
+      - unloading
+      - check_in
+      - ticketing
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
+      x-stoplight:
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type: string
+          x-stoplight:
+            id: ttaijg77qmbgk
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: s4rscgptv68x3
+          nullable: true
+      additionalProperties: false
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    Equipment-Read-Nested:
+      title: Equipment-Read-Nested
+      x-stoplight:
+        id: 7ezenec7ycv5l
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
+      - type: object
+        required:
+        - license_number
+        - zone
+        - accounting_id
+        - equipment_id
+        properties:
+          license_number:
+            type: string
+            x-stoplight:
+              id: hw1ooa17wsadq
+            nullable: true
+          zone:
+            type: string
+            x-stoplight:
+              id: 81hr4p8yp8btv
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: ere9qhs4cuwhi
+            nullable: true
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: gt7r3iqzx2w0u
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Equipment-Read:
+      title: Equipment-Read
+      x-stoplight:
+        id: fjrh0hapei5ei
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Nested'
+      - type: object
+        required:
+        - company
+        - ownership
+        - state
+        - labels
+        properties:
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          ownership:
+            $ref: '#/components/schemas/EquipmentOwnership'
+          state:
+            $ref: '#/components/schemas/EquipmentState'
+          home_base:
+            $ref: '#/components/schemas/Site-Read-Nested'
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this equipment
+      - $ref: '#/components/schemas/Timestamps'
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Job-AssignEquipment:
+      title: Job-AssignEquipment
+      x-stoplight:
+        id: o0x2g7zv9i16o
+      type: object
+      properties:
+        equipment_id:
+          type: string
+          nullable: true
+      x-internal: true
+      additionalProperties: false
+    StateError:
+      title: StateError
+      x-stoplight:
+        id: zgcsl4t8bsn3c
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: ntvt2atfotcge
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: noi1jg6o8psl7
+            items:
+              $ref: '#/components/schemas/StateError-Item'
+    EquipmentOwnership:
+      title: EquipmentOwnership
+      x-stoplight:
+        id: p5e75ayo8y6n5
+      enum:
+      - internal
+      - external
+      default: internal
+      example: internal
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    NullableGeofenceType:
+      title: NullableGeofenceType
+      x-stoplight:
+        id: ii94t82oqh5xo
+      allOf:
+      - $ref: '#/components/schemas/GeofenceType'
+      nullable: true
+      type: string
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    StateError-Item:
+      title: StateError-Item
+      x-stoplight:
+        id: dgw2jdmi7ozjj
+      allOf:
+      - $ref: '#/components/schemas/ModelError-Item'
+      - type: object
+        x-stoplight:
+          id: jrgi7oapao3e5
+        required:
+        - state
+        - event
+        properties:
+          state:
+            type: string
+            x-stoplight:
+              id: mah8jye43io32
+            description: The current state value of the field on this Model
+          event:
+            type: string
+            x-stoplight:
+              id: dtgu62ni9ofuh
+            description: The failed state event called on the Model
+    Equipment-Create:
+      title: Equipment-Create
+      x-stoplight:
+        id: 1krisplhwc7qi
+      type: object
+      required:
+      - name
+      - equipment_type_id
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: q9aa3fi1h1otg
+        license_number:
+          type: string
+          x-stoplight:
+            id: pqfafirglts3j
+          nullable: true
+        external_id:
+          type: string
+          x-stoplight:
+            id: rgumh3r14ix11
+          nullable: true
+        ownership:
+          $ref: '#/components/schemas/EquipmentOwnership'
+        state:
+          $ref: '#/components/schemas/EquipmentState'
+        equipment_type_id:
+          type: string
+          x-stoplight:
+            id: o0sxd4jy0ibna
+          format: uuid
+        zone:
+          type: string
+          x-stoplight:
+            id: ddumbhlscsm0t
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: q96hnvqad6yiy
+          nullable: true
+        home_base_id:
+          type: string
+          x-stoplight:
+            id: flcb3ahaqt6c9
+          format: uuid
+          nullable: true
+        label_ids:
+          type: array
+          x-stoplight:
+            id: lbl1d5cr8eqp1
+          description: Array of Label IDs to assign to this equipment.
+          items:
+            type: string
+            format: uuid
+      additionalProperties: false
+    Equipment-Update:
+      title: Equipment-Update
+      x-stoplight:
+        id: 6lx00mm4g7920
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: znozv5x3un2hn
+        license_number:
+          type: string
+          x-stoplight:
+            id: d0ya5jrn2czy7
+          nullable: true
+        external_id:
+          type: string
+          x-stoplight:
+            id: f2f55jpa8mdie
+          nullable: true
+        ownership:
+          $ref: '#/components/schemas/EquipmentOwnership'
+        state:
+          $ref: '#/components/schemas/EquipmentState'
+        equipment_type_id:
+          type: string
+          x-stoplight:
+            id: 4kmwtnc7gddqp
+          format: uuid
+        zone:
+          type: string
+          x-stoplight:
+            id: 8ktxy6rh8u2uv
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: hv61ycgw0tf64
+          nullable: true
+        home_base_id:
+          type: string
+          x-stoplight:
+            id: 0zs8bepby7ggm
+          format: uuid
+          nullable: true
+        label_ids:
+          type: array
+          x-stoplight:
+            id: j7n2mkc4up1xe
+          description: Array of Label IDs to assign to this Equipment
+          items:
+            type: string
+            format: uuid
+      additionalProperties: false
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    Job-AssignAdditionalEquipment:
+      title: Job-AssignAdditionalEquipment
+      x-stoplight:
+        id: 11lrma4qj612o
+      type: object
+      properties:
+        additional_equipment_ids:
+          type: array
+          minItems: 0
+          items:
+            type: string
+            format: uuid
+      x-internal: true
+      additionalProperties: false
+    Site-Read-Nested:
+      title: Site-Read-Nested
+      x-stoplight:
+        id: rt6xqxsfzf4iv
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - lat
+        - lon
+        - full_address
+        - routable
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 7r0x7wicrvwyy
+          lat:
+            type: string
+            x-stoplight:
+              id: cr6y5v0hdl5oo
+            nullable: true
+          lon:
+            type: string
+            x-stoplight:
+              id: f23mkvamncbuw
+            nullable: true
+          address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          full_address:
+            type: string
+            x-stoplight:
+              id: uxixxnmgfi47i
+            nullable: true
+          routable:
+            type: boolean
+            x-stoplight:
+              id: uobfxkm0hujhv
+          next_billion_geofence:
+            $ref: '#/components/schemas/NextBillionGeofence-Read'
+      - $ref: '#/components/schemas/Discardable'
+    Address-Read:
+      title: Address-Read
+      x-stoplight:
+        id: v1mcd2qgns2tf
+      type: object
+      required:
+      - thoroughfare
+      - premise
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      - lat
+      - lon
+      - place_id
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: 8wrr7qkc9ilqn
+        premise:
+          type: string
+          x-stoplight:
+            id: z4jth408out1q
+          nullable: true
+        locality:
+          type: string
+          x-stoplight:
+            id: kfby6wqpgvxbz
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: c9bkrloxf4t8d
+        postal_code:
+          type: string
+          x-stoplight:
+            id: 7zq51k1mof3o3
+        country:
+          type: string
+          x-stoplight:
+            id: iydw9q619ya01
+          pattern: ^[A-Z]{2}
+          example: US
+          minLength: 2
+          maxLength: 2
+        lat:
+          type: string
+          x-stoplight:
+            id: kqu1qtf9rivh1
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+          nullable: true
+        lon:
+          type: string
+          x-stoplight:
+            id: oly2yabkzpk9g
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+          nullable: true
+        place_id:
+          type: string
+          x-stoplight:
+            id: im1fdq7qqxdij
+          description: NextBillion placeID
+          nullable: true
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Geofence-Data:
+      title: Geofence-Data
+      x-stoplight:
+        id: ay73k76oae8gm
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          x-stoplight:
+            id: m9n8p7q6r5s4t
+          description: NextBillionGeofence ID
+        geofence:
+          type: object
+          x-stoplight:
+            id: bo67u046r1ibk
+          required:
+          - name
+          - type
+          properties:
+            id:
+              type: string
+              x-stoplight:
+                id: nm2o97jli2zqm
+              format: uuid
+              description: NextBillion Geofence ID
+            name:
+              type: string
+              x-stoplight:
+                id: x5sp8wq8d2ack
+            type:
+              type: string
+              x-stoplight:
+                id: d91rv1gbtfkm0
+              description: '`circle` or `polygon`'
+            geojson:
+              type: object
+              x-stoplight:
+                id: vk7dx7ipdbuxa
+              required:
+              - type
+              - coordinates
+              properties:
+                type:
+                  type: string
+                  x-stoplight:
+                    id: 65qatpxdox3e9
+                  description: type should be `Polygon`
+                coordinates:
+                  type: array
+                  x-stoplight:
+                    id: 3an8g587wblcs
+                  description: 'This should be an enclosed polygon.
+
+
+                    Example format:
+
+                    [[[-118.226140484,34.048200454],[-118.22616052,34.046872766],[-118.226198738,34.04952736],[-118.226140484,34.048200454]]]'
+                  items:
+                    x-stoplight:
+                      id: 2kltvjxl5xks6
+                    type: array
+                    items:
+                      x-stoplight:
+                        id: k93dt39dghru4
+                      type: array
+                      items: {}
+            circle_center:
+              type: object
+              x-stoplight:
+                id: 6xr3h683f7cl9
+              required:
+              - lat
+              - lon
+              properties:
+                lat:
+                  type: number
+                  x-stoplight:
+                    id: y70xc1ptapv1g
+                lon:
+                  type: number
+                  x-stoplight:
+                    id: uy3twrpcueq9m
+            circle_radius:
+              type: number
+              x-stoplight:
+                id: qrnq301sqfl3d
+            tag:
+              x-stoplight:
+                id: debfy3x1l48zc
+              enum:
+              - pickup
+              - loading
+              - drop_off
+              - unloading
+              - check_in
+              - scaling
+              - ticketing
+              deprecated: true
+        moving_geofence:
+          type: boolean
+          x-stoplight:
+            id: y15533dbr62js
+          default: false
+        tag:
+          $ref: '#/components/schemas/GeofenceTag'
+        geofence_type:
+          $ref: '#/components/schemas/NullableGeofenceType'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Equipment-Read-Typeahead:
+      title: Equipment-Read-Typeahead
+      x-stoplight:
+        id: sv94osohm5xhg
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - equipment_type
+        - external_id
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          external_id:
+            type: string
+            x-stoplight:
+              id: jrkz95htilck3
+            nullable: true
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: fkr9fkdtl996f
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    filter-dispatchable:
+      name: filter[dispatchable]
+      in: query
+      schema:
+        type: boolean
+      description: Filter dispatchable CompanyShareable models
+    filter-sender_company_ids:
+      name: filter[sender_company_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Sender Company IDs
+    filter-equipment_type_ids:
+      name: filter[equipment_type_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated EquipmentType IDs
+    filter-label_ids:
+      name: filter[label_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uuid
+      description: Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic).
+    filter-shared:
+      name: filter[shared]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter shared CompanyShareable models
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

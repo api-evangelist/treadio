@@ -1,0 +1,5170 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Typeaheads API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Typeaheads
+paths:
+  /v1/accounts/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Accounts
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: wvfdabnd4w4ar
+                    items:
+                      $ref: '#/components/schemas/Account-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-accounts-typeahead
+      x-stoplight:
+        id: 249lre4wlspeo
+      description: 'Typeahead search against the `name` property for `Accounts` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_types'
+      - $ref: '#/components/parameters/filter-connected'
+      - $ref: '#/components/parameters/filter-date'
+  /v1/companies/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Companies
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Company-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-typeahead
+      description: 'Typeahead search against the `legal_name` property for `Companies` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-stoplight:
+        id: qkqja5m9f9ixa
+  /v1/companies/{company-id}/accounts/capacity/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Accounts for a Company with with Capacity Data
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account-Read-Capacity-Typeahead'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-accounts-capacity-typeahead
+      description: 'Typeahead search against the `name` property on `Accounts` for a `Company`.
+
+
+        Unlike the standard typeahead, this endpoint includes additional fields with capacity data.
+
+
+        Additionally, this endpoint automatically filters to:
+
+
+        - Connnected Accoubts
+
+        - Vendor-type Accounts
+
+        - Accounts that are currently scheduled on
+
+
+        The `availability` filter can be set to true/false to only include Accounts that are scheduled on or off for the `date` specified. If no `date` is specified then the current day is used.'
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-availability'
+      - $ref: '#/components/parameters/filter-show_all'
+      - $ref: '#/components/parameters/filter-label_ids'
+      - schema:
+          type: string
+        in: query
+        name: date
+        description: The date to query for regarding capacity. In YYYY-MM-DD format.
+        required: true
+      x-stoplight:
+        id: ki83zc9q4cndp
+  /v1/companies/{company-id}/accounts/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Accounts for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: rao3u2ilhbt61
+                    items:
+                      $ref: '#/components/schemas/Account-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-accounts-typeahead
+      x-stoplight:
+        id: 0wetlqfv1ru46
+      description: Typeahead search against the `name` property on `Accounts` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_types'
+      - $ref: '#/components/parameters/filter-connected'
+      - $ref: '#/components/parameters/filter-date'
+      x-internal: true
+  /v1/companies/{company-id}/add_ons/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on AddOns for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: hi3wjxsu1x60b
+                    items:
+                      $ref: '#/components/schemas/AddOn-Read-Typeahead'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-add_ons-typeahead
+      x-stoplight:
+        id: 4bo2hvhmh5lg8
+      x-internal: true
+      description: Typeahead search against the `name` property on `AddOn` for a `Company`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-add_on_types'
+      - $ref: '#/components/parameters/filter-add_on_rate_types'
+  /v1/companies/{company-id}/children/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Children for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Company-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-accounts-typeahead
+      description: Typeahead search against the `legal_name` property on `Children` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-stoplight:
+        id: 0cc8k3gzl6bwu
+      x-internal: true
+  /v1/companies/{company-id}/data_export/tickets/day/{date}:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+      name: date
+      in: path
+      required: true
+      description: Date of daily report
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Daily Ticket Data Export
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DailyExport-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/ModelError'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-daily-export-tickets-day
+      description: "Returns a daily export of `tickets` for given company. Please\nnote, this endpoint is only available to users authenticating\nan `m2m_client`. This endpoint must be configured for customer\nby Tread. The file_url is signed and will be valid for 1 hour \nfrom time of api call."
+      x-internal: true
+      x-stoplight:
+        id: p3jfje1rwgtac
+  /v1/companies/{company-id}/departments/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Departments by Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: dxnoxece9uuo0
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Department-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-departments-typeahead
+      x-stoplight:
+        id: 7axs7zey72hwu
+      description: Typeahead search against the `name` property on `Departments` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/driver_days/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on DriverDays by Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DriverDay-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-driver_days-typeahead
+      x-stoplight:
+        id: ddtypahead01
+      description: Typeahead search against the `driver_day_id` property for `DriverDays` visible to the currently authenticated `Company`.
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/drivers/faceted_search:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      description: Company ID
+      required: true
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Search Drivers based on the current Dispatch results
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Driver-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-drivers-faceted_search
+      description: Searches `Drivers` in a typeahead style but instead of all `Drivers` for a `Company` this returns all `Drivers` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      tags:
+      - Typeaheads
+      x-internal: false
+      x-stoplight:
+        id: fkv07ysacff6n
+  /v1/companies/{company-id}/equipment/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Equipment for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-equipment-typeahead
+      description: Typeahead search against the `name` property on `Equipment` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-equipment_type_ids'
+      - $ref: '#/components/parameters/filter-sender_company_ids'
+      x-stoplight:
+        id: 6u9sp57komhev
+      x-internal: true
+  /v1/companies/{company-id}/equipment_types/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on EquipmentType for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 1y8kgt70w518v
+                    items:
+                      $ref: '#/components/schemas/EquipmentType-Read-Typeahead'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-equipment_types-typeahead
+      x-stoplight:
+        id: jkeh212xqgfp8
+      description: Typeahead search against the `name` property on `EquipmentType` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-internal: true
+  /v1/companies/{company-id}/foremen/faceted_search:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Search Foremen based on the current Dispatch results
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Foreman-Read-Typeahead'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-foremen-faceted_search
+      x-stoplight:
+        id: fhl714kxau0z2
+      description: Searches `Foremen` in a typeahead style but instead of all `Foremen` for a `Company` this returns all `Foremen` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+  /v1/companies/{company-id}/foremen/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Foremen
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 4zf8dir5org9i
+                    items:
+                      $ref: '#/components/schemas/Foreman-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-foremen-typeahead
+      x-stoplight:
+        id: shsf9yvsfoan9
+      description: 'Typeahead search against the `first_name` and `last_name` property on `Foremen` for a `Company`.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-expiring'
+      - $ref: '#/components/parameters/filter-sender_company_types'
+  /v1/companies/{company-id}/fuel_price_indices/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on FuelPriceIndex for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: 95bnj47nk3rv3
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FuelPriceIndex-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-fuel_price_indices-typeahead
+      x-stoplight:
+        id: 0aigw051bke6i
+      description: Typeahead search against the `name` property on `FuelPriceIndex` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/jobs/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Jobs by Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Job-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-jobs-typeahead
+      x-stoplight:
+        id: jobbypahead01
+      description: Typeahead search against the `job_id` property for `Jobs` visible to the currently authenticated `Company`.
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/loads/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Loads by Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Load-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-loads-typeahead
+      x-stoplight:
+        id: loadtypahead01
+      description: Typeahead search against the `load_id` property for `Loads` visible to the currently authenticated `Company`.
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/drivers/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Drivers for a Managed Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: dr8qn8ow5s2uy
+                    items:
+                      $ref: '#/components/schemas/Driver-Read-Typeahead'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-drivers-typeahead
+      x-stoplight:
+        id: dr9pi7ul3n5xa
+      description: Typeahead search against the `first_name` and `last_name` properties on `Drivers` for a managed company. This includes both drivers owned by the managed company and drivers shared with the managed company.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-date'
+      - $ref: '#/components/parameters/filter-availability'
+      - $ref: '#/components/parameters/filter-expiring'
+      - $ref: '#/components/parameters/filter-show_all'
+      - $ref: '#/components/parameters/filter-sender_company_types'
+      - $ref: '#/components/parameters/filter-label_ids'
+      x-internal: true
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/equipment/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Equipment for a Managed Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: eq8pm7nw4s1tx
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read-Typeahead'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-equipment-typeahead
+      x-stoplight:
+        id: eq9nh6tk2m4wz
+      description: Typeahead search against the `name` and `external_id` properties on `Equipment` for a managed company. This includes both equipment owned by the managed company and equipment shared with the managed company.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-internal: true
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/equipment_types/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on EquipmentType for a Managed Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: mngdtp8qr3xw9
+                    items:
+                      $ref: '#/components/schemas/EquipmentType-Read-Typeahead'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-equipment_types-typeahead
+      x-stoplight:
+        id: 75rfxjepk4523
+      description: Typeahead search against the `name` property on `EquipmentType` for a managed company.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-internal: true
+  /v1/companies/{company-id}/material_rates/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on MaterialRates for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 5abtl41lpwhjr
+                    items:
+                      $ref: '#/components/schemas/MaterialRate-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-material_rates-typeahead
+      x-stoplight:
+        id: fbdn0euda5mbc
+      x-internal: true
+      description: '`search[site][query]` is a typeahead against the `MaterialRate`''s `Site`''s `name`'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-site-query'
+      - $ref: '#/components/parameters/filter-customer_account_id'
+      - $ref: '#/components/parameters/filter-project_id'
+      - $ref: '#/components/parameters/filter-material_id'
+      - $ref: '#/components/parameters/filter-site_id'
+  /v1/companies/{company-id}/materials/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Material for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Material-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-material-typeahead
+      description: Typeahead search against the `name` property on `Material` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-stoplight:
+        id: k2n1ug9xevn42
+      x-internal: true
+  /v1/companies/{company-id}/orders/dispatch_numbers/faceted_search:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      description: Company ID
+      required: true
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Search Dispatch Numbers based on the current Dispatch results
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DispatchNumber-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-orders-dispatch_numbers-faceted_search
+      description: Searches `DispatchNumbers` in a typeahead style but instead of all `DispatchNumbers` for a `Company` this returns all `DispatchNumbers` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      tags:
+      - Typeaheads
+      x-internal: false
+      x-stoplight:
+        id: fkv07xsabff5n
+  /v1/companies/{company-id}/orders/dispatch_numbers/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      description: Company ID
+      required: true
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Orders' Dispatch Number by Company
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: myglff7zr8e8u
+                    items:
+                      $ref: '#/components/schemas/DispatchNumber-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-orders-dispatch_numbers-typeahead
+      x-stoplight:
+        id: 2pdlcom6zn9kk
+      description: Typeahead search against the `dispatch_number` property on `Orders` by current `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      tags:
+      - Typeaheads
+      x-internal: false
+  /v1/companies/{company-id}/orders/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Orders by Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-orders-typeahead
+      x-stoplight:
+        id: ordtypahead01
+      description: Typeahead search against the `order_id` property for `Orders` visible to the currently authenticated `Company`.
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/orders/{order-id}/phases:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Order Phases
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Phase-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-orders-order-id-phases-index
+      x-internal: true
+      description: This returns all the `Phases` for an `Order`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      x-stoplight:
+        id: mx2hbj8xil8e4
+  /v1/companies/{company-id}/orders/{order-id}/phases/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Order Phases
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: mbiku8988m3gn
+                    items:
+                      $ref: '#/components/schemas/Phase-Read-Typeahead'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-orders-order-id-phases-typeahead
+      x-stoplight:
+        id: 9yvm0chgebcax
+      description: 'Typeahead search against the `name` property for `Phases` for an `Order` visible to a `Company`.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/projects/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Projects for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-projects-typeahead
+      description: Typeahead search against the `name` or `external_id` property on `Projects` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_id'
+      - $ref: '#/components/parameters/filter-states'
+      - $ref: '#/components/parameters/filter-department_ids'
+      x-stoplight:
+        id: ovi6a7ram6mq5
+      x-internal: true
+  /v1/companies/{company-id}/rates/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Rates for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: onhkwzg06mag3
+                    items:
+                      x-stoplight:
+                        id: rquoa7vw94df3
+                      anyOf:
+                      - $ref: '#/components/schemas/RateTime-Read'
+                      - $ref: '#/components/schemas/RatePerUnit-Read'
+                      - $ref: '#/components/schemas/RateCommission-Read'
+                      - $ref: '#/components/schemas/RateFlatCommission-Read'
+                      - $ref: '#/components/schemas/RateFlatRate-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-rates-typeahead
+      x-stoplight:
+        id: tw8oczepyv61y
+      x-internal: true
+      description: Typeahead search on `Rates` for a `Company`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-account_id'
+      - $ref: '#/components/parameters/filter-driver_id'
+      - $ref: '#/components/parameters/filter-equipment_id'
+      - $ref: '#/components/parameters/filter-include_default'
+      - $ref: '#/components/parameters/filter-owner_type'
+      - $ref: '#/components/parameters/filter-project_id'
+      - $ref: '#/components/parameters/filter-service_id'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-service_class_id'
+      - $ref: '#/components/parameters/filter-equipment_type_id'
+  /v1/companies/{company-id}/service_classes/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on ServiceClasses for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: vuzb52mhx13uh
+                    items:
+                      $ref: '#/components/schemas/ServiceClass-Read-Nested'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company_id-service_classes-typeahead
+      x-stoplight:
+        id: xwei45sjrxsa2
+      description: Typeahead search against the `name` property on `ServiceClass` for a `Company`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/services/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Services for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Service-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-services-typeahead
+      description: Typeahead search against the `name` property on `Services` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-stoplight:
+        id: r0tj9b7du7t90
+      x-internal: true
+  /v1/companies/{company-id}/sites/dispatch:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    get:
+      summary: Retrieve Sites based on the current Dispatch results for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-sites-dispatch-index
+      description: Returns `Sites`, but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/search-job-datagrid'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      - $ref: '#/components/parameters/facet-filter-waypoint-type'
+      x-stoplight:
+        id: 4sw2sqdp0ofig
+  /v1/companies/{company-id}/sites/dispatch/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Sites based on the current Dispatch results for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 8y3ie0nhvchzr
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-sites-dispatch-typeahead
+      x-stoplight:
+        id: ln1vlnl01hf87
+      description: Returns `Sites` in a typeahead style but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/search-job-datagrid'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      - $ref: '#/components/parameters/facet-filter-waypoint-type'
+  /v1/companies/{company-id}/sites/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Sites for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-site-typeahead
+      description: Typeahead search against the `name`, or `external_id` property on `Sites` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-states'
+      - $ref: '#/components/parameters/filter-site_types'
+      x-stoplight:
+        id: xbth42mtawc3k
+      x-internal: true
+  /v1/companies/{company-id}/users/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Users for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-users-typeahead
+      description: 'Typeahead search against the `first_name` and `last_name` property on `Users` for a `Company`.
+
+
+        Note:
+
+        - `filter[iam_roles]` array are applied as `OR` in the query'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-iam_roles'
+      x-stoplight:
+        id: 1m1zvo5unnm6v
+      x-internal: true
+  /v1/driver_days/{driver-day-id}/phases/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: driver-day-id
+      in: path
+      required: true
+      description: DriverDay ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on DriverDay Phases
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: b4vaf80v7nxjv
+                    items:
+                      $ref: '#/components/schemas/Phase-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-driver_days-driver-day-id-phases-typeahead
+      x-stoplight:
+        id: zsflkez4xes2j
+      x-internal: true
+      description: 'Typeahead search against the `name` property for `Phases` for a `DriverDay` visible to the currently authenticated `Company`.
+
+
+        This returns all the `Phases` across `Orders` for the `Jobs` that are in a `DriverDay`.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/equipment/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Equipment
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Equipment-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-equipment-typeahead
+      description: 'Typeahead search against the `name` property for `Equipment` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-equipment_type_ids'
+      x-stoplight:
+        id: d0zb2trrtqlx5
+      deprecated: true
+  /v1/equipment_types/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on EquipmentType
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 1s1jka3l1rifj
+                    items:
+                      $ref: '#/components/schemas/EquipmentType-Read-Typeahead'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-equipment_types-typeahead
+      x-stoplight:
+        id: yc1b9hgq4r0g2
+      x-internal: true
+      description: Typeahead search against the `name` property for `EquipmentType` visible to the currently authenticated `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/jobs/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Jobs
+      deprecated: true
+      description: Deprecated in favor of `GET /v1/companies/{company-id}/jobs/typeahead`. Typeahead search against the `job_id` property for `Jobs` visible to the currently authenticated `Company`.
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Job-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-jobs-typeahead
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-stoplight:
+        id: h1bh1yjfzib67
+  /v1/materials/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Materials
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Material-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-material-typeahead
+      description: 'Typeahead search against the `name` property for `Material` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-stoplight:
+        id: g1vnefs3m2mdt
+  /v1/orders/{order-id}/phases:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Order Phases
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Phase-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-orders-order-id-phases-index
+      x-internal: true
+      description: This returns all the `Phases` for an `Order`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      x-stoplight:
+        id: yxeywnz85ntpf
+      deprecated: true
+  /v1/orders/{order-id}/phases/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Order Phases
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: mbiku8988m3gn
+                    items:
+                      $ref: '#/components/schemas/Phase-Read-Typeahead'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-orders-order-id-phases-typeahead
+      x-stoplight:
+        id: h33hwt6dtb7h6
+      description: 'Typeahead search against the `name` property for `Phases` for an `Order` visible to the currently authenticated `Company`.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/search-query'
+      deprecated: true
+  /v1/projects/external_ids/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Projects for a Company
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project-Read-Typeahead-External-Id'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-projects-external_ids-typeahead
+      description: Typeahead search against the `external_id` property all `Projects` that belong to current `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_id'
+      - $ref: '#/components/parameters/filter-states'
+      x-stoplight:
+        id: g3c7a95tje9xx
+      x-internal: true
+  /v1/projects/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Projects
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-projects-typeahead
+      description: 'Typeahead search against the `name` or `external_id` property for `Projects` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_id'
+      - $ref: '#/components/parameters/filter-states'
+      - $ref: '#/components/parameters/filter-department_ids'
+      x-stoplight:
+        id: 2bo13xsu452qn
+  /v1/projects/{project-id}/phases:
+    parameters:
+    - schema:
+        type: string
+      name: project-id
+      in: path
+      required: true
+      description: Project ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Project Phases
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Phase-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-projects-projects-phases-index
+      x-internal: true
+      description: This returns all the `Phases` for a `Project`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      x-stoplight:
+        id: yynlfa7n5qj8x
+  /v1/projects/{project-id}/phases/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: project-id
+      in: path
+      required: true
+      description: Project ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Project Phases
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: winwahxto6owf
+                    items:
+                      $ref: '#/components/schemas/Phase-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-projects-project-id-phases-typeahead
+      x-stoplight:
+        id: jxoz046591t0s
+      description: 'Typeahead search against the `name` property for `Phases` for an `Project` visible to the currently authenticated `Company`.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/rates/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Rates
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: mkubms5vew2o2
+                    items:
+                      x-stoplight:
+                        id: rdnefjijzp2mg
+                      anyOf:
+                      - $ref: '#/components/schemas/RateTime-Read'
+                      - $ref: '#/components/schemas/RatePerUnit-Read'
+                      - $ref: '#/components/schemas/RateCommission-Read'
+                      - $ref: '#/components/schemas/RateFlatCommission-Read'
+                      - $ref: '#/components/schemas/RateFlatRate-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-rates-typeahead
+      x-stoplight:
+        id: me0xr5dfv82xw
+      description: Typeahead search against the `name` property for `Rates` visible to the currently authenticated `Company`
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-account_id'
+      - $ref: '#/components/parameters/filter-driver_id'
+      - $ref: '#/components/parameters/filter-equipment_id'
+      - $ref: '#/components/parameters/filter-service_id'
+      - $ref: '#/components/parameters/filter-project_id'
+      - $ref: '#/components/parameters/filter-include_default'
+      - $ref: '#/components/parameters/filter-owner_type'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-service_class_id'
+      - $ref: '#/components/parameters/filter-equipment_type_id'
+  /v1/service_classes/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on ServiceClasses
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ServiceClass-Read-Nested'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-service_classes-typeahead
+      description: 'Typeahead search against the `name` property for `ServiceClass` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-stoplight:
+        id: bg12r6fixecwz
+      tags:
+      - Typeaheads
+  /v1/services/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Services
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Service-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-services-typeahead
+      description: 'Typeahead search against the `name` property for `Services` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      x-stoplight:
+        id: aa7i510yp8rbs
+  /v1/sites/dispatch:
+    parameters:
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    get:
+      summary: Retrieve Sites based on the current Dispatch results
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-sites-dispatch-index
+      parameters:
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/search-job-datagrid'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      - $ref: '#/components/parameters/facet-filter-waypoint-type'
+      x-internal: true
+      description: 'Returns `Sites`, but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs.
+
+        '
+      x-stoplight:
+        id: 7hw1qdoh30cza
+  /v1/sites/dispatch/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Sites based on the current Dispatch results
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-sites-dispatch
+      x-stoplight:
+        id: hzrkjbdk62679
+      parameters:
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/search-job-datagrid'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      - $ref: '#/components/parameters/facet-filter-waypoint-type'
+      x-internal: true
+      description: Returns `Sites` in a typeahead style but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs.
+  /v1/sites/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Sites
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-sites-typeahead
+      description: Typeahead search against the `name`, or `external_id` property for `Sites` visible to the currently authenticated `Company`.
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-states'
+      x-stoplight:
+        id: jrkvfu8c3q0vl
+  /v1/traffic_control_plans/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Traffic Control Plans
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: lhtoihtpghk3f
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TrafficControlPlan-Read-Typeahead'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-traffic_control_plans-typeahead
+      x-stoplight:
+        id: bzyu4qke4lumc
+      description: 'Typeahead search against the `name` property for `Traffic Control Plans` visible to the currently authenticated `Company`.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/users/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Users
+      tags:
+      - Typeaheads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-users-typeahead
+      description: 'Typeahead search against the `first_name` and `last_name` property for `Users` visible to the currently authenticated `Company`.
+
+
+        Note:
+
+        - `filter[iam_roles]` array are applied as `OR` in the query'
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-iam_roles'
+      x-stoplight:
+        id: ot445z3l0x9vy
+components:
+  schemas:
+    RateOwnerType:
+      title: RateOwnerType
+      x-stoplight:
+        id: zwp4uh4rzdpft
+      enum:
+      - customer
+      - vendor
+      - driver
+      default: driver
+      example: driver
+    ServiceClass-Read-Nested:
+      title: ServiceClass-Read-Nested
+      x-stoplight:
+        id: ahk4knwjgo1di
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: ServiceClass name.
+        required:
+        - name
+    FuelSurchargeSchedule-Read-Nested:
+      title: FuelSurchargeSchedule-Read-Nested
+      x-stoplight:
+        id: cfxi1bfv03rdl
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: ug5goi9re1abe
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 2izdii9s4bcmr
+    MovingSite-Read:
+      title: MovingSite-Read
+      x-stoplight:
+        id: yaf7dbodbspna
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: tf4brd0yshw5e
+        required:
+        - equipment_id
+        - site_id
+        - polling_interval_seconds
+        properties:
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: bucjeefefqu2t
+            format: uuid
+          site_id:
+            type: string
+            x-stoplight:
+              id: nxcmrn80s2rqj
+            format: uuid
+          polling_interval_seconds:
+            type: integer
+            x-stoplight:
+              id: 72glfhxls2dqw
+    RateFlatCommission-Read:
+      title: RateFlatCommission-Read
+      x-stoplight:
+        id: y8p7jejeqgai5
+      allOf:
+      - $ref: '#/components/schemas/Rate-Read'
+      - type: object
+        required:
+        - commission_amount
+        properties:
+          commission_amount:
+            type: number
+            x-stoplight:
+              id: ozl726ux4vu1t
+    NextBillionGeofence-Read:
+      title: NextBillionGeofence-Read
+      x-stoplight:
+        id: 60y0z4bb3pu6m
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Geofence-Data'
+    Department-Read-Typeahead:
+      title: Department-Read-Typeahead
+      x-stoplight:
+        id: p78wbrthl46mr
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: fy8jozdwbtq4k
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: sh9gkn0s9k4bz
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type: string
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    TrafficControlPlan-Read-Typeahead:
+      title: TrafficControlPlan-Read-Nested
+      x-stoplight:
+        id: ckqgoytcerdb5
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: owzje9m62wkns
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: ewndawz46zsax
+    AddOn-Read-Typeahead:
+      title: AddOn-Read-Typeahead
+      x-stoplight:
+        id: b30cmjc02mvjh
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - add_on_rate_type
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: tfqmw2od0zvng
+          add_on_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+            deprecated: true
+            description: Deprecated in favor of `revenue_cost_rate_type`.
+          fuel_surcharge_schedule:
+            $ref: '#/components/schemas/FuelSurchargeSchedule-Read-Nested'
+    AddOn-Read-Nested:
+      title: AddOn-Read-Nested
+      x-stoplight:
+        id: v8dl5yn30kkc1
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - quantity
+        - rate
+        - percentage
+        - add_on_rate_type
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 050zd8kz0vgbs
+          quantity:
+            type: string
+            x-stoplight:
+              id: c3va13nna81jo
+          rate:
+            type: string
+            x-stoplight:
+              id: 9j3huo3cmv9hx
+          percentage:
+            type: string
+            x-stoplight:
+              id: qrfrr46gebj4h
+          add_on_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+            deprecated: true
+            description: Deprecated in favor of `revenue_cost_rate_type`.
+          fuel_surcharge_schedule:
+            $ref: '#/components/schemas/FuelSurchargeSchedule-Read-Nested'
+    RatePerUnit-Read:
+      title: RatePerUnit-Read
+      x-stoplight:
+        id: h49e4lb1d9qjn
+      allOf:
+      - $ref: '#/components/schemas/Rate-Read'
+      - type: object
+        properties:
+          unit_rate:
+            type: number
+            x-stoplight:
+              id: jhif8pzx75v63
+            minimum: 0
+          unit_minimum:
+            type: number
+            x-stoplight:
+              id: ecwq9vr2oiz49
+            minimum: 0
+          unit_increment:
+            type: number
+            x-stoplight:
+              id: 9d7hhgo8jh9io
+            minimum: 0
+        required:
+        - unit_rate
+        - unit_minimum
+        - unit_increment
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Driver-Read-Nested:
+      title: Driver-Read-Nested
+      x-stoplight:
+        id: lcevfprple1sa
+      allOf:
+      - $ref: '#/components/schemas/Driver-Read-Typeahead'
+      - type: object
+        x-stoplight:
+          id: 19sn21xqtmd0w
+        required:
+        - email
+        properties:
+          email:
+            type: string
+            x-stoplight:
+              id: ekvo9chmdhjkp
+            nullable: true
+    SiteType:
+      title: SiteType
+      x-stoplight:
+        id: 31h267btxh667
+      enum:
+      - Plant
+      - Quarry
+      - JobSite
+      - Depot
+      - Other
+      - Daily
+      - EquipmentHomeBase
+      example: Plant
+    EquipmentType-Read-Typeahead:
+      title: EquipmentType-Read-Typeahead
+      x-stoplight:
+        id: e6i4vca40gozl
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: c78zqsegfn4u4
+        required:
+        - name
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    Load-Read-Typeahead:
+      title: Load-Read-Typeahead
+      x-stoplight:
+        id: loadtypahead1
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          load_id:
+            type: string
+            description: Load friendly identifier
+            x-stoplight:
+              id: loadtypahead2
+        required:
+        - load_id
+    Phase-Read:
+      title: Phase-Read
+      x-stoplight:
+        id: t87rtwp61n8ry
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - code
+        - primary
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: joxj6kldpdok8
+          code:
+            type: string
+            x-stoplight:
+              id: mtoxuvguckczq
+            nullable: true
+          primary:
+            type: boolean
+            x-stoplight:
+              id: ww6q56py1x5wq
+      - $ref: '#/components/schemas/Timestamps'
+    DriverDay-Read-Typeahead:
+      title: DriverDay-Read-Typeahead
+      x-stoplight:
+        id: ddtypahead1
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          driver_day_id:
+            type: string
+            description: DriverDay friendly identifier
+            x-stoplight:
+              id: ddtypahead2
+        required:
+        - driver_day_id
+    CompanyShare-Read-User-Nested:
+      title: CompanyShare-Read-User-Nested
+      x-stoplight:
+        id: 8czythac5qhgz
+      allOf:
+      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - type: object
+        properties:
+          default_equipment:
+            $ref: '#/components/schemas/Equipment-Read-Default-Nested'
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Equipment-Read-Typeahead:
+      title: Equipment-Read-Typeahead
+      x-stoplight:
+        id: sv94osohm5xhg
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - equipment_type
+        - external_id
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          external_id:
+            type: string
+            x-stoplight:
+              id: jrkz95htilck3
+            nullable: true
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: fkr9fkdtl996f
+    FuelPriceIndex-Read-Typeahead:
+      title: FuelPriceIndex-Typeahead
+      x-stoplight:
+        id: uuokb9twnidv2
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: qybhimj3u03ty
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: kju9qtd39dsrv
+    Driver-Read-Typeahead:
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 5vacab4kzhkj4
+        required:
+        - first_name
+        - last_name
+        - schedule_on
+        - phone
+        - managed
+        - company
+        properties:
+          first_name:
+            type: string
+            x-stoplight:
+              id: 4gb9hhpizab3h
+            description: First name
+          last_name:
+            type: string
+            x-stoplight:
+              id: my6q150nen1kb
+            description: Last name
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-User-Nested'
+          equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+          default_equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 7dq6dvne8bqcr
+          company_day_driver_stat:
+            $ref: '#/components/schemas/CompanyDayDriverStat-Read'
+          phone:
+            type: string
+            x-stoplight:
+              id: y4l44re1zfaa9
+            description: User's E.164 formatted phone number
+            nullable: true
+          managed:
+            type: boolean
+            x-stoplight:
+              id: k8m3xq0sz6wt4
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this driver
+      - $ref: '#/components/schemas/GpsStatusable'
+      title: Driver-Read-Typeahead
+    AccountType:
+      title: AccountType
+      x-stoplight:
+        id: i4vfmd4rwrq8p
+      enum:
+      - customer
+      - vendor
+      example: customer
+    DailyExport-Read:
+      title: DailyExport-Read
+      x-stoplight:
+        id: omxur2zom8vrl
+      type: object
+      required:
+      - day
+      - created_at
+      - file_url
+      properties:
+        day:
+          type: string
+          x-stoplight:
+            id: 4ptbcq6ryqkfo
+          format: date
+        created_at:
+          type: string
+          x-stoplight:
+            id: dio0ll8zgt6g7
+          format: date-time
+        file_url:
+          type: string
+          x-stoplight:
+            id: 38lhuxnqd1xgx
+      additionalProperties: false
+    Department-Read-Nested:
+      title: Department-Read-Nested
+      x-stoplight:
+        id: gv9tfg4scr2yx
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 4y3gfdgq1brqf
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 3718c2tvwwqsn
+            description: Department name.
+        required:
+        - name
+    GeofenceTag:
+      title: GeofenceTag
+      x-stoplight:
+        id: anytkmb3ydi6c
+      enum:
+      - scaling
+      - site
+      - loading
+      - unloading
+      - check_in
+      - ticketing
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
+      x-stoplight:
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type: string
+          x-stoplight:
+            id: ttaijg77qmbgk
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: s4rscgptv68x3
+          nullable: true
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Project-Read-Typeahead-External-Id:
+      title: Project-Read-Typeahead-External-Id
+      x-stoplight:
+        id: z971jcl3xeyog
+      type: object
+      properties:
+        external_id:
+          type: string
+          x-stoplight:
+            id: dkivyg6fju70u
+      additionalProperties: false
+    NullableGeofenceType:
+      title: NullableGeofenceType
+      x-stoplight:
+        id: ii94t82oqh5xo
+      allOf:
+      - $ref: '#/components/schemas/GeofenceType'
+      nullable: true
+      type: string
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    RateType:
+      title: RateType
+      x-stoplight:
+        id: zn2jb7gsifkk3
+      enum:
+      - RatePerHour
+      - RatePerDay
+      - RatePerLoad
+      - RatePerTon
+      - RatePerTonne
+      - RatePerYard
+      - RatePerBushel
+      - RateCommission
+      - RateFlatCommission
+      - RateFlatRate
+      example: RatePerHour
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
+      x-stoplight:
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    MaterialRate-Read-Typeahead:
+      title: MaterialRate-Read-Typeahead
+      x-stoplight:
+        id: n7ssu2zszdqgx
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - sell_price
+        - buy_price
+        - unit_of_measure
+        properties:
+          sell_price:
+            type: string
+            x-stoplight:
+              id: dskmpvrizqinj
+            nullable: true
+          buy_price:
+            type: string
+            x-stoplight:
+              id: w107s2wjkvowa
+            nullable: true
+          unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+          site:
+            $ref: '#/components/schemas/Site-Read-Typeahead'
+          material:
+            $ref: '#/components/schemas/Material-Read-Typeahead'
+          project:
+            $ref: '#/components/schemas/Project-Read-Typeahead'
+          customer_account:
+            $ref: '#/components/schemas/Account-Read-Typeahead'
+    SiteState:
+      title: SiteState
+      x-stoplight:
+        id: tk96rwiactdrj
+      enum:
+      - active
+      - inactive
+      default: active
+      description: ''
+    Account-Read-Capacity-Typeahead:
+      title: Account-Read-Capacity-Typeahead
+      x-stoplight:
+        id: y06sjzp3z6k4c
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - schedule_on
+        - current_assigned_count
+        - current_capacity_count
+        properties:
+          name:
+            type: string
+            description: Account name
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: hlfa8tn5znpsy
+            description: Boolean indicator of this Account's current availablity for being dispatched.
+          current_assigned_count:
+            type: number
+            x-stoplight:
+              id: bmr4fet0uassi
+            description: The truck capacity of this Account that is already assigned for the day.
+          current_capacity_count:
+            type: number
+            x-stoplight:
+              id: eyxnoph0ggkd0
+            description: The available truck capacity of this Account for the day.
+          connected_company:
+            type: object
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                format: uuid
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this account
+      x-internal: true
+    Job-Read-Typeahead:
+      title: Job-Read-Typeahead
+      x-stoplight:
+        id: mpjpwtpyc0pi1
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          job_id:
+            type: string
+            description: Account name
+            x-stoplight:
+              id: bl32v5q2dd1c9
+        required:
+        - job_id
+    Account-Read-Nested:
+      title: Account-Read-Nested
+      x-stoplight:
+        id: zo8r3gsz1tm5h
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: gl7hua7pv8xka
+        required:
+        - name
+        - account_types
+        - external_id
+        - accounting_id
+        - company
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: a7g065w5byfcf
+          account_types:
+            type: array
+            x-stoplight:
+              id: a0e9c3lpr1wad
+            items:
+              $ref: '#/components/schemas/AccountType'
+          external_id:
+            type: string
+            x-stoplight:
+              id: yfrec4y0a90cb
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: yfsec5y0a91cb
+            nullable: true
+          company:
+            type: object
+            x-stoplight:
+              id: 9loqtu14mvlnq
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: udjkdjrz08pzr
+                format: uuid
+          billing_address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 0g9kx77zym4ok
+          connected_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          billing_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+    DispatchNumber-Read-Typeahead:
+      title: DispatchNumber-Read-Typeahead
+      x-stoplight:
+        id: qcetdkxho2g9s
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: hjd7j5qltq7i0
+    User-Read-Typeahead:
+      title: User-Read-Typeahead
+      x-stoplight:
+        id: ttbbss5b5k66f
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - first_name
+        - last_name
+        properties:
+          first_name:
+            type: string
+            description: First name
+            x-stoplight:
+              id: gwo999rcdahmg
+          last_name:
+            type: string
+            description: Last name
+            x-stoplight:
+              id: l9omnnsq644bh
+      description: ''
+    RateTime-Read:
+      title: RateTime-Read
+      x-stoplight:
+        id: gsz4jl8ws70ac
+      allOf:
+      - $ref: '#/components/schemas/Rate-Read'
+      - type: object
+        properties:
+          time_rate:
+            type: number
+            x-stoplight:
+              id: 77ouycjgsbisl
+            minimum: 0
+          time_minimum_minutes:
+            type: integer
+            x-stoplight:
+              id: dknkfroav5bqj
+            minimum: 0
+          time_increment_minutes:
+            type: integer
+            x-stoplight:
+              id: ds1s0ub4319lh
+            minimum: 0
+        required:
+        - time_rate
+        - time_minimum_minutes
+        - time_increment_minutes
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: c9ls3nrhbih3v
+            nullable: true
+          ticket_match_id:
+            type: string
+            x-stoplight:
+              id: a1cd3nrhbih3v
+            nullable: true
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type: string
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+            nullable: true
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    Site-Read-Typeahead:
+      title: Site-Read-Typeahead
+      x-stoplight:
+        id: wnzkdq5df4apa
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        properties:
+          name:
+            type: string
+            description: Site name
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          external_id:
+            type: string
+            x-stoplight:
+              id: tt6lx8lw29aiu
+            nullable: true
+    CompanyDayDriverStat-Read:
+      title: CompanyDayDriverStat-Read
+      x-stoplight:
+        id: 3grxlvq5qo470
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: e0k1y5lyccj7x
+        properties:
+          day:
+            type: string
+            x-stoplight:
+              id: tq2kbgspesbyq
+            format: date
+          jobs_count:
+            type: integer
+            x-stoplight:
+              id: lq3o1iorx79vx
+      description: CompanyDayDriverStat
+    Material-Read-Typeahead:
+      title: Material-Read-Typeahead
+      x-stoplight:
+        id: 30glh3las0ydb
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        properties:
+          name:
+            type: string
+            description: Material name
+          external_id:
+            type: string
+            description: Material external_id
+            x-stoplight:
+              id: ml0l0yvuz5u6d
+            nullable: true
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Project-Read-Nested:
+      title: Project-Read-Nested
+      x-stoplight:
+        id: 9ene929zmvaog
+      allOf:
+      - $ref: '#/components/schemas/Project-Read-Typeahead'
+      - type: object
+        x-stoplight:
+          id: 8t1ly6sefwmit
+        required:
+        - po_job_number
+        - internal_notes
+        - job_notes
+        - notes
+        - order_notes
+        properties:
+          po_job_number:
+            type: string
+            x-stoplight:
+              id: w5ajmms5o1rjq
+            nullable: true
+          internal_notes:
+            type: string
+            x-stoplight:
+              id: 3hbaltdu1u159
+            nullable: true
+          job_notes:
+            type: string
+            x-stoplight:
+              id: fupx5op0cmel2
+            nullable: true
+          notes:
+            type: string
+            x-stoplight:
+              id: 96qr64lmtj36s
+            nullable: true
+          order_notes:
+            type: string
+            x-stoplight:
+              id: o38gpshallijh
+            nullable: true
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Equipment-Read-Default-Nested:
+      title: Equipment-Read-Default-Nested
+      x-stoplight:
+        id: kojte9y4g6t9v
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        - equipment_type
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          external_id:
+            type: string
+            nullable: true
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: v25n5jka8apv0
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - email
+        - phone
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: sd80y9pbgvkok
+            nullable: true
+          email:
+            type: string
+            x-stoplight:
+              id: 883fmt34pdeaj
+            nullable: true
+          phone:
+            type: string
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+            nullable: true
+      description: ''
+    Service-Read-Typeahead:
+      title: Service-Read-Typeahead
+      x-stoplight:
+        id: hzokhwqcwvue5
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: Service name
+        required:
+        - name
+    RateFlatRate-Read:
+      title: RateFlatRate-Read
+      x-stoplight:
+        id: cchfdcn2nogj4
+      allOf:
+      - $ref: '#/components/schemas/Rate-Read'
+      - type: object
+        x-stoplight:
+          id: k6s97jfyyal9x
+        required:
+        - flat_amount
+        properties:
+          flat_amount:
+            type: number
+            x-stoplight:
+              id: lbps3g0gciclk
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    AddOnRateType:
+      title: AddOnRateType
+      x-stoplight:
+        id: 1c3m0qj0ofdao
+      enum:
+      - RateForEach
+      - RatePercentOfTotal
+      - PerLoad
+      - FuelSurcharge
+      example: RateForEach
+      default: RateForEach
+    GpsStatus:
+      title: GpsStatus
+      x-stoplight:
+        id: 3b02180lfd6ve
+      description: GPS Ping status for a record
+      type: object
+      required:
+      - status
+      - last_ping_at
+      properties:
+        status:
+          x-stoplight:
+            id: 7f6aqydupq3ac
+          enum:
+          - online
+          - offline
+          - idle
+          - no_signal
+        last_ping_at:
+          type: string
+          x-stoplight:
+            id: 1ikh7blmxdqcz
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    GeofenceType:
+      title: GeofenceType
+      x-stoplight:
+        id: geahowr9r8ly1
+      nullable: true
+      enum:
+      - moving
+      - circle
+      - polygon
+      readOnly: true
+    Label-Read-Nested:
+      title: Label-Read-Nested
+      x-stoplight:
+        id: lbl1readnest01
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: lbl1nestnm0001
+            description: Label name
+          color:
+            type: string
+            x-stoplight:
+              id: lbl1nestcol001
+            description: Hex color code for the label
+            pattern: ^#[0-9A-Fa-f]{6}$
+        required:
+        - name
+        - color
+    Company-Read-Typeahead:
+      title: Company-Read-Typeahead
+      x-stoplight:
+        id: vl8vd87brmcah
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            description: Company Legal Name
+            x-stoplight:
+              id: gy5vtcbh7agl2
+        required:
+        - legal_name
+      x-internal: true
+    Account-Read-Typeahead:
+      title: Account-Read-Typeahead
+      x-stoplight:
+        id: 0jtlv216ot4og
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: zinx4pmrlrvkg
+        required:
+        - name
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 675oqyzkv2xvp
+            description: Account name
+          connected_company:
+            type: object
+            x-stoplight:
+              id: 9e36j656fhsso
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: 8nxy7z0w3h51m
+                format: uuid
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 4yv7e5z57qmn2
+      x-internal: true
+    Equipment-Read-Nested:
+      title: Equipment-Read-Nested
+      x-stoplight:
+        id: 7ezenec7ycv5l
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
+      - type: object
+        required:
+        - license_number
+        - zone
+        - accounting_id
+        - equipment_id
+        properties:
+          license_number:
+            type: string
+            x-stoplight:
+              id: hw1ooa17wsadq
+            nullable: true
+          zone:
+            type: string
+            x-stoplight:
+              id: 81hr4p8yp8btv
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: ere9qhs4cuwhi
+            nullable: true
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: gt7r3iqzx2w0u
+    GpsStatusable:
+      title: GpsStatusable
+      x-stoplight:
+        id: o6oprcupw6ep7
+      type: object
+      required:
+      - gps_status
+      properties:
+        gps_status:
+          $ref: '#/components/schemas/GpsStatus'
+      additionalProperties: false
+    Rate-Read:
+      title: Rate-Read
+      x-stoplight:
+        id: de0evm1n01ovt
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - company
+        - primary
+        - fuel_surcharge_enabled
+        - projects
+        - services
+        - equipment
+        - owner_type
+        - add_ons
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 68v64b4h4savn
+          type:
+            $ref: '#/components/schemas/RateType'
+          account:
+            $ref: '#/components/schemas/Account-Read-Nested'
+          account_type:
+            $ref: '#/components/schemas/AccountType'
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          primary:
+            type: boolean
+            x-stoplight:
+              id: 5zm8fs03fcx5f
+          fuel_surcharge_enabled:
+            type: boolean
+            x-stoplight:
+              id: p2gy698ydj5z6
+          projects:
+            type: array
+            x-stoplight:
+              id: l3jrum5n4f1kj
+            items:
+              $ref: '#/components/schemas/Project-Read-Nested'
+          services:
+            type: array
+            x-stoplight:
+              id: c6hzbddhsct1v
+            items:
+              $ref: '#/components/schemas/Service-Read-Nested'
+          equipment:
+            type: array
+            x-stoplight:
+              id: 32sh55sr2mob0
+            items:
+              $ref: '#/components/schemas/Equipment-Read-Nested'
+          owner_type:
+            $ref: '#/components/schemas/RateOwnerType'
+          driver:
+            $ref: '#/components/schemas/Driver-Read-Nested'
+          add_ons:
+            type: array
+            x-stoplight:
+              id: 6jf0xn2k0obg9
+            items:
+              $ref: '#/components/schemas/AddOn-Read-Nested'
+          service_class:
+            $ref: '#/components/schemas/ServiceClass-Read-Nested'
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+      description: Base model for Rates. Do not use this directly, instead use the submodels.
+    Phase-Read-Typeahead:
+      title: Phase-Read-Typeahead
+      x-stoplight:
+        id: tjfs70n45skps
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - x-stoplight:
+          id: a6hm4eognaiso
+        type: object
+        required:
+        - name
+        - code
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: ezkzw91o7rfo1
+          code:
+            type: string
+            x-stoplight:
+              id: 7wz335bhaggci
+            nullable: true
+    Order-Read-Typeahead:
+      title: Order-Read-Typeahead
+      x-stoplight:
+        id: ordrtypahead1
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          order_id:
+            type: string
+            description: Order friendly identifier
+            x-stoplight:
+              id: ordrtypahead2
+        required:
+        - order_id
+    Foreman-Read-Typeahead:
+      title: Foreman-Read-Typeahead
+      x-stoplight:
+        id: kdwiblw3n3qtm
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: mhsvzlxjbapan
+        required:
+        - first_name
+        - last_name
+        - phone
+        properties:
+          first_name:
+            type: string
+            x-stoplight:
+              id: 8fst58e2tam8v
+            description: First name
+          last_name:
+            type: string
+            x-stoplight:
+              id: av8z4dxam69hi
+            description: Last name
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          phone:
+            type: string
+            x-stoplight:
+              id: 7b5vdi0y2qt5m
+            description: User's E.164 formatted phone number
+            nullable: true
+    Project-Read-Typeahead:
+      title: Project-Read-Typeahead
+      x-stoplight:
+        id: 3wdg6ghyvsknb
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        properties:
+          name:
+            type: string
+            description: Project name
+          external_id:
+            type: string
+            x-stoplight:
+              id: 7kipqxvhrgvk0
+            nullable: true
+    Service-Read-Nested:
+      title: Service-Read-Nested
+      x-stoplight:
+        id: 4bry9oy16sin9
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: tsb5b63pzas6h
+        required:
+        - name
+    RateCommission-Read:
+      title: RateCommission-Read
+      x-stoplight:
+        id: ugvgjhdxqi406
+      allOf:
+      - $ref: '#/components/schemas/Rate-Read'
+      - type: object
+        properties:
+          commission_percentage:
+            type: number
+            x-stoplight:
+              id: ugu95q3secjrp
+        required:
+        - commission_percentage
+    Site-Read:
+      title: Site-Read
+      x-stoplight:
+        id: d3bw9em1ibuq1
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - company
+        - name
+        - lat
+        - lon
+        - notes
+        - state
+        - external_id
+        - full_address
+        - routable
+        properties:
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          name:
+            type: string
+            x-stoplight:
+              id: qetgw5ugccnx3
+          lat:
+            type: string
+            x-stoplight:
+              id: f85y4jij1rblz
+            nullable: true
+          lon:
+            type: string
+            x-stoplight:
+              id: 12zny9anzmdv1
+            nullable: true
+          site_type:
+            $ref: '#/components/schemas/SiteType'
+          notes:
+            type: string
+            x-stoplight:
+              id: x8fcflv4sr9qu
+            nullable: true
+          state:
+            $ref: '#/components/schemas/SiteState'
+          next_billion_geofence:
+            $ref: '#/components/schemas/NextBillionGeofence-Read'
+          external_id:
+            type: string
+            x-stoplight:
+              id: 89q7a12oipvs7
+            nullable: true
+          full_address:
+            type: string
+            x-stoplight:
+              id: 5yo2vmvrpdqhs
+            nullable: true
+          routable:
+            type: boolean
+            x-stoplight:
+              id: 1wpkny0oz7ju1
+          moving_site:
+            $ref: '#/components/schemas/MovingSite-Read'
+          department:
+            $ref: '#/components/schemas/Department-Read-Nested'
+          contacts:
+            type: array
+            x-stoplight:
+              id: iln7bn31b1mdo
+            items:
+              $ref: '#/components/schemas/Contact-Read-Nested'
+          editable:
+            type: boolean
+            description: Whether the current user can edit this site
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - $ref: '#/components/schemas/Timestamps'
+      - $ref: '#/components/schemas/Discardable'
+      x-tags:
+      - Sites
+    Geofence-Data:
+      title: Geofence-Data
+      x-stoplight:
+        id: ay73k76oae8gm
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          x-stoplight:
+            id: m9n8p7q6r5s4t
+          description: NextBillionGeofence ID
+        geofence:
+          type: object
+          x-stoplight:
+            id: bo67u046r1ibk
+          required:
+          - name
+          - type
+          properties:
+            id:
+              type: string
+              x-stoplight:
+                id: nm2o97jli2zqm
+              format: uuid
+              description: NextBillion Geofence ID
+            name:
+              type: string
+              x-stoplight:
+                id: x5sp8wq8d2ack
+            type:
+              type: string
+              x-stoplight:
+                id: d91rv1gbtfkm0
+              description: '`circle` or `polygon`'
+            geojson:
+              type: object
+              x-stoplight:
+                id: vk7dx7ipdbuxa
+              required:
+              - type
+              - coordinates
+              properties:
+                type:
+                  type: string
+                  x-stoplight:
+                    id: 65qatpxdox3e9
+                  description: type should be `Polygon`
+                coordinates:
+                  type: array
+                  x-stoplight:
+                    id: 3an8g587wblcs
+                  description: 'This should be an enclosed polygon.
+
+
+                    Example format:
+
+                    [[[-118.226140484,34.048200454],[-118.22616052,34.046872766],[-118.226198738,34.04952736],[-118.226140484,34.048200454]]]'
+                  items:
+                    x-stoplight:
+                      id: 2kltvjxl5xks6
+                    type: array
+                    items:
+                      x-stoplight:
+                        id: k93dt39dghru4
+                      type: array
+                      items: {}
+            circle_center:
+              type: object
+              x-stoplight:
+                id: 6xr3h683f7cl9
+              required:
+              - lat
+              - lon
+              properties:
+                lat:
+                  type: number
+                  x-stoplight:
+                    id: y70xc1ptapv1g
+                lon:
+                  type: number
+                  x-stoplight:
+                    id: uy3twrpcueq9m
+            circle_radius:
+              type: number
+              x-stoplight:
+                id: qrnq301sqfl3d
+            tag:
+              x-stoplight:
+                id: debfy3x1l48zc
+              enum:
+              - pickup
+              - loading
+              - drop_off
+              - unloading
+              - check_in
+              - scaling
+              - ticketing
+              deprecated: true
+        moving_geofence:
+          type: boolean
+          x-stoplight:
+            id: y15533dbr62js
+          default: false
+        tag:
+          $ref: '#/components/schemas/GeofenceTag'
+        geofence_type:
+          $ref: '#/components/schemas/NullableGeofenceType'
+      additionalProperties: false
+    Address-Read:
+      title: Address-Read
+      x-stoplight:
+        id: v1mcd2qgns2tf
+      type: object
+      required:
+      - thoroughfare
+      - premise
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      - lat
+      - lon
+      - place_id
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: 8wrr7qkc9ilqn
+        premise:
+          type: string
+          x-stoplight:
+            id: z4jth408out1q
+          nullable: true
+        locality:
+          type: string
+          x-stoplight:
+            id: kfby6wqpgvxbz
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: c9bkrloxf4t8d
+        postal_code:
+          type: string
+          x-stoplight:
+            id: 7zq51k1mof3o3
+        country:
+          type: string
+          x-stoplight:
+            id: iydw9q619ya01
+          pattern: ^[A-Z]{2}
+          example: US
+          minLength: 2
+          maxLength: 2
+        lat:
+          type: string
+          x-stoplight:
+            id: kqu1qtf9rivh1
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+          nullable: true
+        lon:
+          type: string
+          x-stoplight:
+            id: oly2yabkzpk9g
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+          nullable: true
+        place_id:
+          type: string
+          x-stoplight:
+            id: im1fdq7qqxdij
+          description: NextBillion placeID
+          nullable: true
+      additionalProperties: false
+    NullableOrderUnitOfMeasure:
+      title: NullableOrderUnitOfMeasure
+      x-stoplight:
+        id: rtlna368z495u
+      allOf:
+      - $ref: '#/components/schemas/OrderUnitOfMeasure'
+      type: string
+      nullable: true
+  parameters:
+    filter-job-customer_account_ids:
+      name: filter[job][customer_account_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Customer Account IDs for the Job
+    filter-equipment_type_ids:
+      name: filter[equipment_type_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated EquipmentType IDs
+    search-job-datagrid:
+      name: search[job][datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    filter-label_ids:
+      name: filter[label_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uuid
+      description: Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic).
+    filter-job-dropoff_site_ids:
+      name: filter[job][dropoff_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Dropoff Site IDs for the Job
+    search-site-query:
+      name: search[site][query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries on Site
+    filter-job-company_ids:
+      name: filter[job][company_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Company IDs for the Job
+    filter-account_id:
+      name: filter[account_id]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Account ID filter
+    filter-job-external_ids:
+      name: filter[job][external_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated External Project IDs for the Job
+    filter-job-site_types:
+      name: filter[job][site_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: SiteType enum filters for the Job (see SiteType enum for the list of values)
+    filter-site_id:
+      name: filter[site_id]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+      description: The associated Site ID
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    filter-service_class_id:
+      name: filter[service_class_id]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+      description: The associated ServiceClass ID
+    filter-customer_account_id:
+      name: filter[customer_account_id]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+      description: The associated Customer Account ID
+    filter-connected:
+      name: filter[connected]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Only show connected Accounts
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    filter-add_on_rate_types:
+      name: filter[add_on_rate_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: AddOnRateTypes enum filter. See AddOnRateType enum for accepted values.
+    filter-site_types:
+      name: filter[site_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: SiteType enum filters (see SiteType enum for the list of values)
+    filter-account_types:
+      name: filter[account_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: AccountType filter
+    filter-states:
+      name: filter[states]
+      in: query
+      schema:
+        type: array
+      description: States based on the resource (e.g. Order states or Job states)
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    filter-include_default:
+      name: filter[include_default]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Includes default rates when set to true
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    filter-job-service_ids:
+      name: filter[job][service_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Service IDs for the Job
+    filter-availability:
+      name: filter[availability]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter based on record availability based on the `date` parameter/filter, defaulting to the current day.
+    filter-job-pickup_site_ids:
+      name: filter[job][pickup_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Pickup Site IDs for the Job
+    filter-show_all:
+      name: filter[show_all]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Show all records. Deprecated in favor of `filter[availability]`
+      deprecated: true
+    filter-sender_company_ids:
+      name: filter[sender_company_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Sender Company IDs
+    filter-dispatch_number_ids:
+      name: filter[dispatch_number_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated DispatchNumber IDs
+    filter-job-equipment_ids:
+      name: filter[job][equipment_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Equipment IDs for the Job
+    filter-add_on_types:
+      name: filter[add_on_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: AddOnTypes enum filter. See AddOnType enum for accepted values.
+    facet-search-query:
+      name: facet[search][query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The typeahead search query. Matches on the models's `name` field
+    filter-driver_id:
+      name: filter[driver_id]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Driver ID filter
+    filter-job-end_date:
+      name: filter[job][end_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: End date range for Job.job_start_at
+    filter-date:
+      name: filter[date]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+      description: Single Date Filter
+    filter-owner_type:
+      name: filter[owner_type]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: RateOwnerType filter
+    filter-equipment_id:
+      name: filter[equipment_id]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Equipment ID filter
+    filter-service_id:
+      name: filter[service_id]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Service ID filter
+    filter-expiring:
+      name: filter[expiring]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records.
+    filter-department_ids:
+      name: filter[department_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Department IDs. Use 'none' to filter for records without a Department.
+    filter-sender_company_types:
+      name: filter[sender_company_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: CompanyType enum filter. See CompanyType enum for accepted values.
+    filter-dispatchable:
+      name: filter[dispatchable]
+      in: query
+      schema:
+        type: boolean
+      description: Filter dispatchable CompanyShareable models
+    filter-job-vendor_account_ids:
+      name: filter[job][vendor_account_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Vendor Account IDs for the Job
+    facet-filter-waypoint-type:
+      name: facet[filter][waypoint][type]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - pickup
+        - drop_off
+      description: A Waypoint type to filter on. Can be omitted to return all.
+    filter-material_id:
+      name: filter[material_id]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+      description: The associated Material ID
+    filter-iam_roles:
+      name: filter[iam_roles]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: 'The IamRoles of the User. Allowed values: `platform_admin`, `company_admin`, `dispatcher`, `biller`, `foreman`, `driver`, `it_admin`, `manager`'
+      allowEmptyValue: false
+      explode: false
+    filter-job-driver_ids:
+      name: filter[job][driver_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The assigned Driver IDs for the Job
+    filter-project_id:
+      name: filter[project_id]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Project ID filter
+    filter-job-material_ids:
+      name: filter[job][material_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Material IDs for the Job
+    filter-job-states:
+      name: filter[job][states]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: Job states
+    filter-job-start_date:
+      name: filter[job][start_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Start date range for Job.job_start_at
+    filter-shared:
+      name: filter[shared]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter shared CompanyShareable models
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    filter-equipment_type_id:
+      name: filter[equipment_type_id]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+      description: The associated EquipmentType ID
+    filter-job-project_ids:
+      name: filter[job][project_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Project IDs for the Job
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

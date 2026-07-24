@@ -1,0 +1,912 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier OmniReports API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: OmniReports
+paths:
+  /v1/companies/{company-id}/omni_reports:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create Omni Report for a Company
+      tags:
+      - OmniReports
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OmniReport-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-omni_reports
+      x-stoplight:
+        id: wz52ohp300noh
+      x-internal: true
+      description: Create `Omni Report` for a `Company`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OmniReport-Create'
+    get:
+      summary: Retrieve all Omni Reports that belong to a Company
+      tags:
+      - OmniReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: ppjtv6kxfiv9d
+                    items:
+                      $ref: '#/components/schemas/OmniReport-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-omni_reports
+      x-stoplight:
+        id: 03401h79tzpda
+      description: 'Retrieve `Omni Reports` that belong to `Company` by `ID`.
+
+
+        This endpoint requires the `view_report` permission.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-after'
+  /v1/companies/{company-id}/omni_reports/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: Omni Report ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve embedded link for Omni Report that belongs to a Company
+      tags:
+      - OmniReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OmniReportLink-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-omni_reports-id
+      x-stoplight:
+        id: lv9hch2e4ribh
+      description: 'Retrieve embedded link for Omni Report by `ID` that is scoped to a `Company` and their child `Companies`.
+
+
+        This endpoint requires the `view_report` permission.'
+  /v1/companies/{company-id}/report_categories:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a Report Category
+      tags:
+      - OmniReports
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ReportCategory-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-report_categories
+      x-stoplight:
+        id: bv9l1v1270tja
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportCategory-Create'
+      description: Create a `Report Category`
+      x-internal: true
+    get:
+      summary: Retrieve ReportCategories for a Company
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: so1k96amby5td
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReportCategory-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-report_categories
+      x-stoplight:
+        id: weuz29f764l26
+      x-internal: true
+      description: Retrieve `ReportCategories` for a `Company`
+      tags:
+      - OmniReports
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/companies/{company-id}/report_categories/{report-category-id}/omni_reports:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: report-category-id
+      in: path
+      required: true
+      description: Report Category ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve all OmniReports under a ReportCategory that belong to a Company
+      tags:
+      - OmniReports
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 778lanpype7zi
+                    items:
+                      $ref: '#/components/schemas/OmniReport-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-report_categories-report-category-id-omni_reports
+      x-stoplight:
+        id: 9gdf860uxh1k2
+      description: 'Retrieve all `OmniReports` under a `ReportCategory` that belong to a `Company`
+
+
+        This endpoint requires the `view_report` permission'
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/omni_reports:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve all Omni Reports visible to the current Company
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: t7zdd3ibkyp19
+                    items:
+                      $ref: '#/components/schemas/OmniReport-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-omni_reports
+      x-stoplight:
+        id: rypfgt41jqlgi
+      description: 'Retrieve all `Omni Reports` visible to the current `Company`
+
+
+        This endpoint requires the `view_report` permission'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-after'
+      tags:
+      - OmniReports
+  /v1/omni_reports/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: Report ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve embedded link for Omni Report by Report Name
+      tags:
+      - OmniReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OmniReportLink-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-omni_reports-report_name
+      x-stoplight:
+        id: qqas9dmyc7mof
+      description: 'Retrieve embedded link for Omni Report by `ID`
+
+
+        This endpoint requires the `view_report` permission'
+      parameters: []
+      x-internal: true
+    patch:
+      summary: Update Omni Report
+      tags:
+      - OmniReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OmniReport-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-omni_reports-id
+      x-stoplight:
+        id: yag41l1bpmyuh
+      description: Update `OmniReport` by `ID`
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OmniReport-Update'
+    delete:
+      summary: Delete Omni Report
+      tags:
+      - OmniReports
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-omni_reports-id
+      x-stoplight:
+        id: 7q8q7mlwouqv3
+      description: Delete `Omni Report` by `ID`
+      x-internal: true
+  /v1/report_categories/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: ReportCategory ID
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Update ReportCategory
+      tags:
+      - OmniReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ReportCategory-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-report_categories-id
+      x-stoplight:
+        id: qy5eik2q9mvfq
+      description: Update `ReportCategory` by `ID`
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportCategory-Update'
+    delete:
+      summary: Delete ReportCategory
+      tags:
+      - OmniReports
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-report_categories-id
+      x-stoplight:
+        id: c0l9abzhmysus
+      description: Delete `ReportCategory` by `ID`
+      x-internal: true
+  /v1/report_categories/{report-category-id}/omni_reports:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: report-category-id
+      in: path
+      required: true
+      description: Report Category ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve all OmniReports that are under a ReportCategory
+      tags:
+      - OmniReports
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: azjet1zexx24n
+                    items:
+                      $ref: '#/components/schemas/OmniReport-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-report_categories-report-category-id-omni_reports
+      x-stoplight:
+        id: 6f31eb2dkyncc
+      description: 'Retrieve all `OmniReports` that are under a `ReportCategory`
+
+
+        This endpoint requires the `view_report` permission'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      x-internal: true
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    ReportCategory-Create:
+      title: ReportCategory-Create
+      x-stoplight:
+        id: o09qb30a1qkrg
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 7aicmm7orystr
+        system:
+          type: boolean
+          x-stoplight:
+            id: pfov05cu0auik
+      x-internal: true
+      additionalProperties: false
+    ReportCategory-Update:
+      title: ReportCategory-Update
+      x-stoplight:
+        id: aa52md9g3xvnn
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: bebjyyae4jzyu
+      x-internal: true
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    OmniReport-Read:
+      title: OmniReport-Read
+      x-stoplight:
+        id: av3k6gjltpapb
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 19wcinghh91lt
+        required:
+        - name
+        - dashboard_id
+        - system
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: f2ovmcott6v5k
+          dashboard_id:
+            type: string
+            x-stoplight:
+              id: by70pqu4qydb1
+          system:
+            type: boolean
+            x-stoplight:
+              id: a9nrnf6mpydga
+          report_category:
+            $ref: '#/components/schemas/ReportCategory-Read'
+      x-internal: true
+    ReportCategory-Read:
+      title: ReportCategory-Read
+      x-stoplight:
+        id: 0wppww4mee050
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: ohyqoa1t83mag
+        required:
+        - name
+        - system
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 8bw23t06r90h3
+          system:
+            type: boolean
+            x-stoplight:
+              id: 0t7net7vosd8z
+      x-internal: true
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    OmniReport-Update:
+      title: OmniReport-Update
+      x-stoplight:
+        id: 0b09vp2lful8q
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: kdcqqkihqvdvv
+        dashboard_id:
+          type: string
+          x-stoplight:
+            id: hquuxyxju5olx
+        report_category_id:
+          type: string
+          x-stoplight:
+            id: l9xw0qz6ni5lc
+          format: uuid
+      x-internal: true
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    OmniReportLink-Read:
+      title: OmniReportLink-Read
+      x-stoplight:
+        id: iusjdijojq679
+      type: object
+      required:
+      - dashboard_url
+      properties:
+        dashboard_url:
+          type: string
+          x-stoplight:
+            id: selsmml5eqvc9
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    OmniReport-Create:
+      title: OmniReport-Create
+      x-stoplight:
+        id: 1pd87c360aj87
+      type: object
+      required:
+      - name
+      - dashboard_id
+      - report_category_id
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: q46k4wj11ephk
+        dashboard_id:
+          type: string
+          x-stoplight:
+            id: dvtmkyxz2ed1o
+        report_category_id:
+          type: string
+          x-stoplight:
+            id: am4622rnu2x6p
+          format: uuid
+        system:
+          type: boolean
+          x-stoplight:
+            id: ry8ocfi2elgyt
+      x-internal: true
+      additionalProperties: false
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

@@ -1,0 +1,688 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Telematics API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Telematics
+paths:
+  /v1/telematics/fleets:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve all Telematics Fleets visible to the current Company
+      tags:
+      - Telematics
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: yxddrx1suecmq
+                    items:
+                      $ref: '#/components/schemas/TelematicsFleet-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-telematics_fleet
+      x-stoplight:
+        id: b5swlyac0yi3z
+      description: Retrieve `TelematicsFleets` visible to the currently authenticated `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/telematics/fleets/{fleet-id}/remote_vehicles:
+    parameters:
+    - schema:
+        type: string
+      name: fleet-id
+      in: path
+      required: true
+      description: Fleet ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve all Remote Vehicles for a Telematics Fleet visible to the current Company
+      tags:
+      - Telematics
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: ldg7xe292ml6s
+                    items:
+                      $ref: '#/components/schemas/TelematicsRemoteVehicle-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-telematics-fleets-:id-remote_vehicles
+      x-stoplight:
+        id: 88nz5bw8kqauh
+      description: Retrieve all `Remote Vehicles` for a `Telematics Fleet` visible to the current Company
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-datagrid'
+  /v1/telematics/remote_vehicles/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Telematics Remote Vehicle ID
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Update a Telematics Remote Vehicle
+      tags:
+      - Telematics
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TelematicsRemoteVehicle-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-telematics-remote_vehicle-id
+      x-stoplight:
+        id: tcbxsox3f288c
+      description: 'Update a `Telematics Remote Vehicle` by `id`.
+
+
+        This endpoint requires the `edit_telematics_remote_vehicles` permission.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TelematicsRemoteVehicle-Update'
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: c9ls3nrhbih3v
+            nullable: true
+          ticket_match_id:
+            type: string
+            x-stoplight:
+              id: a1cd3nrhbih3v
+            nullable: true
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type: string
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+            nullable: true
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    TelematicsProviderSource:
+      title: TelematicsProviderSource
+      x-stoplight:
+        id: 9csrn2g21o443
+      enum:
+      - axle
+      - paver_tracker
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
+      x-stoplight:
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type: string
+          x-stoplight:
+            id: ttaijg77qmbgk
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: s4rscgptv68x3
+          nullable: true
+      additionalProperties: false
+    Equipment-Read-Nested:
+      title: Equipment-Read-Nested
+      x-stoplight:
+        id: 7ezenec7ycv5l
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
+      - type: object
+        required:
+        - license_number
+        - zone
+        - accounting_id
+        - equipment_id
+        properties:
+          license_number:
+            type: string
+            x-stoplight:
+              id: hw1ooa17wsadq
+            nullable: true
+          zone:
+            type: string
+            x-stoplight:
+              id: 81hr4p8yp8btv
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: ere9qhs4cuwhi
+            nullable: true
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: gt7r3iqzx2w0u
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    TelematicsRemoteVehicle-Update:
+      title: TelematicsRemoteVehicle-Update
+      x-stoplight:
+        id: jrhriusqekxoc
+      type: object
+      properties:
+        telematics_fleet_id:
+          type: string
+          x-stoplight:
+            id: 4noqqqv9nmoot
+          format: uuid
+        equipment_id:
+          type: string
+          x-stoplight:
+            id: sxe7yvlc5gq6p
+          format: uuid
+          nullable: true
+        remote_vehicle_external_id:
+          type: number
+          x-stoplight:
+            id: 5a2cju2p37vz0
+        remote_vehicle_external_name:
+          type: string
+          x-stoplight:
+            id: 2a7jqwkglsd17
+        remote_vehicle_external_model:
+          type: string
+          x-stoplight:
+            id: 2nq0t1400otk0
+          nullable: true
+        remote_vehicle_external_license_plate_number:
+          type: string
+          x-stoplight:
+            id: ek1b4yla11ugq
+          nullable: true
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    TelematicsRemoteVehicle-Read:
+      title: TelematicsRemoteVehicle-Read
+      x-stoplight:
+        id: r0q7f0r1ybb0i
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: d4k8j1wny76bs
+        required:
+        - telematics_fleet_id
+        - remote_vehicle_external_id
+        - remote_vehicle_external_name
+        - remote_vehicle_external_model
+        - remote_vehicle_external_license_plate_number
+        properties:
+          telematics_fleet_id:
+            type: string
+            x-stoplight:
+              id: xvj9akg8ywblc
+            format: uuid
+          remote_vehicle_external_id:
+            type: number
+            x-stoplight:
+              id: xq7860839zn6c
+          remote_vehicle_external_name:
+            type: string
+            x-stoplight:
+              id: jm4jg52cm924u
+          remote_vehicle_external_model:
+            type: string
+            x-stoplight:
+              id: pz3xuif93dwk1
+            nullable: true
+          remote_vehicle_external_license_plate_number:
+            type: string
+            x-stoplight:
+              id: 5acxe97clnqtp
+            nullable: true
+          equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+    TelematicsFleet-Read:
+      title: TelematicsFleet-Read
+      x-stoplight:
+        id: 7morriwrzyhd3
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: 3iqx1q7krh4mi
+        required:
+        - external_remote_fleet_id
+        - provider_source
+        - company_id
+        properties:
+          external_remote_fleet_id:
+            type: string
+            x-stoplight:
+              id: jbfwmpk7iq9r5
+            nullable: true
+          provider_source:
+            $ref: '#/components/schemas/TelematicsProviderSource'
+          company_id:
+            type: string
+            x-stoplight:
+              id: vr38u0i2aebz8
+            format: uuid
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Equipment-Read-Typeahead:
+      title: Equipment-Read-Typeahead
+      x-stoplight:
+        id: sv94osohm5xhg
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - equipment_type
+        - external_id
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          external_id:
+            type: string
+            x-stoplight:
+              id: jrkz95htilck3
+            nullable: true
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: fkr9fkdtl996f
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

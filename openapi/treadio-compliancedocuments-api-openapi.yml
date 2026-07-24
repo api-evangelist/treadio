@@ -1,0 +1,1184 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier ComplianceDocuments API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: ComplianceDocuments
+paths:
+  /v1/companies/{company-id}/accounts/{account-id}/compliance_documents:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: account-id
+      in: path
+      required: true
+      description: Account ID
+    post:
+      summary: Create Compliance Document for Account
+      operationId: post-account-compliance-documents
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplianceDocument-Create'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      description: Create Compliance Document for Account
+    get:
+      summary: List Compliance Documents for Account
+      operationId: get-account-compliance-documents
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: List Compliance Documents for Account
+  /v1/companies/{company-id}/accounts/{account-id}/compliance_documents/checklist:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: account-id
+      in: path
+      required: true
+      description: Account ID
+    get:
+      summary: Get Compliance Checklist for Account
+      operationId: get-account-compliance-checklist
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        compliance_document_type:
+                          $ref: '#/components/schemas/ComplianceDocumentType-Read-Nested'
+                        compliance_document:
+                          nullable: true
+                          allOf:
+                          - $ref: '#/components/schemas/ComplianceDocument-Read-Nested'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: Get Compliance Checklist for Account
+  /v1/companies/{company-id}/accounts/{account-id}/compliance_documents/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: account-id
+      in: path
+      required: true
+      description: Account ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: ID
+    get:
+      summary: Show Compliance Document
+      operationId: get-account-compliance-document
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: Show Compliance Document
+    patch:
+      summary: Update Compliance Document
+      operationId: patch-account-compliance-document
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplianceDocument-Update'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      description: Update Compliance Document
+    delete:
+      summary: Delete Compliance Document
+      operationId: delete-account-compliance-document
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: Delete Compliance Document
+  /v1/companies/{company-id}/equipment/{equipment-id}/compliance_documents:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: equipment-id
+      in: path
+      required: true
+      description: Equipment ID
+    post:
+      summary: Create Compliance Document for Equipment
+      operationId: post-equipment-compliance-documents
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplianceDocument-Create'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      description: Create Compliance Document for Equipment
+    get:
+      summary: List Compliance Documents for Equipment
+      operationId: get-equipment-compliance-documents
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: List Compliance Documents for Equipment
+  /v1/companies/{company-id}/equipment/{equipment-id}/compliance_documents/checklist:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: equipment-id
+      in: path
+      required: true
+      description: Equipment ID
+    get:
+      summary: Get Compliance Checklist for Equipment
+      operationId: get-equipment-compliance-checklist
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        compliance_document_type:
+                          $ref: '#/components/schemas/ComplianceDocumentType-Read-Nested'
+                        compliance_document:
+                          nullable: true
+                          allOf:
+                          - $ref: '#/components/schemas/ComplianceDocument-Read-Nested'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: Get Compliance Checklist for Equipment
+  /v1/companies/{company-id}/equipment/{equipment-id}/compliance_documents/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: equipment-id
+      in: path
+      required: true
+      description: Equipment ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: ID
+    get:
+      summary: Show Compliance Document for Equipment
+      operationId: get-equipment-compliance-document
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: Show Compliance Document for Equipment
+    patch:
+      summary: Update Compliance Document for Equipment
+      operationId: patch-equipment-compliance-document
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplianceDocument-Update'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      description: Update Compliance Document for Equipment
+    delete:
+      summary: Delete Compliance Document for Equipment
+      operationId: delete-equipment-compliance-document
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: Delete Compliance Document for Equipment
+  /v1/companies/{company-id}/users/{user-id}/compliance_documents:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: user-id
+      in: path
+      required: true
+      description: User ID
+    post:
+      summary: Create Compliance Document for User
+      operationId: post-user-compliance-documents
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplianceDocument-Create'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      description: Create Compliance Document for User
+    get:
+      summary: List Compliance Documents for User
+      operationId: get-user-compliance-documents
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: List Compliance Documents for User
+  /v1/companies/{company-id}/users/{user-id}/compliance_documents/checklist:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: user-id
+      in: path
+      required: true
+      description: User ID
+    get:
+      summary: Get Compliance Checklist for User
+      operationId: get-user-compliance-checklist
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        compliance_document_type:
+                          $ref: '#/components/schemas/ComplianceDocumentType-Read-Nested'
+                        compliance_document:
+                          nullable: true
+                          allOf:
+                          - $ref: '#/components/schemas/ComplianceDocument-Read-Nested'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: Get Compliance Checklist for User
+  /v1/companies/{company-id}/users/{user-id}/compliance_documents/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: user-id
+      in: path
+      required: true
+      description: User ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: ID
+    get:
+      summary: Show Compliance Document for User
+      operationId: get-user-compliance-document
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: Show Compliance Document for User
+    patch:
+      summary: Update Compliance Document for User
+      operationId: patch-user-compliance-document
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplianceDocument-Update'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocument-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      description: Update Compliance Document for User
+    delete:
+      summary: Delete Compliance Document for User
+      operationId: delete-user-compliance-document
+      tags:
+      - ComplianceDocuments
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: Delete Compliance Document for User
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    ComplianceDocument-Read-Nested:
+      title: ComplianceDocument-Read-Nested
+      x-stoplight:
+        id: n3q5dwg8m1r7k
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: t6u2fxh9p4s0l
+        required:
+        - compliant_type
+        - compliant_id
+        properties:
+          compliant_type:
+            type: string
+            x-stoplight:
+              id: c8v1gyi3q5w7n
+            enum:
+            - Account
+            - User
+            - Equipment
+            description: Type of entity this document belongs to
+          compliant_id:
+            type: string
+            x-stoplight:
+              id: d2x4hzj6r8a0p
+            format: uuid
+            description: ID of the entity this document belongs to
+          value:
+            type: string
+            x-stoplight:
+              id: e9y7iak5s1b3q
+            nullable: true
+            description: Custom value for this document
+          expires_at:
+            type: string
+            x-stoplight:
+              id: f0z8jbl4t2c6r
+            format: date-time
+            nullable: true
+            description: Expiration date of the document
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    ComplianceDocument-Update:
+      title: ComplianceDocument-Update
+      x-stoplight:
+        id: cd1update00001
+      type: object
+      properties:
+        value:
+          type: string
+          x-stoplight:
+            id: cd1updatval001
+          description: Custom value
+        expires_at:
+          type: string
+          x-stoplight:
+            id: cd1updatexp001
+          format: date-time
+          description: Expiration date
+      additionalProperties: false
+    ComplianceDocumentType-Read-Nested:
+      title: ComplianceDocumentType-Read-Nested
+      x-stoplight:
+        id: k7m2xpqr9w4nf
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: v3h8yjzl5t1qb
+        required:
+        - name
+        - field_type
+        - has_expiration
+        - dispatch_gating
+        - required_vendors
+        - required_internal_drivers
+        - required_shared_drivers
+        - required_equipment
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: r4n6wkf8j2m1x
+            description: Display name of the document type
+          external_id:
+            type: string
+            x-stoplight:
+              id: p9c3qvh7e5s2y
+            description: External identifier for integration with external systems
+            nullable: true
+          field_type:
+            type: string
+            x-stoplight:
+              id: w1d5bnm4g8t6z
+            enum:
+            - none
+            - string
+            - number
+            - date
+            - boolean
+            description: Type of custom value field
+          has_expiration:
+            type: boolean
+            x-stoplight:
+              id: a2f7xlj3k9u0c
+            description: Whether this type has an expiration date
+          dispatch_gating:
+            type: boolean
+            x-stoplight:
+              id: b6g1yre8n4v5d
+            description: Whether expired/missing docs trigger dispatch warnings
+          required_vendors:
+            type: boolean
+            x-stoplight:
+              id: e8h3zsp2q7w6f
+            description: Whether vendors must have this document
+          required_internal_drivers:
+            type: boolean
+            x-stoplight:
+              id: f5j9atm1r0x8g
+            description: Whether internal company drivers must have this document
+          required_shared_drivers:
+            type: boolean
+            x-stoplight:
+              id: h0k4bun6s3y2i
+            description: Whether shared/vendor drivers must have this document
+          required_equipment:
+            type: boolean
+            x-stoplight:
+              id: j7l8cvp5t2z9m
+            description: Whether equipment must have this document
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ComplianceDocument-Read:
+      title: ComplianceDocument-Read
+      x-stoplight:
+        id: cd1read0000001
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          compliant_type:
+            type: string
+            x-stoplight:
+              id: cd1readct00001
+            enum:
+            - Account
+            - User
+            - Equipment
+            description: Type of entity this document belongs to
+          compliant_id:
+            type: string
+            x-stoplight:
+              id: cd1readci00001
+            format: uuid
+            description: ID of the entity this document belongs to
+          value:
+            type: string
+            x-stoplight:
+              id: cd1readval0001
+            nullable: true
+            description: Custom value for this document
+          expires_at:
+            type: string
+            x-stoplight:
+              id: cd1readexp0001
+            format: date-time
+            nullable: true
+            description: Expiration date of the document
+          notification_sent_at:
+            type: string
+            x-stoplight:
+              id: cd1readnsa0001
+            format: date-time
+            nullable: true
+            description: Timestamp when expiration notification was sent
+          compliance_document_type:
+            $ref: '#/components/schemas/ComplianceDocumentType-Read-Nested'
+            x-stoplight:
+              id: cd1readcdt0001
+            description: The document type
+        required:
+        - compliant_type
+        - compliant_id
+        - compliance_document_type
+      - $ref: '#/components/schemas/Timestamps'
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    ComplianceDocument-Create:
+      title: ComplianceDocument-Create
+      x-stoplight:
+        id: cd1create00001
+      type: object
+      properties:
+        compliance_document_type_id:
+          type: string
+          x-stoplight:
+            id: cd1creatcti001
+          format: uuid
+          description: ID of the compliance document type
+        compliant_type:
+          type: string
+          x-stoplight:
+            id: cd1creatct0001
+          enum:
+          - Account
+          - User
+          - Equipment
+          description: Type of entity
+        compliant_id:
+          type: string
+          x-stoplight:
+            id: cd1creatci0001
+          format: uuid
+          description: ID of the entity
+        value:
+          type: string
+          x-stoplight:
+            id: cd1creatval001
+          description: Custom value
+        expires_at:
+          type: string
+          x-stoplight:
+            id: cd1createxp001
+          format: date-time
+          description: Expiration date
+      required:
+      - compliance_document_type_id
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

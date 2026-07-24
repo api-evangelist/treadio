@@ -1,0 +1,3265 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Projects API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Projects
+paths:
+  /v1/companies/{company-id}/projects:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Projects that belong to a Company
+      tags:
+      - Projects
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-projects
+      x-stoplight:
+        id: jpaq6qohyjyjo
+      description: "Retrieve `Projects` for a `Company`.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `name`\n * `po_job_number`\n * `project_id`\n * `company.legal_name`\n * `account.name`\n * `external_id`\n\n Filter usage:\n* to filter a single state: `filter[states][]=active`\n* to filter multiple states: `filter[states][]=inactive&filter[states][]=active`"
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-datagrid'
+      - schema:
+          type: array
+        in: query
+        name: filter[states]
+        description: Project state filters.
+      - $ref: '#/components/parameters/filter-requester_ids'
+      - $ref: '#/components/parameters/filter-external_ids'
+      - $ref: '#/components/parameters/filter-account_ids'
+      - $ref: '#/components/parameters/filter-department_ids'
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-po_job_numbers'
+      - $ref: '#/components/parameters/filter-service_class_ids'
+      - $ref: '#/components/parameters/filter-equipment_type_ids'
+      - $ref: '#/components/parameters/filter-foreman_ids'
+      - $ref: '#/components/parameters/filter-collaborator_ids'
+      - $ref: '#/components/parameters/filter-salesperson_ids'
+      - $ref: '#/components/parameters/filter-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-dropoff_site_ids'
+  /v1/companies/{company-id}/projects/salesperson:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Projects where the current User is a Salesperson
+      tags:
+      - Projects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: ascxooavwuuwg
+                    items:
+                      $ref: '#/components/schemas/Project-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-projects-salesperson
+      x-stoplight:
+        id: xzzypg34v7p8k
+      description: Retrieve `Projects` where the current `User` is a `Salesperson`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/companies/{company-id}/projects/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Projects for a Company
+      tags:
+      - Projects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-projects-typeahead
+      description: Typeahead search against the `name` or `external_id` property on `Projects` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_id'
+      - $ref: '#/components/parameters/filter-states'
+      - $ref: '#/components/parameters/filter-department_ids'
+      x-stoplight:
+        id: ovi6a7ram6mq5
+      x-internal: true
+  /v1/projects:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a Project in the current Company
+      operationId: post-v1-projects
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: hzl58l811aajv
+      description: 'Create a new `Project`
+
+
+        This endpoint requires the `create_project` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project-Create'
+      tags:
+      - Projects
+    get:
+      summary: Retrieve Projects that belong to the current Company
+      operationId: get-v1-projects
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    x-stoplight:
+                      id: 596sx9n2ju902
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      x-stoplight:
+        id: h741en60ac5ld
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-requester_ids'
+      - $ref: '#/components/parameters/filter-external_ids'
+      - $ref: '#/components/parameters/filter-account_ids'
+      - $ref: '#/components/parameters/filter-department_ids'
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-po_job_numbers'
+      - $ref: '#/components/parameters/filter-service_class_ids'
+      - $ref: '#/components/parameters/filter-equipment_type_ids'
+      - $ref: '#/components/parameters/filter-foreman_ids'
+      - $ref: '#/components/parameters/filter-collaborator_ids'
+      - $ref: '#/components/parameters/filter-salesperson_ids'
+      - $ref: '#/components/parameters/filter-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-dropoff_site_ids'
+      tags:
+      - Projects
+      description: "Retrieve `Projects` for a `Company`.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `name`\n * `po_job_number`\n * `project_id`\n * `company.legal_name`\n * `account.name`\n * `external_id`"
+  /v1/projects/external_ids/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Projects for a Company
+      tags:
+      - Projects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project-Read-Typeahead-External-Id'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-projects-external_ids-typeahead
+      description: Typeahead search against the `external_id` property all `Projects` that belong to current `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_id'
+      - $ref: '#/components/parameters/filter-states'
+      x-stoplight:
+        id: g3c7a95tje9xx
+      x-internal: true
+  /v1/projects/typeahead:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Projects
+      tags:
+      - Projects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project-Read-Typeahead'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-projects-typeahead
+      description: 'Typeahead search against the `name` or `external_id` property for `Projects` visible to the currently authenticated `Company`.
+
+        '
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-account_id'
+      - $ref: '#/components/parameters/filter-states'
+      - $ref: '#/components/parameters/filter-department_ids'
+      x-stoplight:
+        id: 2bo13xsu452qn
+  /v1/projects/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Project ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Project
+      tags:
+      - Projects
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-projects-id
+      x-stoplight:
+        id: uwa6vxp0zgx1s
+      description: Retrieve `Project` by ID
+    patch:
+      summary: Update Project
+      operationId: patch-v1-projects-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: 05suyjgrih7ay
+      tags:
+      - Projects
+      description: 'Update `Project` by ID
+
+
+        This endpoint requires the `edit_project` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project-Update'
+    delete:
+      summary: Delete Project
+      operationId: delete-v1-projects-id
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: huc6v88eeafj8
+      description: 'Delete `Project` by ID
+
+
+        This endpoint requires the `delete_project` permission'
+      tags:
+      - Projects
+  /v1/projects/{project-id}/activate:
+    parameters:
+    - schema:
+        type: string
+      name: project-id
+      in: path
+      required: true
+      description: Project ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Activate a Project
+      operationId: put-v1-projects-project-id-activate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/StateError'
+        '415':
+          $ref: '#/components/responses/Error'
+      x-stoplight:
+        id: 9pbv98fgjhk0o
+      tags:
+      - Projects
+      description: 'Activate a `Project`
+
+
+        This endpoint requires the `edit_project` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /v1/projects/{project-id}/deactivate:
+    parameters:
+    - schema:
+        type: string
+      name: project-id
+      in: path
+      required: true
+      description: Project ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Deactivate a Project
+      operationId: put-v1-projects-project-id-deactivate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/StateError'
+        '415':
+          $ref: '#/components/responses/Error'
+      x-stoplight:
+        id: ylrh322g74akl
+      tags:
+      - Projects
+      description: 'Deactivate a `Project`
+
+
+        This endpoint requires the `edit_project` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /v1/projects/{project-id}/default_sites/{waypoint-type}:
+    parameters:
+    - schema:
+        type: string
+        enum:
+        - pickup
+        - drop_off
+      name: waypoint-type
+      in: path
+      required: true
+      description: Waypoint type
+    - schema:
+        type: string
+      name: project-id
+      in: path
+      required: true
+      description: Project Id
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve default sites for a project, given a waypoint type.
+      tags:
+      - Projects
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Site-Read-Nested'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-projects-project-id-default-sites
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      description: 'Retrieve the `Sites` that belong to the default list of an `Project`, given a particular ''WaypointType''.
+
+        '
+      x-stoplight:
+        id: x9tdnf2b680k9
+      x-internal: true
+components:
+  parameters:
+    filter-po_job_numbers:
+      name: filter[po_job_numbers]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: The associated PO/Job Numbers
+      x-stoplight:
+        id: k8mj3nxp2r7t1
+    filter-pickup_site_ids:
+      name: filter[pickup_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Pickup Site IDs
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    filter-account_ids:
+      name: filter[account_ids]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Account IDs filter
+    filter-requester_ids:
+      name: filter[requester_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Requester IDs
+    filter-equipment_type_ids:
+      name: filter[equipment_type_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated EquipmentType IDs
+    filter-collaborator_ids:
+      name: filter[collaborator_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Collaborator IDs
+    filter-service_class_ids:
+      name: filter[service_class_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated ServiceClass IDs
+      x-stoplight:
+        id: r5tp9qwm4j2n8
+    filter-account_id:
+      name: filter[account_id]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Account ID filter
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    filter-foreman_ids:
+      name: filter[foreman_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Foreman IDs
+    filter-states:
+      name: filter[states]
+      in: query
+      schema:
+        type: array
+      description: States based on the resource (e.g. Order states or Job states)
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    filter-salesperson_ids:
+      name: filter[salesperson_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Salesperson IDs
+    filter-dropoff_site_ids:
+      name: filter[dropoff_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Dropoff Site IDs
+    filter-dispatch_number_ids:
+      name: filter[dispatch_number_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated DispatchNumber IDs
+    filter-department_ids:
+      name: filter[department_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Department IDs. Use 'none' to filter for records without a Department.
+    filter-external_ids:
+      name: filter[external_ids]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The associated External IDs
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+  schemas:
+    ServiceClass-Read-Nested:
+      title: ServiceClass-Read-Nested
+      x-stoplight:
+        id: ahk4knwjgo1di
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: ServiceClass name.
+        required:
+        - name
+    StateError-Response:
+      title: StateError-Response
+      x-stoplight:
+        id: i0wsk2gmnaqup
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/StateError'
+      additionalProperties: false
+    Project-Read:
+      title: Project-Read
+      x-stoplight:
+        id: 4p869ign045x0
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: gfks0fnwa815x
+        required:
+        - expires_at
+        - effective_at
+        - name
+        - notes
+        - order_notes
+        - job_notes
+        - internal_notes
+        - po_job_number
+        - external_id
+        - state
+        - project_id
+        - company
+        - account
+        - phases
+        - project_material_totals
+        - foremen
+        - collaborators
+        - salespeople
+        - hauler_rate_type
+        - job_time
+        - order_quantity
+        - loads_per_truck
+        - truck_count
+        - units_per_hour
+        - job_quantity
+        - customer_rate_value
+        - customer_rate_type
+        - vendor_rate_value
+        - vendor_rate_type
+        - driver_rate_value
+        - driver_rate_type
+        - equipment_type_gross_capacity
+        - load_unit_of_measure
+        - job_unit_of_measure
+        - order_unit_of_measure
+        - recurring_loads
+        - equipment_type_gross_capacity_unit_of_measure
+        - charge_to_account
+        - chase_missing_tickets
+        - tax_rate
+        - tax_freight
+        - tax_material
+        - tax_add_ons
+        properties:
+          expires_at:
+            type: string
+            x-stoplight:
+              id: ypo4xculi788q
+            nullable: true
+          effective_at:
+            type: string
+            x-stoplight:
+              id: fcnvg73e1j3v8
+            nullable: true
+          name:
+            type: string
+            x-stoplight:
+              id: tld4cn3fzcmf3
+          notes:
+            type: string
+            x-stoplight:
+              id: vuyc4o4l7g54t
+            nullable: true
+          order_notes:
+            type: string
+            x-stoplight:
+              id: 5hb0rlyvc15ao
+            nullable: true
+          job_notes:
+            type: string
+            x-stoplight:
+              id: qh5hnt19uq4wm
+            nullable: true
+          internal_notes:
+            type: string
+            x-stoplight:
+              id: s2osoxby50u29
+            nullable: true
+          po_job_number:
+            type: string
+            x-stoplight:
+              id: ty2kf0ueaq3sw
+            nullable: true
+          external_id:
+            type: string
+            x-stoplight:
+              id: q22ozbvyys81t
+            nullable: true
+          state:
+            $ref: '#/components/schemas/ProjectState'
+          project_id:
+            type: string
+            x-stoplight:
+              id: v0vird4qt9luv
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          account:
+            $ref: '#/components/schemas/Account-Read-Nested'
+          contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+          site:
+            $ref: '#/components/schemas/Site-Read-Nested'
+          phases:
+            type: array
+            x-stoplight:
+              id: v7naa00rm6sdg
+            items:
+              $ref: '#/components/schemas/Phase-Read'
+          project_material_totals:
+            type: array
+            x-stoplight:
+              id: mhaw3k0gg8icd
+            items:
+              $ref: '#/components/schemas/ProjectMaterialTotal-Read'
+          foremen:
+            type: array
+            x-stoplight:
+              id: bln4zo5e9k0cz
+            items:
+              $ref: '#/components/schemas/Foreman-Read-Nested'
+          collaborators:
+            type: array
+            x-stoplight:
+              id: cln4zo5e9k0cz
+            items:
+              $ref: '#/components/schemas/User-Read-Nested'
+          salespeople:
+            type: array
+            x-stoplight:
+              id: zzz4zo5e9k0cz
+            items:
+              $ref: '#/components/schemas/User-Read-Nested'
+          sales_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+          foreman_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+          supervisor_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+          collaborator_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+          department:
+            $ref: '#/components/schemas/Department-Read-Nested'
+          customer_rate:
+            x-stoplight:
+              id: hv0x4x84xjhgv
+            anyOf:
+            - $ref: '#/components/schemas/RateTime-Read-Nested'
+            - $ref: '#/components/schemas/RatePerUnit-Read-Nested'
+            - $ref: '#/components/schemas/RateCommission-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatCommission-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatRate-Read-Nested'
+          vendor_rate:
+            x-stoplight:
+              id: zqw55oqzxbjcf
+            anyOf:
+            - $ref: '#/components/schemas/RateTime-Read-Nested'
+            - $ref: '#/components/schemas/RatePerUnit-Read-Nested'
+            - $ref: '#/components/schemas/RateCommission-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatCommission-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatRate-Read-Nested'
+          driver_rate:
+            x-stoplight:
+              id: qrkqbxhb0691m
+            anyOf:
+            - $ref: '#/components/schemas/RateTime-Read-Nested'
+            - $ref: '#/components/schemas/RatePerUnit-Read-Nested'
+            - $ref: '#/components/schemas/RateCommission-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatCommission-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatRate-Read-Nested'
+          hauler_rate_type:
+            type: string
+            nullable: true
+          service:
+            $ref: '#/components/schemas/Service-Read-Nested'
+          service_class:
+            $ref: '#/components/schemas/ServiceClass-Read-Nested'
+          job_time:
+            type: integer
+            x-stoplight:
+              id: bpeck1k9rmjb3
+            nullable: true
+          order_quantity:
+            type: string
+            x-stoplight:
+              id: bn2qwdatmex3n
+            nullable: true
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          loads_per_truck:
+            type: integer
+            x-stoplight:
+              id: xdjk8r7yzz2jz
+            nullable: true
+          truck_count:
+            type: integer
+            x-stoplight:
+              id: p54rz53gbe36g
+            nullable: true
+          units_per_hour:
+            type: integer
+            x-stoplight:
+              id: h4kh0tcu82ni0
+            nullable: true
+          job_quantity:
+            type: string
+            x-stoplight:
+              id: rkr9r14aihvjs
+            nullable: true
+          waypoints:
+            type: array
+            x-stoplight:
+              id: dwje8rido05xg
+            items:
+              $ref: '#/components/schemas/Waypoint-Read-Nested'
+          customer_rate_value:
+            type: string
+            x-stoplight:
+              id: syjmuphzgurad
+            nullable: true
+          customer_rate_type:
+            $ref: '#/components/schemas/NullableRateType'
+          vendor_rate_value:
+            type: string
+            x-stoplight:
+              id: yhuvkn7bmgb6x
+            nullable: true
+          vendor_rate_type:
+            $ref: '#/components/schemas/NullableRateType'
+          driver_rate_value:
+            type: string
+            x-stoplight:
+              id: kirj1xga7eraa
+            nullable: true
+          driver_rate_type:
+            $ref: '#/components/schemas/NullableRateType'
+          requester:
+            $ref: '#/components/schemas/User-Read-Nested'
+          equipment_type_gross_capacity:
+            type: string
+            x-stoplight:
+              id: mad4zg9xtr51h
+            nullable: true
+          load_unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+          dispatch_number:
+            $ref: '#/components/schemas/DispatchNumber-Read-Nested'
+          job_unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+          order_unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+          recurring_loads:
+            type: boolean
+            x-stoplight:
+              id: ahlw8o6o6riym
+          equipment_type_gross_capacity_unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+          charge_to_account:
+            type: string
+            x-stoplight:
+              id: 1roxm3r1g2kdb
+            nullable: true
+          chase_missing_tickets:
+            type: boolean
+            x-stoplight:
+              id: c5wkp8dn6jl9r
+            description: Enable ticket chasing for jobs in orders with this project
+          default_digital_ticket_view:
+            type: boolean
+            default: false
+            x-stoplight:
+              id: ddtv4prjread00
+            description: Use the default digital ticket view for orders in this project
+          tax_rate:
+            x-stoplight:
+              id: d5x8a2f4h6k9n
+            type: string
+            nullable: true
+            description: Tax rate percentage (up to 4 decimal places)
+          tax_freight:
+            x-stoplight:
+              id: p1r3t5v7y9b2d
+            type: boolean
+            default: false
+            description: Whether freight line items and FSC are taxable
+          tax_material:
+            x-stoplight:
+              id: e4g6i8l0n2q4s
+            type: boolean
+            default: false
+            description: Whether material line items are taxable
+          tax_add_ons:
+            x-stoplight:
+              id: u6w8z0c2f4h7j
+            type: boolean
+            default: false
+            description: Whether add-on charges are taxable (dual-confirm with add_on.taxable)
+      description: Read model for `Project`
+    NextBillionGeofence-Read:
+      title: NextBillionGeofence-Read
+      x-stoplight:
+        id: 60y0z4bb3pu6m
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Geofence-Data'
+    Address-Create:
+      title: Address-Create
+      x-stoplight:
+        id: 9wmd46rzgjxh7
+      type: object
+      required:
+      - thoroughfare
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: zkh46rwwvpuca
+          description: Street address
+          example: 123 Fake St.
+        premise:
+          type: string
+          x-stoplight:
+            id: bkcia8yh59wzf
+          description: Apartment, Suite, Box number, etc.
+          example: 3rd Floor
+        locality:
+          type: string
+          x-stoplight:
+            id: e40nnuxgub7ug
+          description: City / Town
+          example: New York
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: 2bfqcapyozkpp
+          description: State / Province / Region (ISO code when available)
+          example: NY
+        postal_code:
+          type: string
+          x-stoplight:
+            id: a9m9rbcbsa635
+          description: Postal code / ZIP Code
+          example: '10011'
+        country:
+          type: string
+          x-stoplight:
+            id: gud5s8ypb8oam
+          minLength: 2
+          maxLength: 2
+          pattern: ^[A-Z]{2}
+          example: US
+          description: 2 character country ISO code
+        lat:
+          type: string
+          x-stoplight:
+            id: nwg5be93gvmkd
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+        lon:
+          type: string
+          x-stoplight:
+            id: rcvsjw8cbs4hs
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+        place_id:
+          type: string
+          x-stoplight:
+            id: xtuyrwo0rqzkh
+          description: NextBillion placeID
+      additionalProperties: false
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type: string
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    Contact-Create:
+      title: Contact-Create
+      x-stoplight:
+        id: dhro09gmoiqgw
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: ehb4vhlggledw
+        email:
+          type: string
+          x-stoplight:
+            id: kxjggao5fm38r
+        phone:
+          type: string
+          x-stoplight:
+            id: 3dxv517oimpb1
+          example: '+18885551234'
+          description: Contact's E.164 formatted phone number
+      additionalProperties: false
+    DispatchNumber-Update:
+      title: DispatchNumber-Update
+      x-stoplight:
+        id: pnc0w6nqmqx3m
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: dgxr5h012k8lx
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: pkzppi16wvdz9
+      additionalProperties: false
+    Destroyable:
+      title: Destroyable
+      x-stoplight:
+        id: 2uftzhptd2l14
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: gx1ww996hmzqm
+          format: uuid
+          description: Required if `_destroy` is set
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 0xjwztkz4fmcr
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
+      additionalProperties: false
+    Waypoint-Create:
+      title: Waypoint-Create
+      x-stoplight:
+        id: lkkjczl49mn3l
+      type: object
+      required:
+      - type
+      - site_id
+      - ordinality
+      properties:
+        type:
+          $ref: '#/components/schemas/WaypointType'
+        site_id:
+          type: string
+          x-stoplight:
+            id: qlodrw03gom0x
+          format: uuid
+        contact:
+          $ref: '#/components/schemas/Contact-Create'
+        ordinality:
+          type: integer
+          x-stoplight:
+            id: bfpbu9vyhtn9a
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    StateError-Item:
+      title: StateError-Item
+      x-stoplight:
+        id: dgw2jdmi7ozjj
+      allOf:
+      - $ref: '#/components/schemas/ModelError-Item'
+      - type: object
+        x-stoplight:
+          id: jrgi7oapao3e5
+        required:
+        - state
+        - event
+        properties:
+          state:
+            type: string
+            x-stoplight:
+              id: mah8jye43io32
+            description: The current state value of the field on this Model
+          event:
+            type: string
+            x-stoplight:
+              id: dtgu62ni9ofuh
+            description: The failed state event called on the Model
+    DispatchNumber-Read-Nested:
+      title: DispatchNumber-Read-Nested
+      x-stoplight:
+        id: 5oe6kw6t82gnr
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        properties:
+          name:
+            type: string
+    RateCommission-Read-Nested:
+      title: RateCommission-Read-Nested
+      x-stoplight:
+        id: rfosxiu0rajbx
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - commission_percentage
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: uquhf0pc3ydpf
+          type:
+            $ref: '#/components/schemas/RateType'
+          commission_percentage:
+            type: number
+            x-stoplight:
+              id: 44e2kldfzbxdj
+    RateFlatCommission-Read-Nested:
+      title: RateFlatCommission-Read-Nested
+      x-stoplight:
+        id: wtdgoiw8tlpl3
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - commission_amount
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: yt5g1alyyd6fu
+          type:
+            $ref: '#/components/schemas/RateType'
+          commission_amount:
+            type: number
+            x-stoplight:
+              id: 14a1jkho85lpw
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    Phase-Read:
+      title: Phase-Read
+      x-stoplight:
+        id: t87rtwp61n8ry
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - code
+        - primary
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: joxj6kldpdok8
+          code:
+            type: string
+            x-stoplight:
+              id: mtoxuvguckczq
+            nullable: true
+          primary:
+            type: boolean
+            x-stoplight:
+              id: ww6q56py1x5wq
+      - $ref: '#/components/schemas/Timestamps'
+    Waypoint-Update-Destroyable:
+      title: Waypoint-Update-Destroyable
+      x-stoplight:
+        id: w96rpm44miiib
+      allOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/WaypointType'
+          site_id:
+            type: string
+            x-stoplight:
+              id: 8quojxs0ual5a
+            format: uuid
+          contact:
+            $ref: '#/components/schemas/Contact-Update'
+          ordinality:
+            type: integer
+            x-stoplight:
+              id: 53pb6rybmktqc
+      - $ref: '#/components/schemas/Destroyable'
+      description: ''
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Project-Update:
+      title: Project-Update
+      x-stoplight:
+        id: w6ef8ajo94tmy
+      type: object
+      description: Update model for `Project`
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: rt38c7hf2wah2
+        effective_at:
+          type: string
+          x-stoplight:
+            id: dpf2oa6dcbnmo
+          format: date-time
+        expires_at:
+          type: string
+          x-stoplight:
+            id: b5oxhoxyy1nq3
+          format: date-time
+        notes:
+          type: string
+          x-stoplight:
+            id: 097mhtyu3j7ii
+        order_notes:
+          type: string
+          x-stoplight:
+            id: 0yo9ldqjd4rkp
+        job_notes:
+          type: string
+          x-stoplight:
+            id: lajxn21wirg9m
+        internal_notes:
+          type: string
+          x-stoplight:
+            id: mhmknc572dn37
+        po_job_number:
+          type: string
+          x-stoplight:
+            id: mbs160z33u1zi
+        external_id:
+          type: string
+          x-stoplight:
+            id: bfzknx3gbg6ca
+        contact:
+          $ref: '#/components/schemas/Contact-Update-Destroyable'
+        site_id:
+          type: string
+          x-stoplight:
+            id: 9o9vcffwttopr
+          format: uuid
+          nullable: true
+        phases:
+          type: array
+          x-stoplight:
+            id: exk04m9rzh9vz
+          items:
+            $ref: '#/components/schemas/Phase-Update'
+        project_material_totals:
+          type: array
+          x-stoplight:
+            id: d7pfypw0q88op
+          items:
+            $ref: '#/components/schemas/ProjectMaterialTotal-Update'
+        sales_contact:
+          $ref: '#/components/schemas/Contact-Update-Destroyable'
+        foreman_contact:
+          $ref: '#/components/schemas/Contact-Update-Destroyable'
+        supervisor_contact:
+          $ref: '#/components/schemas/Contact-Update-Destroyable'
+        collaborator_contact:
+          $ref: '#/components/schemas/Contact-Update-Destroyable'
+        department_id:
+          type: string
+          x-stoplight:
+            id: 18me4hu0bc9cg
+          format: uuid
+          nullable: true
+        foreman_ids:
+          type: array
+          x-stoplight:
+            id: thsrda7uexm0r
+          items:
+            x-stoplight:
+              id: bffcleazsy2tk
+            type: string
+            format: uuid
+        collaborator_ids:
+          type: array
+          x-stoplight:
+            id: dhsrda7uexm0r
+          items:
+            x-stoplight:
+              id: dffcleazsy2tk
+            type: string
+            format: uuid
+        salesperson_ids:
+          type: array
+          x-stoplight:
+            id: ehsrda7uexm0r
+          items:
+            x-stoplight:
+              id: effcleazsy2tk
+            type: string
+            format: uuid
+        customer_rate_id:
+          type: string
+          x-stoplight:
+            id: yy80qnnd0xnax
+          format: uuid
+          nullable: true
+        vendor_rate_id:
+          type: string
+          x-stoplight:
+            id: 064ra6tiiw0bh
+          format: uuid
+          nullable: true
+        driver_rate_id:
+          type: string
+          x-stoplight:
+            id: gxx9xr0kq1ugm
+          format: uuid
+          nullable: true
+        hauler_rate_type:
+          type: string
+          nullable: true
+        service_id:
+          type: string
+          x-stoplight:
+            id: g8s1np3b7x78b
+          format: uuid
+          nullable: true
+        service_class_id:
+          type: string
+          x-stoplight:
+            id: 3muh1cuh7j6xm
+          format: uuid
+          nullable: true
+        job_time:
+          type: integer
+          x-stoplight:
+            id: c0hb9xuilaqkr
+          description: Time in minutes
+          nullable: true
+        order_quantity:
+          type: number
+          x-stoplight:
+            id: 8p2o6qmq5bcd5
+          nullable: true
+        equipment_type_id:
+          type: string
+          x-stoplight:
+            id: 44c24uspwria0
+          format: uuid
+          nullable: true
+        loads_per_truck:
+          type: integer
+          x-stoplight:
+            id: 4v0ygr6efo8iv
+          minimum: 1
+          maximum: 25
+          nullable: true
+        truck_count:
+          type: integer
+          x-stoplight:
+            id: provaq6kvfk05
+          minimum: 1
+          maximum: 200
+          nullable: true
+        units_per_hour:
+          type: integer
+          x-stoplight:
+            id: rzl1pw7wbtxyw
+          nullable: true
+        job_quantity:
+          type: number
+          x-stoplight:
+            id: o8djzy8k4kevi
+          nullable: true
+        waypoints:
+          type: array
+          x-stoplight:
+            id: josxokq5eb4r2
+          items:
+            $ref: '#/components/schemas/Waypoint-Update-Destroyable'
+        customer_rate_value:
+          type: number
+          x-stoplight:
+            id: itdg9pkmxt48m
+          nullable: true
+        customer_rate_type:
+          $ref: '#/components/schemas/NullableRateType'
+        vendor_rate_value:
+          type: number
+          x-stoplight:
+            id: 44kqco2xivvvl
+          nullable: true
+        vendor_rate_type:
+          $ref: '#/components/schemas/NullableRateType'
+        driver_rate_value:
+          type: number
+          x-stoplight:
+            id: xxipwpkxca7uc
+          nullable: true
+        driver_rate_type:
+          $ref: '#/components/schemas/NullableRateType'
+        requester_id:
+          type: string
+          x-stoplight:
+            id: 0etw0h40kd2hh
+          nullable: true
+        equipment_type_gross_capacity:
+          type: number
+          x-stoplight:
+            id: 9jhpl8sc51thg
+          nullable: true
+        equipment_type_gross_capacity_unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        load_unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        dispatch_number:
+          $ref: '#/components/schemas/DispatchNumber-Update'
+        order_unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        job_unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        recurring_loads:
+          type: boolean
+          x-stoplight:
+            id: 8l9rf7qqp8ozc
+        charge_to_account:
+          type: string
+          x-stoplight:
+            id: wwkfd3i22zwn1
+          nullable: true
+        chase_missing_tickets:
+          type: boolean
+          x-stoplight:
+            id: z9pqm2vx5tn7k
+          description: Enable ticket chasing for jobs in orders with this project
+        default_digital_ticket_view:
+          type: boolean
+          default: false
+          x-stoplight:
+            id: ddtv5prjupdate
+          description: Use the default digital ticket view for orders in this project
+        tax_rate:
+          x-stoplight:
+            id: m9p1r3t5w7y0b
+          type: number
+          nullable: true
+          description: Tax rate percentage (up to 4 decimal places)
+        tax_freight:
+          x-stoplight:
+            id: a2c4e6g8j0l2n
+          type: boolean
+          default: false
+          description: Whether freight line items and FSC are taxable
+        tax_material:
+          x-stoplight:
+            id: q4s6u8w0z2b4d
+          type: boolean
+          default: false
+          description: Whether material line items are taxable
+        tax_add_ons:
+          x-stoplight:
+            id: f6h8k0m2p4r6t
+          type: boolean
+          default: false
+          description: Whether add-on charges are taxable (dual-confirm with add_on.taxable)
+      additionalProperties: false
+    Phase-Create:
+      title: Phase-Create
+      x-stoplight:
+        id: 75nmc5yd8h72i
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: d4kcn3t0asc5e
+        code:
+          type: string
+          x-stoplight:
+            id: yoecopo3whrnu
+          nullable: true
+        primary:
+          type: boolean
+          x-stoplight:
+            id: iwe52gflixegu
+      additionalProperties: false
+    AccountType:
+      title: AccountType
+      x-stoplight:
+        id: i4vfmd4rwrq8p
+      enum:
+      - customer
+      - vendor
+      example: customer
+    Department-Read-Nested:
+      title: Department-Read-Nested
+      x-stoplight:
+        id: gv9tfg4scr2yx
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 4y3gfdgq1brqf
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 3718c2tvwwqsn
+            description: Department name.
+        required:
+        - name
+    GeofenceTag:
+      title: GeofenceTag
+      x-stoplight:
+        id: anytkmb3ydi6c
+      enum:
+      - scaling
+      - site
+      - loading
+      - unloading
+      - check_in
+      - ticketing
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
+      x-stoplight:
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type: string
+          x-stoplight:
+            id: ttaijg77qmbgk
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: s4rscgptv68x3
+          nullable: true
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Project-Read-Typeahead-External-Id:
+      title: Project-Read-Typeahead-External-Id
+      x-stoplight:
+        id: z971jcl3xeyog
+      type: object
+      properties:
+        external_id:
+          type: string
+          x-stoplight:
+            id: dkivyg6fju70u
+      additionalProperties: false
+    ProjectMaterialTotal-Read:
+      title: ProjectMaterialTotal-Read
+      x-stoplight:
+        id: fesdm0wakcpf5
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - total_quantity
+        - unit_of_measure
+        - material
+        properties:
+          total_quantity:
+            type: string
+            x-stoplight:
+              id: 1pwkfmzchwx3b
+            nullable: true
+          unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+          material:
+            $ref: '#/components/schemas/Material-Read-Nested'
+      - $ref: '#/components/schemas/Timestamps'
+    DispatchNumber-Create:
+      title: DispatchNumber-Create
+      x-stoplight:
+        id: 9f8xoex3arnaw
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: dswmnsebng8ja
+      additionalProperties: false
+    Phase-Update:
+      title: Phase-Update
+      x-stoplight:
+        id: lgcase43scjtx
+      allOf:
+      - $ref: '#/components/schemas/Destroyable'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: g0k8neezg3x5r
+          code:
+            type: string
+            x-stoplight:
+              id: 1pcdrs26ed1sh
+            nullable: true
+          primary:
+            type: boolean
+            x-stoplight:
+              id: sclf6qb2bu3x2
+    NullableGeofenceType:
+      title: NullableGeofenceType
+      x-stoplight:
+        id: ii94t82oqh5xo
+      allOf:
+      - $ref: '#/components/schemas/GeofenceType'
+      nullable: true
+      type: string
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    RateType:
+      title: RateType
+      x-stoplight:
+        id: zn2jb7gsifkk3
+      enum:
+      - RatePerHour
+      - RatePerDay
+      - RatePerLoad
+      - RatePerTon
+      - RatePerTonne
+      - RatePerYard
+      - RatePerBushel
+      - RateCommission
+      - RateFlatCommission
+      - RateFlatRate
+      example: RatePerHour
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
+      x-stoplight:
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    Account-Read-Nested:
+      title: Account-Read-Nested
+      x-stoplight:
+        id: zo8r3gsz1tm5h
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: gl7hua7pv8xka
+        required:
+        - name
+        - account_types
+        - external_id
+        - accounting_id
+        - company
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: a7g065w5byfcf
+          account_types:
+            type: array
+            x-stoplight:
+              id: a0e9c3lpr1wad
+            items:
+              $ref: '#/components/schemas/AccountType'
+          external_id:
+            type: string
+            x-stoplight:
+              id: yfrec4y0a90cb
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: yfsec5y0a91cb
+            nullable: true
+          company:
+            type: object
+            x-stoplight:
+              id: 9loqtu14mvlnq
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: udjkdjrz08pzr
+                format: uuid
+          billing_address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 0g9kx77zym4ok
+          connected_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          billing_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+    User-Read-Typeahead:
+      title: User-Read-Typeahead
+      x-stoplight:
+        id: ttbbss5b5k66f
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - first_name
+        - last_name
+        properties:
+          first_name:
+            type: string
+            description: First name
+            x-stoplight:
+              id: gwo999rcdahmg
+          last_name:
+            type: string
+            description: Last name
+            x-stoplight:
+              id: l9omnnsq644bh
+      description: ''
+    Account-Create:
+      title: Account-Create
+      x-stoplight:
+        id: gxkg5vrqlzq89
+      type: object
+      required:
+      - name
+      - account_types
+      - auto_accept_orders
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 5298s0s0peapc
+          description: Account name
+        department:
+          type: string
+          x-stoplight:
+            id: jcmgf3qz70e9w
+          description: Department
+          deprecated: true
+          nullable: true
+        department_id:
+          type: string
+          x-stoplight:
+            id: ewd9im004flot
+          format: uuid
+          description: 'The ID of the associated **Department**.
+
+
+            This should be used instead of `department`.'
+          nullable: true
+        primary_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        billing_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        address:
+          $ref: '#/components/schemas/Address-Create'
+        billing_address:
+          $ref: '#/components/schemas/Address-Create'
+        notes:
+          type: string
+          x-stoplight:
+            id: cekepr6fg19fx
+          description: Notes
+          nullable: true
+        account_types:
+          type: array
+          x-stoplight:
+            id: fz4g38ct2r9l3
+          description: Account type allowing for multiple values
+          items:
+            $ref: '#/components/schemas/AccountType'
+        external_id:
+          type: string
+          x-stoplight:
+            id: ck449dcgiige8
+          description: Identifier used to associate an account to any external system
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: ck459dchijge8
+          description: The accounting ID of the Account mapping to any accounting system
+          nullable: true
+        company_id:
+          type: string
+          x-stoplight:
+            id: x9ow3nfelos0a
+          format: uuid
+        truck_count:
+          type: integer
+          x-stoplight:
+            id: qzekegh1h2ztd
+          description: The allowable number of trucks that is dispatchable to the customer of this account.
+          default: 0
+          nullable: true
+        auto_accept_orders:
+          type: boolean
+          x-stoplight:
+            id: tjzapla5k8r8f
+          default: false
+          description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
+        label_ids:
+          type: array
+          x-stoplight:
+            id: lbl1d5cr8acc1
+          description: Array of Label IDs to assign to this account.
+          items:
+            type: string
+            format: uuid
+      additionalProperties: false
+    Material-Read-Nested:
+      title: Material-Read-Nested
+      x-stoplight:
+        id: 5hvekq1lnr9ku
+      type: object
+      required:
+      - id
+      - name
+      - external_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: c6nool5iljv3l
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: bsd3m2c74jis8
+        external_id:
+          type: string
+          description: Material external_id
+          x-stoplight:
+            id: ab0l0yvuz5u6d
+          nullable: true
+      additionalProperties: false
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: c9ls3nrhbih3v
+            nullable: true
+          ticket_match_id:
+            type: string
+            x-stoplight:
+              id: a1cd3nrhbih3v
+            nullable: true
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type: string
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+            nullable: true
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    RateTime-Read-Nested:
+      title: RateTime-Read-Nested
+      x-stoplight:
+        id: k3z13rbtdojcq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - time_rate
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: s5zmmpgpw8ykn
+          type:
+            $ref: '#/components/schemas/RateType'
+          time_rate:
+            type: number
+            x-stoplight:
+              id: yzbg76z9oflup
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    RateFlatRate-Read-Nested:
+      title: RateFlatRate-Read-Nested
+      x-stoplight:
+        id: l2to0mrxz6ndu
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: khly9g5a3tgap
+        required:
+        - name
+        - type
+        - flat_amount
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 0h0s2w3tathgv
+          type:
+            $ref: '#/components/schemas/RateType'
+          flat_amount:
+            type: number
+            x-stoplight:
+              id: 3s2pycb09j6ph
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    StateError:
+      title: StateError
+      x-stoplight:
+        id: zgcsl4t8bsn3c
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: ntvt2atfotcge
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: noi1jg6o8psl7
+            items:
+              $ref: '#/components/schemas/StateError-Item'
+    WaypointType:
+      title: WaypointType
+      x-stoplight:
+        id: a8567v0zl3pi3
+      enum:
+      - pickup
+      - drop_off
+      - weigh_point
+      example: pickup
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - email
+        - phone
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: sd80y9pbgvkok
+            nullable: true
+          email:
+            type: string
+            x-stoplight:
+              id: 883fmt34pdeaj
+            nullable: true
+          phone:
+            type: string
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+            nullable: true
+      description: ''
+    ProjectMaterialTotal-Update:
+      title: ProjectMaterialTotal-Update
+      x-stoplight:
+        id: kphqetbkjj31b
+      allOf:
+      - $ref: '#/components/schemas/Destroyable'
+      - type: object
+        properties:
+          total_quantity:
+            type: number
+            x-stoplight:
+              id: ydpgbfqh1oy39
+            nullable: true
+          unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+          material_id:
+            type: string
+            x-stoplight:
+              id: bcx5tne2na6ho
+            format: uuid
+    NullableRateType:
+      title: NullableRateType
+      x-stoplight:
+        id: rajiobym5ovlp
+      allOf:
+      - $ref: '#/components/schemas/RateType'
+      nullable: true
+      type: string
+    Contact-Update:
+      title: Contact-Update
+      x-stoplight:
+        id: p2ny8u55sfpcx
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: wm2na5bv2uvvv
+        email:
+          x-stoplight:
+            id: mdv25imtbstfh
+          type: string
+        phone:
+          type: string
+          x-stoplight:
+            id: rtf4rqlgwt35i
+          example: '+18885551234'
+      additionalProperties: false
+    Site-Read-Nested:
+      title: Site-Read-Nested
+      x-stoplight:
+        id: rt6xqxsfzf4iv
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - lat
+        - lon
+        - full_address
+        - routable
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 7r0x7wicrvwyy
+          lat:
+            type: string
+            x-stoplight:
+              id: cr6y5v0hdl5oo
+            nullable: true
+          lon:
+            type: string
+            x-stoplight:
+              id: f23mkvamncbuw
+            nullable: true
+          address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          full_address:
+            type: string
+            x-stoplight:
+              id: uxixxnmgfi47i
+            nullable: true
+          routable:
+            type: boolean
+            x-stoplight:
+              id: uobfxkm0hujhv
+          next_billion_geofence:
+            $ref: '#/components/schemas/NextBillionGeofence-Read'
+      - $ref: '#/components/schemas/Discardable'
+    RatePerUnit-Read-Nested:
+      title: RatePerUnit-Read-Nested
+      x-stoplight:
+        id: 5kl2dre6otz74
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - unit_rate
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 7wb8p1ffoz1wz
+          type:
+            $ref: '#/components/schemas/RateType'
+          unit_rate:
+            type: number
+            x-stoplight:
+              id: szqf3p2vkmb0x
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Project-Create:
+      title: Project-Create
+      x-stoplight:
+        id: mc6h13scr3vve
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: x00f37nn6fjue
+          description: '`Project` name, must be unique in the current `Company`'
+        effective_at:
+          type: string
+          x-stoplight:
+            id: whfjwjjfk06f7
+          format: date-time
+          description: Timestamp of the `Project`'s effective start. Must be less than `expires_at` if `expires_at` is present.
+        expires_at:
+          type: string
+          x-stoplight:
+            id: hrnixu5416kga
+          format: date-time
+          description: Timestamp of the `Project`'s effective end. Must be greater than `effective_at` if `effective_at` is present.
+        notes:
+          type: string
+          x-stoplight:
+            id: y1klh0n6g0q6z
+          description: '`Project` notes'
+          nullable: true
+        order_notes:
+          type: string
+          x-stoplight:
+            id: ra53mqysfnd37
+          description: '`Order` notes'
+          nullable: true
+        job_notes:
+          type: string
+          x-stoplight:
+            id: lo5lvytlfbfh7
+          description: '`Job` notes'
+          nullable: true
+        internal_notes:
+          type: string
+          x-stoplight:
+            id: y87emixsvib8z
+          description: '`Project` notes'
+          nullable: true
+        po_job_number:
+          type: string
+          x-stoplight:
+            id: g3pngk5arrslf
+          description: 'PO/Job # for `Project`'
+        external_id:
+          type: string
+          x-stoplight:
+            id: pwmsqnhu6vebh
+          description: 'External # for `Project`, must be unique in the current `Company`'
+        account_id:
+          type: string
+          x-stoplight:
+            id: c7ru4hk340plc
+          format: uuid
+          description: "`Account` ID. \n\nOne of `account_id` or `account` is required."
+        account:
+          $ref: '#/components/schemas/Account-Create'
+        contact:
+          $ref: '#/components/schemas/Contact-Create'
+        site_id:
+          type: string
+          x-stoplight:
+            id: 9mzhmk310z2tg
+          format: uuid
+          nullable: true
+        company_id:
+          type: string
+          x-stoplight:
+            id: 7ygjobmwvb440
+          format: uuid
+        phases:
+          type: array
+          x-stoplight:
+            id: fa09m8a5b3w41
+          items:
+            $ref: '#/components/schemas/Phase-Create'
+        project_material_totals:
+          type: array
+          x-stoplight:
+            id: plmni6jzbwwbf
+          items:
+            $ref: '#/components/schemas/ProjectMaterialTotal-Create'
+        sales_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        foreman_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        supervisor_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        collaborator_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        department_id:
+          type: string
+          x-stoplight:
+            id: gpzcubrzftd5y
+          format: uuid
+          nullable: true
+        foreman_ids:
+          type: array
+          x-stoplight:
+            id: g70fdfa5uekrj
+          items:
+            x-stoplight:
+              id: ksvg3cav8niz5
+            type: string
+            format: uuid
+        collaborator_ids:
+          type: array
+          x-stoplight:
+            id: a70fdfa5uekrj
+          items:
+            x-stoplight:
+              id: bsvg3cav8niz5
+            type: string
+            format: uuid
+        salesperson_ids:
+          type: array
+          x-stoplight:
+            id: c70fdfa5uekrj
+          items:
+            x-stoplight:
+              id: csvg3cav8niz5
+            type: string
+            format: uuid
+        customer_rate_id:
+          type: string
+          x-stoplight:
+            id: ocoflso00uk96
+          format: uuid
+          nullable: true
+        vendor_rate_id:
+          type: string
+          x-stoplight:
+            id: 6sslnxwb1d0t2
+          format: uuid
+          nullable: true
+        driver_rate_id:
+          type: string
+          x-stoplight:
+            id: a3dvzwr72vhbq
+          format: uuid
+          nullable: true
+        hauler_rate_type:
+          type: string
+          nullable: true
+        service_id:
+          type: string
+          x-stoplight:
+            id: 8jytqfapee321
+          format: uuid
+          nullable: true
+        service_class_id:
+          type: string
+          x-stoplight:
+            id: redhglw9tzkw0
+          format: uuid
+          nullable: true
+        job_time:
+          type: integer
+          x-stoplight:
+            id: 4cplr9mqa3d7g
+          description: Time in minutes
+          nullable: true
+        order_quantity:
+          type: number
+          x-stoplight:
+            id: 81e5albx14q4u
+          nullable: true
+        equipment_type_id:
+          type: string
+          x-stoplight:
+            id: wy1npm222ygzg
+          format: uuid
+          nullable: true
+        loads_per_truck:
+          type: integer
+          x-stoplight:
+            id: 04gb5gkugm6t6
+          minimum: 1
+          maximum: 25
+          nullable: true
+        truck_count:
+          type: integer
+          x-stoplight:
+            id: zmb0d2t96cluv
+          minimum: 1
+          maximum: 200
+          nullable: true
+        units_per_hour:
+          type: integer
+          x-stoplight:
+            id: w8rt161hyhlat
+          nullable: true
+        job_quantity:
+          type: number
+          x-stoplight:
+            id: nn6dwos93bxex
+          nullable: true
+        waypoints:
+          type: array
+          x-stoplight:
+            id: s0593yl6a7cyk
+          items:
+            $ref: '#/components/schemas/Waypoint-Create'
+        customer_rate_value:
+          type: number
+          x-stoplight:
+            id: spnm2injq37ro
+          nullable: true
+        customer_rate_type:
+          $ref: '#/components/schemas/NullableRateType'
+        vendor_rate_value:
+          type: number
+          x-stoplight:
+            id: 3iot48nwjdt2c
+          nullable: true
+        vendor_rate_type:
+          $ref: '#/components/schemas/NullableRateType'
+        driver_rate_value:
+          type: number
+          x-stoplight:
+            id: yig9ta99pt0fs
+          nullable: true
+        driver_rate_type:
+          $ref: '#/components/schemas/NullableRateType'
+        requester_id:
+          type: string
+          x-stoplight:
+            id: hy11rdxvs6b4c
+          format: uuid
+          nullable: true
+        equipment_type_gross_capacity:
+          type: number
+          x-stoplight:
+            id: h3u9e04snsaka
+          nullable: true
+        load_unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        dispatch_number:
+          $ref: '#/components/schemas/DispatchNumber-Create'
+        recurring_loads:
+          type: boolean
+          x-stoplight:
+            id: gwgkvcwpd06wg
+        order_unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        job_unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        equipment_type_gross_capacity_unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        charge_to_account:
+          type: string
+          x-stoplight:
+            id: 0h5w52svbemhc
+          nullable: true
+        chase_missing_tickets:
+          type: boolean
+          x-stoplight:
+            id: a7bmn9xt4kq2h
+          description: Enable ticket chasing for jobs in orders with this project
+        default_digital_ticket_view:
+          type: boolean
+          default: false
+          x-stoplight:
+            id: ddtv3prjcreate
+          description: Use the default digital ticket view for orders in this project
+        tax_rate:
+          x-stoplight:
+            id: t7k2m9p4r1v3x
+          type: number
+          nullable: true
+          description: Tax rate percentage (up to 4 decimal places)
+        tax_freight:
+          x-stoplight:
+            id: w8n3q5s6u2y4b
+          type: boolean
+          default: false
+          description: Whether freight line items and FSC are taxable
+        tax_material:
+          x-stoplight:
+            id: j1f4h6k8m0p2r
+          type: boolean
+          default: false
+          description: Whether material line items are taxable
+        tax_add_ons:
+          x-stoplight:
+            id: c3e5g7i9l1n3q
+          type: boolean
+          default: false
+          description: Whether add-on charges are taxable (dual-confirm with add_on.taxable)
+      additionalProperties: false
+    ProjectState:
+      title: ProjectState
+      x-stoplight:
+        id: ro1rcsiogqrmt
+      enum:
+      - active
+      - inactive
+      example: active
+      default: active
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    GeofenceType:
+      title: GeofenceType
+      x-stoplight:
+        id: geahowr9r8ly1
+      nullable: true
+      enum:
+      - moving
+      - circle
+      - polygon
+      readOnly: true
+    Contact-Update-Destroyable:
+      title: Contact-Update-Destroyable
+      x-stoplight:
+        id: v9odqbnxcm0g2
+      allOf:
+      - $ref: '#/components/schemas/Contact-Update'
+      - $ref: '#/components/schemas/Destroyable'
+    Foreman-Read-Nested:
+      title: Foreman-Read-Nested
+      x-stoplight:
+        id: f9iqzaesw4aij
+      allOf:
+      - $ref: '#/components/schemas/Foreman-Read-Typeahead'
+      - type: object
+        x-stoplight:
+          id: m5idk3cd24zti
+        required:
+        - email
+        - company
+        properties:
+          email:
+            type: string
+            x-stoplight:
+              id: ft77ezeftemb1
+            nullable: true
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+      - $ref: '#/components/schemas/Discardable'
+    Foreman-Read-Typeahead:
+      title: Foreman-Read-Typeahead
+      x-stoplight:
+        id: kdwiblw3n3qtm
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: mhsvzlxjbapan
+        required:
+        - first_name
+        - last_name
+        - phone
+        properties:
+          first_name:
+            type: string
+            x-stoplight:
+              id: 8fst58e2tam8v
+            description: First name
+          last_name:
+            type: string
+            x-stoplight:
+              id: av8z4dxam69hi
+            description: Last name
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          phone:
+            type: string
+            x-stoplight:
+              id: 7b5vdi0y2qt5m
+            description: User's E.164 formatted phone number
+            nullable: true
+    Project-Read-Typeahead:
+      title: Project-Read-Typeahead
+      x-stoplight:
+        id: 3wdg6ghyvsknb
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        properties:
+          name:
+            type: string
+            description: Project name
+          external_id:
+            type: string
+            x-stoplight:
+              id: 7kipqxvhrgvk0
+            nullable: true
+    Service-Read-Nested:
+      title: Service-Read-Nested
+      x-stoplight:
+        id: 4bry9oy16sin9
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: tsb5b63pzas6h
+        required:
+        - name
+    ProjectMaterialTotal-Create:
+      title: ProjectMaterialTotal-Create
+      x-stoplight:
+        id: g2el0av3jk3d1
+      type: object
+      required:
+      - material_id
+      properties:
+        total_quantity:
+          type: number
+          x-stoplight:
+            id: 78crmrexv0wqh
+          nullable: true
+        unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        material_id:
+          type: string
+          x-stoplight:
+            id: mklew23hjga8c
+          format: uuid
+      additionalProperties: false
+    Address-Read:
+      title: Address-Read
+      x-stoplight:
+        id: v1mcd2qgns2tf
+      type: object
+      required:
+      - thoroughfare
+      - premise
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      - lat
+      - lon
+      - place_id
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: 8wrr7qkc9ilqn
+        premise:
+          type: string
+          x-stoplight:
+            id: z4jth408out1q
+          nullable: true
+        locality:
+          type: string
+          x-stoplight:
+            id: kfby6wqpgvxbz
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: c9bkrloxf4t8d
+        postal_code:
+          type: string
+          x-stoplight:
+            id: 7zq51k1mof3o3
+        country:
+          type: string
+          x-stoplight:
+            id: iydw9q619ya01
+          pattern: ^[A-Z]{2}
+          example: US
+          minLength: 2
+          maxLength: 2
+        lat:
+          type: string
+          x-stoplight:
+            id: kqu1qtf9rivh1
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+          nullable: true
+        lon:
+          type: string
+          x-stoplight:
+            id: oly2yabkzpk9g
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+          nullable: true
+        place_id:
+          type: string
+          x-stoplight:
+            id: im1fdq7qqxdij
+          description: NextBillion placeID
+          nullable: true
+      additionalProperties: false
+    Geofence-Data:
+      title: Geofence-Data
+      x-stoplight:
+        id: ay73k76oae8gm
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          x-stoplight:
+            id: m9n8p7q6r5s4t
+          description: NextBillionGeofence ID
+        geofence:
+          type: object
+          x-stoplight:
+            id: bo67u046r1ibk
+          required:
+          - name
+          - type
+          properties:
+            id:
+              type: string
+              x-stoplight:
+                id: nm2o97jli2zqm
+              format: uuid
+              description: NextBillion Geofence ID
+            name:
+              type: string
+              x-stoplight:
+                id: x5sp8wq8d2ack
+            type:
+              type: string
+              x-stoplight:
+                id: d91rv1gbtfkm0
+              description: '`circle` or `polygon`'
+            geojson:
+              type: object
+              x-stoplight:
+                id: vk7dx7ipdbuxa
+              required:
+              - type
+              - coordinates
+              properties:
+                type:
+                  type: string
+                  x-stoplight:
+                    id: 65qatpxdox3e9
+                  description: type should be `Polygon`
+                coordinates:
+                  type: array
+                  x-stoplight:
+                    id: 3an8g587wblcs
+                  description: 'This should be an enclosed polygon.
+
+
+                    Example format:
+
+                    [[[-118.226140484,34.048200454],[-118.22616052,34.046872766],[-118.226198738,34.04952736],[-118.226140484,34.048200454]]]'
+                  items:
+                    x-stoplight:
+                      id: 2kltvjxl5xks6
+                    type: array
+                    items:
+                      x-stoplight:
+                        id: k93dt39dghru4
+                      type: array
+                      items: {}
+            circle_center:
+              type: object
+              x-stoplight:
+                id: 6xr3h683f7cl9
+              required:
+              - lat
+              - lon
+              properties:
+                lat:
+                  type: number
+                  x-stoplight:
+                    id: y70xc1ptapv1g
+                lon:
+                  type: number
+                  x-stoplight:
+                    id: uy3twrpcueq9m
+            circle_radius:
+              type: number
+              x-stoplight:
+                id: qrnq301sqfl3d
+            tag:
+              x-stoplight:
+                id: debfy3x1l48zc
+              enum:
+              - pickup
+              - loading
+              - drop_off
+              - unloading
+              - check_in
+              - scaling
+              - ticketing
+              deprecated: true
+        moving_geofence:
+          type: boolean
+          x-stoplight:
+            id: y15533dbr62js
+          default: false
+        tag:
+          $ref: '#/components/schemas/GeofenceTag'
+        geofence_type:
+          $ref: '#/components/schemas/NullableGeofenceType'
+      additionalProperties: false
+    Waypoint-Read-Nested:
+      title: Waypoint-Read-Nested
+      x-stoplight:
+        id: s7xrqujvsvhq0
+      allOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/WaypointType'
+          ordinality:
+            type: integer
+            x-stoplight:
+              id: fn4w5zg9n1hyl
+          contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+          site:
+            $ref: '#/components/schemas/Site-Read-Nested'
+        required:
+        - type
+        - ordinality
+        - site
+      - $ref: '#/components/schemas/Identifier'
+    NullableOrderUnitOfMeasure:
+      title: NullableOrderUnitOfMeasure
+      x-stoplight:
+        id: rtlna368z495u
+      allOf:
+      - $ref: '#/components/schemas/OrderUnitOfMeasure'
+      type: string
+      nullable: true
+    User-Read-Nested:
+      title: User-Read-Nested
+      x-stoplight:
+        id: llvhpyfas0ekp
+      allOf:
+      - $ref: '#/components/schemas/User-Read-Typeahead'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: 6i4ku1oj5jnjs
+        required:
+        - email
+        - phone
+        - external_id
+        - schedule_on
+        properties:
+          email:
+            type: string
+            x-stoplight:
+              id: lyetvi4zixhq9
+            nullable: true
+          phone:
+            type: string
+            x-stoplight:
+              id: 5dyog3jwd9m72
+            description: User's E.164 formatted phone number
+            nullable: true
+          external_id:
+            type: string
+            x-stoplight:
+              id: nk3qk35smj1ej
+            nullable: true
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 5l8bajmm29c31
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    StateError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/StateError-Response'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

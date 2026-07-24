@@ -1,0 +1,880 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier JobAssignments API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: JobAssignments
+paths:
+  /v1/job_assignments/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Job Assignment ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single JobAssignment
+      tags:
+      - JobAssignments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/JobAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-job_assignments-id
+      x-stoplight:
+        id: j7jjhdbtdz8ij
+      description: Retrieve a single `JobAssignment`.
+      parameters: []
+    patch:
+      summary: Update a JobAssignment
+      tags:
+      - JobAssignments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/JobAssignment-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-job_assignments-id
+      x-stoplight:
+        id: uynsex7qkgzqq
+      description: 'Update a `Job Assignment` by ID
+
+
+        This endpoint requires the `edit_job_assignment` permission'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobAssignment-Update'
+  /v1/jobs/{job-id}/job_assignments:
+    parameters:
+    - schema:
+        type: string
+      name: job-id
+      in: path
+      required: true
+      description: Job ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a JobAssignment for a Job
+      tags:
+      - JobAssignments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/JobAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-jobs-job-id-job_assignments
+      x-stoplight:
+        id: 871p9td29wiee
+      description: 'Create a `JobAssignment` for a `Job`.
+
+
+        This endpoint requires the `create_job_assignment` permission.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobAssignment-Create'
+    get:
+      summary: Retrieve JobAssignments for a Job
+      tags:
+      - JobAssignments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: qb2yybtqqfd4b
+                    items:
+                      $ref: '#/components/schemas/JobAssignment-Read'
+                required:
+                - data
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-jobs-job-id-job_assignments
+      x-stoplight:
+        id: 6h651ov38hwiy
+      description: Retrieve all `JobAssignments` visible to your `Company` for a `Job`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-after'
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  schemas:
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    JobAssignment-Create:
+      title: JobAssignment-Create
+      x-stoplight:
+        id: dzrdddmk5aqtn
+      type: object
+      required:
+      - vendor_account_id
+      properties:
+        vendor_account_id:
+          type: string
+          x-stoplight:
+            id: 5vc34ur5xwjq1
+          format: uuid
+        rate_id:
+          type: string
+          x-stoplight:
+            id: 8bwdtciczb3wg
+          format: uuid
+          nullable: true
+        rate_value:
+          type: number
+          x-stoplight:
+            id: 4pfejb42j9yaa
+          nullable: true
+        rate_type:
+          $ref: '#/components/schemas/NullableRateType'
+      additionalProperties: false
+    AccountType:
+      title: AccountType
+      x-stoplight:
+        id: i4vfmd4rwrq8p
+      enum:
+      - customer
+      - vendor
+      example: customer
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type: string
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    RateTime-Read-Nested:
+      title: RateTime-Read-Nested
+      x-stoplight:
+        id: k3z13rbtdojcq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - time_rate
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: s5zmmpgpw8ykn
+          type:
+            $ref: '#/components/schemas/RateType'
+          time_rate:
+            type: number
+            x-stoplight:
+              id: yzbg76z9oflup
+    RateFlatRate-Read-Nested:
+      title: RateFlatRate-Read-Nested
+      x-stoplight:
+        id: l2to0mrxz6ndu
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: khly9g5a3tgap
+        required:
+        - name
+        - type
+        - flat_amount
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 0h0s2w3tathgv
+          type:
+            $ref: '#/components/schemas/RateType'
+          flat_amount:
+            type: number
+            x-stoplight:
+              id: 3s2pycb09j6ph
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    JobAssignment-Read:
+      title: JobAssignment-Read
+      x-stoplight:
+        id: 4jmwvyq0awdou
+      allOf:
+      - $ref: '#/components/schemas/JobAssignment-Read-Nested'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: 0j1wd0lei72vn
+        required:
+        - job
+        properties:
+          job:
+            type: object
+            x-stoplight:
+              id: ftfboc8jt86y2
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: gocyr7pas4uan
+                format: uuid
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - email
+        - phone
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: sd80y9pbgvkok
+            nullable: true
+          email:
+            type: string
+            x-stoplight:
+              id: 883fmt34pdeaj
+            nullable: true
+          phone:
+            type: string
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+            nullable: true
+      description: ''
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    RateType:
+      title: RateType
+      x-stoplight:
+        id: zn2jb7gsifkk3
+      enum:
+      - RatePerHour
+      - RatePerDay
+      - RatePerLoad
+      - RatePerTon
+      - RatePerTonne
+      - RatePerYard
+      - RatePerBushel
+      - RateCommission
+      - RateFlatCommission
+      - RateFlatRate
+      example: RatePerHour
+    RateCommission-Read-Nested:
+      title: RateCommission-Read-Nested
+      x-stoplight:
+        id: rfosxiu0rajbx
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - commission_percentage
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: uquhf0pc3ydpf
+          type:
+            $ref: '#/components/schemas/RateType'
+          commission_percentage:
+            type: number
+            x-stoplight:
+              id: 44e2kldfzbxdj
+    JobAssignment-Update:
+      title: JobAssignment-Update
+      x-stoplight:
+        id: 7epsskvpe1c5a
+      type: object
+      properties:
+        rate_id:
+          type: string
+          x-stoplight:
+            id: tngvpkqg1qyi1
+          format: uuid
+          nullable: true
+        rate_value:
+          type: number
+          x-stoplight:
+            id: 8v68k20du0k1b
+          nullable: true
+        rate_type:
+          $ref: '#/components/schemas/NullableRateType'
+      additionalProperties: false
+    NullableRateType:
+      title: NullableRateType
+      x-stoplight:
+        id: rajiobym5ovlp
+      allOf:
+      - $ref: '#/components/schemas/RateType'
+      nullable: true
+      type: string
+    RateFlatCommission-Read-Nested:
+      title: RateFlatCommission-Read-Nested
+      x-stoplight:
+        id: wtdgoiw8tlpl3
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - commission_amount
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: yt5g1alyyd6fu
+          type:
+            $ref: '#/components/schemas/RateType'
+          commission_amount:
+            type: number
+            x-stoplight:
+              id: 14a1jkho85lpw
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    Account-Read-Nested:
+      title: Account-Read-Nested
+      x-stoplight:
+        id: zo8r3gsz1tm5h
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: gl7hua7pv8xka
+        required:
+        - name
+        - account_types
+        - external_id
+        - accounting_id
+        - company
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: a7g065w5byfcf
+          account_types:
+            type: array
+            x-stoplight:
+              id: a0e9c3lpr1wad
+            items:
+              $ref: '#/components/schemas/AccountType'
+          external_id:
+            type: string
+            x-stoplight:
+              id: yfrec4y0a90cb
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: yfsec5y0a91cb
+            nullable: true
+          company:
+            type: object
+            x-stoplight:
+              id: 9loqtu14mvlnq
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: udjkdjrz08pzr
+                format: uuid
+          billing_address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 0g9kx77zym4ok
+          connected_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          billing_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+    RatePerUnit-Read-Nested:
+      title: RatePerUnit-Read-Nested
+      x-stoplight:
+        id: 5kl2dre6otz74
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - unit_rate
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 7wb8p1ffoz1wz
+          type:
+            $ref: '#/components/schemas/RateType'
+          unit_rate:
+            type: number
+            x-stoplight:
+              id: szqf3p2vkmb0x
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Address-Read:
+      title: Address-Read
+      x-stoplight:
+        id: v1mcd2qgns2tf
+      type: object
+      required:
+      - thoroughfare
+      - premise
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      - lat
+      - lon
+      - place_id
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: 8wrr7qkc9ilqn
+        premise:
+          type: string
+          x-stoplight:
+            id: z4jth408out1q
+          nullable: true
+        locality:
+          type: string
+          x-stoplight:
+            id: kfby6wqpgvxbz
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: c9bkrloxf4t8d
+        postal_code:
+          type: string
+          x-stoplight:
+            id: 7zq51k1mof3o3
+        country:
+          type: string
+          x-stoplight:
+            id: iydw9q619ya01
+          pattern: ^[A-Z]{2}
+          example: US
+          minLength: 2
+          maxLength: 2
+        lat:
+          type: string
+          x-stoplight:
+            id: kqu1qtf9rivh1
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+          nullable: true
+        lon:
+          type: string
+          x-stoplight:
+            id: oly2yabkzpk9g
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+          nullable: true
+        place_id:
+          type: string
+          x-stoplight:
+            id: im1fdq7qqxdij
+          description: NextBillion placeID
+          nullable: true
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    JobAssignment-Read-Nested:
+      title: JobAssignment-Read-Nested
+      x-stoplight:
+        id: mg7965bt1bm8u
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 7cm7nl6s8xho7
+        required:
+        - rate_value
+        - rate_type
+        - commission_rate_value
+        - commission_rate_type
+        properties:
+          customer_account:
+            $ref: '#/components/schemas/Account-Read-Nested'
+          vendor_account:
+            $ref: '#/components/schemas/Account-Read-Nested'
+          rate:
+            x-stoplight:
+              id: dbq76i8yjcmwt
+            anyOf:
+            - $ref: '#/components/schemas/RateTime-Read-Nested'
+            - $ref: '#/components/schemas/RateCommission-Read-Nested'
+            - $ref: '#/components/schemas/RatePerUnit-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatCommission-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatRate-Read-Nested'
+          rate_value:
+            type: string
+            x-stoplight:
+              id: 1vstlgt31c0wg
+            nullable: true
+          rate_type:
+            $ref: '#/components/schemas/NullableRateType'
+          commission_rate_value:
+            type: string
+            x-stoplight:
+              id: kl1p5p4ii7nyy
+            description: This is the applied value when the `rate_type` is commission-based.
+            nullable: true
+          commission_rate_type:
+            $ref: '#/components/schemas/NullableRateType'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

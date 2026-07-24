@@ -1,0 +1,257 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Reflection API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Reflection
+paths:
+  /health:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Health Check
+      tags:
+      - Reflection
+      responses:
+        '200':
+          $ref: '#/components/responses/HealthCheck'
+        '406':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/HealthCheck'
+      operationId: get-health
+      x-internal: true
+      description: '`/health` is used by load balancers in AWS as well as in our Docker image.'
+      security: []
+  /v1/mobile_context:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Mobile Context
+      tags:
+      - Reflection
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/MobileContext-Read'
+                required:
+                - data
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-mobile_context
+      x-stoplight:
+        id: fo8cpg6nzzuam
+      x-internal: true
+      description: Retrieve the current Mobile Context
+      security: []
+  /version:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve the current Version
+      tags:
+      - Reflection
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Version-Read'
+                required:
+                - data
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-version
+      x-stoplight:
+        id: a0zz4u8l2iyzr
+      x-internal: true
+      description: Retrieve the current `Version`
+      security: []
+components:
+  responses:
+    HealthCheck:
+      description: Health check response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/HealthCheck-Read'
+            required:
+            - data
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  schemas:
+    HealthCheck-Read:
+      title: HealthCheck-Read
+      x-stoplight:
+        id: tqnnr1w49hyyk
+      type: object
+      description: Health check results
+      x-internal: true
+      required:
+      - data_migrations
+      - db
+      - db_ro
+      - geo_db
+      - geo_db_ro
+      - migrations
+      - geo_migrations
+      - redis
+      - sidekiq_redis
+      properties:
+        data_migrations:
+          type: boolean
+          x-stoplight:
+            id: z53o03znp1y5z
+          description: Have all data migrations run?
+        db:
+          type: boolean
+          x-stoplight:
+            id: qd6mepb0ex1q3
+          description: Can we connect to the primary writer database?
+        db_ro:
+          type: boolean
+          x-stoplight:
+            id: 88i0z5lzwpw76
+          description: Can we connect to the primary reader database?
+        geo_db:
+          type: boolean
+          x-stoplight:
+            id: dq6mepb0ex1q3
+          description: Can we connect to the writer geo database?
+        geo_db_ro:
+          type: boolean
+          x-stoplight:
+            id: i0z5lzwpw7688
+          description: Can we connect to the reader geo database?
+        migrations:
+          type: boolean
+          x-stoplight:
+            id: 8gnbpka1lbf9q
+          description: Have all primary db migrations run?
+        geo_migrations:
+          type: boolean
+          x-stoplight:
+            id: q9fbl1akpbng8
+          description: Have all geo db migrations run?
+        redis:
+          type: boolean
+          x-stoplight:
+            id: bcn7yaxqgzhcf
+          description: Can we connect to the Redis instance?
+        sidekiq_redis:
+          type: boolean
+          x-stoplight:
+            id: idx85wwz6ty6a
+          description: Can we connect to the Redis instance used by Sidekiq?
+      additionalProperties: false
+    Version-Read:
+      title: Version-Read
+      x-stoplight:
+        id: 7gy0fsdb7cj8p
+      type: object
+      x-internal: true
+      required:
+      - sha
+      - time
+      properties:
+        sha:
+          type: string
+          x-stoplight:
+            id: 4ci3zf3ruvgv7
+        time:
+          type: string
+          x-stoplight:
+            id: ui2uehdkrw33p
+          format: date-time
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    MobileContext-Read:
+      title: MobileContext-Read
+      x-stoplight:
+        id: uqex0xkxbrkmi
+      type: object
+      description: Read model for MobileContext
+      x-internal: true
+      required:
+      - minimum_supported_version
+      properties:
+        minimum_supported_version:
+          type: integer
+          x-stoplight:
+            id: mpdt6xld98sfi
+          description: minimum supported version of the mobile app
+      additionalProperties: false
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

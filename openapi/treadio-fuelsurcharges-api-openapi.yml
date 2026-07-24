@@ -1,0 +1,1295 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier FuelSurcharges API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: FuelSurcharges
+paths:
+  /v1/companies/{company-id}/fuel_price_indices:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a FuelPriceIndex for a Company
+      tags:
+      - FuelSurcharges
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FuelPriceIndex-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-fuel_price_indices
+      x-stoplight:
+        id: 2f64msx26yluy
+      description: 'Create a `FuelPriceIndex` for a `Company`
+
+
+        This endpoint requires the `create_fuel_price_indices` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelPriceIndex-Create'
+    get:
+      summary: Retrieve FuelPriceIndices that belong to a Company
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: pcuxfktjombvc
+                    items:
+                      $ref: '#/components/schemas/FuelPriceIndex-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-fuel_price_indices
+      x-stoplight:
+        id: 5y263j22npmb8
+      description: Retrieve `FuelPriceIndices` for a `Company`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      tags:
+      - FuelSurcharges
+  /v1/companies/{company-id}/fuel_price_indices/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on FuelPriceIndex for a Company
+      tags:
+      - FuelSurcharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: 95bnj47nk3rv3
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FuelPriceIndex-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-fuel_price_indices-typeahead
+      x-stoplight:
+        id: 0aigw051bke6i
+      description: Typeahead search against the `name` property on `FuelPriceIndex` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/companies/{company-id}/fuel_surcharge_schedules:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    post:
+      summary: Create a FuelSurchargeSchedule for a Company
+      tags:
+      - FuelSurcharges
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FuelSurchargeSchedule-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-fuel_surcharge_schedules
+      x-stoplight:
+        id: g53w8gu31ojs0
+      description: 'Create a `FuelSurchargeSchedule` for a `Company`
+
+
+        This endpoint requires the `create_fuel_price_indices` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelSurchargeSchedule-Create'
+    get:
+      summary: Retrieve FuelSurchargeSchedules that belong to a Company
+      tags:
+      - FuelSurcharges
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 70a1g0wo5ktfl
+                    items:
+                      $ref: '#/components/schemas/FuelSurchargeSchedule-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-fuel_surcharge_schedules
+      x-stoplight:
+        id: 9kdp2r41vtlao
+      description: Retrieve `FuelSurchargeSchedules` for a `Company`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/companies/{company-id}/fuel_surcharge_schedules/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    get:
+      summary: Typeahead search on FuelSurchargeSchedule for a Company
+      tags:
+      - FuelSurcharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: fcwaom5u01336
+                    items:
+                      $ref: '#/components/schemas/FuelSurchargeSchedule-Read-Typeahead'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-fuel_surcharge_schedules-typeahead
+      x-stoplight:
+        id: 89v7xhgn3dxtz
+      description: Typeahead search against the `name` property on `FuelSurchargeSchedule` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+  /v1/fuel_price_indices/{fuel-price-index-id}/fuel_prices:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: fuel-price-index-id
+      in: path
+      description: FuelPriceIndex ID
+      required: true
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a FuelPrice for a FuelPriceIndex
+      tags:
+      - FuelSurcharges
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FuelPrice-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-fuel_price_indices-fuel-price-index-id-fuel_prices
+      x-stoplight:
+        id: c3iujyj14m2yk
+      description: 'Create a `FuelPrice` for a `FuelPriceIndex`
+
+
+        This endpoint requires the `create_fuel_price_indices` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelPrice-Create'
+    get:
+      summary: Retrieve Fuel Prices that belong to a FuelPriceIndex
+      tags:
+      - FuelSurcharges
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: xud1dvw59hpa4
+                    items:
+                      $ref: '#/components/schemas/FuelPrice-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-fuel_price_indices-fuel-price-index-id-fuel_prices
+      x-stoplight:
+        id: di6a0yk14l7uu
+      description: Retrieve `FuelPrices` that belong to a `FuelPriceIndex`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/fuel_price_indices/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: FuelPriceIndex ID
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Update FuelPriceIndex
+      tags:
+      - FuelSurcharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FuelPriceIndex-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-fuel_price_indices-id
+      x-stoplight:
+        id: rglynamxfchx1
+      description: 'Update `FuelPriceIndex` by `ID`
+
+
+        This endpoint requires the `edit_fuel_price_indices` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelPriceIndex-Update'
+    delete:
+      summary: Delete FuelPriceIndex
+      tags:
+      - FuelSurcharges
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-fuel_price_indices-id
+      x-stoplight:
+        id: alrhrsq4z9h2m
+      description: 'Delete `FuelPriceIndex` by `ID`
+
+
+        This endpoint requires the `delete_fuel_price_indices` permission'
+  /v1/fuel_prices/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: FuelPrice ID
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Update FuelPrice
+      tags:
+      - FuelSurcharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FuelPrice-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-fuel_prices-id
+      x-stoplight:
+        id: b7lvb2h1glz4i
+      description: 'Update `FuelPrice` by `ID`
+
+
+        This endpoint requires the `edit_fuel_price_indices` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelPrice-Update'
+    delete:
+      summary: Delete FuelPrice
+      tags:
+      - FuelSurcharges
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-fuel_prices-id
+      x-stoplight:
+        id: 2ng6xzgo1uipj
+      description: 'Delete `FuelPrice` by `ID`
+
+
+        This endpoint requires the `delete_fuel_price_indices` permission'
+  /v1/fuel_surcharge_schedule_prices/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: FuelSurchargeSchedulePrice ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    patch:
+      summary: Update FuelSurchargeSchedulePrice
+      tags:
+      - FuelSurcharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FuelSurchargeSchedulePrice-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-fuel_surcharge_schedule_prices-id
+      x-stoplight:
+        id: ii4ghlsn13iff
+      description: 'Update `FuelSurchargeSchedulePrice` by `ID`
+
+
+        This endpoint requires the `edit_fuel_price_indices` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelSurchargeSchedulePrice-Update'
+    delete:
+      summary: Delete FuelSurchargeSchedulePrice
+      tags:
+      - FuelSurcharges
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-fuel_surcharge_schedule_prices-id
+      x-stoplight:
+        id: svlbe4mut156p
+      description: 'Delete `FuelSurchargeSchedulePrice` by `ID`
+
+
+        This endpoint requires the `delete_fuel_price_indices` permission'
+  /v1/fuel_surcharge_schedules/{fuel-surcharge-schedule-id}/fuel_surcharge_schedule_prices:
+    parameters:
+    - schema:
+        type: string
+      name: fuel-surcharge-schedule-id
+      in: path
+      required: true
+      description: FuelSurchargeSchedule ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    post:
+      summary: Create a FuelSurchargeSchedulePrice for a FuelSurchargeSchedule
+      tags:
+      - FuelSurcharges
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FuelSurchargeSchedulePrice-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-fuel_surcharge_schedules-fuel-surcharge-schedule-id-fuel_surcharge_schedule_prices
+      x-stoplight:
+        id: mqtr1s3ulkfum
+      description: 'Create a `FuelSurchargeSchedulePrice` for a `FuelSurchargeSchedule`
+
+
+        This endpoint requires the `create_fuel_price_indices` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelSurchargeSchedulePrice-Create'
+    get:
+      summary: Retrieve FuelSurchargeSchedulePrices that belong to a FuelSurchargeSchedule
+      tags:
+      - FuelSurcharges
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: dwesmlba40uh6
+                    items:
+                      $ref: '#/components/schemas/FuelSurchargeSchedulePrice-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-fuel_surcharge_schedules-fuel-surcharge-schedule-id-fuel_surcharge_schedule_prices
+      x-stoplight:
+        id: ezpdqlfcwz4a5
+      description: Retrieve `FuelSurchargeSchedulePrices` that belong to a `FuelSurchargeSchedule`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/fuel_surcharge_schedules/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: FuelSurchargeSchedule ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    patch:
+      summary: Update FuelSurchargeSchedule
+      tags:
+      - FuelSurcharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FuelSurchargeSchedule-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-fuel_surcharge_schedules-id
+      x-stoplight:
+        id: rfd4ul6jiib0u
+      description: 'Update `FuelSurchargeSchedule` by `ID`
+
+
+        This endpoint requires the `edit_fuel_price_indices` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelSurchargeSchedule-Update'
+    delete:
+      summary: Delete FuelSurchargeSchedule
+      tags:
+      - FuelSurcharges
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-fuel_surcharge_schedules-id
+      x-stoplight:
+        id: lzqbxoxllq42p
+      description: 'Delete `FuelSurchargeSchedule` by `ID`
+
+
+        This endpoint requires the `delete_fuel_price_indices` permission'
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    FuelPrice-Create:
+      title: FuelPrice-Create
+      x-stoplight:
+        id: pykob9emn260a
+      type: object
+      required:
+      - date
+      - price
+      properties:
+        date:
+          type: string
+          x-stoplight:
+            id: 05ak4lkj1wrau
+          format: date
+        price:
+          type: number
+          x-stoplight:
+            id: 3y21sppsb67f8
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    FuelPriceIndex-Create:
+      title: FuelPriceIndex-Create
+      x-stoplight:
+        id: bx2dcqc8pabka
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 0nbbobxnefm75
+      additionalProperties: false
+    FuelSurchargeSchedulePrice-Create:
+      title: FuelSurchargeSchedulePrice-Create
+      x-stoplight:
+        id: gz18zuchccnol
+      type: object
+      required:
+      - price
+      - bill_surcharge
+      properties:
+        price:
+          type: number
+          x-stoplight:
+            id: pgxnd135m0h24
+        bill_surcharge_percentage:
+          type: number
+          x-stoplight:
+            id: wtzy52b9ukdnu
+          deprecated: true
+        bill_surcharge:
+          type: number
+          x-stoplight:
+            id: 1ro4kf3cu0hxy
+      additionalProperties: false
+    FuelSurchargeSchedule-Create:
+      title: FuelSurchargeSchedule-Create
+      x-stoplight:
+        id: n6il53t5wo7wa
+      type: object
+      required:
+      - name
+      - fuel_price_index_id
+      - surcharge_type
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: uhq664n2olcyv
+        fuel_price_index_id:
+          type: string
+          x-stoplight:
+            id: 30tssu05k3j1a
+          format: uuid
+        surcharge_type:
+          $ref: '#/components/schemas/FuelSurchargeScheduleType'
+      additionalProperties: false
+    FuelSurchargeSchedule-Read-Typeahead:
+      title: FuelSurchargeSchedule-Read-Typeahead
+      x-stoplight:
+        id: 0he4xx9e2z3vn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: w8t1qlz5d7k88
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: pk7vc6u73nl7o
+    FuelSurchargeSchedulePrice-Read:
+      title: FuelSurchargeSchedulePrice-Read
+      x-stoplight:
+        id: e403rrvyjweta
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: ds6t4d4fklbm8
+        required:
+        - price
+        - bill_surcharge
+        properties:
+          price:
+            type: string
+            x-stoplight:
+              id: cy6fbk5hu1f2k
+          bill_surcharge_percentage:
+            type: string
+            x-stoplight:
+              id: 8pt0kypfoatvg
+            deprecated: true
+          bill_surcharge:
+            type: string
+            x-stoplight:
+              id: gaxj1uqzjh56w
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    FuelSurchargeSchedule-Read:
+      title: FuelSurchargeSchedule-Read
+      x-stoplight:
+        id: 81byeas3bbklu
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: i66e7uew8m6pl
+        required:
+        - name
+        - fuel_price_index
+        - surcharge_type
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: w2khek3m07je7
+          fuel_price_index:
+            $ref: '#/components/schemas/FuelPriceIndex-Read-Nested'
+          surcharge_type:
+            $ref: '#/components/schemas/FuelSurchargeScheduleType'
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    FuelSurchargeScheduleType:
+      title: FuelSurchargeScheduleType
+      x-stoplight:
+        id: w280lnuzi5auy
+      enum:
+      - percentage
+      - per_unit
+    FuelPriceIndex-Read:
+      title: FuelPriceIndex-Read
+      x-stoplight:
+        id: 9q9bvvi0f977s
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: eyybrb6bmt2yt
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 5gbynft50wi90
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    FuelSurchargeSchedule-Update:
+      title: FuelSurchargeSchedule-Update
+      x-stoplight:
+        id: dzj3lw89pjrps
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: u31x6wwbsmznt
+        fuel_price_index_id:
+          type: string
+          x-stoplight:
+            id: a74jl4gty4h62
+          format: uuid
+        surcharge_type:
+          $ref: '#/components/schemas/FuelSurchargeScheduleType'
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    FuelPriceIndex-Update:
+      title: FuelPriceIndex-Update
+      x-stoplight:
+        id: excovpp86o6k7
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: wpck2maua6k55
+      additionalProperties: false
+    FuelPrice-Update:
+      title: FuelPrice-Update
+      x-stoplight:
+        id: mpj5kio2ts4q7
+      type: object
+      properties:
+        date:
+          type: string
+          x-stoplight:
+            id: rsjrltbk9exa0
+        price:
+          type: number
+          x-stoplight:
+            id: ffu7ki07t1h08
+      additionalProperties: false
+    FuelPrice-Read:
+      title: FuelPrice-Read
+      x-stoplight:
+        id: ynx4ubsv2knje
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: o08ke84wb6bnm
+        required:
+        - date
+        - price
+        properties:
+          date:
+            type: string
+            x-stoplight:
+              id: ytbhduf1axc2d
+            format: date
+          price:
+            type: string
+            x-stoplight:
+              id: zcrrius16gvav
+    FuelSurchargeSchedulePrice-Update:
+      title: FuelSurchargeSchedulePrice-Update
+      x-stoplight:
+        id: 4y30ln4olyimq
+      type: object
+      properties:
+        price:
+          type: number
+          x-stoplight:
+            id: 0lb482me1iv8b
+        bill_surcharge_percentage:
+          type: number
+          x-stoplight:
+            id: zb98i2h7vnw0d
+          deprecated: true
+        bill_surcharge:
+          type: number
+          x-stoplight:
+            id: 0xz5e4s5kg2w9
+      additionalProperties: false
+    FuelPriceIndex-Read-Nested:
+      title: FuelPriceIndex-Read-Nested
+      x-stoplight:
+        id: 75z95xmkmafzu
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: gt6hyd6yv56qg
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: mnpmw9znthk98
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    FuelPriceIndex-Read-Typeahead:
+      title: FuelPriceIndex-Typeahead
+      x-stoplight:
+        id: uuokb9twnidv2
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: qybhimj3u03ty
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: kju9qtd39dsrv
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

@@ -1,0 +1,405 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier DriverStateEvent API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: DriverStateEvent
+paths:
+  /v1/users/me/driver_state:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve the current driver_state
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DriverStateEvent-Read'
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-me-driver_state
+      description: 'Retrieve the current driver_state of the `User` if user is a `driver`.
+
+        This endpoint requires the `Driver` role'
+      x-stoplight:
+        id: 3r6knyjwslf8r
+      tags:
+      - DriverStateEvent
+      x-internal: true
+  /v1/users/me/driver_state/break:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Update Driver State to break
+      operationId: put-v1-users-me-driver_state-break
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DriverStateEvent-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      description: 'This endpoint will update the status of a `driver` to `break`.
+
+        This endpoint requires the `Driver` role'
+      x-internal: true
+      tags:
+      - DriverStateEvent
+      x-stoplight:
+        id: 3dd5zs6xv4efd
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /v1/users/me/driver_state/off_duty:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Update Driver State to off_duty
+      operationId: put-v1-users-me-driver_state-off_duty
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DriverStateEvent-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      description: 'This endpoint will update the status of a `driver` to `off_duty`.
+
+        This endpoint requires the `Driver` role'
+      x-internal: true
+      tags:
+      - DriverStateEvent
+      x-stoplight:
+        id: rng97e9k7325i
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /v1/users/me/driver_state/on_duty:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Update Driver State to on_duty
+      operationId: put-v1-users-me-driver_state-on_duty
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DriverStateEvent-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      x-stoplight:
+        id: tpt1ubr0empbb
+      description: 'This endpoint will update the status of a `driver` to `on_duty`.
+
+        This endpoint requires the `Driver` role'
+      x-internal: true
+      tags:
+      - DriverStateEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /v1/users/me/driver_state/time_logged:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve the time driver logged today
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Driver-Time-Logged-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-me-driver_state_time_logged
+      description: 'Retrieve the time in minutes the `driver` was on_duty today.
+
+        This endpoint requires the `Driver` role'
+      tags:
+      - DriverStateEvent
+      x-internal: true
+      x-stoplight:
+        id: 83m58md6hxaor
+components:
+  responses:
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    Driver-Time-Logged-Read:
+      title: Driver-Time-Logged-Read
+      x-stoplight:
+        id: xbmrfzoz3zddg
+      type: object
+      properties:
+        total_time_logged:
+          type: integer
+          x-stoplight:
+            id: x732g1jexvf80
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    DriverStateEvent-Read:
+      title: DriverStateEvent-Read
+      x-stoplight:
+        id: 813jz0m2wvdpm
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          user_id:
+            type: string
+            format: uuid
+            x-stoplight:
+              id: azx0we0941wlr
+          state:
+            $ref: '#/components/schemas/DriverState'
+          started_at:
+            x-stoplight:
+              id: k97zhsrha4zvo
+            type: string
+            format: date-time
+          ended_at:
+            x-stoplight:
+              id: xqde66xx0nitc
+            type: string
+            format: date-time
+            nullable: true
+        required:
+        - user_id
+        - state
+        - started_at
+      - $ref: '#/components/schemas/Timestamps'
+      description: Model for driver_state_event
+      x-tags:
+      - DriverStateEvent
+      x-internal: true
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    DriverState:
+      title: DriverState
+      x-stoplight:
+        id: ibubibnkuzq3g
+      enum:
+      - on_duty
+      - off_duty
+      - break
+      example: on_duty
+      description: These are the states of driver to display their availability
+      x-internal: true
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

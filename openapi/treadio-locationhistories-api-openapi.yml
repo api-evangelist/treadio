@@ -1,0 +1,931 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier LocationHistories API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: LocationHistories
+paths:
+  /v1/companies/{company-id}/driver_days/{driver-day-id}/location_histories:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: driver-day-id
+      in: path
+      required: true
+      description: DriverDay ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Location Histories for a DriverDay
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 6z2ak1r6ainf5
+                    items:
+                      $ref: '#/components/schemas/Job-LocationHistory-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-driver-days-driver-day-id-location_histories
+      x-stoplight:
+        id: osd3on975q53r
+      description: Retrieve `LocationHistories` for a `DriverDay`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-after'
+      tags:
+      - LocationHistories
+      x-internal: true
+  /v1/companies/{company-id}/jobs/{job-id}/location_histories:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: job-id
+      in: path
+      required: true
+      description: Job ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Location Histories for a Job
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 6z2ak1r6ainf5
+                    items:
+                      $ref: '#/components/schemas/Job-LocationHistory-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-jobs-job-id-location_histories
+      x-stoplight:
+        id: osd3on975q53r
+      description: Retrieve `LocationHistories` for a `Job`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-after'
+      tags:
+      - LocationHistories
+      x-internal: true
+  /v1/companies/{company-id}/jobs/{job-id}/moving_sites/{moving-site-id}/location_histories:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: job-id
+      in: path
+      required: true
+      description: Job ID
+    - schema:
+        type: string
+        format: uuid
+      name: moving-site-id
+      in: path
+      required: true
+      description: MovingSite ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Location Histories for a Moving Site on a Job
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: occr6x8ux462k
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Job-LocationHistory-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-jobs-job-id-moving_sites-moving-site-id-location_histories
+      x-stoplight:
+        id: syn0wfx5soe1u
+      description: 'Retrieve `LocationHistories` for a `MovingSite` on a `Job`.
+
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      tags:
+      - LocationHistories
+      x-internal: true
+  /v1/companies/{company-id}/location_histories/latest:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve latest Location Histories for a Company
+      tags:
+      - LocationHistories
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: lg1vq81dstm0v
+                    items:
+                      $ref: '#/components/schemas/NextBillionAssetLocations-LatestLocation-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-location_histories-latest
+      x-stoplight:
+        id: ywr89pd9skn5r
+      description: Retrieve latest `LocationHistories` for a `Company`.
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: filter[order_id]
+        description: 'Filters location histories to include only those associated with the specified order''s jobs '
+      - schema:
+          type: string
+        in: query
+        name: filter[job_id]
+        description: 'Filters location histories to include only those associated with the specific job '
+  /v1/location_histories/latest:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve latest Location Histories for a Company
+      tags:
+      - LocationHistories
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 1glvq81dstm0v
+                    items:
+                      $ref: '#/components/schemas/NextBillionAssetLocations-LatestLocation-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-location_histories-latest
+      x-stoplight:
+        id: rwy89pd9skn5r
+      description: Retrieve latest `LocationHistories` for a `Company`.
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: filter[order_id]
+        description: 'Filters location histories to include only those associated with the specified order''s jobs '
+      - schema:
+          type: string
+        in: query
+        name: filter[job_id]
+        description: 'Filters location histories to include only those associated with the specific job '
+      deprecated: true
+components:
+  schemas:
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: c9ls3nrhbih3v
+            nullable: true
+          ticket_match_id:
+            type: string
+            x-stoplight:
+              id: a1cd3nrhbih3v
+            nullable: true
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type: string
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+            nullable: true
+    Radii-Read-Nested:
+      title: Radii-Read-Nested
+      x-stoplight:
+        id: ly6sm0c8t4pyb
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: ho0uakpcggx2p
+        required:
+        - radius_meters
+        properties:
+          radius_meters:
+            type: number
+            x-stoplight:
+              id: gw6qtcobk2y84
+          site_id:
+            type: string
+            x-stoplight:
+              id: fudag8xqdf288
+            format: uuid
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    JobAssignment-LatestLocation-Read-Nested:
+      title: JobAssignment-LatestLocation-Read-Nested
+      x-stoplight:
+        id: j6i2gjnatp1s4
+      type: object
+      properties:
+        customer_account:
+          $ref: '#/components/schemas/Account-LatestLocation-Read-Nested'
+        vendor_account:
+          $ref: '#/components/schemas/Account-LatestLocation-Read-Nested'
+      additionalProperties: false
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type: string
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    NextBillionAssetLocations-Read:
+      title: NextBillionAssetLocations-Read
+      x-stoplight:
+        id: r4fxi0lyzdk7c
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: okxxnjle06x4t
+        required:
+        - lat
+        - lon
+        - accuracy
+        - device_id
+        - load_id
+        - job_id
+        - order_id
+        - created_at
+        - load_state
+        - radii
+        - speed_meters_per_second
+        - bearing_degrees
+        - occurred_at
+        properties:
+          lat:
+            type: string
+            x-stoplight:
+              id: sz4r3je8tjtug
+          lon:
+            type: string
+            x-stoplight:
+              id: oxv4dux129o9u
+          accuracy:
+            type: string
+            x-stoplight:
+              id: yfet2yt7hix1r
+            nullable: true
+          device_id:
+            type: string
+            x-stoplight:
+              id: twigr07p456el
+            nullable: true
+          load_id:
+            type: string
+            x-stoplight:
+              id: x2nr61wujagbl
+            format: uuid
+            nullable: true
+          job_id:
+            type: string
+            x-stoplight:
+              id: eh8h8ewvux24d
+            format: uuid
+            nullable: true
+          order_id:
+            type: string
+            x-stoplight:
+              id: es98zgal04r4z
+            nullable: true
+          created_at:
+            type: string
+            x-stoplight:
+              id: mfxcvbjb4hpah
+            format: date-time
+            deprecated: true
+          load_state:
+            $ref: '#/components/schemas/NullableLoadState'
+          equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+          radii:
+            x-stoplight:
+              id: qgdg5f6qq8vw9
+            type: array
+            nullable: true
+            items:
+              $ref: '#/components/schemas/Radii-Read-Nested'
+          speed_meters_per_second:
+            type: string
+            x-stoplight:
+              id: p42zd3kzlilwf
+            nullable: true
+          bearing_degrees:
+            type: string
+            x-stoplight:
+              id: os6j4w8qfqg4h
+            nullable: true
+          occurred_at:
+            type: string
+            x-stoplight:
+              id: 1gdxcj1n7b4ug
+            format: date-time
+    NullableLoadState:
+      title: NullableLoadState
+      x-stoplight:
+        id: s21krgz0gt3pa
+      allOf:
+      - $ref: '#/components/schemas/LoadState'
+      nullable: true
+      type: string
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
+      x-stoplight:
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type: string
+          x-stoplight:
+            id: ttaijg77qmbgk
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: s4rscgptv68x3
+          nullable: true
+      additionalProperties: false
+    Equipment-Read-Nested:
+      title: Equipment-Read-Nested
+      x-stoplight:
+        id: 7ezenec7ycv5l
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
+      - type: object
+        required:
+        - license_number
+        - zone
+        - accounting_id
+        - equipment_id
+        properties:
+          license_number:
+            type: string
+            x-stoplight:
+              id: hw1ooa17wsadq
+            nullable: true
+          zone:
+            type: string
+            x-stoplight:
+              id: 81hr4p8yp8btv
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: ere9qhs4cuwhi
+            nullable: true
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: gt7r3iqzx2w0u
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    NextBillionAssetLocations-LatestLocation-Read:
+      title: NextBillionAssetLocations-LatestLocation-Read
+      x-stoplight:
+        id: kxf2ke7m44u5j
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/NextBillionAssetLocations-Read'
+      - type: object
+        x-stoplight:
+          id: 640j3b5ol4fi7
+        properties:
+          driver:
+            $ref: '#/components/schemas/User-Read-Nested'
+          vendor_job_assignment:
+            $ref: '#/components/schemas/JobAssignment-LatestLocation-Read-Nested'
+          dispatch_number:
+            $ref: '#/components/schemas/DispatchNumber-Read-Nested'
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    DispatchNumber-Read-Nested:
+      title: DispatchNumber-Read-Nested
+      x-stoplight:
+        id: 5oe6kw6t82gnr
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        properties:
+          name:
+            type: string
+    Account-LatestLocation-Read-Nested:
+      title: Account-LatestLocation-Read-Nested
+      x-stoplight:
+        id: rrobgjwm8y242
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 4hcvfg9m00lsi
+      additionalProperties: false
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    LoadState:
+      title: LoadState
+      x-stoplight:
+        id: 4gkn8rmkg2f8b
+      enum:
+      - created
+      - to_pickup
+      - arrived_pickup
+      - loaded
+      - to_dropoff
+      - arrived_dropoff
+      - unloaded
+      - completed
+      - canceled
+      - paused
+      example: created
+      default: created
+      readOnly: true
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Job-LocationHistory-Read:
+      title: Job-LocationHistory-Read
+      x-stoplight:
+        id: yqm5zp7g5j36l
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - lat
+        - load_id
+        - load_state
+        - lon
+        - occurred_at
+        - offline_mode
+        - speed_meters_per_second
+        properties:
+          lat:
+            type: string
+            x-stoplight:
+              id: ups5us4k346z3
+          load_id:
+            type: string
+            x-stoplight:
+              id: jwz9jl4ehz2e5
+            format: uuid
+            nullable: true
+          load_state:
+            $ref: '#/components/schemas/NullableLoadState'
+          lon:
+            type: string
+            x-stoplight:
+              id: w3p41tcwovbyw
+          occurred_at:
+            type: string
+            x-stoplight:
+              id: cn9p4shg2sly2
+            format: date-time
+          offline_mode:
+            type: boolean
+            x-stoplight:
+              id: k8m2nwp5xq7r1
+            description: Whether this location was recorded while the device was in offline mode
+          speed_meters_per_second:
+            type: string
+            x-stoplight:
+              id: wgxe890y6vltv
+            nullable: true
+    User-Read-Typeahead:
+      title: User-Read-Typeahead
+      x-stoplight:
+        id: ttbbss5b5k66f
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - first_name
+        - last_name
+        properties:
+          first_name:
+            type: string
+            description: First name
+            x-stoplight:
+              id: gwo999rcdahmg
+          last_name:
+            type: string
+            description: Last name
+            x-stoplight:
+              id: l9omnnsq644bh
+      description: ''
+    Equipment-Read-Typeahead:
+      title: Equipment-Read-Typeahead
+      x-stoplight:
+        id: sv94osohm5xhg
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - equipment_type
+        - external_id
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          external_id:
+            type: string
+            x-stoplight:
+              id: jrkz95htilck3
+            nullable: true
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: fkr9fkdtl996f
+    User-Read-Nested:
+      title: User-Read-Nested
+      x-stoplight:
+        id: llvhpyfas0ekp
+      allOf:
+      - $ref: '#/components/schemas/User-Read-Typeahead'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: 6i4ku1oj5jnjs
+        required:
+        - email
+        - phone
+        - external_id
+        - schedule_on
+        properties:
+          email:
+            type: string
+            x-stoplight:
+              id: lyetvi4zixhq9
+            nullable: true
+          phone:
+            type: string
+            x-stoplight:
+              id: 5dyog3jwd9m72
+            description: User's E.164 formatted phone number
+            nullable: true
+          external_id:
+            type: string
+            x-stoplight:
+              id: nk3qk35smj1ej
+            nullable: true
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 5l8bajmm29c31
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  responses:
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

@@ -1,0 +1,1255 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier CompanyShares API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: CompanyShares
+paths:
+  /v1/companies/{company-id}/company_shares:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    post:
+      summary: Create a Company Share
+      tags:
+      - CompanyShares
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company_id-company_shares
+      x-stoplight:
+        id: ln40xlp4cvnqn
+      description: 'Create a `CompanyShare`.
+
+
+        This endpoint requires the `create_companyshare` permission.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyShare-Create'
+    get:
+      summary: Retrieve CompanyShares for a Company
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: nnk7jufdx6fdn
+                    items:
+                      $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company_id-company_shares
+      x-stoplight:
+        id: eswe030sesr9r
+      description: 'Retrieve `CompanyShares` for a `Company`.
+
+
+        Note that the `sender_company_id` and `receiver_company_id` filters are mutually exclusive with `between_company_id`.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - schema:
+          type: string
+          format: uuid
+        in: query
+        name: filter[sender_company_id]
+        description: Sender Company ID
+      - schema:
+          type: string
+          format: uuid
+        in: query
+        name: filter[receiver_company_id]
+        description: Receiver Company ID
+      - schema:
+          type: string
+          format: uuid
+        in: query
+        name: filter[between_company_id]
+        description: Between Company ID
+      - schema:
+          $ref: '#/components/schemas/CompanyShareableType'
+        in: query
+        name: filter[company_shareable_type]
+        description: Company Shareable Type
+      - schema:
+          type: string
+          format: uuid
+        in: query
+        name: filter[company_shareable_id]
+        description: Company Shareable ID
+  /v1/companies/{company-id}/company_shares/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: CompanyShare ID
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Update a CompanyShare as a Company
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-companies-company-id-company_shares-id
+      x-stoplight:
+        id: hqzrj1jlna4ni
+      description: 'Update a `CompanyShare` as a `Company`.
+
+
+        This endpoint requires the `edit_company_share` permission.
+
+
+        Note that `external_id` can only be updated by the receiver `Company`.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyShare-Update'
+    delete:
+      summary: Delete a CompanyShare as a Company
+      tags:
+      - CompanyShares
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: delete-v1-companies-company-id-company_shares-id
+      x-stoplight:
+        id: f9q9dkod6kvbu
+      description: 'Delete a `CompanyShare` as a `Company`.
+
+
+        This endpoint requires the `delete_companyshare` permission.'
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/company_shares:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create CompanyShare for a Managed Company
+      tags:
+      - CompanyShares
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompanyShare-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-managed_companies-managed-company-id-company_shares
+      x-stoplight:
+        id: cs1am6pq7v3td
+      description: 'Create a `CompanyShare` for a Managed Company
+
+
+        This endpoint requires the `create_company_share` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyShare-Create'
+    get:
+      summary: Retrieve CompanyShares for a Managed Company
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: cs7xk2mn3r9pz
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-company_shares
+      x-stoplight:
+        id: mg3ht5cs8w2nr
+      description: Retrieve `CompanyShares` for a managed company. This includes both shares sent by the managed company and shares received by the managed company.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - schema:
+          type: string
+          format: uuid
+        in: query
+        name: filter[sender_company_id]
+        description: Sender Company ID
+      - schema:
+          type: string
+          format: uuid
+        in: query
+        name: filter[receiver_company_id]
+        description: Receiver Company ID
+      - schema:
+          type: string
+          format: uuid
+        in: query
+        name: filter[between_company_id]
+        description: Between Company ID
+      - schema:
+          $ref: '#/components/schemas/CompanyShareableType'
+        in: query
+        name: filter[company_shareable_type]
+        description: Company Shareable Type
+      - schema:
+          type: string
+          format: uuid
+        in: query
+        name: filter[company_shareable_id]
+        description: Company Shareable ID
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/company_shares/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: CompanyShare ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve CompanyShare by ID for a Managed Company
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompanyShare-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-company_shares-id
+      x-stoplight:
+        id: cs8xk3mn4s0qa
+      description: Retrieve `CompanyShare` by ID for a Managed Company
+    patch:
+      summary: Update CompanyShare for a Managed Company
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompanyShare-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-companies-company-id-managed_companies-managed-company-id-company_shares-id
+      x-stoplight:
+        id: cs9yl4no5t1rb
+      description: 'Update `CompanyShare` by ID for a Managed Company
+
+
+        This endpoint requires the `edit_company_share` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyShare-Update'
+    delete:
+      summary: Delete CompanyShare for a Managed Company
+      tags:
+      - CompanyShares
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: delete-v1-companies-company-id-managed_companies-managed-company-id-company_shares-id
+      x-stoplight:
+        id: cs0zm5op6u2sc
+      description: 'Delete `CompanyShare` by ID for a Managed Company
+
+
+        This endpoint requires the `delete_company_share` permission'
+  /v1/company_shares/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: CompanyShare ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single CompanyShare
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: Shared Response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-company_shares-id
+      x-stoplight:
+        id: bnhvalwgp0rh8
+      description: Retrieve a single `CompanyShare` by ID.
+    patch:
+      summary: Update a CompanyShare
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-company_shares-id
+      x-stoplight:
+        id: ld064lptzqxqb
+      description: 'Deprecated in favor of "Update a `CompanyShare` as a `Company`"
+
+
+        Update a `CompanyShare`.
+
+
+        This endpoint requires the `edit_company_share` permission.
+
+
+        Note that `external_id` can only be updated by the receiver `Company`.'
+      deprecated: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyShare-Update'
+    delete:
+      summary: Delete a CompanyShare
+      tags:
+      - CompanyShares
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: delete-v1-company_shares-id
+      x-stoplight:
+        id: mo3eszophj6ef
+      description: 'Deprecated in favor of "Delete a `CompanyShare` as a `Company`"
+
+
+        Delete a `CompanyShare`.
+
+
+        This endpoint requires the `delete_companyshare` permission.'
+      deprecated: true
+  /v1/drivers/{driver-id}/company_shares:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: driver-id
+      in: path
+      required: true
+      description: Driver ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve CompanyShares for a Driver
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: vr8hf4nu24td9
+                    items:
+                      $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-drivers-driver-id-company_shares
+      x-stoplight:
+        id: 5fzbcj492p0he
+      description: Retrieve `CompanyShares` for a `Driver`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/equipment/{equipment-id}/company_shares:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: equipment-id
+      in: path
+      required: true
+      description: Equipment ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve CompanyShares for an Equipment
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: q999ofuzlh6t6
+                    items:
+                      $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-equipment-equipment-id-company_shares
+      x-stoplight:
+        id: bti38ji5bxios
+      description: Retrieve `CompanyShares` for an `Equipment`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/foremen/{foreman-id}/company_shares:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: foreman-id
+      in: path
+      required: true
+      description: Foreman ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve CompanyShares for a Foreman
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: snkrv3k6x25sh
+                    items:
+                      $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-foremen-foreman-id-company_shares
+      x-stoplight:
+        id: hyuvlw1dlry8q
+      description: Retrieve `CompanyShares` for a `Foreman`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/sites/{site-id}/company_shares:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: site-id
+      in: path
+      required: true
+      description: Site ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve CompanyShares for a Site
+      tags:
+      - CompanyShares
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CompanyShare-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-sites-site-id-company_shares
+      description: Retrieve `CompanyShares` for a `Site`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    CompanyShareableType:
+      title: CompanyShareType
+      x-stoplight:
+        id: o6j5rtwll4fvm
+      enum:
+      - User
+      - Equipment
+      - Site
+      description: ''
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: c9ls3nrhbih3v
+            nullable: true
+          ticket_match_id:
+            type: string
+            x-stoplight:
+              id: a1cd3nrhbih3v
+            nullable: true
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type: string
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+            nullable: true
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    CompanyShare-Create:
+      title: CompanyShare-Create
+      x-stoplight:
+        id: 8bgp42ntgizqx
+      type: object
+      required:
+      - receiver_company_id
+      - company_shareable_id
+      - company_shareable_type
+      properties:
+        receiver_company_id:
+          type: string
+          x-stoplight:
+            id: ueempsmbg5dpq
+          format: uuid
+        company_shareable_id:
+          type: string
+          x-stoplight:
+            id: bptnrqwak0r5i
+          format: uuid
+        company_shareable_type:
+          $ref: '#/components/schemas/CompanyShareableType'
+        dispatchable:
+          type: boolean
+          x-stoplight:
+            id: 3k6wflbl3vsqh
+          description: 'Whether the receiver `Company` can dispatch to the shared model.
+
+
+            `dispatchable` defaults to `false` for `Equipment` and `true` for `User`. '
+        rate_override:
+          type: boolean
+          x-stoplight:
+            id: hcmpiszi75zt3
+          description: 'Whether the receiver `Company` can override the `Rate` that will be used by the shared model when dispatched.
+
+
+            `rate_override` is always `false` for `Equipment` and defaults to `false` for `User` (can be edited to `true`)'
+        expires_at:
+          type: string
+          x-stoplight:
+            id: izsipmch75zt3
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        ticket_match_id:
+          type: string
+          x-stoplight:
+            id: tmid8bgp42n
+      additionalProperties: false
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    CompanyShare-Read:
+      title: CompanyShare-Read
+      x-stoplight:
+        id: 3fw8no6g8e334
+      allOf:
+      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: 5tvsur0wkmwr3
+        required:
+        - parent_company_share_id
+        - company_shareable_id
+        - company_shareable_type
+        - receiver_company
+        - company_shareable
+        properties:
+          parent_company_share_id:
+            type: string
+            x-stoplight:
+              id: hl0lvh254bdch
+            format: uuid
+            nullable: true
+          company_shareable_id:
+            type: string
+            x-stoplight:
+              id: l5wwd21py5c6e
+            format: uuid
+            deprecated: true
+          company_shareable_type:
+            $ref: '#/components/schemas/CompanyShareableType'
+            deprecated: true
+          receiver_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          company_shareable:
+            $ref: '#/components/schemas/CompanyShareable-Read-Nested'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    CompanyShare-Update:
+      title: CompanyShare-Update
+      x-stoplight:
+        id: geay0k7358gt2
+      type: object
+      properties:
+        external_id:
+          type: string
+          x-stoplight:
+            id: kob9ztzpw31hb
+        ticket_match_id:
+          type: string
+          x-stoplight:
+            id: baa1ztzpw31hb
+        dispatchable:
+          type: boolean
+          x-stoplight:
+            id: goxg92u0s8end
+        schedule_on:
+          type: boolean
+          x-stoplight:
+            id: aaaa92u0s8end
+        rate_override:
+          type: boolean
+          x-stoplight:
+            id: 4ezg457x7lxek
+        default_equipment_id:
+          type: string
+          x-stoplight:
+            id: m1n56g7y6y1m5
+          nullable: true
+        default_additional_equipment_ids:
+          type: array
+          x-stoplight:
+            id: o89g451x7vxb4
+          items:
+            x-stoplight:
+              id: tkcbf1r95tmhc
+            type: string
+            format: uuid
+        expires_at:
+          type: string
+          x-stoplight:
+            id: fbckt1r95tmhc
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+          nullable: true
+      additionalProperties: false
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    CompanyShareable-Read-Nested:
+      title: CompanyShareable-Read-Nested
+      x-stoplight:
+        id: 7gq4gh59nzv6r
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: f3fdykm0k5rid
+        required:
+        - name
+        - type
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: m0zwbwf2ta0tr
+          type:
+            $ref: '#/components/schemas/CompanyShareableType'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

@@ -1,0 +1,750 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Compliance API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Compliance
+paths:
+  /v1/companies/{company-id}/compliance_check:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    get:
+      summary: Check Compliance Status
+      tags:
+      - Compliance
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceCheck-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-compliance-check
+      x-stoplight:
+        id: cc1pathget0001
+      description: 'Check compliance status for a job assignment.
+
+
+        Requires `compliance_read` permission.'
+      parameters:
+      - $ref: '#/components/parameters/Accept-Language'
+      - schema:
+          type: string
+          format: uuid
+        name: account_id
+        in: query
+        description: Account ID to check vendor compliance
+      - schema:
+          type: string
+          format: uuid
+        name: user_id
+        in: query
+        description: User ID to check driver compliance
+      - schema:
+          type: string
+          format: uuid
+        name: equipment_id
+        in: query
+        description: Equipment ID to check equipment compliance
+  /v1/companies/{company-id}/compliance_document_types:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a Compliance Document Type
+      tags:
+      - Compliance
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocumentType-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-compliance-document-types
+      x-stoplight:
+        id: cdt1pathpost01
+      description: 'Create a new compliance document type.
+
+
+        Requires `compliance_write` permission.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplianceDocumentType-Create'
+    get:
+      summary: Retrieve Compliance Document Types
+      tags:
+      - Compliance
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: cdt1idxarr0001
+                    items:
+                      $ref: '#/components/schemas/ComplianceDocumentType-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-compliance-document-types
+      x-stoplight:
+        id: cdt1pathget001
+      description: 'Retrieve compliance document types for the company.
+
+
+        Requires `compliance_read` permission.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/companies/{company-id}/compliance_document_types/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Compliance Document Type ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a Compliance Document Type
+      tags:
+      - Compliance
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocumentType-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-compliance-document-types-id
+      x-stoplight:
+        id: cdt1pathshow01
+      description: 'Retrieve a compliance document type by ID.
+
+
+        Requires `compliance_read` permission.'
+    patch:
+      summary: Update a Compliance Document Type
+      tags:
+      - Compliance
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ComplianceDocumentType-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-companies-company-id-compliance-document-types-id
+      x-stoplight:
+        id: cdt1pathpatch1
+      description: 'Update a compliance document type.
+
+
+        Requires `compliance_write` permission.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplianceDocumentType-Update'
+    delete:
+      summary: Delete a Compliance Document Type
+      tags:
+      - Compliance
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: delete-v1-companies-company-id-compliance-document-types-id
+      x-stoplight:
+        id: cdt1pathdel001
+      description: 'Delete a compliance document type (soft delete).
+
+
+        Requires `compliance_write` permission.'
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  schemas:
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    ComplianceDocumentType-Update:
+      title: ComplianceDocumentType-Update
+      x-stoplight:
+        id: cdt1update0001
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: cdt1upname0001
+          description: Display name
+        external_id:
+          type: string
+          x-stoplight:
+            id: cdt1upcode0001
+          description: External identifier for integration with external systems
+        description:
+          type: string
+          x-stoplight:
+            id: cdt1updesc0001
+          description: Optional description
+        field_type:
+          type: string
+          x-stoplight:
+            id: cdt1upft000001
+          enum:
+          - none
+          - string
+          - number
+          - date
+          - boolean
+        has_expiration:
+          type: boolean
+          x-stoplight:
+            id: cdt1uphe000001
+        dispatch_gating:
+          type: boolean
+          x-stoplight:
+            id: cdt1updg000001
+        required_vendors:
+          type: boolean
+          x-stoplight:
+            id: cdt1uprv000001
+        required_internal_drivers:
+          type: boolean
+          x-stoplight:
+            id: cdt1uprid00001
+        required_shared_drivers:
+          type: boolean
+          x-stoplight:
+            id: cdt1uprsd00001
+        required_equipment:
+          type: boolean
+          x-stoplight:
+            id: cdt1upre000001
+      additionalProperties: false
+    ComplianceCheck-Read:
+      title: ComplianceCheck-Read
+      x-stoplight:
+        id: cc1read000001
+      type: object
+      properties:
+        has_issues:
+          type: boolean
+          x-stoplight:
+            id: cc1readissue01
+        warnings:
+          type: array
+          x-stoplight:
+            id: cc1readwarn001
+          items:
+            $ref: '#/components/schemas/ComplianceIssue'
+        blocking:
+          type: array
+          x-stoplight:
+            id: cc1readblock01
+          items:
+            $ref: '#/components/schemas/ComplianceIssue'
+      required:
+      - has_issues
+      - warnings
+      - blocking
+      additionalProperties: false
+    ComplianceDocumentType-Create:
+      title: ComplianceDocumentType-Create
+      x-stoplight:
+        id: cdt1create0001
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: cdt1crname0001
+          description: Display name, must be unique for the company
+        external_id:
+          type: string
+          x-stoplight:
+            id: cdt1crcode0001
+          description: External identifier for integration with external systems
+        description:
+          type: string
+          x-stoplight:
+            id: cdt1crdesc0001
+          description: Optional description
+        field_type:
+          type: string
+          x-stoplight:
+            id: cdt1crft000001
+          enum:
+          - none
+          - string
+          - number
+          - date
+          - boolean
+          default: none
+        has_expiration:
+          type: boolean
+          x-stoplight:
+            id: cdt1crhe000001
+          default: false
+        dispatch_gating:
+          type: boolean
+          x-stoplight:
+            id: cdt1crdg000001
+          default: false
+        required_vendors:
+          type: boolean
+          x-stoplight:
+            id: cdt1crrv000001
+          default: false
+        required_internal_drivers:
+          type: boolean
+          x-stoplight:
+            id: cdt1crrid00001
+          default: false
+        required_shared_drivers:
+          type: boolean
+          x-stoplight:
+            id: cdt1crrsd00001
+          default: false
+        required_equipment:
+          type: boolean
+          x-stoplight:
+            id: cdt1crre000001
+          default: false
+      additionalProperties: false
+    ComplianceIssue:
+      title: ComplianceIssue
+      x-stoplight:
+        id: cc1issue00001
+      type: object
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: cc1isstype0001
+        entity:
+          type: string
+          x-stoplight:
+            id: cc1issentity01
+          nullable: true
+        document_type:
+          type: string
+          x-stoplight:
+            id: cc1issdoctyp01
+        document_type_id:
+          type: string
+          format: uuid
+          x-stoplight:
+            id: cc1issdoctid01
+        expires_at:
+          type: string
+          format: date-time
+          x-stoplight:
+            id: cc1issexpire01
+          nullable: true
+      required:
+      - type
+      - document_type
+      - document_type_id
+      additionalProperties: false
+    ComplianceDocumentType-Read:
+      title: ComplianceDocumentType-Read
+      x-stoplight:
+        id: cdt1read000001
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: cdt1readname01
+            description: Display name of the document type
+          external_id:
+            type: string
+            x-stoplight:
+              id: cdt1readcode01
+            description: External identifier for integration with external systems
+            nullable: true
+          description:
+            type: string
+            x-stoplight:
+              id: cdt1readdesc01
+            description: Optional description
+            nullable: true
+          field_type:
+            type: string
+            x-stoplight:
+              id: cdt1readft0001
+            enum:
+            - none
+            - string
+            - number
+            - date
+            - boolean
+            description: Type of custom value field
+          has_expiration:
+            type: boolean
+            x-stoplight:
+              id: cdt1readhe0001
+            description: Whether this type has an expiration date
+          dispatch_gating:
+            type: boolean
+            x-stoplight:
+              id: cdt1readdg0001
+            description: Whether expired/missing docs trigger dispatch warnings
+          required_vendors:
+            type: boolean
+            x-stoplight:
+              id: cdt1readrv0001
+            description: Whether vendors must have this document
+          required_internal_drivers:
+            type: boolean
+            x-stoplight:
+              id: cdt1readrid001
+            description: Whether internal company drivers must have this document
+          required_shared_drivers:
+            type: boolean
+            x-stoplight:
+              id: cdt1readrsd001
+            description: Whether shared/vendor drivers must have this document
+          required_equipment:
+            type: boolean
+            x-stoplight:
+              id: cdt1readre0001
+            description: Whether equipment must have this document
+        required:
+        - name
+        - field_type
+        - has_expiration
+        - dispatch_gating
+        - required_vendors
+        - required_internal_drivers
+        - required_shared_drivers
+        - required_equipment
+      - $ref: '#/components/schemas/Timestamps'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

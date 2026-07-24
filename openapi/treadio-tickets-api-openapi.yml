@@ -1,0 +1,1860 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Tickets API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Tickets
+paths:
+  /v1/companies/{company-id}/orders/{order-id}/tickets:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Tickets for an Order for a Company
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ticket-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-orders-order-id-id-tickets
+      description: 'Retrive `Tickets` for an `Order`.
+
+        Filter usage:
+
+        * to filter a from date: `filter[from_date]`
+
+        * to filter a to date: `filter[to_date]`
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - schema:
+          type: string
+        in: query
+        name: filter[from_date]
+        description: Start range of ticket.created_at
+      - schema:
+          type: string
+        in: query
+        name: filter[to_date]
+        description: End range of ticket.created_at
+      - schema:
+          type: boolean
+        in: query
+        name: filter[flagged]
+        description: Filter to only flagged or un-flagged Tickets
+      - $ref: '#/components/parameters/filter-sources'
+      x-stoplight:
+        id: sxk44khjpj9h8
+  /v1/companies/{company-id}/orders/{order-id}/tickets/rollup_summary:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Ticket Rollup Summary for an Order for a Company
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TicketRollupSummary-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-orders-order-id-id-tickets-rollup-summary
+      description: 'Retrive `TicketRollupSummary` for an `Order`.
+
+        Filter usage:
+
+        * filter on ticket source: `filter[sources]`
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/filter-sources'
+      x-stoplight:
+        id: lrtsaqw83ugg6
+  /v1/companies/{company-id}/settlements/{settlement-id}/tickets:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: settlement-id
+      in: path
+      required: true
+      description: Settlement ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Tickets for a Settlement for a Company
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ticket-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-settlements-settlement-id-tickets
+      x-stoplight:
+        id: m7n8o9p0q1r2s
+      x-internal: true
+      description: Retrieve `Tickets` for a `Settlement`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/companies/{company-id}/tickets:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Tickets that belong to a Company
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: pyvvst6d54d5t
+                    items:
+                      $ref: '#/components/schemas/Ticket-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-tickets
+      x-stoplight:
+        id: zdk5o9cvbnl7t
+      description: 'Retrieve `Tickets` that belong to a `Company` by `ID`
+
+
+        Filter usage:
+
+        * to filter a from date: `filter[from_date]`
+
+        * to filter a to date: `filter[to_date]`'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - schema:
+          type: string
+          format: date-time
+        in: query
+        name: filter[from_date]
+        description: Start range of ticket.created_at
+      - schema:
+          type: string
+          format: date-time
+        in: query
+        name: filter[to_date]
+        description: End range of ticket.created_at
+      - schema:
+          type: boolean
+        in: query
+        name: filter[flagged]
+        description: Filter to only flagged or un-flagged Tickets
+      - $ref: '#/components/parameters/filter-sources'
+  /v1/direct_uploads:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a DirectUpload
+      tags:
+      - Tickets
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DirectUpload-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-direct_uploads
+      x-stoplight:
+        id: tgme583womicv
+      description: 'Create a `DirectUpload`.
+
+
+        The `checksum` _must_ be calculated exactly the way `rails` expects it ([javascript example](https://github.com/rails/rails/blob/main/activestorage/app/javascript/activestorage/file_checksum.js)).
+
+
+        You should upload the file to `direct_upload.url` using any provided headers from `direct_upload.headers`.
+
+
+        Once this is done you can use `signed_id` in place of a file in any endpoint that accepts file uploads.'
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DirectUpload-Create'
+  /v1/jobs/{job-id}/tickets:
+    parameters:
+    - schema:
+        type: string
+      name: job-id
+      in: path
+      required: true
+      description: Job ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Tickets for a Job
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ticket-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-jobs-job-id-tickets
+      x-stoplight:
+        id: mvwxdiz0x5hf8
+      description: 'Retrive `Tickets` for a `Job`.
+
+        Filter usage:
+
+        * to filter a from date: `filter[from_date]`
+
+        * to filter a to date: `filter[to_date]`
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - schema:
+          type: string
+        in: query
+        name: filter[from_date]
+        description: Start range of ticket.created_at
+      - schema:
+          type: string
+        in: query
+        name: filter[to_date]
+        description: End range of ticket.created_at
+      - schema:
+          type: boolean
+        in: query
+        name: filter[flagged]
+        description: Filter to only flagged or un-flagged Tickets
+      - $ref: '#/components/parameters/filter-sources'
+  /v1/orders/{order-id}/tickets:
+    parameters:
+    - schema:
+        type: string
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Tickets for an Order
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ticket-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-orders-order-id-id-tickets
+      description: 'Retrive `Tickets` for an `Order`.
+
+        Filter usage:
+
+        * to filter a from date: `filter[from_date]`
+
+        * to filter a to date: `filter[to_date]`
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - schema:
+          type: string
+        in: query
+        name: filter[from_date]
+        description: Start range of ticket.created_at
+      - schema:
+          type: string
+        in: query
+        name: filter[to_date]
+        description: End range of ticket.created_at
+      - schema:
+          type: boolean
+        in: query
+        name: filter[flagged]
+        description: Filter to only flagged or un-flagged Tickets
+      - $ref: '#/components/parameters/filter-sources'
+      x-stoplight:
+        id: ncxsngghpi7ea
+      deprecated: true
+  /v1/orders/{order-id}/tickets/rollup_summary:
+    parameters:
+    - schema:
+        type: string
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Ticket Rollup Summary for an Order
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TicketRollupSummary-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-orders-order-id-id-tickets-rollup-summary
+      description: 'Retrive `TicketRollupSummary` for an `Order`.
+
+        Filter usage:
+
+        * filter on ticket source: `filter[sources]`
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/filter-sources'
+      x-stoplight:
+        id: gflnfaum35oba
+      deprecated: true
+  /v1/tickets:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create a Ticket
+      operationId: post-v1-tickets
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Ticket-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: grug3kaa54qpn
+      tags:
+      - Tickets
+      description: 'Create a `Ticket`
+
+
+        This endpoint requires the `create_ticket` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket-Create'
+    get:
+      summary: Retrieve Tickets that belong to the current Company
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: tria7go8pqqi9
+                    items:
+                      $ref: '#/components/schemas/Ticket-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-tickets
+      x-stoplight:
+        id: ip4clt2871jqj
+      description: 'Retrieve `Tickets` for a `Company`
+
+
+        Filter usage:
+
+        * to filter a from date: `filter[from_date]`
+
+        * to filter a to date: `filter[to_date]`'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - schema:
+          type: string
+        in: query
+        name: filter[from_date]
+        description: Start range of ticket.created_at
+      - schema:
+          type: string
+        in: query
+        name: filter[to_date]
+        description: End range of ticket.created_at
+      - schema:
+          type: boolean
+        in: query
+        name: filter[flagged]
+        description: Filter to only flagged or un-flagged Tickets
+      x-internal: true
+  /v1/tickets/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Ticket ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single Ticket
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Ticket-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-tickets-id
+      x-stoplight:
+        id: l4iqzqn7t4xzj
+      description: Retrieve `Ticket` by ID
+    patch:
+      summary: Update a Ticket
+      operationId: patch-v1-tickets-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Ticket-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: ukwpwcy5dis0t
+      tags:
+      - Tickets
+      description: 'Update a `Ticket` by ID
+
+
+        This endpoint requires the `edit_ticket` permission'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket-Update'
+    delete:
+      summary: Delete a Ticket
+      operationId: delete-v1-tickets-id
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: yraim58bdmx84
+      tags:
+      - Tickets
+      description: 'Delete a `Ticket` by ID
+
+
+        This endpoint requires the `delete_ticket` permission'
+  /v1/tickets/{ticket-id}/ai_metadata:
+    parameters:
+    - schema:
+        type: string
+      name: ticket-id
+      in: path
+      required: true
+      description: Ticket ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single Ticket's AI metadata
+      tags:
+      - Tickets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Ticket-Metadata-Read'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-tickets-ticket-id-ai-metadata
+      x-stoplight:
+        id: aaaqzqn7t4xzj
+      description: Retrieve `Ticket`'s AI metadata by ID
+  /v1/tickets/{ticket-id}/approve:
+    parameters:
+    - schema:
+        type: string
+      name: ticket-id
+      in: path
+      required: true
+      description: Ticket ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Approve a Ticket
+      operationId: put-v1-tickets-ticket-id-approve
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Ticket-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/StateError'
+        '415':
+          $ref: '#/components/responses/Error'
+      description: 'Approve a `Ticket` by ID
+
+
+        This endpoint requires the `edit_ticket` permission.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      x-stoplight:
+        id: p7hd8j339m33d
+      tags:
+      - Tickets
+  /v1/tickets/{ticket-id}/image:
+    parameters:
+    - schema:
+        type: string
+      name: ticket-id
+      in: path
+      required: true
+      description: Ticket ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Update the Image that belongs to a Ticket
+      operationId: post-v1-tickets-ticket-id-image
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Ticket-Read'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      x-stoplight:
+        id: j9qfptfyqfedu
+      tags:
+      - Tickets
+      description: "Add or replace the `image` for a `Ticket`. \n\nThis endpoint requires the `edit_ticket` `IamPermission`\n\nThe following restrictions apply:\n * `image` must be one of the following image types:`jpeg`, `jpg`.\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `image` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `image` must be a file."
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Ticket-Image-Create'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ticket-Image-Create'
+    delete:
+      summary: Delete the Image that belongs to a Ticket
+      operationId: delete-v1-tickets-ticket-id-image
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      x-stoplight:
+        id: 0jji2xykebe3z
+      tags:
+      - Tickets
+      description: "Delete the `image` for a `Ticket`. \n\nThis endpoint requires the `delete_ticket` `IamPermission`"
+  /v1/tickets/{ticket-id}/void:
+    parameters:
+    - schema:
+        type: string
+      name: ticket-id
+      in: path
+      required: true
+      description: Ticket ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Void a Ticket
+      operationId: put-v1-tickets-ticket-id-void
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Ticket-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/StateError'
+        '415':
+          $ref: '#/components/responses/Error'
+      description: 'Void a `Ticket` by ID.
+
+
+        This endpoint requires the `edit_ticket` permission.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      x-stoplight:
+        id: 9hs3hplf1xkrm
+      tags:
+      - Tickets
+components:
+  schemas:
+    Ticket-Create:
+      title: Ticket-Create
+      x-stoplight:
+        id: 131qvudbt31h8
+      type: object
+      required:
+      - unit_of_measure
+      properties:
+        quantity:
+          type: number
+          x-stoplight:
+            id: 68w2mgm2lle6k
+          nullable: true
+        ticket_number:
+          type: string
+          x-stoplight:
+            id: p67knkzoxujnd
+          nullable: true
+        unit_of_measure:
+          $ref: '#/components/schemas/OrderUnitOfMeasure'
+        job_id:
+          type: string
+          x-stoplight:
+            id: 9m3xrz2jrzpcv
+          format: uuid
+          nullable: true
+        material_id:
+          type: string
+          x-stoplight:
+            id: emc067k3odhah
+          format: uuid
+          nullable: true
+        load_id:
+          type: string
+          x-stoplight:
+            id: qilqgc5qwadfb
+          format: uuid
+          nullable: true
+        printed_at:
+          type: string
+          x-stoplight:
+            id: 2ufj0pk9uzf82
+          format: date-time
+          nullable: true
+        service_date:
+          type: string
+          x-stoplight:
+            id: yimcofg0r55xa
+          format: date-time
+          nullable: true
+        source:
+          $ref: '#/components/schemas/TicketSource'
+      additionalProperties: false
+    TicketRollupSummary-Read:
+      title: TicketRollupSummary-Read
+      x-stoplight:
+        id: 8hl2dv5xu3hc6
+      type: object
+      required:
+      - external_vendor_name
+      - external_truck_id
+      - total_tickets_count
+      - total_tickets_missing_job_count
+      - total_tickets_quantity
+      - total_tickets_missing_job_quantity
+      properties:
+        external_vendor_name:
+          type: string
+          x-stoplight:
+            id: nym1xtyupjjk0
+        external_truck_id:
+          type: string
+          x-stoplight:
+            id: ywebg5780jiy3
+        total_tickets_count:
+          type: integer
+          x-stoplight:
+            id: gqtwnjam89ci4
+        total_tickets_missing_job_count:
+          type: integer
+          x-stoplight:
+            id: qw71s1luaetyn
+        total_tickets_quantity:
+          type: number
+          x-stoplight:
+            id: 8slo9pd137h0m
+        total_tickets_missing_job_quantity:
+          type: number
+          x-stoplight:
+            id: xxy6yaadsn4ty
+        unit_of_measure:
+          $ref: '#/components/schemas/OrderUnitOfMeasure'
+      additionalProperties: false
+    DirectUpload-Read:
+      title: DirectUpload-Read
+      x-stoplight:
+        id: ge5fs3tk8yb8k
+      type: object
+      required:
+      - id
+      - byte_size
+      - checksum
+      - content_type
+      - created_at
+      - filename
+      - key
+      - service_name
+      - signed_id
+      - direct_upload
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: lzwkhbbuc30lt
+          format: uuid
+        byte_size:
+          type: integer
+          x-stoplight:
+            id: zdq5i2km7dbdd
+        checksum:
+          type: string
+          x-stoplight:
+            id: pfgyb7ctywy3o
+        content_type:
+          type: string
+          x-stoplight:
+            id: id6fbesbolbxu
+        created_at:
+          type: string
+          x-stoplight:
+            id: qkkile7jxkghk
+          format: date-time
+        filename:
+          type: string
+          x-stoplight:
+            id: nh2lxjat0biia
+        key:
+          type: string
+          x-stoplight:
+            id: saakohyy5kvvz
+        metadata:
+          type: object
+          x-stoplight:
+            id: zlk0ufjqtjaxq
+        service_name:
+          type: string
+          x-stoplight:
+            id: br0ew9wo8145q
+        signed_id:
+          type: string
+          x-stoplight:
+            id: zvuflukjwdj16
+        direct_upload:
+          type: object
+          x-stoplight:
+            id: e4cw0bh9x1t4n
+          required:
+          - url
+          properties:
+            url:
+              type: string
+              x-stoplight:
+                id: l0qwu7ya2mng0
+              format: uri
+            headers:
+              type: object
+              x-stoplight:
+                id: jgxk00g0qfrub
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    StateError-Response:
+      title: StateError-Response
+      x-stoplight:
+        id: i0wsk2gmnaqup
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/StateError'
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Ticket-Read:
+      title: Ticket-Read
+      x-stoplight:
+        id: jb9fdewaxmw1t
+      allOf:
+      - $ref: '#/components/schemas/Ticket-Read-Nested'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        required:
+        - quantity
+        - unit_of_measure
+        - job_id
+        - order_id
+        - image_url
+        - image_mime_type
+        - preview_mime_type
+        - ocr_ticket_number
+        - ocr_net_quantity_ton
+        - ocr_processed
+        - load_id
+        - source
+        - state
+        - flagged
+        - missing_info
+        - printed_at
+        - ocr_ticket_number_confidence
+        - ocr_net_quantity_ton_confidence
+        - ocr_service_date
+        - ocr_service_date_raw_str
+        - ai_processed
+        properties:
+          quantity:
+            type: string
+            x-stoplight:
+              id: hc9oz0vfm68u0
+            nullable: true
+          unit_of_measure:
+            $ref: '#/components/schemas/OrderUnitOfMeasure'
+          job_id:
+            type: string
+            x-stoplight:
+              id: 037deqk7slvf4
+            format: uuid
+            nullable: true
+          order_id:
+            type: string
+            x-stoplight:
+              id: 111deqk7slvf4
+            format: uuid
+            nullable: true
+          material:
+            $ref: '#/components/schemas/Material-Read-Nested'
+          image_url:
+            type: string
+            x-stoplight:
+              id: zls4nx0al0t9h
+            format: uri
+            nullable: true
+          image_mime_type:
+            type: string
+            x-stoplight:
+              id: ozhkitwvj5b7q
+            description: This will be the type of attachment.
+            nullable: true
+          preview_mime_type:
+            type: string
+            x-stoplight:
+              id: abckitwvj5b7z
+            description: This will be the type of attachment.
+            nullable: true
+          ocr_ticket_number:
+            type: string
+            x-stoplight:
+              id: 6cc7czi0fiykn
+            nullable: true
+          ocr_net_quantity_ton:
+            type: string
+            x-stoplight:
+              id: ohhdzp74uxp1t
+            nullable: true
+          ocr_processed:
+            type: boolean
+            x-stoplight:
+              id: ny2zxmboh8uty
+          load_id:
+            type: string
+            x-stoplight:
+              id: bstva0m37b0dk
+            format: uuid
+            nullable: true
+          source:
+            $ref: '#/components/schemas/TicketSource'
+          state:
+            $ref: '#/components/schemas/TicketState'
+          state_events:
+            type: array
+            x-stoplight:
+              id: tvnn7axceeubc
+            items:
+              $ref: '#/components/schemas/TicketStateEvent'
+          flagged:
+            type: boolean
+            x-stoplight:
+              id: oujkhiehefkc3
+            readOnly: true
+          service_date:
+            type: string
+            x-stoplight:
+              id: s46b12vbuanfd
+            format: date-time
+            nullable: true
+          friendly_job_id:
+            type: string
+            x-stoplight:
+              id: ob6wwko7nk9l3
+            nullable: true
+          customer_name:
+            type: string
+            x-stoplight:
+              id: yt5ohhg087jw2
+            nullable: true
+          project_name:
+            type: string
+            x-stoplight:
+              id: lctkgf7pnyiby
+            nullable: true
+          dispatch_number_name:
+            type: string
+            x-stoplight:
+              id: q1r2s3t4u5v6w
+            nullable: true
+            description: Dispatch number name from the order
+          equipment_name:
+            type: string
+            x-stoplight:
+              id: jx5lmwhemf2g8
+            nullable: true
+          driver_name:
+            type: string
+            x-stoplight:
+              id: 8iplagfsmzgbw
+            nullable: true
+          vendor_name:
+            type: string
+            x-stoplight:
+              id: 5tsnul2i0tfr5
+            nullable: true
+          material_name:
+            type: string
+            x-stoplight:
+              id: fq50fysabdxve
+            nullable: true
+          pickup_site_name:
+            type: string
+            x-stoplight:
+              id: jay8jobgw4zy8
+            nullable: true
+          dropoff_site_name:
+            type: string
+            x-stoplight:
+              id: rudn8s9j3ocyr
+            nullable: true
+          missing_info:
+            type: boolean
+            x-stoplight:
+              id: 4rjs6i5z14ik5
+            description: 'A `Ticket` is missing info when any of the following are true:
+
+              1. is has no `job_id`.
+
+              2. it has no `quantity`
+
+              3. it has no `ticket_number`
+
+              4. it has no `image`
+
+              '
+          printed_at:
+            type: string
+            x-stoplight:
+              id: 5f95ni9l51rtg
+            format: date-time
+            description: This is the time when the ticket was printed. This is different from created_at
+            nullable: true
+          ocr_ticket_number_confidence:
+            type: string
+            x-stoplight:
+              id: 82rfndbofuoxv
+            example: '"1.0", "90.5", null'
+            description: Percentage confidence score
+            nullable: true
+          ocr_net_quantity_ton_confidence:
+            type: string
+            x-stoplight:
+              id: 56f10gbenjxk3
+            example: '"1.0", "90.5", null'
+            description: Percentage confidence score
+            nullable: true
+          ocr_service_date:
+            type: string
+            x-stoplight:
+              id: gzgvplenry5ue
+            format: date-time
+            nullable: true
+          ocr_service_date_raw_str:
+            type: string
+            x-stoplight:
+              id: his0q7sb4sw3t
+            nullable: true
+          ai_processed:
+            type: boolean
+            x-stoplight:
+              id: kpmmww5xayiou
+          external_truck_id:
+            type: string
+            x-stoplight:
+              id: l6g3zmooi9sd6
+            nullable: true
+          external_vendor_name:
+            type: string
+            x-stoplight:
+              id: zapwl7aisd0u7
+            nullable: true
+          external_material_material_name:
+            type: string
+            x-stoplight:
+              id: zwl5ubv4mhsbl
+            nullable: true
+          external_net_weight:
+            type: string
+            x-stoplight:
+              id: ge7l0pjxzwqon
+            nullable: true
+          external_net_weight_unit:
+            type: string
+            x-stoplight:
+              id: 4u5hcn505wkfr
+            nullable: true
+          external_ticket_number:
+            type: string
+            x-stoplight:
+              id: 6xg5q9dj0bukx
+            nullable: true
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    TicketStateEvent:
+      title: TicketStateEvent
+      x-stoplight:
+        id: 1b2ulz2srbdfc
+      enum:
+      - approve
+      - void
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    TicketState:
+      title: TicketState
+      x-stoplight:
+        id: q01ztz4xuvcc5
+      enum:
+      - new
+      - pending
+      - approved
+      - voided
+      readOnly: true
+    StateError:
+      title: StateError
+      x-stoplight:
+        id: zgcsl4t8bsn3c
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: ntvt2atfotcge
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: noi1jg6o8psl7
+            items:
+              $ref: '#/components/schemas/StateError-Item'
+    Ticket-Metadata-Read:
+      title: Ticket-Metadata-Read
+      x-stoplight:
+        id: aaazca6zh8g8x
+      description: This model includes AI metadata for a ticket
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - ai_extracted_full_text
+        - ai_structured_data
+        - ai_confidence_score
+        properties:
+          ai_extracted_full_text:
+            x-stoplight:
+              id: w7pu6txv1oy0d
+            description: AI-generated text description of the ticket
+            type: string
+            nullable: true
+          ai_structured_data:
+            type: object
+            x-stoplight:
+              id: qripkb3os00ih
+            description: Unstructured JSON of all fields extracted by the AI vision model
+            nullable: true
+          ai_confidence_score:
+            type: string
+            x-stoplight:
+              id: 3ua4pc0st87ef
+            example: '"1.0", "90.5", null'
+            description: Percentage confidence score from the AI vision model
+            nullable: true
+    Ticket-Update:
+      title: Ticket-Update
+      x-stoplight:
+        id: kthjhrcsdatr9
+      type: object
+      properties:
+        quantity:
+          type: number
+          x-stoplight:
+            id: 089ty63es0vch
+          nullable: true
+        ticket_number:
+          type: string
+          x-stoplight:
+            id: ds6qndk0ifsfl
+          nullable: true
+        unit_of_measure:
+          $ref: '#/components/schemas/OrderUnitOfMeasure'
+        material_id:
+          type: string
+          x-stoplight:
+            id: zvfdcmv2ov83s
+          format: uuid
+        load_id:
+          type: string
+          x-stoplight:
+            id: 306pwjjow337f
+          format: uuid
+        flagged:
+          type: boolean
+          x-stoplight:
+            id: 72dvguu6oyhre
+        service_date:
+          type: string
+          x-stoplight:
+            id: fdpjc4t3ex1ev
+          format: date-time
+        printed_at:
+          type: string
+          x-stoplight:
+            id: j1m5h32kr9g3y
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Ticket-Image-Create:
+      title: Ticket-Image-Create
+      x-stoplight:
+        id: cl7aomdoqrh8v
+      type: object
+      required:
+      - image
+      properties:
+        image:
+          x-stoplight:
+            id: m0ta240u1ja53
+          anyOf:
+          - x-stoplight:
+              id: wwurdbme7r4da
+            format: binary
+          - x-stoplight:
+              id: gegzd5bom5va0
+          type: string
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    TicketSource:
+      title: TicketSource
+      x-stoplight:
+        id: z52hto616mgx1
+      enum:
+      - driver_app
+      - web
+      - api_integration
+      - agent
+      example: driver_app
+      default: driver_app
+      readOnly: true
+    DirectUpload-Create:
+      title: DirectUpload-Create
+      x-stoplight:
+        id: gu4eq95ccx5jq
+      type: object
+      x-internal: true
+      required:
+      - filename
+      - byte_size
+      - checksum
+      - content_type
+      properties:
+        filename:
+          type: string
+          x-stoplight:
+            id: npiq1r1p6z5sz
+        byte_size:
+          type: integer
+          x-stoplight:
+            id: 173ysh5cb9fj9
+        checksum:
+          type: string
+          x-stoplight:
+            id: u1cilwg6olbvu
+        content_type:
+          type: string
+          x-stoplight:
+            id: 2bz7ycohbo4zz
+        metadata:
+          type: object
+          x-stoplight:
+            id: 7zg8sn25q1paq
+      additionalProperties: false
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
+      x-stoplight:
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    StateError-Item:
+      title: StateError-Item
+      x-stoplight:
+        id: dgw2jdmi7ozjj
+      allOf:
+      - $ref: '#/components/schemas/ModelError-Item'
+      - type: object
+        x-stoplight:
+          id: jrgi7oapao3e5
+        required:
+        - state
+        - event
+        properties:
+          state:
+            type: string
+            x-stoplight:
+              id: mah8jye43io32
+            description: The current state value of the field on this Model
+          event:
+            type: string
+            x-stoplight:
+              id: dtgu62ni9ofuh
+            description: The failed state event called on the Model
+    Ticket-Read-Nested:
+      title: Ticket-Read-Nested
+      x-stoplight:
+        id: sxhhxkcgkj6ep
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: u7esfoogq8q49
+        required:
+        - ticket_number
+        - preview_url
+        properties:
+          ticket_number:
+            type: string
+            x-stoplight:
+              id: kzx5yw8vvwbra
+            nullable: true
+          preview_url:
+            type: string
+            x-stoplight:
+              id: h1do11irp24bw
+            format: uri
+            nullable: true
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Material-Read-Nested:
+      title: Material-Read-Nested
+      x-stoplight:
+        id: 5hvekq1lnr9ku
+      type: object
+      required:
+      - id
+      - name
+      - external_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: c6nool5iljv3l
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: bsd3m2c74jis8
+        external_id:
+          type: string
+          description: Material external_id
+          x-stoplight:
+            id: ab0l0yvuz5u6d
+          nullable: true
+      additionalProperties: false
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    StateError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/StateError-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    filter-sources:
+      name: filter[sources]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: Array of sources (Tickets)
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

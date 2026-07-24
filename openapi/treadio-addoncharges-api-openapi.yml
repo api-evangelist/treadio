@@ -1,0 +1,1453 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier AddOnCharges API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: AddOnCharges
+paths:
+  /v1/add_on_charges/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: AddOnCharge ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a single AddOnCharge
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOnCharge-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-add-on-charges-id
+      x-stoplight:
+        id: ba6h588czevfo
+      description: Retrieve a single `AddOnCharge` by ID
+      x-internal: true
+    patch:
+      summary: Update an AddOnCharge
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOnCharge-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-add-on-charges-id
+      x-stoplight:
+        id: 5euad7wqjmg3i
+      description: Update an `AddOnCharge`
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/AddOnCharge-Update'
+    delete:
+      summary: Delete an AddOnCharge
+      tags:
+      - AddOnCharges
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: delete-v1-add-on-charges-id
+      x-stoplight:
+        id: 9xrptlgrnufur
+      x-internal: true
+      description: Delete an `AddOnCharge`
+  /v1/companies/{company-id}/invoices/{invoice-id}/add_on_charges:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+      name: invoice-id
+      in: path
+      required: true
+      description: Invoice ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an AddOnCharge for an Invoice (company-scoped)
+      operationId: post-v1-companies-company-id-invoices-invoice-id-add-on-charges
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOnCharge-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      description: 'Create an `AddOnCharge` for an `Invoice` within a specific company scope.
+
+
+        This endpoint is used to apply an `AddOnCharge` for an `Invoice`.'
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/AddOnCharge-Create'
+      tags:
+      - AddOnCharges
+    get:
+      summary: Retrieve AddOnCharges for an Invoice (company-scoped)
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-invoices-invoice-id-add-on-charges
+      x-internal: true
+      description: 'Retrieve `AddOnCharges` for an `Invoice` within a specific company context.
+
+
+        This endpoint returns the applied `AddOnCharges` for an `Invoice` and validates that the company_id is authorized for the current user.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+    patch:
+      summary: Batch update AddOnCharges for an Invoice for a Company
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: dw39xnqamd8aw-company
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-companies-company-id-invoices-invoice-id-add-on-charges
+      x-stoplight:
+        id: s2ctvyxv0q08n-company
+      description: "Batch update `AddOnCharges` for an `Invoice` for a `Company`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                add_on_charges:
+                  type: array
+                  x-stoplight:
+                    id: z27syd1630c6o-company
+                  items:
+                    x-stoplight:
+                      id: q5zz10ownp1fp-company
+                    anyOf:
+                    - $ref: '#/components/schemas/AddOnCharge-Create'
+                    - $ref: '#/components/schemas/AddOnCharge-Update-Destroyable'
+      tags:
+      - AddOnCharges
+  /v1/companies/{company-id}/settlements/{settlement-id}/add_on_charges:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+      name: settlement-id
+      in: path
+      required: true
+      description: Settlement ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an AddOnCharge for a Settlement (company-scoped)
+      tags:
+      - AddOnCharges
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOnCharge-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-settlements-settlement-id-add-on-charges
+      description: 'Create an `AddOnCharge` for a `Settlement` within a specific company scope.
+
+
+        This endpoint is used to apply an `AddOnCharge` for a `Settlement`.'
+      x-internal: true
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/AddOnCharge-Create'
+    get:
+      summary: Retrieve AddOnCharges for a Settlement (company-scoped)
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-settlements-settlement-id-add-on-charges
+      x-internal: true
+      description: 'Retrieve `AddOnCharges` for a `Settlement` within a specific company context.
+
+
+        This endpoint returns the applied `AddOnCharges` for a `Settlement` and validates that the company_id is authorized for the current user.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+    patch:
+      summary: Batch update AddOnCharges for a Settlement (Company-scoped)
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-companies-company-id-settlements-settlement-id-add-on-charges
+      x-internal: true
+      description: "Batch update `AddOnCharges` for a `Settlement` using company-scoped endpoint.\n\nThis endpoint allows parent companies to manage add-on charges for settlements belonging to their child companies.\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                add_on_charges:
+                  type: array
+                  items:
+                    anyOf:
+                    - $ref: '#/components/schemas/AddOnCharge-Create'
+                    - $ref: '#/components/schemas/AddOnCharge-Update-Destroyable'
+  /v1/driver_days/{driver-day-id}/add_on_charges:
+    parameters:
+    - schema:
+        type: string
+      name: driver-day-id
+      in: path
+      required: true
+      description: DriverDay ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an AddOnCharge for a DriverDay
+      tags:
+      - AddOnCharges
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOnCharge-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-driver_days-driver-day-id-add-on-charges
+      x-stoplight:
+        id: wm44acbempsgf
+      x-internal: true
+      description: 'Create an `AddOnCharge` for a `DriverDay`.
+
+
+        This endpoint is used to apply an `AddOnCharge` for a `DriverDay`.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/AddOnCharge-Create'
+    get:
+      summary: Retrieve AddOnCharges for a DriverDay
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 62s6gniyoshoe
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-driver_days-driver-day-id-add-on-charges
+      x-stoplight:
+        id: 6avwghey9t7mc
+      x-internal: true
+      description: 'Retrieve `AddOnCharges` for a `DriverDay`.
+
+
+        This endpoint returns the applied `AddOnCharges` for a `DriverDay`.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+    patch:
+      summary: Batch update AddOnCharges for a DriverDay
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: exyacbi5mph15
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-driver_days-driver-day-id-add-on-charges
+      x-stoplight:
+        id: xuuovaurs6pkh
+      x-internal: true
+      description: "Batch update `AddOnCharges` for a `DriverDay`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                add_on_charges:
+                  type: array
+                  x-stoplight:
+                    id: rm6mgg6xcn0eu
+                  items:
+                    x-stoplight:
+                      id: 4wfwplap5xusm
+                    anyOf:
+                    - $ref: '#/components/schemas/AddOnCharge-Create'
+                    - $ref: '#/components/schemas/AddOnCharge-Update-Destroyable'
+  /v1/jobs/{job-id}/add_on_charges:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: job-id
+      in: path
+      required: true
+      description: Job ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an AddOnCharge for a Job
+      tags:
+      - AddOnCharges
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOnCharge-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-jobs-job-id-add-on-charges
+      x-stoplight:
+        id: xr122zynv088s
+      x-internal: true
+      description: 'Create an `AddOnCharge` for a `Job`.
+
+
+        This endpoint is used to request an `AddOnCharge` for a `Job` that can be applied on a billing object.'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/AddOnCharge-Create'
+    get:
+      summary: Retrieve AddOnCharges for a Job
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: nb8iy18s9f6c8
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-jobs-job-id-add-on-charges
+      x-stoplight:
+        id: mmddentq2cgui
+      x-internal: true
+      description: 'Retrieve `AddOnCharges` for a `Job`.
+
+
+        This endpoint returns the requested `AddOnCharges` for a `Job`.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+    patch:
+      summary: Batch update AddOnCharges for a Job
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: n7e5pr773lnrt
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-jobs-job-id-add-on-charges
+      x-stoplight:
+        id: i50mevcejjfoi
+      x-internal: true
+      description: "Batch update `AddOnCharges` for an `Job`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                add_on_charges:
+                  type: array
+                  x-stoplight:
+                    id: 2la6grsivscm7
+                  items:
+                    x-stoplight:
+                      id: b2e1z3awpe093
+                    anyOf:
+                    - $ref: '#/components/schemas/AddOnCharge-Create'
+                    - $ref: '#/components/schemas/AddOnCharge-Update-Destroyable'
+  /v1/settlements/{settlement-id}/add_on_charges:
+    parameters:
+    - schema:
+        type: string
+      name: settlement-id
+      in: path
+      required: true
+      description: Settlement ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create an AddOnCharge for a Settlement
+      tags:
+      - AddOnCharges
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AddOnCharge-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-settlements-settlement-id-add-on-charges
+      x-stoplight:
+        id: lcfbg9vsjgekb
+      description: 'Create an `AddOnCharge` for a `Settlement`.
+
+
+        This endpoint is used to apply an `AddOnCharge` for an `Settlement`.'
+      x-internal: true
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/AddOnCharge-Create'
+    get:
+      summary: Retrieve AddOnCharges for a Settlement
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: syquhr0motskr
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-settlements-settlement-id-add-on-charges
+      x-stoplight:
+        id: oor6jevy3ynek
+      x-internal: true
+      description: 'Retrieve `AddOnCharges` for a `Settlement`.
+
+
+        This endpoint returns the applied `AddOnCharges` for a `Settlement`.'
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+    patch:
+      summary: Batch update AddOnCharges for a Settlement
+      tags:
+      - AddOnCharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: in5y0dfgj4jvp
+                    items:
+                      $ref: '#/components/schemas/AddOnCharge-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-settlements-settlement-id-add-on-charges
+      x-stoplight:
+        id: 75zqxlladu67l
+      x-internal: true
+      description: "Batch update `AddOnCharges` for a `Settlement`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                add_on_charges:
+                  type: array
+                  x-stoplight:
+                    id: mofgsixpv66s5
+                  items:
+                    x-stoplight:
+                      id: k82c0mauuc5as
+                    anyOf:
+                    - $ref: '#/components/schemas/AddOnCharge-Create'
+                    - $ref: '#/components/schemas/AddOnCharge-Update-Destroyable'
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    NullableAddOnRequestableType:
+      title: NullableAddOnRequestableType
+      x-stoplight:
+        id: jlbtlz8rtw77s
+      allOf:
+      - $ref: '#/components/schemas/AddOnRequestableType'
+      nullable: true
+      type: string
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    AddOnRequestableType:
+      title: AddOnRequestableType
+      x-stoplight:
+        id: cmjs5zi8b8ejj
+      enum:
+      - Job
+      - DriverDay
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    AddOnCharge-Update-Destroyable:
+      title: AddOnCharge-Update-Destroyable
+      x-stoplight:
+        id: 18c6y7jy30z4l
+      allOf:
+      - $ref: '#/components/schemas/AddOnCharge-Update'
+      - $ref: '#/components/schemas/Destroyable'
+    Destroyable:
+      title: Destroyable
+      x-stoplight:
+        id: 2uftzhptd2l14
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: gx1ww996hmzqm
+          format: uuid
+          description: Required if `_destroy` is set
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 0xjwztkz4fmcr
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Job-Read-Nested:
+      title: Job-Read-Nested
+      x-stoplight:
+        id: qxb3a764a1hxf
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - job_id
+        - loads_count
+        - job_start_at
+        - unit_of_measure
+        properties:
+          job_id:
+            type: string
+            x-stoplight:
+              id: 692lxpafrrxpl
+          loads_count:
+            type: integer
+            x-stoplight:
+              id: 1fh2mqq1z7l8k
+            description: Count of `Loads` under this `Job`
+          job_start_at:
+            type: string
+            x-stoplight:
+              id: w4o47yoyesm9u
+            format: date-time
+          unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+    AddOnApplicableType:
+      title: AddOnApplicableType
+      x-stoplight:
+        id: ya40711rhz1dj
+      enum:
+      - Invoice
+      - Settlement
+    AddOnCharge-Read:
+      title: AddOnCharge-Read
+      x-stoplight:
+        id: 3npsewlp3eut7
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - percentage
+        - quantity
+        - total_amount
+        - external_id
+        - revenue_rate_value
+        - revenue_cost_rate_type
+        - add_on_requestable_id
+        - add_on_requestable_type
+        - add_on_applicable_id
+        - add_on_applicable_type
+        - accounting_id
+        - rate
+        - add_on_rate_type
+        - rebill_revenue_rate_value
+        - rebill_total_amount
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: eiloaoq75zkem
+          percentage:
+            type: string
+            x-stoplight:
+              id: nbtky5jycfmbi
+          quantity:
+            type: string
+            x-stoplight:
+              id: t61r6ezqzfirq
+          total_amount:
+            type: string
+            x-stoplight:
+              id: t4dnjvisijock
+          external_id:
+            type: string
+            x-stoplight:
+              id: tof8dd3gihjox
+            nullable: true
+          revenue_rate_value:
+            type: string
+            x-stoplight:
+              id: 40m55gbtgnk8i
+            description: The revenue rate or sell price of the add on charge
+          revenue_cost_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+          add_on:
+            type: object
+            x-stoplight:
+              id: fmommm0xa5oeg
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: ec76n4aevm0g5
+                format: uuid
+          invoice:
+            type: object
+            x-stoplight:
+              id: c4u9ihypwnfj2
+            deprecated: true
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: 2do1g0k27ex1x
+                format: uuid
+          add_on_requestable_id:
+            type: string
+            x-stoplight:
+              id: 3j73z3acol2rf
+            format: uuid
+            nullable: true
+          add_on_requestable_type:
+            $ref: '#/components/schemas/NullableAddOnRequestableType'
+          add_on_applicable_id:
+            type: string
+            x-stoplight:
+              id: jsajp8fcd2i93
+            format: uuid
+            nullable: true
+          add_on_applicable_type:
+            $ref: '#/components/schemas/NullableAddOnApplicableType'
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: icf2yhgyoisrw
+            nullable: true
+          rate:
+            type: string
+            x-stoplight:
+              id: yr6fsr4l2ksxg
+            description: Deprecated in favor of `revenue_rate_value`.
+            deprecated: true
+          add_on_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+          load:
+            x-stoplight:
+              id: 2ss02wqx85btm
+            type: object
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: dtws9lawfedin
+                format: uuid
+          job:
+            $ref: '#/components/schemas/Job-Read-Nested'
+            nullable: true
+          rebill_revenue_rate_value:
+            type: string
+            x-stoplight:
+              id: sshbcnm4bi3x4
+            nullable: true
+          rebill_total_amount:
+            type: string
+            x-stoplight:
+              id: wkcpvyuj6zgle
+            nullable: true
+          rebill_percentage:
+            type: string
+            x-stoplight:
+              id: c25guuq8lau3w
+            nullable: true
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
+      x-stoplight:
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    AddOnCharge-Update:
+      title: AddOnCharge-Update
+      x-stoplight:
+        id: 60xqncbbobhdt
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: sdrteeih2f5ef
+        percentage:
+          type: number
+          x-stoplight:
+            id: 2d0so3qv1y6gb
+          minimum: -100
+          maximum: 100
+        quantity:
+          type: number
+          x-stoplight:
+            id: 6dh4gnh91kzdc
+        rate:
+          type: number
+          x-stoplight:
+            id: 7quwi593vqe1j
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        add_on_id:
+          type: string
+          x-stoplight:
+            id: xadjpeuivo54i
+          format: uuid
+          nullable: true
+        external_id:
+          type: string
+          x-stoplight:
+            id: vt46ss6zjf04a
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: b3dq6kqlgcbm5
+          nullable: true
+        revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: tps5oztw4p2xn
+          description: The cost rate or buy price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        rebill_revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: 9d1ov81cnxbos
+          nullable: true
+        rebill_percentage:
+          type: number
+          x-stoplight:
+            id: guajxqjnam0r2
+          nullable: true
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    AddOnCharge-Create:
+      title: AddOnCharge-Create
+      x-stoplight:
+        id: qaxj9zriu4qic
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: eu4ikmqxz0uhi
+        percentage:
+          type: number
+          x-stoplight:
+            id: bconrirkf3v7w
+          minimum: -100
+          maximum: 100
+        quantity:
+          type: number
+          x-stoplight:
+            id: 3muzrhygt8fxc
+        rate:
+          type: number
+          x-stoplight:
+            id: 95srshuk7r4uk
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        add_on_id:
+          type: string
+          x-stoplight:
+            id: ogjl6lwfu5bi2
+          format: uuid
+          nullable: true
+        invoice_id:
+          type: string
+          x-stoplight:
+            id: 35pucziaq6pfm
+          format: uuid
+          deprecated: true
+        external_id:
+          type: string
+          x-stoplight:
+            id: gxftfsiuujera
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: q9dmpj8zoqg5s
+          nullable: true
+        load_id:
+          type: string
+          x-stoplight:
+            id: durt2lwgl8p36
+          format: uuid
+        revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: dbc9wcoiorot9
+          description: The cost rate or buy price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        rebill_revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: 1ujqtxpv3l88g
+          nullable: true
+        rebill_percentage:
+          type: number
+          x-stoplight:
+            id: 16xhc04qcup8d
+          nullable: true
+        cost_rate_value:
+          type: number
+          x-stoplight:
+            id: sj881cp6tx9v8
+          description: The cost rate or buy price of the add on.
+          nullable: true
+      additionalProperties: false
+    NullableAddOnApplicableType:
+      title: NullableAddOnApplicableType
+      x-stoplight:
+        id: iy7f8dnx4g1zp
+      allOf:
+      - $ref: '#/components/schemas/AddOnApplicableType'
+      nullable: true
+      type: string
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    NullableOrderUnitOfMeasure:
+      title: NullableOrderUnitOfMeasure
+      x-stoplight:
+        id: rtlna368z495u
+      allOf:
+      - $ref: '#/components/schemas/OrderUnitOfMeasure'
+      type: string
+      nullable: true
+    AddOnRateType:
+      title: AddOnRateType
+      x-stoplight:
+        id: 1c3m0qj0ofdao
+      enum:
+      - RateForEach
+      - RatePercentOfTotal
+      - PerLoad
+      - FuelSurcharge
+      example: RateForEach
+      default: RateForEach
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

@@ -1,0 +1,2062 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Drivers API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Drivers
+paths:
+  /v1/companies/{company-id}/drivers:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Drivers for a Company
+      tags:
+      - Drivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: x3vlfb1jtsdae
+                    items:
+                      $ref: '#/components/schemas/Driver-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-drivers
+      x-stoplight:
+        id: 60j1hwpv37vsl
+      description: Retrieve `Drivers` for a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-availability'
+      - $ref: '#/components/parameters/filter-expiring'
+      - $ref: '#/components/parameters/filter-show_all'
+      - $ref: '#/components/parameters/filter-date'
+      - $ref: '#/components/parameters/filter-auto_add_ons'
+      - $ref: '#/components/parameters/filter-sender_company_types'
+      - $ref: '#/components/parameters/filter-label_ids'
+  /v1/companies/{company-id}/drivers/faceted_search:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      description: Company ID
+      required: true
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Search Drivers based on the current Dispatch results
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Driver-Read-Typeahead'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-drivers-faceted_search
+      description: Searches `Drivers` in a typeahead style but instead of all `Drivers` for a `Company` this returns all `Drivers` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`.
+      parameters:
+      - $ref: '#/components/parameters/filter-job-company_ids'
+      - $ref: '#/components/parameters/filter-job-customer_account_ids'
+      - $ref: '#/components/parameters/filter-dispatch_number_ids'
+      - $ref: '#/components/parameters/filter-job-driver_ids'
+      - $ref: '#/components/parameters/filter-job-dropoff_site_ids'
+      - $ref: '#/components/parameters/filter-job-end_date'
+      - $ref: '#/components/parameters/filter-job-equipment_ids'
+      - $ref: '#/components/parameters/filter-job-external_ids'
+      - $ref: '#/components/parameters/filter-job-material_ids'
+      - $ref: '#/components/parameters/filter-job-pickup_site_ids'
+      - $ref: '#/components/parameters/filter-job-project_ids'
+      - $ref: '#/components/parameters/filter-job-service_ids'
+      - $ref: '#/components/parameters/filter-job-site_types'
+      - $ref: '#/components/parameters/filter-job-start_date'
+      - $ref: '#/components/parameters/filter-job-states'
+      - $ref: '#/components/parameters/filter-job-vendor_account_ids'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/facet-search-query'
+      tags:
+      - Drivers
+      x-internal: false
+      x-stoplight:
+        id: fkv07ysacff6n
+  /v1/companies/{company-id}/drivers/typeahead:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Drivers
+      tags:
+      - Drivers
+      responses:
+        '200':
+          description: Shared Response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 5tq8lfrhvt7as
+                    items:
+                      $ref: '#/components/schemas/Driver-Read-Typeahead'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-drivers-typeahead
+      x-stoplight:
+        id: mcrkqprl1p1i0
+      description: 'Typeahead search against the `first_name` and `last_name` property on `Drivers` for a `Company`.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-date'
+      - $ref: '#/components/parameters/filter-availability'
+      - $ref: '#/components/parameters/filter-expiring'
+      - $ref: '#/components/parameters/filter-show_all'
+      - $ref: '#/components/parameters/filter-sender_company_types'
+      - $ref: '#/components/parameters/filter-label_ids'
+      - $ref: '#/components/parameters/sort-name'
+  /v1/companies/{company-id}/drivers/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: Driver ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a Driver by ID for a Company
+      tags:
+      - Drivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Driver-Read-Show'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-drivers-id
+      x-stoplight:
+        id: 4rb8ndkzwiu83
+      description: Retrieve a `Driver` by ID for a `Company`
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/drivers:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve Drivers for a Managed Company
+      tags:
+      - Drivers
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    x-stoplight:
+                      id: dr7yk3mn4s1pq
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Driver-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-drivers
+      x-stoplight:
+        id: dr8zl4op6t2sc
+      description: Retrieve `Drivers` for a managed company. This includes both drivers owned by the managed company and drivers shared with the managed company.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/search-datagrid'
+      - $ref: '#/components/parameters/filter-availability'
+      - $ref: '#/components/parameters/filter-expiring'
+      - $ref: '#/components/parameters/filter-show_all'
+      - $ref: '#/components/parameters/filter-date'
+      - $ref: '#/components/parameters/filter-auto_add_ons'
+      - $ref: '#/components/parameters/filter-sender_company_types'
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/drivers/typeahead:
+    parameters:
+    - schema:
+        type: string
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Typeahead search on Drivers for a Managed Company
+      tags:
+      - Drivers
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: dr8qn8ow5s2uy
+                    items:
+                      $ref: '#/components/schemas/Driver-Read-Typeahead'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-drivers-typeahead
+      x-stoplight:
+        id: dr9pi7ul3n5xa
+      description: Typeahead search against the `first_name` and `last_name` properties on `Drivers` for a managed company. This includes both drivers owned by the managed company and drivers shared with the managed company.
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/search-query'
+      - $ref: '#/components/parameters/filter-shared'
+      - $ref: '#/components/parameters/filter-dispatchable'
+      - $ref: '#/components/parameters/filter-date'
+      - $ref: '#/components/parameters/filter-availability'
+      - $ref: '#/components/parameters/filter-expiring'
+      - $ref: '#/components/parameters/filter-show_all'
+      - $ref: '#/components/parameters/filter-sender_company_types'
+      - $ref: '#/components/parameters/filter-label_ids'
+      x-internal: true
+  /v1/companies/{company-id}/managed_companies/{managed-company-id}/drivers/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Managing Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: managed-company-id
+      in: path
+      required: true
+      description: Managed Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: Driver ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a Driver by ID for a Managed Company
+      tags:
+      - Drivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Driver-Read-Show'
+                required:
+                - data
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-companies-company-id-managed_companies-managed-company-id-drivers-id
+      x-stoplight:
+        id: dr9am5pq7u3td
+      description: Retrieve a `Driver` by ID for a Managed Company
+  /v1/drivers/{driver-id}/driver_state/off_duty:
+    parameters:
+    - schema:
+        type: string
+      name: driver-id
+      in: path
+      required: true
+      description: Driver ID
+    - $ref: '#/components/parameters/Accept-Language'
+    put:
+      summary: Update a Driver's State to off_duty
+      tags:
+      - Drivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DriverStateEvent-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      operationId: put-v1-drivers-driver-id-driver_state-off_duty
+      x-stoplight:
+        id: 6gzx2pe70t1d7
+      description: 'Update the status of a `driver` to `off_duty`.
+
+
+        This endpoint requires the `edit_user` permission.'
+  /v1/drivers/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: Driver ID
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve a Driver by ID
+      tags:
+      - Drivers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Driver-Read-Show'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: get-v1-drivers-id
+      x-stoplight:
+        id: 9xieixne0b707
+      description: 'Deprecated in favor of "Retrieve a `Driver` by ID for a `Company`"
+
+
+        Retrieve a `Driver` by ID'
+      deprecated: true
+components:
+  schemas:
+    GpsStatus:
+      title: GpsStatus
+      x-stoplight:
+        id: 3b02180lfd6ve
+      description: GPS Ping status for a record
+      type: object
+      required:
+      - status
+      - last_ping_at
+      properties:
+        status:
+          x-stoplight:
+            id: 7f6aqydupq3ac
+          enum:
+          - online
+          - offline
+          - idle
+          - no_signal
+        last_ping_at:
+          type: string
+          x-stoplight:
+            id: 1ikh7blmxdqcz
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: c9ls3nrhbih3v
+            nullable: true
+          ticket_match_id:
+            type: string
+            x-stoplight:
+              id: a1cd3nrhbih3v
+            nullable: true
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type: string
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+            nullable: true
+    Driver-Read:
+      allOf:
+      - $ref: '#/components/schemas/Driver-Read-Nested'
+      - type: object
+        x-stoplight:
+          id: smbq32b6inc2l
+        required:
+        - external_id
+        - time_zone
+        - additional_equipment
+        - default_additional_equipment
+        - managed
+        - labels
+        properties:
+          external_id:
+            type: string
+            x-stoplight:
+              id: cj69x6xyjqvql
+            nullable: true
+          time_zone:
+            $ref: '#/components/schemas/TimeZone'
+          additional_equipment:
+            x-stoplight:
+              id: krjs9w5fjf9su
+            type: array
+            items:
+              $ref: '#/components/schemas/Equipment-Read-Nested'
+          default_additional_equipment:
+            type: array
+            x-stoplight:
+              id: 2280kkkyt1fb6
+            items:
+              $ref: '#/components/schemas/Equipment-Read-Default-Nested'
+          managed:
+            type: boolean
+            x-stoplight:
+              id: zzzzzz58pns2s
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this driver
+      title: Driver-Read
+    CompanyShare-Read-Driver-Nested:
+      title: CompanyShare-Read-Driver-Nested
+      x-stoplight:
+        id: top7tsa824c0p
+      allOf:
+      - $ref: '#/components/schemas/CompanyShare-Read-User-Nested'
+      - type: object
+        x-stoplight:
+          id: rnzzjr7g8jgsr
+        properties:
+          receiver_account:
+            $ref: '#/components/schemas/Account-Read-Driver-Nested'
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    DriverStateEvent-Read:
+      title: DriverStateEvent-Read
+      x-stoplight:
+        id: 813jz0m2wvdpm
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          user_id:
+            type: string
+            format: uuid
+            x-stoplight:
+              id: azx0we0941wlr
+          state:
+            $ref: '#/components/schemas/DriverState'
+          started_at:
+            x-stoplight:
+              id: k97zhsrha4zvo
+            type: string
+            format: date-time
+          ended_at:
+            x-stoplight:
+              id: xqde66xx0nitc
+            type: string
+            format: date-time
+            nullable: true
+        required:
+        - user_id
+        - state
+        - started_at
+      - $ref: '#/components/schemas/Timestamps'
+      description: Model for driver_state_event
+      x-tags:
+      - DriverStateEvent
+      x-internal: true
+    Driver-Read-Show:
+      title: Driver-Read-Show
+      x-stoplight:
+        id: crdn7cqotv2t1
+      allOf:
+      - $ref: '#/components/schemas/Driver-Read'
+      - type: object
+        x-stoplight:
+          id: n20sldp2oxq44
+        properties:
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Driver-Nested'
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    Label-Read-Nested:
+      title: Label-Read-Nested
+      x-stoplight:
+        id: lbl1readnest01
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: lbl1nestnm0001
+            description: Label name
+          color:
+            type: string
+            x-stoplight:
+              id: lbl1nestcol001
+            description: Hex color code for the label
+            pattern: ^#[0-9A-Fa-f]{6}$
+        required:
+        - name
+        - color
+    CompanyDayDriverStat-Read:
+      title: CompanyDayDriverStat-Read
+      x-stoplight:
+        id: 3grxlvq5qo470
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: e0k1y5lyccj7x
+        properties:
+          day:
+            type: string
+            x-stoplight:
+              id: tq2kbgspesbyq
+            format: date
+          jobs_count:
+            type: integer
+            x-stoplight:
+              id: lq3o1iorx79vx
+      description: CompanyDayDriverStat
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
+      x-stoplight:
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type: string
+          x-stoplight:
+            id: ttaijg77qmbgk
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: s4rscgptv68x3
+          nullable: true
+      additionalProperties: false
+    Equipment-Read-Nested:
+      title: Equipment-Read-Nested
+      x-stoplight:
+        id: 7ezenec7ycv5l
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
+      - type: object
+        required:
+        - license_number
+        - zone
+        - accounting_id
+        - equipment_id
+        properties:
+          license_number:
+            type: string
+            x-stoplight:
+              id: hw1ooa17wsadq
+            nullable: true
+          zone:
+            type: string
+            x-stoplight:
+              id: 81hr4p8yp8btv
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: ere9qhs4cuwhi
+            nullable: true
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: gt7r3iqzx2w0u
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    GpsStatusable:
+      title: GpsStatusable
+      x-stoplight:
+        id: o6oprcupw6ep7
+      type: object
+      required:
+      - gps_status
+      properties:
+        gps_status:
+          $ref: '#/components/schemas/GpsStatus'
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Equipment-Read-Default-Nested:
+      title: Equipment-Read-Default-Nested
+      x-stoplight:
+        id: kojte9y4g6t9v
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        - equipment_type
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          external_id:
+            type: string
+            nullable: true
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: v25n5jka8apv0
+    Account-Read-Driver-Nested:
+      title: Account-Read-Driver-Nested
+      x-stoplight:
+        id: o7ewts6ptb2y9
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: igqzka59d2ywt
+        required:
+        - name
+        - external_id
+        - company
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 2so5ohbz96yrf
+          external_id:
+            type: string
+            x-stoplight:
+              id: zh1jd8d1opfpi
+            nullable: true
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+    TimeZone:
+      title: TimeZone
+      x-stoplight:
+        id: 23bilsa9wx5xx
+      enum:
+      - Africa/Abidjan
+      - Africa/Accra
+      - Africa/Addis_Ababa
+      - Africa/Algiers
+      - Africa/Asmara
+      - Africa/Asmera
+      - Africa/Bamako
+      - Africa/Bangui
+      - Africa/Banjul
+      - Africa/Bissau
+      - Africa/Blantyre
+      - Africa/Brazzaville
+      - Africa/Bujumbura
+      - Africa/Cairo
+      - Africa/Casablanca
+      - Africa/Ceuta
+      - Africa/Conakry
+      - Africa/Dakar
+      - Africa/Dar_es_Salaam
+      - Africa/Djibouti
+      - Africa/Douala
+      - Africa/El_Aaiun
+      - Africa/Freetown
+      - Africa/Gaborone
+      - Africa/Harare
+      - Africa/Johannesburg
+      - Africa/Juba
+      - Africa/Kampala
+      - Africa/Khartoum
+      - Africa/Kigali
+      - Africa/Kinshasa
+      - Africa/Lagos
+      - Africa/Libreville
+      - Africa/Lome
+      - Africa/Luanda
+      - Africa/Lubumbashi
+      - Africa/Lusaka
+      - Africa/Malabo
+      - Africa/Maputo
+      - Africa/Maseru
+      - Africa/Mbabane
+      - Africa/Mogadishu
+      - Africa/Monrovia
+      - Africa/Nairobi
+      - Africa/Ndjamena
+      - Africa/Niamey
+      - Africa/Nouakchott
+      - Africa/Ouagadougou
+      - Africa/Porto-Novo
+      - Africa/Sao_Tome
+      - Africa/Timbuktu
+      - Africa/Tripoli
+      - Africa/Tunis
+      - Africa/Windhoek
+      - America/Adak
+      - America/Anchorage
+      - America/Anguilla
+      - America/Antigua
+      - America/Araguaina
+      - America/Argentina/Buenos_Aires
+      - America/Argentina/Catamarca
+      - America/Argentina/ComodRivadavia
+      - America/Argentina/Cordoba
+      - America/Argentina/Jujuy
+      - America/Argentina/La_Rioja
+      - America/Argentina/Mendoza
+      - America/Argentina/Rio_Gallegos
+      - America/Argentina/Salta
+      - America/Argentina/San_Juan
+      - America/Argentina/San_Luis
+      - America/Argentina/Tucuman
+      - America/Argentina/Ushuaia
+      - America/Aruba
+      - America/Asuncion
+      - America/Atikokan
+      - America/Atka
+      - America/Bahia
+      - America/Bahia_Banderas
+      - America/Barbados
+      - America/Belem
+      - America/Belize
+      - America/Blanc-Sablon
+      - America/Boa_Vista
+      - America/Bogota
+      - America/Boise
+      - America/Buenos_Aires
+      - America/Cambridge_Bay
+      - America/Campo_Grande
+      - America/Cancun
+      - America/Caracas
+      - America/Catamarca
+      - America/Cayenne
+      - America/Cayman
+      - America/Chicago
+      - America/Chihuahua
+      - America/Ciudad_Juarez
+      - America/Coral_Harbour
+      - America/Cordoba
+      - America/Costa_Rica
+      - America/Coyhaique
+      - America/Creston
+      - America/Cuiaba
+      - America/Curacao
+      - America/Danmarkshavn
+      - America/Dawson
+      - America/Dawson_Creek
+      - America/Denver
+      - America/Detroit
+      - America/Dominica
+      - America/Edmonton
+      - America/Eirunepe
+      - America/El_Salvador
+      - America/Ensenada
+      - America/Fort_Nelson
+      - America/Fort_Wayne
+      - America/Fortaleza
+      - America/Glace_Bay
+      - America/Godthab
+      - America/Goose_Bay
+      - America/Grand_Turk
+      - America/Grenada
+      - America/Guadeloupe
+      - America/Guatemala
+      - America/Guayaquil
+      - America/Guyana
+      - America/Halifax
+      - America/Havana
+      - America/Hermosillo
+      - America/Indiana/Indianapolis
+      - America/Indiana/Knox
+      - America/Indiana/Marengo
+      - America/Indiana/Petersburg
+      - America/Indiana/Tell_City
+      - America/Indiana/Vevay
+      - America/Indiana/Vincennes
+      - America/Indiana/Winamac
+      - America/Indianapolis
+      - America/Inuvik
+      - America/Iqaluit
+      - America/Jamaica
+      - America/Jujuy
+      - America/Juneau
+      - America/Kentucky/Louisville
+      - America/Kentucky/Monticello
+      - America/Knox_IN
+      - America/Kralendijk
+      - America/La_Paz
+      - America/Lima
+      - America/Los_Angeles
+      - America/Louisville
+      - America/Lower_Princes
+      - America/Maceio
+      - America/Managua
+      - America/Manaus
+      - America/Marigot
+      - America/Martinique
+      - America/Matamoros
+      - America/Mazatlan
+      - America/Mendoza
+      - America/Menominee
+      - America/Merida
+      - America/Metlakatla
+      - America/Mexico_City
+      - America/Miquelon
+      - America/Moncton
+      - America/Monterrey
+      - America/Montevideo
+      - America/Montreal
+      - America/Montserrat
+      - America/Nassau
+      - America/New_York
+      - America/Nipigon
+      - America/Nome
+      - America/Noronha
+      - America/North_Dakota/Beulah
+      - America/North_Dakota/Center
+      - America/North_Dakota/New_Salem
+      - America/Nuuk
+      - America/Ojinaga
+      - America/Panama
+      - America/Pangnirtung
+      - America/Paramaribo
+      - America/Phoenix
+      - America/Port-au-Prince
+      - America/Port_of_Spain
+      - America/Porto_Acre
+      - America/Porto_Velho
+      - America/Puerto_Rico
+      - America/Punta_Arenas
+      - America/Rainy_River
+      - America/Rankin_Inlet
+      - America/Recife
+      - America/Regina
+      - America/Resolute
+      - America/Rio_Branco
+      - America/Rosario
+      - America/Santa_Isabel
+      - America/Santarem
+      - America/Santiago
+      - America/Santo_Domingo
+      - America/Sao_Paulo
+      - America/Scoresbysund
+      - America/Shiprock
+      - America/Sitka
+      - America/St_Barthelemy
+      - America/St_Johns
+      - America/St_Kitts
+      - America/St_Lucia
+      - America/St_Thomas
+      - America/St_Vincent
+      - America/Swift_Current
+      - America/Tegucigalpa
+      - America/Thule
+      - America/Thunder_Bay
+      - America/Tijuana
+      - America/Toronto
+      - America/Tortola
+      - America/Vancouver
+      - America/Virgin
+      - America/Whitehorse
+      - America/Winnipeg
+      - America/Yakutat
+      - America/Yellowknife
+      - Antarctica/Casey
+      - Antarctica/Davis
+      - Antarctica/DumontDUrville
+      - Antarctica/Macquarie
+      - Antarctica/Mawson
+      - Antarctica/McMurdo
+      - Antarctica/Palmer
+      - Antarctica/Rothera
+      - Antarctica/South_Pole
+      - Antarctica/Syowa
+      - Antarctica/Troll
+      - Antarctica/Vostok
+      - Arctic/Longyearbyen
+      - Asia/Aden
+      - Asia/Almaty
+      - Asia/Amman
+      - Asia/Anadyr
+      - Asia/Aqtau
+      - Asia/Aqtobe
+      - Asia/Ashgabat
+      - Asia/Ashkhabad
+      - Asia/Atyrau
+      - Asia/Baghdad
+      - Asia/Bahrain
+      - Asia/Baku
+      - Asia/Bangkok
+      - Asia/Barnaul
+      - Asia/Beirut
+      - Asia/Bishkek
+      - Asia/Brunei
+      - Asia/Calcutta
+      - Asia/Chita
+      - Asia/Choibalsan
+      - Asia/Chongqing
+      - Asia/Chungking
+      - Asia/Colombo
+      - Asia/Dacca
+      - Asia/Damascus
+      - Asia/Dhaka
+      - Asia/Dili
+      - Asia/Dubai
+      - Asia/Dushanbe
+      - Asia/Famagusta
+      - Asia/Gaza
+      - Asia/Harbin
+      - Asia/Hebron
+      - Asia/Ho_Chi_Minh
+      - Asia/Hong_Kong
+      - Asia/Hovd
+      - Asia/Irkutsk
+      - Asia/Istanbul
+      - Asia/Jakarta
+      - Asia/Jayapura
+      - Asia/Jerusalem
+      - Asia/Kabul
+      - Asia/Kamchatka
+      - Asia/Karachi
+      - Asia/Kashgar
+      - Asia/Kathmandu
+      - Asia/Katmandu
+      - Asia/Khandyga
+      - Asia/Kolkata
+      - Asia/Krasnoyarsk
+      - Asia/Kuala_Lumpur
+      - Asia/Kuching
+      - Asia/Kuwait
+      - Asia/Macao
+      - Asia/Macau
+      - Asia/Magadan
+      - Asia/Makassar
+      - Asia/Manila
+      - Asia/Muscat
+      - Asia/Nicosia
+      - Asia/Novokuznetsk
+      - Asia/Novosibirsk
+      - Asia/Omsk
+      - Asia/Oral
+      - Asia/Phnom_Penh
+      - Asia/Pontianak
+      - Asia/Pyongyang
+      - Asia/Qatar
+      - Asia/Qostanay
+      - Asia/Qyzylorda
+      - Asia/Rangoon
+      - Asia/Riyadh
+      - Asia/Saigon
+      - Asia/Sakhalin
+      - Asia/Samarkand
+      - Asia/Seoul
+      - Asia/Shanghai
+      - Asia/Singapore
+      - Asia/Srednekolymsk
+      - Asia/Taipei
+      - Asia/Tashkent
+      - Asia/Tbilisi
+      - Asia/Tehran
+      - Asia/Tel_Aviv
+      - Asia/Thimbu
+      - Asia/Thimphu
+      - Asia/Tokyo
+      - Asia/Tomsk
+      - Asia/Ujung_Pandang
+      - Asia/Ulaanbaatar
+      - Asia/Ulan_Bator
+      - Asia/Urumqi
+      - Asia/Ust-Nera
+      - Asia/Vientiane
+      - Asia/Vladivostok
+      - Asia/Yakutsk
+      - Asia/Yangon
+      - Asia/Yekaterinburg
+      - Asia/Yerevan
+      - Atlantic/Azores
+      - Atlantic/Bermuda
+      - Atlantic/Canary
+      - Atlantic/Cape_Verde
+      - Atlantic/Faeroe
+      - Atlantic/Faroe
+      - Atlantic/Jan_Mayen
+      - Atlantic/Madeira
+      - Atlantic/Reykjavik
+      - Atlantic/South_Georgia
+      - Atlantic/St_Helena
+      - Atlantic/Stanley
+      - Australia/ACT
+      - Australia/Adelaide
+      - Australia/Brisbane
+      - Australia/Broken_Hill
+      - Australia/Canberra
+      - Australia/Currie
+      - Australia/Darwin
+      - Australia/Eucla
+      - Australia/Hobart
+      - Australia/LHI
+      - Australia/Lindeman
+      - Australia/Lord_Howe
+      - Australia/Melbourne
+      - Australia/NSW
+      - Australia/North
+      - Australia/Perth
+      - Australia/Queensland
+      - Australia/South
+      - Australia/Sydney
+      - Australia/Tasmania
+      - Australia/Victoria
+      - Australia/West
+      - Australia/Yancowinna
+      - Brazil/Acre
+      - Brazil/DeNoronha
+      - Brazil/East
+      - Brazil/West
+      - CET
+      - CST6CDT
+      - Canada/Atlantic
+      - Canada/Central
+      - Canada/Eastern
+      - Canada/Mountain
+      - Canada/Newfoundland
+      - Canada/Pacific
+      - Canada/Saskatchewan
+      - Canada/Yukon
+      - Chile/Continental
+      - Chile/EasterIsland
+      - Cuba
+      - EET
+      - EST
+      - EST5EDT
+      - Egypt
+      - Eire
+      - Etc/GMT
+      - Etc/GMT+0
+      - Etc/GMT+1
+      - Etc/GMT+10
+      - Etc/GMT+11
+      - Etc/GMT+12
+      - Etc/GMT+2
+      - Etc/GMT+3
+      - Etc/GMT+4
+      - Etc/GMT+5
+      - Etc/GMT+6
+      - Etc/GMT+7
+      - Etc/GMT+8
+      - Etc/GMT+9
+      - Etc/GMT-0
+      - Etc/GMT-1
+      - Etc/GMT-10
+      - Etc/GMT-11
+      - Etc/GMT-12
+      - Etc/GMT-13
+      - Etc/GMT-14
+      - Etc/GMT-2
+      - Etc/GMT-3
+      - Etc/GMT-4
+      - Etc/GMT-5
+      - Etc/GMT-6
+      - Etc/GMT-7
+      - Etc/GMT-8
+      - Etc/GMT-9
+      - Etc/GMT0
+      - Etc/Greenwich
+      - Etc/UCT
+      - Etc/UTC
+      - Etc/Universal
+      - Etc/Zulu
+      - Europe/Amsterdam
+      - Europe/Andorra
+      - Europe/Astrakhan
+      - Europe/Athens
+      - Europe/Belfast
+      - Europe/Belgrade
+      - Europe/Berlin
+      - Europe/Bratislava
+      - Europe/Brussels
+      - Europe/Bucharest
+      - Europe/Budapest
+      - Europe/Busingen
+      - Europe/Chisinau
+      - Europe/Copenhagen
+      - Europe/Dublin
+      - Europe/Gibraltar
+      - Europe/Guernsey
+      - Europe/Helsinki
+      - Europe/Isle_of_Man
+      - Europe/Istanbul
+      - Europe/Jersey
+      - Europe/Kaliningrad
+      - Europe/Kiev
+      - Europe/Kirov
+      - Europe/Kyiv
+      - Europe/Lisbon
+      - Europe/Ljubljana
+      - Europe/London
+      - Europe/Luxembourg
+      - Europe/Madrid
+      - Europe/Malta
+      - Europe/Mariehamn
+      - Europe/Minsk
+      - Europe/Monaco
+      - Europe/Moscow
+      - Europe/Nicosia
+      - Europe/Oslo
+      - Europe/Paris
+      - Europe/Podgorica
+      - Europe/Prague
+      - Europe/Riga
+      - Europe/Rome
+      - Europe/Samara
+      - Europe/San_Marino
+      - Europe/Sarajevo
+      - Europe/Saratov
+      - Europe/Simferopol
+      - Europe/Skopje
+      - Europe/Sofia
+      - Europe/Stockholm
+      - Europe/Tallinn
+      - Europe/Tirane
+      - Europe/Tiraspol
+      - Europe/Ulyanovsk
+      - Europe/Uzhgorod
+      - Europe/Vaduz
+      - Europe/Vatican
+      - Europe/Vienna
+      - Europe/Vilnius
+      - Europe/Volgograd
+      - Europe/Warsaw
+      - Europe/Zagreb
+      - Europe/Zaporozhye
+      - Europe/Zurich
+      - Factory
+      - GB
+      - GB-Eire
+      - GMT
+      - GMT+0
+      - GMT-0
+      - GMT0
+      - Greenwich
+      - HST
+      - Hongkong
+      - Iceland
+      - Indian/Antananarivo
+      - Indian/Chagos
+      - Indian/Christmas
+      - Indian/Cocos
+      - Indian/Comoro
+      - Indian/Kerguelen
+      - Indian/Mahe
+      - Indian/Maldives
+      - Indian/Mauritius
+      - Indian/Mayotte
+      - Indian/Reunion
+      - Iran
+      - Israel
+      - Jamaica
+      - Japan
+      - Kwajalein
+      - Libya
+      - MET
+      - MST
+      - MST7MDT
+      - Mexico/BajaNorte
+      - Mexico/BajaSur
+      - Mexico/General
+      - NZ
+      - NZ-CHAT
+      - Navajo
+      - PRC
+      - PST8PDT
+      - Pacific/Apia
+      - Pacific/Auckland
+      - Pacific/Bougainville
+      - Pacific/Chatham
+      - Pacific/Chuuk
+      - Pacific/Easter
+      - Pacific/Efate
+      - Pacific/Enderbury
+      - Pacific/Fakaofo
+      - Pacific/Fiji
+      - Pacific/Funafuti
+      - Pacific/Galapagos
+      - Pacific/Gambier
+      - Pacific/Guadalcanal
+      - Pacific/Guam
+      - Pacific/Honolulu
+      - Pacific/Johnston
+      - Pacific/Kanton
+      - Pacific/Kiritimati
+      - Pacific/Kosrae
+      - Pacific/Kwajalein
+      - Pacific/Majuro
+      - Pacific/Marquesas
+      - Pacific/Midway
+      - Pacific/Nauru
+      - Pacific/Niue
+      - Pacific/Norfolk
+      - Pacific/Noumea
+      - Pacific/Pago_Pago
+      - Pacific/Palau
+      - Pacific/Pitcairn
+      - Pacific/Pohnpei
+      - Pacific/Ponape
+      - Pacific/Port_Moresby
+      - Pacific/Rarotonga
+      - Pacific/Saipan
+      - Pacific/Samoa
+      - Pacific/Tahiti
+      - Pacific/Tarawa
+      - Pacific/Tongatapu
+      - Pacific/Truk
+      - Pacific/Wake
+      - Pacific/Wallis
+      - Pacific/Yap
+      - Poland
+      - Portugal
+      - ROC
+      - ROK
+      - Singapore
+      - Turkey
+      - UCT
+      - US/Alaska
+      - US/Aleutian
+      - US/Arizona
+      - US/Central
+      - US/East-Indiana
+      - US/Eastern
+      - US/Hawaii
+      - US/Indiana-Starke
+      - US/Michigan
+      - US/Mountain
+      - US/Pacific
+      - US/Samoa
+      - UTC
+      - Universal
+      - W-SU
+      - WET
+      - Zulu
+      example: America/New_York
+      default: America/New_York
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Driver-Read-Nested:
+      title: Driver-Read-Nested
+      x-stoplight:
+        id: lcevfprple1sa
+      allOf:
+      - $ref: '#/components/schemas/Driver-Read-Typeahead'
+      - type: object
+        x-stoplight:
+          id: 19sn21xqtmd0w
+        required:
+        - email
+        properties:
+          email:
+            type: string
+            x-stoplight:
+              id: ekvo9chmdhjkp
+            nullable: true
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    CompanyShare-Read-User-Nested:
+      title: CompanyShare-Read-User-Nested
+      x-stoplight:
+        id: 8czythac5qhgz
+      allOf:
+      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - type: object
+        properties:
+          default_equipment:
+            $ref: '#/components/schemas/Equipment-Read-Default-Nested'
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Equipment-Read-Typeahead:
+      title: Equipment-Read-Typeahead
+      x-stoplight:
+        id: sv94osohm5xhg
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - equipment_type
+        - external_id
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          external_id:
+            type: string
+            x-stoplight:
+              id: jrkz95htilck3
+            nullable: true
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: fkr9fkdtl996f
+    DriverState:
+      title: DriverState
+      x-stoplight:
+        id: ibubibnkuzq3g
+      enum:
+      - on_duty
+      - off_duty
+      - break
+      example: on_duty
+      description: These are the states of driver to display their availability
+      x-internal: true
+    Driver-Read-Typeahead:
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 5vacab4kzhkj4
+        required:
+        - first_name
+        - last_name
+        - schedule_on
+        - phone
+        - managed
+        - company
+        properties:
+          first_name:
+            type: string
+            x-stoplight:
+              id: 4gb9hhpizab3h
+            description: First name
+          last_name:
+            type: string
+            x-stoplight:
+              id: my6q150nen1kb
+            description: Last name
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-User-Nested'
+          equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+          default_equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 7dq6dvne8bqcr
+          company_day_driver_stat:
+            $ref: '#/components/schemas/CompanyDayDriverStat-Read'
+          phone:
+            type: string
+            x-stoplight:
+              id: y4l44re1zfaa9
+            description: User's E.164 formatted phone number
+            nullable: true
+          managed:
+            type: boolean
+            x-stoplight:
+              id: k8m3xq0sz6wt4
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this driver
+      - $ref: '#/components/schemas/GpsStatusable'
+      title: Driver-Read-Typeahead
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  parameters:
+    filter-expiring:
+      name: filter[expiring]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records.
+    filter-job-service_ids:
+      name: filter[job][service_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Service IDs for the Job
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    filter-sender_company_types:
+      name: filter[sender_company_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: CompanyType enum filter. See CompanyType enum for accepted values.
+    filter-availability:
+      name: filter[availability]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter based on record availability based on the `date` parameter/filter, defaulting to the current day.
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    filter-show_all:
+      name: filter[show_all]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Show all records. Deprecated in favor of `filter[availability]`
+      deprecated: true
+    filter-job-pickup_site_ids:
+      name: filter[job][pickup_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Pickup Site IDs for the Job
+    filter-job-external_ids:
+      name: filter[job][external_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated External Project IDs for the Job
+    filter-dispatchable:
+      name: filter[dispatchable]
+      in: query
+      schema:
+        type: boolean
+      description: Filter dispatchable CompanyShareable models
+    filter-job-vendor_account_ids:
+      name: filter[job][vendor_account_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Vendor Account IDs for the Job
+    filter-job-customer_account_ids:
+      name: filter[job][customer_account_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Customer Account IDs for the Job
+    filter-dispatch_number_ids:
+      name: filter[dispatch_number_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated DispatchNumber IDs
+    filter-auto_add_ons:
+      name: filter[auto_add_ons]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter on whether the resource (e.g. Account, User) has associated AutoAddOns
+    filter-job-equipment_ids:
+      name: filter[job][equipment_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Equipment IDs for the Job
+    sort-name:
+      name: sort[name]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Sort on Name `asc` or `desc`
+    filter-job-driver_ids:
+      name: filter[job][driver_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The assigned Driver IDs for the Job
+    facet-search-query:
+      name: facet[search][query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The typeahead search query. Matches on the models's `name` field
+    filter-job-material_ids:
+      name: filter[job][material_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Material IDs for the Job
+    filter-job-states:
+      name: filter[job][states]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: Job states
+    filter-job-start_date:
+      name: filter[job][start_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Start date range for Job.job_start_at
+    filter-label_ids:
+      name: filter[label_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uuid
+      description: Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic).
+    filter-job-end_date:
+      name: filter[job][end_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: End date range for Job.job_start_at
+    filter-job-dropoff_site_ids:
+      name: filter[job][dropoff_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Dropoff Site IDs for the Job
+    filter-date:
+      name: filter[date]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+      description: Single Date Filter
+    filter-shared:
+      name: filter[shared]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter shared CompanyShareable models
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    filter-job-company_ids:
+      name: filter[job][company_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Company IDs for the Job
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    filter-job-project_ids:
+      name: filter[job][project_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Project IDs for the Job
+    filter-job-site_types:
+      name: filter[job][site_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: SiteType enum filters for the Job (see SiteType enum for the list of values)
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

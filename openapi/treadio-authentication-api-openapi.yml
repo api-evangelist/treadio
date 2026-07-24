@@ -1,0 +1,837 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier Authentication API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+paths:
+  /v1/auth/forgot_password:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Forgot Password
+      operationId: post-v1-auth-forgot_password
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      description: This endpoint accepts an `email` of the `User` which will be sent a reset password link from Stytch.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthForgotPassword-Create'
+      tags:
+      - Authentication
+      security: []
+  /v1/auth/login:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Generate an auth token
+      operationId: post-v1-auth-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AuthToken'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      description: 'This endpoint takes an `email` and `password`, and if a `User` exists with the given data it returns a `session_jwt` for usage with the API. This `session_jwt` should be added to the headers of further requests like so:
+
+        ```
+
+        Authorization: Bearer <session_jwt>
+
+        ```'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthLogin-Create'
+            examples:
+              Example 1:
+                value:
+                  email: pbailey@phauling.com
+                  password: whatsupdoc
+        description: ''
+      security: []
+      tags:
+      - Authentication
+    delete:
+      summary: Delete an auth token
+      operationId: delete-v1-auth-login
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+      description: This endpoints revokes the `session_jwt` passed in the Authorization header.
+      tags:
+      - Authentication
+  /v1/auth/magic_link:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Send a magic link email
+      tags:
+      - Authentication
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      operationId: post-v1-auth-magic_link
+      x-stoplight:
+        id: 9vhwhfp6n78q1
+      description: Send a magic link email
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MagicLink-Create'
+  /v1/auth/magic_link/login:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Login with a magic link token
+      tags:
+      - Authentication
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AuthToken'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      operationId: post-v1-auth-magic_link-login
+      x-stoplight:
+        id: jv9hmnncx8qj8
+      description: Login with a magic link token.
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MagicLink-Login'
+  /v1/auth/otp_sms:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Send a one-time password via SMS
+      tags:
+      - Authentication
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OtpSms-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      operationId: post-v1-auth-otp_sms
+      x-stoplight:
+        id: 2i8o3qa1lk1ok
+      description: Send a one-time password via SMS.
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtpSms-Create'
+  /v1/auth/otp_sms/login:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Login with a one-time password received via SMS
+      tags:
+      - Authentication
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AuthToken'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      operationId: post-v1-auth-otp_sms-login
+      x-stoplight:
+        id: vr5j5o6w70ww4
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtpSms-Login'
+      description: Login with a one-time password received via SMS.
+  /v1/auth/reset_password:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Reset Password
+      operationId: post-v1-auth-reset_password
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AuthToken'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthResetPassword-Create'
+        description: ''
+      description: This endpoint accepts a `password_reset_token`, which comes from the reset password link from Stytch, and also accepts a `password` which will be set as the new password. This endpoint returns a valid `session_jwt` for the `User`.
+      tags:
+      - Authentication
+      security: []
+  /v1/auth/signup:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: User sign up
+      operationId: post-v1-auth-signup
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AuthToken'
+                required:
+                - data
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      description: This endpoint takes a `password` and a `magic_links_token` from the invite email in order to successfully register the `User` in Stytch. This endpoint returns a valid `session_jwt` for the `User`.
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthSignup-Create'
+      tags:
+      - Authentication
+  /v1/auth/sso/login:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Login with a sso token
+      tags:
+      - Authentication
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AuthToken'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+      operationId: post-v1-auth-sso-login
+      x-stoplight:
+        id: 9vjhmnncx8qj8
+      description: Login with a sso token.
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SSO-Login'
+  /v1/auth_methods:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Retrieve a list of AuthMethods for a given email
+      tags:
+      - Authentication
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AuthMethod-List'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-auth_methods
+      x-stoplight:
+        id: pkw0lw5wbamay
+      description: Retrive a list of `AuthMethods` for a given `email`
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthMethod-Query'
+  /v1/sso_connections:
+    parameters:
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Retrieve a list of SSOConnections for a given email
+      tags:
+      - Authentication
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SSOConnection-Read'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-sso_connections
+      x-stoplight:
+        id: wkp0lw5wbamay
+      description: Retrive a list of `SSOConnections` for a given `email`
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SSOConnection-Query'
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    StytchIdentityProvider:
+      title: StytchIdentityProvider
+      x-stoplight:
+        id: stytchidp001
+      enum:
+      - classlink
+      - cyberark
+      - duo
+      - generic
+      - google-workspace
+      - jumpcloud
+      - keycloak
+      - microsoft-entra
+      - miniorange
+      - okta
+      - onelogin
+      - pingfederate
+      - rippling
+      - salesforce
+      - shibboleth
+      description: Identity provider type from Stytch SSO (OIDC/SAML)
+    MagicLink-Login:
+      title: MagicLink-Login
+      x-stoplight:
+        id: 4xe6ekm3oekn4
+      type: object
+      required:
+      - magic_links_token
+      properties:
+        magic_links_token:
+          type: string
+          x-stoplight:
+            id: 2rf3hmpkuzlwl
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    OtpSms-Login:
+      title: OtpSms-Login
+      x-stoplight:
+        id: f3vyx7q96jss2
+      type: object
+      required:
+      - phone_id
+      - code
+      properties:
+        phone_id:
+          type: string
+          x-stoplight:
+            id: tfj4cxwcojurj
+        code:
+          type: string
+          x-stoplight:
+            id: nu64nbrq17hcv
+      additionalProperties: false
+    AuthForgotPassword-Create:
+      title: AuthForgotPassword-Create
+      x-stoplight:
+        id: 2saioda2pdq5n
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: tsl52wj7j5xm9
+          format: email
+      additionalProperties: false
+    SSO-Login:
+      title: SSO-Login
+      x-stoplight:
+        id: 4ex5ekm3oekn4
+      type: object
+      required:
+      - sso_token
+      properties:
+        sso_token:
+          type: string
+          x-stoplight:
+            id: f3rshmpkuzlwl
+      additionalProperties: false
+    AuthMethod-Query:
+      title: AuthMethod-Query
+      x-stoplight:
+        id: izjmfp3545323
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: yfrodtjkxwn56
+          format: email
+      additionalProperties: false
+    OtpSms-Read:
+      title: OtpSms-Read
+      x-stoplight:
+        id: 57qcip70tiv75
+      type: object
+      required:
+      - phone_id
+      properties:
+        phone_id:
+          type: string
+          x-stoplight:
+            id: pr5k9mgthwcsb
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    OtpSms-Create:
+      title: OtpSms-Create
+      x-stoplight:
+        id: dcxf9hhuegc5q
+      type: object
+      required:
+      - phone
+      properties:
+        phone:
+          type: string
+          x-stoplight:
+            id: h2sbeiy3xhoa3
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    AuthLogin-Create:
+      title: AuthLogin-Create
+      x-stoplight:
+        id: 8r1bzidjyz1mz
+      type: object
+      description: 'AuthLogin model for creates. '
+      required:
+      - email
+      - password
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: umhqb7sb8n19u
+          format: email
+        password:
+          type: string
+          x-stoplight:
+            id: 6dy0x2lf783vm
+          format: password
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    AuthSignup-Create:
+      title: AuthSignup-Create
+      x-stoplight:
+        id: qtdog0h0a1f08
+      type: object
+      description: Input parameters for signing up.
+      required:
+      - password
+      - magic_links_token
+      properties:
+        password:
+          type: string
+          x-stoplight:
+            id: 0enw4rnm5mxmx
+          format: password
+        magic_links_token:
+          type: string
+          x-stoplight:
+            id: 75knswwo21hzi
+      additionalProperties: false
+    AuthMethod-List:
+      title: AuthMethod-List
+      x-stoplight:
+        id: u7wycypgxm1cg
+      type: object
+      required:
+      - auth_methods
+      properties:
+        auth_methods:
+          type: array
+          x-stoplight:
+            id: jum90iupeh3eo
+          items:
+            $ref: '#/components/schemas/AuthMethod'
+      additionalProperties: false
+    SSOConnection-Query:
+      title: SSOConnection-Query
+      x-stoplight:
+        id: wkp0lw5wbamay
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: j89u98u98u98u
+          format: email
+      additionalProperties: false
+    AuthToken:
+      title: AuthToken
+      x-stoplight:
+        id: cjpfb2fy29h16
+      type: object
+      description: 'AuthToken model for reads. '
+      required:
+      - session_jwt
+      properties:
+        session_jwt:
+          type: string
+          x-stoplight:
+            id: m8326118lib99
+      additionalProperties: false
+    SSOConnection-Read:
+      title: SSOConnection-Read
+      x-stoplight:
+        id: ywkp0lw5wbama
+      type: object
+      properties:
+        display_name:
+          type: string
+          x-stoplight:
+            id: 89u98u98u98uj
+        stytch_connection_id:
+          type: string
+          x-stoplight:
+            id: 9u98u98u98uj8
+        start_url:
+          type: string
+          x-stoplight:
+            id: u98u98u98uj89
+        stytch_identity_provider:
+          $ref: '#/components/schemas/StytchIdentityProvider'
+      additionalProperties: false
+    MagicLink-Create:
+      title: MagicLink-Create
+      x-stoplight:
+        id: 7i37tmjq2wchl
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: msyjm44adghyn
+          format: email
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    AuthResetPassword-Create:
+      title: AuthResetPassword-Create
+      x-stoplight:
+        id: lm7pdhq3u14ad
+      type: object
+      required:
+      - password_reset_token
+      - password
+      properties:
+        password_reset_token:
+          type: string
+          x-stoplight:
+            id: 8p1wdtma8btj4
+        password:
+          type: string
+          x-stoplight:
+            id: q6or96jyfcc54
+          format: password
+      additionalProperties: false
+    AuthMethod:
+      title: AuthMethod
+      x-stoplight:
+        id: 4h7bxzt0hkx3o
+      enum:
+      - sso
+      - magic_link
+      - password
+      - google_auth
+      - microsoft_auth
+      - otp_sms
+      description: ''
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

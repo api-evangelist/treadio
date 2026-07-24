@@ -1,0 +1,1537 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier AutoAddOnAssignments API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: AutoAddOnAssignments
+paths:
+  /v1/accounts/{account-id}/auto_add_on_assignments:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: account-id
+      in: path
+      required: true
+      description: Account ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create AutoAddOnAssignments for an Account
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-accounts-account-id-auto_add_on_assignments
+      x-stoplight:
+        id: nv3sjczmet07b
+      description: Create `AutoAddOnAssignment` for an `Account`
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Create'
+      tags:
+      - AutoAddOnAssignments
+    get:
+      summary: Get AutoAddOnAssignments for an Account
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: ' Contains prev and next links for pagination'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-accounts-account-id-auto_add_on_assignments
+      x-stoplight:
+        id: 757f5cafedvsz
+      description: Get `AutoAddOnAssignments` for an `Account`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-account_type'
+      x-internal: true
+      tags:
+      - AutoAddOnAssignments
+  /v1/auto_add_on_assignments/{id}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: id
+      in: path
+      required: true
+      description: AutoAddOnAssignment ID
+    - $ref: '#/components/parameters/Accept-Language'
+    patch:
+      summary: Update AutoAddOnAssignment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: patch-v1-auto_add_on_assignments-id
+      x-stoplight:
+        id: ow454f0kwjhfi
+      description: Update `AutoAddOnAssignment` by ID
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Update'
+      tags:
+      - AutoAddOnAssignments
+    delete:
+      summary: Delete AutoAddOnAssignment
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+      operationId: delete-v1-auto_add_on_assignments-id
+      x-stoplight:
+        id: 3r8r9o1v6eko9
+      description: Delete `AutoAddOnAssignment` by ID
+      x-internal: true
+      tags:
+      - AutoAddOnAssignments
+  /v1/companies/{company-id}/orders/{order-id}/auto_add_on_assignments:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create AutoAddOnAssignment for an Order for a Company
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-companies-company-id-orders-order-id-auto_add_on_assignments
+      x-stoplight:
+        id: 5h33djbg21gmm
+      x-internal: true
+      description: Create `AutoAddOnAssignment` for an `Order`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Create'
+    get:
+      summary: Get AutoAddOnAssignments for an Order for a Company
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: mb1vbj8e4ha9n
+                    items:
+                      $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-orders-order-id-auto_add_on_assignments
+      x-stoplight:
+        id: rdj0rl8ypn9am
+      x-internal: true
+      description: Get `AutoAddOnAssignments` for an `Order`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-account_type'
+  /v1/drivers/{driver-id}/auto_add_on_assignments:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: driver-id
+      in: path
+      required: true
+      description: Driver ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create AutoAddOnAssignment for a Driver
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-drivers-driver-id-auto_add_on_assignments
+      x-stoplight:
+        id: gpplt50s4ratm
+      description: Create `AutoAddOnAssignment` for a `Driver`
+      x-internal: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Create'
+      tags:
+      - AutoAddOnAssignments
+    get:
+      summary: Get AutoAddOnAssignments for a Driver
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: dltpky6py8r7v
+                    items:
+                      $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-drivers-driver-id-auto_add_on_assignments
+      x-stoplight:
+        id: huuaz4g6borkb
+      x-internal: true
+      description: Get `AutoAddOnAssignments` for a `Driver`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      tags:
+      - AutoAddOnAssignments
+  /v1/job_assignments/{job-assignment-id}/auto_add_on_assignments:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: job-assignment-id
+      in: path
+      required: true
+      description: JobAssignment ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create AutoAddOnAssignment for a JobAssignment
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-job_assignments-job-assignment-id-auto_add_on_assignments
+      x-stoplight:
+        id: ib7d4gjlhyy4o
+      x-internal: true
+      description: Create `AutoAddOnAssignment` for a `JobAssignment`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Create'
+    get:
+      summary: Get AutoAddOnAssignments for a JobAssignment
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 6a4oijcsoj4ic
+                    items:
+                      $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-job_assignments-job-assignment-id-auto_add_on_assignments
+      x-stoplight:
+        id: df6no3h7kigff
+      x-internal: true
+      description: Get `AutoAddOnAssignments` for a `JobAssignment`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/jobs/{job-id}/auto_add_on_assignments:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: job-id
+      in: path
+      required: true
+      description: Job ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create AutoAddOnAssignment for a Job
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-jobs-job-id-auto_add_on_assignments
+      x-stoplight:
+        id: rlpg83fl77xfh
+      x-internal: true
+      description: Create `AutoAddOnAssignment` for a `Job`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Create'
+    get:
+      summary: Get AutoAddOnAssignments for a Job
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: jmdovwyzpttad
+                    items:
+                      $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-jobs-job-id-auto_add_on_assignments
+      x-stoplight:
+        id: a5itcv0qdnt8a
+      x-internal: true
+      description: Get `AutoAddOnAssignments` for a `Job`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/orders/{order-id}/auto_add_on_assignments:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: order-id
+      in: path
+      required: true
+      description: Order ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create AutoAddOnAssignment for an Order
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-orders-order-id-auto_add_on_assignments
+      x-stoplight:
+        id: 46vbpxwxyaj60
+      x-internal: true
+      description: Create `AutoAddOnAssignment` for an `Order`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Create'
+      deprecated: true
+    get:
+      summary: Get AutoAddOnAssignments for an Order
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: mb1vbj8e4ha9n
+                    items:
+                      $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-orders-order-id-auto_add_on_assignments
+      x-stoplight:
+        id: wb920awxysm98
+      x-internal: true
+      description: Get `AutoAddOnAssignments` for an `Order`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-account_type'
+      deprecated: true
+  /v1/projects/{project-id}/auto_add_on_assignments:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: project-id
+      in: path
+      required: true
+      description: Project ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create AutoAddOnAssignment for a Project
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-projects-project-id-auto_add_on_assignments
+      x-stoplight:
+        id: 1swriowasik3r
+      x-internal: true
+      description: Create `AutoAddOnAssignment` for a `Project`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Create'
+    get:
+      summary: Get AutoAddOnAssignments for a Project
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: bv5wgrh96b3x4
+                    items:
+                      $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-projects-project-id-auto_add_on_assignments
+      x-stoplight:
+        id: w0i7tozhjlfjz
+      description: Get `AutoAddOnAssignments` for a `Project`
+      x-internal: true
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-account_type'
+  /v1/rates/{rate-id}/auto_add_on_assignments:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: rate-id
+      in: path
+      required: true
+      description: Rate ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create AutoAddOnAssignment for a Rate
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-rates-rate-id-auto_add_on_assignments
+      x-stoplight:
+        id: ri1es0xegbx5i
+      x-internal: true
+      description: Create `AutoAddOnAssignment` for a `Rate`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Create'
+    get:
+      summary: Get AutoAddOnAssignments for a Rate
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '200':
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: rcpv6isrxmyuh
+                    items:
+                      $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-rates-rate-id-auto_add_on_assignments
+      x-stoplight:
+        id: m5a3yxp26uywt
+      x-internal: true
+      description: Get `AutoAddOnAssignments` for a `Rate`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+  /v1/site_rate_schedules/{site-rate-schedule-id}/auto_add_on_assignments:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: site-rate-schedule-id
+      in: path
+      required: true
+      description: SiteRateSchedule ID
+    - $ref: '#/components/parameters/Accept-Language'
+    post:
+      summary: Create AutoAddOnAssignments for a SiteRateSchedule
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '415':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: post-v1-site_rate_schedules-site-rate-schedule-id-auto_add_on_assignments
+      x-stoplight:
+        id: 2utuw9y73vppe
+      x-internal: true
+      description: Create `AutoAddOnAssignments` for a `SiteRateSchedule`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutoAddOnAssignment-Create'
+    get:
+      summary: Get AutoAddOnAssignments for a SiteRateSchedule
+      tags:
+      - AutoAddOnAssignments
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 1v8fq6f1bnymy
+                    items:
+                      $ref: '#/components/schemas/AutoAddOnAssignment-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-site_rate_schedules-site-rate-schedule-id-auto_add_on_assignments
+      x-stoplight:
+        id: lb6t2lbbjuhhx
+      x-internal: true
+      description: Get `AutoAddOnAssignments` for a `SiteRateSchedule`
+      parameters:
+      - $ref: '#/components/parameters/page-limit'
+      - $ref: '#/components/parameters/page-after'
+      - $ref: '#/components/parameters/page-before'
+      - $ref: '#/components/parameters/filter-account_type'
+components:
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    filter-account_type:
+      name: filter[account_type]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: AccountType filter. See `AccountType` enum for accepted values.
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+  schemas:
+    FuelSurchargeSchedule-Read-Nested:
+      title: FuelSurchargeSchedule-Read-Nested
+      x-stoplight:
+        id: cfxi1bfv03rdl
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: ug5goi9re1abe
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 2izdii9s4bcmr
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    AccountType:
+      title: AccountType
+      x-stoplight:
+        id: i4vfmd4rwrq8p
+      enum:
+      - customer
+      - vendor
+      example: customer
+    AutoAddOnAssignment-Read:
+      title: AutoAddOnAssignment-Read
+      x-stoplight:
+        id: mrei4t0lzdaps
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - quantity
+        - rate
+        - percentage
+        - add_on_rate_type
+        - external_id
+        - accounting_id
+        - add_on_types
+        - total_installments
+        - auto_add_on_installments_count
+        - revenue_rate_value
+        - revenue_cost_rate_type
+        - cost_rate_value
+        - account_type
+        - add_on_id
+        - original_auto_add_on_assignment_id
+        - source_id
+        - source_type
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: nniiufnqbcrt6
+            nullable: true
+          quantity:
+            type: string
+            x-stoplight:
+              id: zw1rycytuuf81
+            nullable: true
+          rate:
+            type: string
+            x-stoplight:
+              id: ogfdds5jcdlwy
+            deprecated: true
+            description: Deprecated in favor of `revenue_rate_value`.
+            nullable: true
+          percentage:
+            type: string
+            x-stoplight:
+              id: ydlu6qwh4b5j7
+            nullable: true
+          add_on_rate_type:
+            $ref: '#/components/schemas/NullableAddOnRateType'
+          external_id:
+            type: string
+            x-stoplight:
+              id: 9ttqi0mwfjnm3
+            nullable: true
+          accounting_id:
+            type: string
+            x-stoplight:
+              id: bluyzie0m5jb9
+            nullable: true
+          add_on_types:
+            type: array
+            x-stoplight:
+              id: di5gr4zc9iq3i
+            items:
+              $ref: '#/components/schemas/AddOnType'
+          total_installments:
+            type: integer
+            x-stoplight:
+              id: roqevyapa9o4n
+          auto_add_on_installments_count:
+            type: integer
+            x-stoplight:
+              id: pqh4mr50icy3h
+          revenue_rate_value:
+            type: string
+            x-stoplight:
+              id: 7mjgl79cfvrob
+            description: The revenue rate or sell price of the add on
+          revenue_cost_rate_type:
+            $ref: '#/components/schemas/NullableAddOnRateType'
+          cost_rate_value:
+            type: string
+            x-stoplight:
+              id: 4hr7qbumiem9l
+            description: The cost rate or buy price of the add on
+            nullable: true
+          account_type:
+            $ref: '#/components/schemas/NullableAccountType'
+          add_on_id:
+            type: string
+            x-stoplight:
+              id: lrsv4ri327cd3
+            format: uuid
+            nullable: true
+          original_auto_add_on_assignment_id:
+            type: string
+            x-stoplight:
+              id: 1bhbvw7jaxkyi
+            description: The reference to the original `AutoAddOnAssignment` it was based on.
+            format: uuid
+            nullable: true
+          add_on:
+            $ref: '#/components/schemas/AddOn-Read-Nested'
+          source_id:
+            type: string
+            x-stoplight:
+              id: 22wfjpgnq59tz
+            format: uuid
+            nullable: true
+          source_type:
+            $ref: '#/components/schemas/NullableAutoAddOnAssignmentSourceType'
+      - $ref: '#/components/schemas/Timestamps'
+      x-internal: true
+      description: 'Note:
+
+        - `add_on_id` is deprecated'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    AddOn-Read-Nested:
+      title: AddOn-Read-Nested
+      x-stoplight:
+        id: v8dl5yn30kkc1
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - quantity
+        - rate
+        - percentage
+        - add_on_rate_type
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 050zd8kz0vgbs
+          quantity:
+            type: string
+            x-stoplight:
+              id: c3va13nna81jo
+          rate:
+            type: string
+            x-stoplight:
+              id: 9j3huo3cmv9hx
+          percentage:
+            type: string
+            x-stoplight:
+              id: qrfrr46gebj4h
+          add_on_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+            deprecated: true
+            description: Deprecated in favor of `revenue_cost_rate_type`.
+          fuel_surcharge_schedule:
+            $ref: '#/components/schemas/FuelSurchargeSchedule-Read-Nested'
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    AutoAddOnAssignment-Update:
+      title: AutoAddOnAssignment-Update
+      x-stoplight:
+        id: z49ocol7q9nxb
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: xi0d4uvzp78hu
+        quantity:
+          type: number
+          x-stoplight:
+            id: nvcxlm30o5buv
+        rate:
+          type: number
+          x-stoplight:
+            id: zaazomdius88t
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        percentage:
+          type: number
+          x-stoplight:
+            id: a59636fzf3gn2
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+          deprecated: true
+          description: Deprecated in favor of `revenue_cost_rate_type`.
+        external_id:
+          type: string
+          x-stoplight:
+            id: opzbsqbjgv1gi
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: 32lqnkmlhd7oo
+          nullable: true
+        add_on_types:
+          type: array
+          x-stoplight:
+            id: djk0y5y7x9nta
+          items:
+            $ref: '#/components/schemas/AddOnType'
+        total_installments:
+          type: integer
+          x-stoplight:
+            id: skwymk99sjn00
+          minimum: 0
+        revenue_rate_value:
+          type: string
+          x-stoplight:
+            id: w99z2qdprcg5b
+          description: The cost rate or buy price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        cost_rate_value:
+          type: string
+          x-stoplight:
+            id: naanql8rzlamb
+          description: The cost rate or buy price of the add on.
+          nullable: true
+      additionalProperties: false
+    AddOnType:
+      title: AddOnType
+      x-stoplight:
+        id: d2h2dx8n8qui8
+      enum:
+      - driver_pay
+      - invoicing
+      - job
+      - settlement
+      - driver_day
+      example: driver_pay
+      default: driver_pay
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    AutoAddOnAssignmentSourceType:
+      title: AutoAddOnAssignmentSourceType
+      x-stoplight:
+        id: tp0kpvtzwhimb
+      enum:
+      - Settlement
+      example: Settlement
+    NullableAutoAddOnAssignmentSourceType:
+      title: NullableAutoAddOnAssignmentSourceType
+      x-stoplight:
+        id: iuykjw9ua72oe
+      allOf:
+      - $ref: '#/components/schemas/AutoAddOnAssignmentSourceType'
+      nullable: true
+      type: string
+    NullableAccountType:
+      title: NullableAccountType
+      x-stoplight:
+        id: 62smrzi6tzz39
+      allOf:
+      - $ref: '#/components/schemas/AccountType'
+      nullable: true
+      type: string
+    NullableAddOnRateType:
+      title: NullableAddOnRateType
+      x-stoplight:
+        id: i6n5x2lt9lohr
+      allOf:
+      - $ref: '#/components/schemas/AddOnRateType'
+      nullable: true
+      type: string
+    AutoAddOnAssignment-Create:
+      title: AutoAddOnAssignment-Create
+      x-stoplight:
+        id: xbcp4w3ukma2o
+      type: object
+      description: 'If you are creating for an `Account`
+
+        - `account_type` is **required**
+
+        - for Vendor `AutoAddOnAssignments`, use `vendor`
+
+        - for Customer `AutoAddOnAssignments`, use `customer`
+
+
+        If you are creating for a `User`, `Rate`, `Job`, `JobAssignment`
+
+        - `account_type` is **not required** and accepted
+
+
+        If you are creating for a `Project`, `Order`
+
+        - `account_type` is **optional**
+
+        - for Vendor `AutoAddOnAssignments`, use `vendor`
+
+        - for Customer `AutoAddOnAssignments`, use `customer`
+
+        - for Driver `AutoAddOnAssignments`, omit or leave as null
+
+        '
+      required:
+      - name
+      - add_on_rate_type
+      - add_on_types
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: xlr597o432cg0
+        quantity:
+          type: number
+          x-stoplight:
+            id: 3qb6fnd982cgm
+        rate:
+          type: number
+          x-stoplight:
+            id: hh4ogt9ya8knx
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        percentage:
+          type: number
+          x-stoplight:
+            id: x3cj67o7n4e8x
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        external_id:
+          type: string
+          x-stoplight:
+            id: ltfkyi20h37bx
+          nullable: true
+        accounting_id:
+          type: string
+          x-stoplight:
+            id: zt7g5pah6d2tj
+          nullable: true
+        add_on_id:
+          type: string
+          x-stoplight:
+            id: 831zr8zmjvuhn
+          format: uuid
+          nullable: true
+        account_type:
+          $ref: '#/components/schemas/NullableAccountType'
+        add_on_types:
+          type: array
+          x-stoplight:
+            id: ncxpuxu3sysi0
+          items:
+            $ref: '#/components/schemas/AddOnType'
+        total_installments:
+          type: integer
+          x-stoplight:
+            id: gocb0v9zmoc9k
+          minimum: 0
+        revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: jdshty9g9zvdh
+          description: The cost rate or buy price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        cost_rate_value:
+          type: number
+          x-stoplight:
+            id: 1trwd1jiujjq4
+          description: The cost rate or buy price of the add on.
+          nullable: true
+        original_auto_add_on_assignment_id:
+          type: string
+          x-stoplight:
+            id: 2y5xit7lqcxpe
+          description: 'If you are creating an `AutoAddOnAssignment` based on an existing one, you''d need to provide this value for cascading effect.
+
+
+            If the `AutoAddOnAssignment` you are basing on already has a `original_auto_add_on_assignment_id`, then just copy it over.
+
+            Otherwise, use its `id` as the `original_auto_add_on_assignment_id` for the new record.'
+          format: uuid
+          nullable: true
+        source_id:
+          type: string
+          x-stoplight:
+            id: bb7pvsbs2g7t4
+          format: uuid
+          nullable: true
+        source_type:
+          $ref: '#/components/schemas/NullableAutoAddOnAssignmentSourceType'
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    AddOnRateType:
+      title: AddOnRateType
+      x-stoplight:
+        id: 1c3m0qj0ofdao
+      enum:
+      - RateForEach
+      - RatePercentOfTotal
+      - PerLoad
+      - FuelSurcharge
+      example: RateForEach
+      default: RateForEach
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523

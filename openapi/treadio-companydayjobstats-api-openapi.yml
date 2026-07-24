@@ -1,0 +1,342 @@
+openapi: 3.0.3
+info:
+  title: Horizon API V1 AccountExternalTruckIdentifier CompanyDayJobStats API
+  version: '1.0'
+  contact:
+    name: Tread
+    url: https://tread.io
+    email: developers@tread.io
+  description: 'This is the Version 1 implementation.
+
+
+    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+  license:
+    name: Private
+    url: https://tread.io
+servers:
+- description: production
+  url: https://api.tread-horizon.com
+security:
+- bearerAuth: []
+tags:
+- name: CompanyDayJobStats
+paths:
+  /v1/companies/{company-id}/company_day_job_stats/{date}:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: company-id
+      in: path
+      required: true
+      description: Company ID
+    - schema:
+        type: string
+        format: date
+      name: date
+      in: path
+      required: true
+      description: Date to query on
+    - $ref: '#/components/parameters/Accept-Language'
+    get:
+      summary: Retrieve CompanyDayJobStat
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - data
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompanyDayJobStat-Read'
+          headers:
+            Link:
+              schema:
+                type: string
+              description: Contains prev and next links for pagination
+        '401':
+          $ref: '#/components/responses/UnauthenticatedError'
+        '404':
+          $ref: '#/components/responses/Error'
+        '406':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/ModelError'
+      operationId: get-v1-companies-company-id-company-day-job-stats-date
+      description: 'Retrieve `CompanyDayJobStat` for a `Company` on a given `Date`
+
+        '
+      x-internal: false
+      x-stoplight:
+        id: p36fjxe8umzsk
+      tags:
+      - CompanyDayJobStats
+components:
+  responses:
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  schemas:
+    CompanyDayJobStat-Read:
+      title: CompanyDayJobStat-Read
+      x-stoplight:
+        id: wa6f07ctugc6c
+      type: object
+      description: CompanyDayJobStat for a given company
+      x-tags:
+      - companies
+      x-internal: true
+      required:
+      - accepted_count
+      - assigned_count
+      - canceled_count
+      - capacity_available_count
+      - capacity_total_count
+      - completed_count
+      - enroute_count
+      - has_been_accepted_count
+      - loaded_count
+      - pending_count
+      - rejected_count
+      - sent_count
+      - total_count
+      - unassigned_count
+      - unloaded_count
+      - day
+      - orders_total_count
+      - orders_pending_request_count
+      properties:
+        accepted_count:
+          type: integer
+          x-stoplight:
+            id: twszrt69yuwos
+          exclusiveMinimum: false
+          minimum: 0
+        assigned_count:
+          type: integer
+          x-stoplight:
+            id: fuppbsa7ujw6g
+          minimum: 0
+        canceled_count:
+          type: integer
+          x-stoplight:
+            id: x9y942hfwox7b
+          minimum: 0
+        capacity_available_count:
+          type: integer
+          x-stoplight:
+            id: qx0qwnd89y4mi
+          minimum: 0
+        capacity_total_count:
+          type: integer
+          x-stoplight:
+            id: lmyk13tificqj
+          minimum: 0
+        completed_count:
+          type: integer
+          x-stoplight:
+            id: kn2nqyhbh1hz0
+          minimum: 0
+        enroute_count:
+          type: integer
+          x-stoplight:
+            id: fyrwxro33j6m1
+          minimum: 0
+        has_been_accepted_count:
+          type: integer
+          x-stoplight:
+            id: 1aa5aateuri17
+          minimum: 0
+        loaded_count:
+          type: integer
+          x-stoplight:
+            id: 1di5riteuri16
+          minimum: 0
+        rejected_count:
+          type: integer
+          x-stoplight:
+            id: nxq11y3oo3ey9
+          minimum: 0
+        sent_count:
+          type: integer
+          x-stoplight:
+            id: pufray0h1yp73
+          minimum: 0
+        total_count:
+          type: integer
+          x-stoplight:
+            id: r04iwq1ebkvcw
+          minimum: 0
+        unassigned_count:
+          type: integer
+          x-stoplight:
+            id: bj9fofa25auje
+          minimum: 0
+        unloaded_count:
+          type: integer
+          x-stoplight:
+            id: 0y0hli9hcda7z
+          minimum: 0
+        day:
+          type: string
+          x-stoplight:
+            id: 3vupu65rkrszz
+          format: date
+        orders_total_count:
+          type: integer
+          x-stoplight:
+            id: vjbzi0eawghvv
+        orders_pending_request_count:
+          type: integer
+          x-stoplight:
+            id: qr2hnu98voxc7
+        pending_count:
+          type: integer
+          x-stoplight:
+            id: iys63c417cdo0
+          minimum: 0
+          description: Total jobs with JobRequested state event for the day
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-stoplight:
+  id: 75rfxjepk4523
