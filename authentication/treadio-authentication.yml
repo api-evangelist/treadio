@@ -1,0 +1,40 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/treadio-horizon-openapi.json
+docs: https://docs.tread.ai/api-reference/introduction
+summary:
+  types: [http, oauth2]
+  scheme: bearer
+  bearer_format: JWT
+  oauth2_flows: [clientCredentials]
+detail: >-
+  The Horizon API authenticates with bearer JWTs on every request
+  (Authorization: Bearer <token>). Two token-issuance flows exist:
+  (1) User session tokens — Stytch issues a short-lived JWT after a user logs in via
+  email+password, magic link, OTP over SMS, or SSO; use for tools acting on behalf of a
+  signed-in user. (2) Machine-to-machine (M2M) — Tread issues a Client ID and Client Secret
+  which are exchanged for an access token using the OAuth 2.0 client-credentials grant; use
+  for server-to-server integrations. M2M credentials are requested from developers@tread.io.
+  Tokens expire; on 401 unauthorized, fetch a new one.
+schemes:
+  - name: bearerAuth
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+    applied: global
+    sources: [openapi/treadio-horizon-openapi.json]
+  - name: oauth2-client-credentials
+    type: oauth2
+    flow: clientCredentials
+    documented_only: true
+    note: >-
+      M2M flow documented in the API introduction but not declared as an OpenAPI
+      securityScheme (the spec models the resulting bearer token as bearerAuth).
+    sources: [https://docs.tread.ai/api-reference/introduction]
+login_flows: [email_password, magic_link, otp_sms, sso]
+scopes:
+  documented: false
+  note: >-
+    No OAuth scope/permission reference is published; access is governed by IAM roles and
+    permissions (Admin, Dispatcher, Foreman, Driver, Biller) rather than token scopes, so no
+    scopes/ artifact is emitted.

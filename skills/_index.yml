@@ -1,0 +1,20 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/treadio-horizon-openapi.json
+note: >-
+  Agent Skills grounded in verified Horizon API operationIds, mirroring the marquee
+  dispatch/billing flows. Auth, pagination, error, and webhook rules are cross-linked to the
+  conventions/, errors/, authentication/, and asyncapi/ artifacts.
+skills:
+  - file: treadio-authenticate-and-list-projects.md
+    name: Authenticate and list projects
+    api: openapi/treadio-horizon-openapi.json
+    operations: [post-v1-auth-login, get-v1-users-me, get-v1-projects]
+  - file: treadio-dispatch-an-order.md
+    name: Create and dispatch an order
+    api: openapi/treadio-horizon-openapi.json
+    operations: [post-v1-projects, post-v1-companies-company-id-orders, put-v1-companies-company-id-orders-order-id-accept, get-v1-companies-company-id-jobs, put-v1-companies-company-id-jobs-bulk_assign_drivers, put-v1-companies-company-id-jobs-bulk_send]
+  - file: treadio-collect-and-approve-loads.md
+    name: Collect tickets and approve loads
+    api: openapi/treadio-horizon-openapi.json
+    operations: [get-v1-companies-company-id-jobs, get-v1-jobs-job-id-loads, get-v1-jobs-job-id-tickets, put-v1-loads-id-approve, get-v1-tickets]

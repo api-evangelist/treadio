@@ -1,0 +1,32 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Tread Horizon API V1
+  version: 1.0.0
+extends: openapi/treadio-horizon-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-21'
+      x-apievangelist-provider: treadio
+      x-apievangelist-artifacts:
+        authentication: authentication/treadio-authentication.yml
+        conventions: conventions/treadio-conventions.yml
+        errors: errors/treadio-problem-types.yml
+        webhooks: asyncapi/treadio-webhooks.yml
+        lifecycle: lifecycle/treadio-lifecycle.yml
+        data_model: data-model/treadio-data-model.yml
+  - target: $.info
+    update:
+      x-apievangelist-auth:
+        type: bearer-jwt
+        m2m: oauth2-client-credentials
+        docs: https://docs.tread.ai/api-reference/introduction
+  - target: $.info
+    update:
+      x-apievangelist-pagination:
+        style: cursor
+        param: 'page[limit]'
+        signal: Link header (rel=next/prev)
+  - target: $.info
+    update:
+      x-apievangelist-error-envelope: '{ "error": { "code": string, "errors": [ { "model", "field", "message" } ] } }'

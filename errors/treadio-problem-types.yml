@@ -1,0 +1,56 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.tread.ai/api-reference/introduction
+spec_source: openapi/treadio-horizon-openapi.json
+format: custom
+note: >-
+  The Horizon API does NOT use RFC 9457 problem+json. Every error response shares one
+  envelope: {"error": {"code": "<string>", "errors": [{"model","field","message"}]}}.
+  The `code` mirrors the HTTP status. 409/422 responses include the `errors` array naming
+  the offending model/field. Accept-Language (en-ca, es-us, fr-ca) translates messages.
+envelope:
+  shape: '{ "error": { "code": string, "errors": [ { "model": string, "field": string, "message": string } ] } }'
+  error_schema: '#/components/schemas/Error-Response'
+  model_error_schema: '#/components/schemas/ModelError-Response'
+  state_error_schema: '#/components/schemas/StateError-Response'
+problems:
+  - status: 400
+    code: bad_request
+    title: Malformed request
+    remediation: Fix the request syntax/JSON body.
+  - status: 401
+    code: unauthorized
+    title: Missing or expired token
+    remediation: Fetch a new bearer token and retry (see authentication/).
+  - status: 403
+    code: forbidden
+    title: Insufficient permission
+    remediation: The user lacks permission for this action; check IAM role/permissions.
+  - status: 404
+    code: object_not_found
+    title: Resource not found or not visible
+    remediation: Verify the id and that the current company can see the resource.
+  - status: 406
+    code: not_acceptable
+    title: Unacceptable Accept header
+    remediation: Send Accept application/json.
+  - status: 409
+    code: conflict
+    title: State-machine rule violation
+    remediation: The action violates a state machine rule; inspect the errors[] array (model/field/state/event).
+  - status: 415
+    code: unsupported_media_type
+    title: Wrong Content-Type
+    remediation: Send Content-Type application/json on POST/PUT/PATCH.
+  - status: 422
+    code: unprocessable_content
+    title: Validation failed
+    remediation: Read the errors[] array; each item names the model, field, and message.
+  - status: 500
+    code: internal_server_error
+    title: Internal server error
+    remediation: Contact support@tread.io.
+  - status: 503
+    code: service_unavailable
+    title: Service unavailable
+    remediation: Retry after a short backoff. Requests time out at 60 seconds.

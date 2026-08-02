@@ -1,0 +1,92 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.tread.ai/integrations/webhooks
+spec_type: Webhooks
+summary: >-
+  Tread pushes real-time events to a customer-controlled HTTPS endpoint when records change.
+  Subscriptions are configured per company (Settings -> Integrations -> Webhooks). Each
+  subscription listens to one or more triggers (topic + event) and is signed with HMAC-SHA256.
+delivery:
+  transport: 'HTTPS POST (HTTP rejected)'
+  signature_header: X-Tread-Hmac-sha256
+  signature_algorithm: HMAC-SHA256(secret, raw_request_body) hex digest
+  ack: 'Respond 2xx to mark delivered; anything else triggers a retry.'
+  timeout_seconds: 10
+  retries: 'Failed deliveries retried at increasing intervals up to a per-event limit; attempt field increments.'
+  ordering: 'Not guaranteed; reconcile with event_time.'
+  replay: 'Not supported; design for at-least-once delivery and idempotent handlers.'
+  custom_headers: 'Optional per-subscription request headers (auth/routing tokens).'
+envelope:
+  fields:
+    - subscription_id
+    - trigger_id
+    - event_id
+    - delivery_id
+    - attempt
+    - event_time
+    - event
+    - payload
+    - meta.company_id
+  event_format: '<Topic>::<event_type>, e.g. Order::create'
+  payload: 'The resource as it appears in the Tread API.'
+topics:
+  - name: Order
+    description: A daily Order.
+  - name: Job
+    description: One Driver's assignment for one Order.
+  - name: Load
+    description: One pickup-to-drop-off cycle.
+  - name: Ticket
+    description: The record of one Load (proof of work).
+  - name: ImportedProject
+    description: A Project pushed in via the import API.
+  - name: ImportedOrder
+    description: An Order pushed in via the import API.
+  - name: ImportedTicket
+    description: A Ticket pushed in via the import API.
+event_types: [create, update, state_change, skip, error]
+events:
+  - Order::create
+  - Order::update
+  - Order::state_change
+  - Order::skip
+  - Order::error
+  - Job::create
+  - Job::update
+  - Job::state_change
+  - Job::skip
+  - Job::error
+  - Load::create
+  - Load::update
+  - Load::state_change
+  - Load::skip
+  - Load::error
+  - Ticket::create
+  - Ticket::update
+  - Ticket::state_change
+  - Ticket::skip
+  - Ticket::error
+  - ImportedProject::create
+  - ImportedProject::update
+  - ImportedProject::state_change
+  - ImportedProject::skip
+  - ImportedProject::error
+  - ImportedOrder::create
+  - ImportedOrder::update
+  - ImportedOrder::state_change
+  - ImportedOrder::skip
+  - ImportedOrder::error
+  - ImportedTicket::create
+  - ImportedTicket::update
+  - ImportedTicket::state_change
+  - ImportedTicket::skip
+  - ImportedTicket::error
+prerequisites:
+  - An HTTPS endpoint you control.
+  - A Tread admin user with the Integrations permission.
+  - Ability to verify HMAC signatures.
+  - A retry-tolerant, idempotent handler.
+asyncapi_spec: null
+asyncapi_note: >-
+  Tread publishes no machine-readable AsyncAPI document; this is the webhook catalog captured
+  from the docs. 7 topics x 5 event types = 35 subscribable triggers.

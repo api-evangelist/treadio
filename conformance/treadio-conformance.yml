@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/treadio-horizon-openapi.json
+docs: https://docs.tread.ai/api-reference/introduction
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: 'OpenAPI 3.0.3 document published at docs.tread.ai/api-reference/openapi.json (562 paths, 553 schemas).'
+  - id: rest-json
+    conforms: true
+    evidence: 'REST API returning application/json; resource-oriented /v1 paths.'
+  - id: oauth2-client-credentials
+    conforms: true
+    evidence: 'Docs document an OAuth 2.0 client-credentials (M2M) grant issuing bearer access tokens.'
+  - id: jwt-bearer
+    conforms: true
+    evidence: 'securitySchemes.bearerAuth: http bearer, bearerFormat JWT; Stytch-issued user session JWTs.'
+  - id: sso-saml-oidc
+    conforms: true
+    evidence: 'Authentication group exposes SSO login (SSOConnections) alongside magic-link and OTP flows.'
+  - id: cursor-pagination
+    conforms: true
+    evidence: 'Cursor pagination via page[limit]/page[after] with RFC 5988 Link header (rel=next/prev).'
+  - id: rfc5988-link-header
+    conforms: true
+    evidence: 'Pagination signaled through a Link header with next/prev relations.'
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Errors use a custom {error:{code,errors[]}} envelope, not application/problem+json.'
+  - id: webhooks-hmac
+    conforms: true
+    evidence: 'HMAC-SHA256 signed webhook deliveries (X-Tread-Hmac-sha256).'
+  - id: idempotency-keys
+    conforms: false
+    evidence: 'No Idempotency-Key header or idempotency contract documented or in the spec.'
+  - id: i18n-accept-language
+    conforms: true
+    evidence: 'Accept-Language (en-ca, es-us, fr-ca) localizes error messages.'
+compliance_programs:
+  soc2:
+    status: in-process
+    published: false
+    note: >-
+      Tread marketing states it is "in process of achieving SOC 2 compliance." No trust center,
+      security.txt, or attestation was found by probe, so no Compliance pointer is emitted.

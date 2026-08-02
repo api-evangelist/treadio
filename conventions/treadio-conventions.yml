@@ -1,0 +1,80 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.tread.ai/api-reference/introduction
+spec_source: openapi/treadio-horizon-openapi.json
+summary: >-
+  Cross-cutting request/response semantics for the Tread Horizon REST API. Bearer-token
+  auth, cursor pagination via a Link header, a uniform error envelope, and per-company
+  URL scoping. No documented idempotency-key mechanism and no documented rate-limit
+  headers as of this capture.
+authentication:
+  style: bearer
+  detail: >-
+    Bearer JWT on every request (Authorization: Bearer <token>). Two token flows:
+    Stytch-issued short-lived user session JWTs, and OAuth2 client-credentials (M2M)
+    tokens exchanged from a Client ID/Secret. See authentication/treadio-authentication.yml.
+required_headers:
+  - name: Authorization
+    required: always
+    value: 'Bearer <token>'
+  - name: Content-Type
+    required: 'on POST/PUT/PATCH'
+    value: application/json
+    note: An invalid Content-Type returns 415 unsupported_media_type.
+  - name: Accept
+    required: optional
+    value: 'application/json (default)'
+    note: An invalid Accept returns 406 not_acceptable.
+  - name: Accept-Language
+    required: optional
+    value: 'en-ca | es-us | fr-ca'
+    note: Translates error messages.
+pagination:
+  style: cursor
+  request_param: 'page[limit]'
+  default_page_size: 25
+  max_page_size: 100
+  cursor_params: ['page[after]', 'page[before]']
+  cursor_opaque: true
+  response_signal: 'Link header with rel="next" and rel="prev" URLs'
+  note: Follow the next link until the Link header no longer includes one; do not parse the page[after] cursor.
+idempotency:
+  supported: false
+  note: >-
+    No Idempotency-Key header or idempotency contract is documented or present in the
+    OpenAPI. Webhook consumers, however, must be idempotent — delivery is at-least-once.
+filtering:
+  style: 'query parameters'
+  note: >-
+    Extensive filter-* query parameters (e.g. filter[states], filter[start_date],
+    filter[customer_account_ids], filter[driver_ids], filter[project_ids]) and sort-*
+    parameters are defined as reusable OpenAPI components across list endpoints.
+scoping:
+  model: per-company
+  note: >-
+    Most endpoints scope to a company via the URL, e.g. GET /v1/companies/{company-id}/projects.
+    A parent-company user inherits role/permission in every child. parent_company_id is read-only.
+versioning:
+  scheme: uri-path
+  current: v1
+  note: All paths are prefixed /v1; a single production host.
+error_envelope:
+  ref: errors/treadio-problem-types.yml
+  shape: '{ "error": { "code": string, "errors": [ { "model", "field", "message" } ] } }'
+rate_limiting:
+  documented: false
+  note: No rate-limit headers documented. Requests time out at 60 seconds (503 service_unavailable on overload).
+request_tracing:
+  documented: false
+async_model:
+  note: >-
+    Importer APIs (Beta) provide async bulk ingest for Orders, Projects, Tickets, and Files;
+    external_id matching supports upsert behavior.
+webhooks:
+  ref: asyncapi/treadio-webhooks.yml
+  note: HMAC-SHA256 signed event deliveries; see the webhooks artifact.
+cross_links:
+  errors: errors/treadio-problem-types.yml
+  authentication: authentication/treadio-authentication.yml
+  lifecycle: lifecycle/treadio-lifecycle.yml
+  webhooks: asyncapi/treadio-webhooks.yml

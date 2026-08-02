@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: probed
+source: live probes of /.well-known/* on the API and web hosts
+note: >-
+  No /.well-known/ discovery documents are published on any Tread host. All probes returned 404.
+  Recorded for auditability; no WellKnown/SecurityTxt pointer is wired because nothing is present.
+hosts:
+  - host: https://api.tread-horizon.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://tread.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://docs.tread.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+  - host: https://app.tread-horizon.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}

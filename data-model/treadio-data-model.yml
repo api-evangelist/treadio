@@ -1,0 +1,55 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/treadio-horizon-openapi.json
+docs: https://docs.tread.ai/api-reference/introduction
+note: >-
+  Entity-relationship graph for the Tread Horizon domain. belongs_to edges tagged
+  (derived) were computed from *_id reference fields on the core -Read schemas; edges
+  tagged (docs) are the resource hierarchy stated in the API introduction / concept docs.
+  Resource IDs are opaque UUID-like strings with no documented type prefixes.
+entities:
+  - {name: Company, note: 'The account you operate as; supports parent/child hierarchy.'}
+  - {name: CompanyShare, note: 'One-way connection that shares records between accounts.'}
+  - {name: Account, note: 'Customers and vendors you bill or dispatch to (customer_id/vendor_id resolve here).'}
+  - {name: User, note: 'A person with access, scoped by IAM roles/permissions.'}
+  - {name: Driver, note: 'A user who receives and performs a dispatch.'}
+  - {name: Foreman, note: 'Field approver of driver hours and orders.'}
+  - {name: Project, note: 'Holds Orders; a multi-day body of work.'}
+  - {name: Order, note: 'A daily order; holds Jobs.'}
+  - {name: Job, note: "One Driver's work for one Order."}
+  - {name: Load, note: 'One pickup-to-drop-off cycle of a Job.'}
+  - {name: Ticket, note: 'Proof-of-work record of one Load.'}
+  - {name: DriverDay, note: "A Driver's hours for a shift (timesheet)."}
+  - {name: Site, note: 'Pickup/delivery location with geofence.'}
+  - {name: Material, note: 'What an Order moves.'}
+  - {name: MaterialRate, note: 'Prices a Material.'}
+  - {name: Equipment, note: 'A truck or trailer record.'}
+  - {name: EquipmentType, note: 'Template holding capacity and unit of measure.'}
+  - {name: Rate, note: 'Base pricing model.'}
+  - {name: AddOn, note: 'Add-on charge.'}
+  - {name: FuelSurcharge, note: 'Fuel surcharge pricing.'}
+  - {name: Settlement, note: 'Batch of approved work, ready to bill or pay.'}
+  - {name: Invoice, note: 'Bills a Customer.'}
+relationships:
+  # derived from *_id fields on -Read schemas
+  - {from: Load, to: Job, type: belongs_to, via: job_id, evidence: derived}
+  - {from: Ticket, to: Job, type: belongs_to, via: job_id, evidence: derived}
+  - {from: Ticket, to: Load, type: belongs_to, via: load_id, evidence: derived}
+  - {from: Ticket, to: Order, type: belongs_to, via: order_id, evidence: derived}
+  # documented resource hierarchy (API introduction / concepts)
+  - {from: Project, to: Order, type: has_many, via: project, evidence: docs}
+  - {from: Order, to: Job, type: has_many, via: order, evidence: docs}
+  - {from: Job, to: Load, type: has_many, via: job, evidence: docs}
+  - {from: Job, to: Driver, type: belongs_to, via: driver, evidence: docs}
+  - {from: Load, to: Ticket, type: has_one, via: load, evidence: docs}
+  - {from: DriverDay, to: Driver, type: belongs_to, via: driver, evidence: docs}
+  - {from: Company, to: Company, type: has_many, via: parent_company_id, evidence: docs, note: parent/child hierarchy}
+  - {from: CompanyShare, to: Company, type: belongs_to, via: company, evidence: docs}
+  - {from: Order, to: Account, type: belongs_to, via: customer, evidence: docs}
+  - {from: Job, to: Account, type: belongs_to, via: vendor, evidence: docs}
+  - {from: Order, to: Site, type: has_many, via: default_sites, evidence: docs, note: pickup/dropoff waypoints}
+  - {from: Order, to: Material, type: belongs_to, via: material, evidence: docs}
+  - {from: MaterialRate, to: Material, type: belongs_to, via: material, evidence: docs}
+  - {from: Equipment, to: EquipmentType, type: belongs_to, via: equipment_type, evidence: docs}
+  - {from: Settlement, to: Load, type: has_many, via: settlement, evidence: docs}
+  - {from: Invoice, to: Account, type: belongs_to, via: customer, evidence: docs}
