@@ -1,0 +1,632 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier FileAttachments API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "FileAttachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk download FileAttachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/bulk_downloads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint starts a bulk download of `FileAttachments`. \n\nThe `job_ids` and `filter[jobs]` params are mutually exclusive and at least one of these is required.\n\nOn success the caller should subscribe to the `BulkDownloadResult` `RTU` using the `id` in the response."
+        },
+        {
+          "info": {
+            "name": "Retrieve all FileAttachments for a given Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              }
+            ]
+          },
+          "docs": "Retrieve all `FileAttachments` for a given `Order`"
+        },
+        {
+          "info": {
+            "name": "Create a FileAttachment on an Order for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FileAttachment` related to an `Order`. Requires permission to create attachment on `Order`—`create_order_attachments`.\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `file` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `file` must be a file."
+        },
+        {
+          "info": {
+            "name": "Create a DirectUpload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/direct_uploads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `DirectUpload`.\n\nThe `checksum` _must_ be calculated exactly the way `rails` expects it ([javascript example](https://github.com/rails/rails/blob/main/activestorage/app/javascript/activestorage/file_checksum.js)).\n\nYou should upload the file to `direct_upload.url` using any provided headers from `direct_upload.headers`.\n\nOnce this is done you can use `signed_id` in place of a file in any endpoint that accepts file uploads."
+        },
+        {
+          "info": {
+            "name": "Retrieve all FileAttachments for a given DriverDay",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/driver_days/:driver-day-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "Driver Day ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              }
+            ]
+          },
+          "docs": "Retrieve all `FileAttachments` for a given `DriverDay`"
+        },
+        {
+          "info": {
+            "name": "Create a FileAttachment on a DriverDay",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/driver_days/:driver-day-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "Driver Day ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FileAttachment` related to a `DriverDay`. Requires permission to create attachment on `DriverDay`—`create_driver_day_attachments`.\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `file` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `file` must be a file."
+        },
+        {
+          "info": {
+            "name": "Retrieve a FileAttachment by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/file_attachments/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file attachment you're operating on "
+              }
+            ]
+          },
+          "docs": "Read a specific `FileAttachment`"
+        },
+        {
+          "info": {
+            "name": "Update a FileAttachment by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/file_attachments/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file attachment you're operating on "
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `FileAttachment` by ID. Requires permission to edit attachment on a particular object: \n\nFor Projects: `edit_project_attachments`\\\nFor Orders: `edit_order_attachments`\\\nFor Jobs: `edit_job_attachments`\\\nFor Loads: `edit_load_attachments`\\\nFor Driver Days: `edit_driver_day_attachments`\\\nFor Settlements: `edit_settlement_attachments`\\\n\nDrivers and Foremen that have this permission, can only edit `FileAttachments` that they have added."
+        },
+        {
+          "info": {
+            "name": "Delete a FileAttachment by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/file_attachments/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file attachment you're operating on "
+              }
+            ]
+          },
+          "docs": "Delete `FileAttachment` by ID. Requires permission to delete attachment on a particular object: \n\nFor Projects: `delete_project_attachments`\\\nFor Orders:`delete_order_attachments`\\\nFor Jobs: `delete_job_attachments`\\\nFor Loads: `delete_load_attachments`\\\nFor Driver Days: `delete_driver_day_attachments`\\\nFor Settlements: `delete_settlement_attachments`\\\n\nDrivers and Foremen that have this permission, can only delete `FileAttachments` that they have added."
+        },
+        {
+          "info": {
+            "name": "Retrieve all FileAttachments for a given Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job you're operating on "
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              }
+            ]
+          },
+          "docs": "Retrieve all `FileAttachments` for a given `Job`"
+        },
+        {
+          "info": {
+            "name": "Create a FileAttachment on a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job you're operating on "
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FileAttachment` related to an `Job`. Requires permission to create attachment on `Job`—`create_job_attachments`.\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `file` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `file` must be a file."
+        },
+        {
+          "info": {
+            "name": "Retrieve all associated FileAttachments for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/files",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "This endpoint retrieves all associated `FileAttachments` for a `Job`, specifically:\n * all `FileAttachments` on the `Job`\n * all `FileAttachments` on the `Job's` `Loads`\n * all `FileAttachments` on `Tickets` connected to this `Job`\n\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve all FileAttachments for a given Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the load you're operating on "
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              }
+            ]
+          },
+          "docs": "Retrieve all `FileAttachments` for a given `Load`"
+        },
+        {
+          "info": {
+            "name": "Create a FileAttachment on a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the load you're operating on "
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FileAttachment` related to an `Load`. Requires permission to create attachment on `Load`—`create_load_attachments`.\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `file` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `file` must be a file."
+        },
+        {
+          "info": {
+            "name": "Retrieve all FileAttachments for a given Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order you're operating on "
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              }
+            ]
+          },
+          "docs": "Retrieve all `FileAttachments` for a given `Order`"
+        },
+        {
+          "info": {
+            "name": "Create a FileAttachment on an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the order you're operating on "
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FileAttachment` related to an `Order`. Requires permission to create attachment on `Order`—`create_order_attachments`.\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `file` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `file` must be a file."
+        },
+        {
+          "info": {
+            "name": "Retrieve all FileAttachments for a given Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project you're operating on "
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              }
+            ]
+          },
+          "docs": "Retrieve all `FileAttachments` for a given `Project`"
+        },
+        {
+          "info": {
+            "name": "Create a FileAttachment on a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project you're operating on "
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FileAttachment` related to a `Project`. Requires permission to create attachment on `Project`—`create_project_attachments`.\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `file` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `file` must be a file."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

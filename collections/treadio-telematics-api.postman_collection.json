@@ -1,0 +1,1305 @@
+{
+  "item": [
+    {
+      "id": "24dcc097-cacb-4acb-9aad-1884c3177f07",
+      "name": "Telematics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f019540a-c3f6-496e-b46d-ae05a68698a6",
+          "name": "Retrieve all Telematics Fleets visible to the current Company",
+          "request": {
+            "name": "Retrieve all Telematics Fleets visible to the current Company",
+            "description": {
+              "content": "Retrieve `TelematicsFleets` visible to the currently authenticated `Company`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "telematics",
+                "fleets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[limit]",
+                  "value": "25",
+                  "description": "The maximum number of paginated results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "The cursor to start paginating after"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[before]",
+                  "value": "<string>",
+                  "description": "The cursor to stop paginating at"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d8841fc1-28a0-413c-94b5-332840de2fbe",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "fleets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Contains prev and next links for pagination",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"company_id\": \"7f1dda15-37fc-7e33-aa46-0d135ec7fbeb\",\n      \"created_at\": \"1961-03-12T14:52:47.342Z\",\n      \"external_remote_fleet_id\": \"string\",\n      \"id\": \"af7ddf8a-07f0-8983-e30e-9166e90ce27e\",\n      \"provider_source\": \"string\",\n      \"updated_at\": \"2009-02-03T23:56:46.246Z\"\n    },\n    {\n      \"company_id\": \"79927d1f-4161-dc10-ee6b-8879ad43f1d0\",\n      \"created_at\": \"1956-08-29T08:43:43.856Z\",\n      \"external_remote_fleet_id\": \"string\",\n      \"id\": \"226237b9-ba9b-2f8b-6c61-447e208bf54f\",\n      \"provider_source\": \"string\",\n      \"updated_at\": \"1991-06-05T01:32:41.435Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebdd6cd4-9691-4bbd-8476-59115417cb9b",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "fleets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40cfef25-75fd-4788-a0d0-1658f02d3541",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "fleets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e2b420c-9ef8-4f1a-ad1c-9b5c13a0685c",
+          "name": "Retrieve all Remote Vehicles for a Telematics Fleet visible to the current Company",
+          "request": {
+            "name": "Retrieve all Remote Vehicles for a Telematics Fleet visible to the current Company",
+            "description": {
+              "content": "Retrieve all `Remote Vehicles` for a `Telematics Fleet` visible to the current Company",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "telematics",
+                "fleets",
+                ":fleet-id",
+                "remote_vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[limit]",
+                  "value": "25",
+                  "description": "The maximum number of paginated results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "The cursor to start paginating after"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[before]",
+                  "value": "<string>",
+                  "description": "The cursor to stop paginating at"
+                },
+                {
+                  "disabled": false,
+                  "key": "search[datagrid]",
+                  "value": "<string>",
+                  "description": "Search string for datagrid queries"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fleet-id",
+                  "description": "(Required) Fleet ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "88e2ecae-1ec9-44ad-b71e-52cd7ffcd3bd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "fleets",
+                    ":fleet-id",
+                    "remote_vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search[datagrid]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fleet-id",
+                      "description": "(Required) Fleet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Contains prev and next links for pagination",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"created_at\": \"1991-05-06T10:41:30.868Z\",\n      \"id\": \"76fb38b6-fd65-b33a-f66d-b39ee3d6c462\",\n      \"remote_vehicle_external_id\": 844.6004186874678,\n      \"remote_vehicle_external_license_plate_number\": \"string\",\n      \"remote_vehicle_external_model\": \"string\",\n      \"remote_vehicle_external_name\": \"string\",\n      \"telematics_fleet_id\": \"514f3ab9-5333-546b-1d07-6fa90d5c98f0\",\n      \"updated_at\": \"1998-08-02T03:08:06.292Z\",\n      \"equipment\": {\n        \"accounting_id\": \"string\",\n        \"equipment_id\": \"string\",\n        \"equipment_type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"license_number\": \"string\",\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"zone\": \"string\",\n        \"company_share\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"created_at\": \"1995-11-11T10:23:59.036Z\",\n      \"id\": \"0d1aa8d1-d996-01c0-f230-7a772f4bb05c\",\n      \"remote_vehicle_external_id\": 1056.7272587573061,\n      \"remote_vehicle_external_license_plate_number\": \"string\",\n      \"remote_vehicle_external_model\": \"string\",\n      \"remote_vehicle_external_name\": \"string\",\n      \"telematics_fleet_id\": \"6c8a0687-8933-08fd-ca49-7f777cee0cb2\",\n      \"updated_at\": \"1975-02-09T12:19:12.099Z\",\n      \"equipment\": {\n        \"accounting_id\": \"string\",\n        \"equipment_id\": \"string\",\n        \"equipment_type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"license_number\": \"string\",\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"zone\": \"string\",\n        \"company_share\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91a1f037-d6d9-4196-931d-10eae8c3c5c5",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "fleets",
+                    ":fleet-id",
+                    "remote_vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search[datagrid]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fleet-id",
+                      "description": "(Required) Fleet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af85fa91-c57d-4d91-989e-23d71741d8dc",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "fleets",
+                    ":fleet-id",
+                    "remote_vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search[datagrid]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fleet-id",
+                      "description": "(Required) Fleet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49388a71-110b-4580-964c-b69450a4d63d",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "fleets",
+                    ":fleet-id",
+                    "remote_vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search[datagrid]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fleet-id",
+                      "description": "(Required) Fleet ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b973245a-c826-4192-8c5e-c78cb5ca3bff",
+          "name": "Update a Telematics Remote Vehicle",
+          "request": {
+            "name": "Update a Telematics Remote Vehicle",
+            "description": {
+              "content": "Update a `Telematics Remote Vehicle` by `id`.\n\nThis endpoint requires the `edit_telematics_remote_vehicles` permission.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "telematics",
+                "remote_vehicles",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Telematics Remote Vehicle ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"telematics_fleet_id\": \"<uuid>\",\n  \"equipment_id\": \"<uuid>\",\n  \"remote_vehicle_external_id\": \"<number>\",\n  \"remote_vehicle_external_name\": \"<string>\",\n  \"remote_vehicle_external_model\": \"<string>\",\n  \"remote_vehicle_external_license_plate_number\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b766ee7d-6e1e-4b34-a6a0-c64d079fd6ad",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "remote_vehicles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Telematics Remote Vehicle ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telematics_fleet_id\": \"<uuid>\",\n  \"equipment_id\": \"<uuid>\",\n  \"remote_vehicle_external_id\": \"<number>\",\n  \"remote_vehicle_external_name\": \"<string>\",\n  \"remote_vehicle_external_model\": \"<string>\",\n  \"remote_vehicle_external_license_plate_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"created_at\": \"2024-10-07T13:51:51.938Z\",\n    \"id\": \"7001b182-6f46-b2c9-870d-f2b5cfcf436b\",\n    \"remote_vehicle_external_id\": 7002.6478993987375,\n    \"remote_vehicle_external_license_plate_number\": \"string\",\n    \"remote_vehicle_external_model\": \"string\",\n    \"remote_vehicle_external_name\": \"string\",\n    \"telematics_fleet_id\": \"7fd53c96-c306-c180-0b3f-5010131fef81\",\n    \"updated_at\": \"1951-09-26T02:12:40.997Z\",\n    \"equipment\": {\n      \"accounting_id\": \"string\",\n      \"equipment_id\": \"string\",\n      \"equipment_type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"external_id\": \"string\",\n      \"id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"license_number\": \"string\",\n      \"name\": \"string\",\n      \"zone\": \"string\",\n      \"company_share\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4390078-8ded-4c1f-ae72-206913225516",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "remote_vehicles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Telematics Remote Vehicle ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telematics_fleet_id\": \"<uuid>\",\n  \"equipment_id\": \"<uuid>\",\n  \"remote_vehicle_external_id\": \"<number>\",\n  \"remote_vehicle_external_name\": \"<string>\",\n  \"remote_vehicle_external_model\": \"<string>\",\n  \"remote_vehicle_external_license_plate_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98145177-6dd9-4aff-8339-043889eac1d6",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "remote_vehicles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Telematics Remote Vehicle ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telematics_fleet_id\": \"<uuid>\",\n  \"equipment_id\": \"<uuid>\",\n  \"remote_vehicle_external_id\": \"<number>\",\n  \"remote_vehicle_external_name\": \"<string>\",\n  \"remote_vehicle_external_model\": \"<string>\",\n  \"remote_vehicle_external_license_plate_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c01726f2-9cdd-4384-bf02-e96e8d4589c0",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "remote_vehicles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Telematics Remote Vehicle ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telematics_fleet_id\": \"<uuid>\",\n  \"equipment_id\": \"<uuid>\",\n  \"remote_vehicle_external_id\": \"<number>\",\n  \"remote_vehicle_external_name\": \"<string>\",\n  \"remote_vehicle_external_model\": \"<string>\",\n  \"remote_vehicle_external_license_plate_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f24f6904-6ada-4a60-b504-ff05330ccb03",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "remote_vehicles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Telematics Remote Vehicle ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telematics_fleet_id\": \"<uuid>\",\n  \"equipment_id\": \"<uuid>\",\n  \"remote_vehicle_external_id\": \"<number>\",\n  \"remote_vehicle_external_name\": \"<string>\",\n  \"remote_vehicle_external_model\": \"<string>\",\n  \"remote_vehicle_external_license_plate_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac29f9d7-1df6-41bc-8d38-91f68a6c093b",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "remote_vehicles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Telematics Remote Vehicle ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telematics_fleet_id\": \"<uuid>\",\n  \"equipment_id\": \"<uuid>\",\n  \"remote_vehicle_external_id\": \"<number>\",\n  \"remote_vehicle_external_name\": \"<string>\",\n  \"remote_vehicle_external_model\": \"<string>\",\n  \"remote_vehicle_external_license_plate_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27ae27d9-1e85-4486-a0c0-1fd1e4ad86fb",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "remote_vehicles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Telematics Remote Vehicle ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telematics_fleet_id\": \"<uuid>\",\n  \"equipment_id\": \"<uuid>\",\n  \"remote_vehicle_external_id\": \"<number>\",\n  \"remote_vehicle_external_name\": \"<string>\",\n  \"remote_vehicle_external_model\": \"<string>\",\n  \"remote_vehicle_external_license_plate_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c654838b-ef45-4966-9834-360a98b1b01b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telematics",
+                    "remote_vehicles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Telematics Remote Vehicle ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telematics_fleet_id\": \"<uuid>\",\n  \"equipment_id\": \"<uuid>\",\n  \"remote_vehicle_external_id\": \"<number>\",\n  \"remote_vehicle_external_name\": \"<string>\",\n  \"remote_vehicle_external_model\": \"<string>\",\n  \"remote_vehicle_external_license_plate_number\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"errors\": [\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tread-horizon.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "761ab117-9da2-434b-a9d0-63310b440702",
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Telematics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the Version 1 implementation.\n\nWhen in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)\n\nContact Support:\n Name: Tread\n Email: developers@tread.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier DriverStateEvent API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DriverStateEvent",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the current driver_state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users/me/driver_state",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve the current driver_state of the `User` if user is a `driver`.\nThis endpoint requires the `Driver` role"
+        },
+        {
+          "info": {
+            "name": "Update Driver State to break",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/users/me/driver_state/break",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint will update the status of a `driver` to `break`.\nThis endpoint requires the `Driver` role"
+        },
+        {
+          "info": {
+            "name": "Update Driver State to off_duty",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/users/me/driver_state/off_duty",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint will update the status of a `driver` to `off_duty`.\nThis endpoint requires the `Driver` role"
+        },
+        {
+          "info": {
+            "name": "Update Driver State to on_duty",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/users/me/driver_state/on_duty",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint will update the status of a `driver` to `on_duty`.\nThis endpoint requires the `Driver` role"
+        },
+        {
+          "info": {
+            "name": "Retrieve the time driver logged today",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users/me/driver_state/time_logged",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve the time in minutes the `driver` was on_duty today.\nThis endpoint requires the `Driver` role"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

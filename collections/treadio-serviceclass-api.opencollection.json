@@ -1,0 +1,325 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier ServiceClass API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ServiceClass",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Service Classes that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/service_classes",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `ServiceClass` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Create a ServiceClass for a Company.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/service_classes",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `ServiceClass` for a `Company`\n\nThis endpoint requires the `create_service_class` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on ServiceClasses for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/service_classes/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `ServiceClass` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve ServiceClasses that belong to the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/service_classes",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `ServiceClass`s that belong to the current `Company`."
+        },
+        {
+          "info": {
+            "name": "Create a new ServiceClass.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/service_classes",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new `ServiceClass`\n\nThis endpoint requires the `create_service_class` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on ServiceClasses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/service_classes/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `ServiceClass` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a single ServiceClass.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/service_classes/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ServiceClass ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a single `ServiceClass` by ID"
+        },
+        {
+          "info": {
+            "name": "Update a ServiceClass",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/service_classes/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ServiceClass ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `ServiceClas` by ID\n\nThis endpoint requires the `edit_service_class` permission"
+        },
+        {
+          "info": {
+            "name": "Delete a ServiceClass",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/service_classes/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ServiceClass ID"
+              }
+            ]
+          },
+          "docs": "Delete a `ServiceClass` by ID\n\nThis endpoint requires the `delete_service_class` permission"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

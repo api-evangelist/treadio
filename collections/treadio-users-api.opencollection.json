@@ -1,0 +1,1046 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Users API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Users for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/users",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[access]",
+                "value": "",
+                "type": "query",
+                "description": "User access filter"
+              },
+              {
+                "name": "filter[iam_roles]",
+                "value": "",
+                "type": "query",
+                "description": "The IamRoles of the User. Allowed values: `platform_admin`, `company_admin`, `dispatcher`, `biller`, `foreman`, `driver`, `it_admin`, `manager`"
+              }
+            ]
+          },
+          "docs": "Retrieve `Users` for a managed company."
+        },
+        {
+          "info": {
+            "name": "Create User for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/users",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `User` for a Managed Company\n\nThis endpoint requires the `create_user` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search Users for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/users/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[iam_roles]",
+                "value": "",
+                "type": "query",
+                "description": "The IamRoles of the User. Allowed values: `platform_admin`, `company_admin`, `dispatcher`, `biller`, `foreman`, `driver`, `it_admin`, `manager`"
+              }
+            ]
+          },
+          "docs": "Typeahead search for `Users` in a managed company"
+        },
+        {
+          "info": {
+            "name": "Retrieve User by ID for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/users/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `User` by ID for a Managed Company"
+        },
+        {
+          "info": {
+            "name": "Update User for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/users/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `User` by ID for a Managed Company\n\nA `User` can always update their own `Equipment` via the `equipment_id` /`additional_equipment_ids` properties.\n\nAny other updates require the `edit_user` permission."
+        },
+        {
+          "info": {
+            "name": "Delete User for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/users/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Delete `User` by ID for a Managed Company\n\nThis endpoint requires the `delete_user` permission"
+        },
+        {
+          "info": {
+            "name": "Send an Email Invite to a User in a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/users/:user-id/invite/email",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint sends an Email invite to a `User` in a Managed Company asynchronously."
+        },
+        {
+          "info": {
+            "name": "Send an SMS Invite to a User in a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/users/:user-id/invite/sms",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint sends an SMS invite to a `User` in a Managed Company asynchronously."
+        },
+        {
+          "info": {
+            "name": "Retrieve Users that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/users",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[access]",
+                "value": "",
+                "type": "query",
+                "description": "User access filter"
+              },
+              {
+                "name": "filter[iam_roles]",
+                "value": "",
+                "type": "query",
+                "description": "The IamRoles of the User. Allowed values: `platform_admin`, `company_admin`, `dispatcher`, `biller`, `foreman`, `driver`, `it_admin`, `manager`"
+              }
+            ]
+          },
+          "docs": "Retrieve `Users` for a `Company`\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `first_name`\n * `last_name`\n * `email`\n * `phone`\n * `company.legal_name`\n * `iam_roles.name`\n\nNote:\n- `filter[iam_roles]` array are applied as `OR` in the query"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Users for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/users/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[iam_roles]",
+                "value": "",
+                "type": "query",
+                "description": "The IamRoles of the User. Allowed values: `platform_admin`, `company_admin`, `dispatcher`, `biller`, `foreman`, `driver`, `it_admin`, `manager`"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `first_name` and `last_name` property on `Users` for a `Company`.\n\nNote:\n- `filter[iam_roles]` array are applied as `OR` in the query"
+        },
+        {
+          "info": {
+            "name": "Retrieve Users that belong to the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[access]",
+                "value": "",
+                "type": "query",
+                "description": "User access filter"
+              },
+              {
+                "name": "filter[iam_roles]",
+                "value": "",
+                "type": "query",
+                "description": "The IamRoles of the User. Allowed values: `platform_admin`, `company_admin`, `dispatcher`, `biller`, `foreman`, `driver`, `it_admin`, `manager`"
+              },
+              {
+                "name": "filter[label_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic)."
+              }
+            ]
+          },
+          "docs": "Retrieve `Users` visible to your `Company`\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `first_name`\n * `last_name`\n * `email`\n * `phone`\n * `company.legal_name`\n * `iam_roles.name`\n\nNote:\n- `filter[iam_roles]` array are applied as `OR` in the query\n- `filter[label_ids]` array are applied as `OR` in the query"
+        },
+        {
+          "info": {
+            "name": "Create a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/users",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `User`\n\nThis endpoint requires the `create_user` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve the current User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users/me",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve the current authenticated `User`"
+        },
+        {
+          "info": {
+            "name": "Retrieve current User's Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users/me/access",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve current `User`'s `Access`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Permissions granted to the current User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users/me/iam_permissions",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve the current authenticated users permissions"
+        },
+        {
+          "info": {
+            "name": "Set Current Location",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/users/me/location",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the current location for a User's Mobile Device"
+        },
+        {
+          "info": {
+            "name": "Bulk Create Historical Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/users/me/locations",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record historical location data for a User's Mobile Device"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[iam_roles]",
+                "value": "",
+                "type": "query",
+                "description": "The IamRoles of the User. Allowed values: `platform_admin`, `company_admin`, `dispatcher`, `biller`, `foreman`, `driver`, `it_admin`, `manager`"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `first_name` and `last_name` property for `Users` visible to the currently authenticated `Company`.\n\nNote:\n- `filter[iam_roles]` array are applied as `OR` in the query"
+        },
+        {
+          "info": {
+            "name": "Retrieve User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `User` by ID"
+        },
+        {
+          "info": {
+            "name": "Update a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/users/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a `User` by ID\n\nA `User` can always update their own `Equipment` via the `equipment_id` /`additional_equipment_ids` properties.\n\nAny other updates require the `edit_user` permission."
+        },
+        {
+          "info": {
+            "name": "Delete a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/users/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Delete a `User` by ID\n\nThis endpoint requires the `delete_user` permission"
+        },
+        {
+          "info": {
+            "name": "Impersonate a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/users/:user-id/impersonations",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Impersonate a `User`. \n\nThis endpoint requires the `impersonate` `IamPermission`. "
+        },
+        {
+          "info": {
+            "name": "Send an Email Invite to a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/users/:user-id/invite/email",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint sends an Email invite to a `User` asynchronously."
+        },
+        {
+          "info": {
+            "name": "Send an SMS Invite to a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/users/:user-id/invite/sms",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint sends an SMS invite to a `User` asynchronously."
+        },
+        {
+          "info": {
+            "name": "Retrieve Scheduled Time Offs for a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users/:user-id/scheduled_time_offs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User Id"
+              }
+            ]
+          },
+          "docs": "Retrieve all active `ScheduledTimeOffs` visible to your `Company` for a `User`"
+        },
+        {
+          "info": {
+            "name": "Create Scheduled Time Off",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/users/:user-id/scheduled_time_offs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Scheduled Time Off for a `User`"
+        },
+        {
+          "info": {
+            "name": "Mark Schedule Available",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/users/:user-id/scheduled_time_offs/available",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User Id"
+              }
+            ]
+          },
+          "docs": "Mark current `User` as available and disable any `Scheduled Time Off`"
+        },
+        {
+          "info": {
+            "name": "Mark Schedule Unavailable",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/users/:user-id/scheduled_time_offs/unavailable",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User Id"
+              }
+            ]
+          },
+          "docs": "Mark current `User` as unavailable and create a new `Scheduled time off`"
+        },
+        {
+          "info": {
+            "name": "Delete a Scheduled Time Off",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/users/:user-id/scheduled_time_offs/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User Id"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Scheduled time off id"
+              }
+            ]
+          },
+          "docs": "Delete Scheduled Time Off for a `User`"
+        },
+        {
+          "info": {
+            "name": "Revokes all active B2B and B2B sessions for the given User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/users/:user-id/sessions",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user-id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "This endpoint revokes all active B2B and B2C sessions for the given `User`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

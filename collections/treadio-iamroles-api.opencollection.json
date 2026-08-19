@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier IamRoles API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "IamRoles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve IamRoles that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/iam_roles",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `IamRoles` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve all IamRoles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/iam_roles",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieve `IamRoles` for the users company along with all system roles"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

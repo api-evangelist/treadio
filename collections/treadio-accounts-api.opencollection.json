@@ -1,0 +1,1019 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Accounts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all Accounts visible to the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/accounts",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[account_types]",
+                "value": "",
+                "type": "query",
+                "description": "AccountType filter"
+              },
+              {
+                "name": "filter[material_rates]",
+                "value": "",
+                "type": "query",
+                "description": "Filter on whether the Account has associated MaterialRates"
+              },
+              {
+                "name": "filter[discarded]",
+                "value": "",
+                "type": "query",
+                "description": "Only show discarded Accounts"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              },
+              {
+                "name": "filter[connected_company][company_types]",
+                "value": "",
+                "type": "query",
+                "description": "Connected Company Type enum filters (see CompanyType enum for the list of values)"
+              },
+              {
+                "name": "filter[auto_add_ons]",
+                "value": "",
+                "type": "query",
+                "description": "Filter on whether the resource (e.g. Account, User) has associated AutoAddOns"
+              },
+              {
+                "name": "filter[label_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic)."
+              }
+            ]
+          },
+          "docs": "Retrieve `Accounts` visible to the currently authenticated `Company`.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `name`\n\nFilter usage:\n * to filter a single state: `filter[account_types][]=customer`\n * to filter multiple states: `filter[account_types][]=customer&filter[account_types][]=vendor`"
+        },
+        {
+          "info": {
+            "name": "Create a new Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/accounts",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new `Account`\n\nThis endpoint requires the `create_account` permission"
+        },
+        {
+          "info": {
+            "name": "Bulk update Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/accounts/bulk_update",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform select bulk updates to `Accounts`.\n\nRequires the `edit_account` permission."
+        },
+        {
+          "info": {
+            "name": "Retrieve all connected Accounts visible to the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/accounts/connected",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve all connected `Accounts` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Create a connected Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/accounts/connected",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a connected `Account` between two `Companies`. \n\nThis endpoint creates two complimentary connected `Accounts`:\n * a \"sender\" `Account` owned by the `Company` specified by `sender_company_id` which has the provided `sender_account_types`\n * a \"receiver\" `Account` owned by the `Company` specified by `receiver_company_id` which has the opposite `account_types`\n \nThe newly created \"sender\" `Account` is returned.\n\nThis endpoint requires the `platform_admin` `IamRole`. "
+        },
+        {
+          "info": {
+            "name": "Invite a Company to connect through an Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/accounts/invite",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invite a `Company` which is not yet on the `Tread` platform to connect through an `Account`.\n\nThis will create:\n * a new `Company` named `name` using `contact` data for `primary_contact ` and `billing_contact` \n * a new `User` with information from `contact` that has the `Company Admin` `IamRole`\n * a new `Account` owned by the currently authenticated `User`'s `Company` and connected to the newly created `Company`\n\nNote that all fields in `contact` are required.\n\nThe following unique constraints"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/accounts/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_types]",
+                "value": "",
+                "type": "query",
+                "description": "AccountType filter"
+              },
+              {
+                "name": "filter[connected]",
+                "value": "",
+                "type": "query",
+                "description": "Only show connected Accounts"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Single Date Filter"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Accounts` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Scheduled Time Offs for an Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/accounts/:account-id/scheduled_time_offs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path",
+                "description": "Account Id"
+              }
+            ]
+          },
+          "docs": "Retrieve all active `ScheduledTimeOffs` visible to your `Company` for an `Account`"
+        },
+        {
+          "info": {
+            "name": "Create Scheduled Time Off",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/accounts/:account-id/scheduled_time_offs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path",
+                "description": "Account Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Scheduled Time Off for an `Account`"
+        },
+        {
+          "info": {
+            "name": "Mark Schedule Available",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/accounts/:account-id/scheduled_time_offs/available",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path",
+                "description": "Account Id"
+              }
+            ]
+          },
+          "docs": "Mark current `Account` as available and disable any `Scheduled Time Off`"
+        },
+        {
+          "info": {
+            "name": "Mark Schedule Unavailable",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/accounts/:account-id/scheduled_time_offs/unavailable",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path",
+                "description": "Account Id"
+              }
+            ]
+          },
+          "docs": "Mark current `Account` as unavailable and create a new `Scheduled time off`"
+        },
+        {
+          "info": {
+            "name": "Delete a Scheduled Time Off",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/accounts/:account-id/scheduled_time_offs/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Scheduled time off id"
+              },
+              {
+                "name": "account-id",
+                "value": "",
+                "type": "path",
+                "description": "Account Id"
+              }
+            ]
+          },
+          "docs": "Delete Scheduled Time Off for an `Account`"
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/accounts/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Account` by ID"
+        },
+        {
+          "info": {
+            "name": "Update an Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/accounts/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an `Account` by ID.\n\nThis endpoint requires the `edit_account` permission"
+        },
+        {
+          "info": {
+            "name": "Delete an Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/accounts/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ]
+          },
+          "docs": "Delete an `Account` by ID\n\nThis endpoint requires the `delete_account` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on customer Accounts scoped to an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:linked-account-id/customers/accounts/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "linked-account-id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "`Typeahead` search on customer `Accounts` scoped to an `Agave-LinkedAccount`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on vendor Accounts scoped to an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:linked-account-id/vendors/accounts/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "linked-account-id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "`Typeahead` search on vendor `Accounts` scoped to an `Agave-LinkedAccount`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Accounts that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/accounts",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[account_types]",
+                "value": "",
+                "type": "query",
+                "description": "AccountType filter"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[material_rates]",
+                "value": "",
+                "type": "query",
+                "description": "Filter on whether the Account has associated MaterialRates"
+              },
+              {
+                "name": "filter[discarded]",
+                "value": "",
+                "type": "query",
+                "description": "Only show discarded Accounts"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              },
+              {
+                "name": "filter[connected_company][company_types]",
+                "value": "",
+                "type": "query",
+                "description": "Connected Company Type enum filters (see CompanyType enum for the list of values)"
+              },
+              {
+                "name": "filter[auto_add_ons]",
+                "value": "",
+                "type": "query",
+                "description": "Filter on whether the resource (e.g. Account, User) has associated AutoAddOns"
+              }
+            ]
+          },
+          "docs": "Retrieve `Accounts` for a `Company`.\n\nFilter usage:\n * to filter a single state: `filter[account_types][]=customer`\n * to filter multiple states: `filter[account_types][]=customer&filter[account_types][]=vendor`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Accounts for a Company with with Capacity Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/accounts/capacity/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[availability]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record availability based on the `date` parameter/filter, defaulting to the current day."
+              },
+              {
+                "name": "filter[show_all]",
+                "value": "",
+                "type": "query",
+                "description": "Show all records. Deprecated in favor of `filter[availability]`"
+              },
+              {
+                "name": "filter[label_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic)."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The date to query for regarding capacity. In YYYY-MM-DD format."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `Accounts` for a `Company`.\n\nUnlike the standard typeahead, this endpoint includes additional fields with capacity data.\n\nAdditionally, this endpoint automatically filters to:\n\n- Connnected Accoubts\n- Vendor-type Accounts\n- Accounts that are currently scheduled on\n\nThe `availability` filter can be set to true/false to only include Accounts that are scheduled on or off for the `date` specified. If no `date` is specified then the current day is used."
+        },
+        {
+          "info": {
+            "name": "Retrieve connected Accounts that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/accounts/connected",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[account_types]",
+                "value": "",
+                "type": "query",
+                "description": "AccountType filter"
+              },
+              {
+                "name": "filter[discarded]",
+                "value": "",
+                "type": "query",
+                "description": "Only show discarded Accounts"
+              }
+            ]
+          },
+          "docs": "Retrieve connected `Accounts` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Create a connected Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/accounts/connected",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a connected `Account` between two `Companies` by use of a `tread_id`.\n\nThis endpoint creates two complimentary connected `Accounts`:\n * a \"sender\" `Account` owned by the `Company` specified in the `company-id` path param which has the provided `account_types`.\n * a \"receiver\" `Account` owned by the `Company` specified in the `tread_id` which has the opposite `account_types`\n \nThe newly created \"sender\" `Account` is returned.\n\nThis endpoint must be called by a principal authorized to act o"
+        },
+        {
+          "info": {
+            "name": "Invite a Company to connect through an Account for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/accounts/invite",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invite a `Company` which is not yet on the `Tread` platform to connect through an `Account` for a `Company`.\n\nThis will create:\n * a new `Company` named `name` using `contact` data for `primary_contact ` and `billing_contact` \n * a new `User` with information from `contact` that has the `Company Admin` `IamRole`\n * a new `Account` owned by the currently authenticated `User`'s `Company` and connected to the newly created `Company`\n\nNote that all fields in `contact` are required.\n\nThe following un"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Accounts for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/accounts/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_types]",
+                "value": "",
+                "type": "query",
+                "description": "AccountType filter"
+              },
+              {
+                "name": "filter[connected]",
+                "value": "",
+                "type": "query",
+                "description": "Only show connected Accounts"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Single Date Filter"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `Accounts` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Daily Ticket Data Export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/data_export/tickets/day/:date",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path",
+                "description": "Date of daily report"
+              }
+            ]
+          },
+          "docs": "Returns a daily export of `tickets` for given company. Please\nnote, this endpoint is only available to users authenticating\nan `m2m_client`. This endpoint must be configured for customer\nby Tread. The file_url is signed and will be valid for 1 hour \nfrom time of api call."
+        },
+        {
+          "info": {
+            "name": "Update Account for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/accounts/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `Account` by ID for a Managed Company\n\nThis endpoint requires the `edit_account` permission"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

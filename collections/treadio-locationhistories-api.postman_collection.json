@@ -1,0 +1,1970 @@
+{
+  "item": [
+    {
+      "id": "62dd2467-cebf-455a-8b56-fe3287a6181e",
+      "name": "LocationHistories",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e71d8d3b-9b77-46b2-8639-52f8d8c6dcb5",
+          "name": "Retrieve Location Histories for a DriverDay",
+          "request": {
+            "name": "Retrieve Location Histories for a DriverDay",
+            "description": {
+              "content": "Retrieve `LocationHistories` for a `DriverDay`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "companies",
+                ":company-id",
+                "driver_days",
+                ":driver-day-id",
+                "location_histories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[limit]",
+                  "value": "25",
+                  "description": "The maximum number of paginated results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[before]",
+                  "value": "<string>",
+                  "description": "The cursor to stop paginating at"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "The cursor to start paginating after"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "company-id",
+                  "description": "(Required) Company ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "driver-day-id",
+                  "description": "(Required) DriverDay ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9997c1e0-5fc4-427c-b23e-4faf1b27b5c2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "driver_days",
+                    ":driver-day-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "driver-day-id",
+                      "description": "(Required) DriverDay ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Contains prev and next links for pagination",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"3e90c323-9d7d-9a03-7e60-f9b27d3b1bf8\",\n      \"lat\": \"string\",\n      \"load_id\": \"cd1dfa9d-22ba-8484-c9e2-a36fbf81e211\",\n      \"load_state\": \"created\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"2016-02-08T14:29:41.095Z\",\n      \"offline_mode\": false,\n      \"speed_meters_per_second\": \"string\"\n    },\n    {\n      \"id\": \"b254e94b-b359-4c8d-565d-244ed67aa7ec\",\n      \"lat\": \"string\",\n      \"load_id\": \"f4eb4660-2d33-6ca5-a45f-08cdb65ad86c\",\n      \"load_state\": \"created\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"1969-10-14T23:38:08.600Z\",\n      \"offline_mode\": false,\n      \"speed_meters_per_second\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19d366cb-ae73-4c3c-97a0-1776ac209b60",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "driver_days",
+                    ":driver-day-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "driver-day-id",
+                      "description": "(Required) DriverDay ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e108314f-6bd4-4521-ad2e-93f0785dff9e",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "driver_days",
+                    ":driver-day-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "driver-day-id",
+                      "description": "(Required) DriverDay ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15e2ecc9-502c-4c87-bb8e-187f06a8a233",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "driver_days",
+                    ":driver-day-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "driver-day-id",
+                      "description": "(Required) DriverDay ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "376b89b4-ba07-4040-b79f-60a5ac68f255",
+          "name": "Retrieve Location Histories for a Job",
+          "request": {
+            "name": "Retrieve Location Histories for a Job",
+            "description": {
+              "content": "Retrieve `LocationHistories` for a `Job`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "companies",
+                ":company-id",
+                "jobs",
+                ":job-id",
+                "location_histories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[limit]",
+                  "value": "25",
+                  "description": "The maximum number of paginated results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[before]",
+                  "value": "<string>",
+                  "description": "The cursor to stop paginating at"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "The cursor to start paginating after"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "company-id",
+                  "description": "(Required) Company ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "job-id",
+                  "description": "(Required) Job ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f489d18b-a2e3-45b1-a2bc-d78bfa5842a6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "jobs",
+                    ":job-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "job-id",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Contains prev and next links for pagination",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"3e90c323-9d7d-9a03-7e60-f9b27d3b1bf8\",\n      \"lat\": \"string\",\n      \"load_id\": \"cd1dfa9d-22ba-8484-c9e2-a36fbf81e211\",\n      \"load_state\": \"created\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"2016-02-08T14:29:41.095Z\",\n      \"offline_mode\": false,\n      \"speed_meters_per_second\": \"string\"\n    },\n    {\n      \"id\": \"b254e94b-b359-4c8d-565d-244ed67aa7ec\",\n      \"lat\": \"string\",\n      \"load_id\": \"f4eb4660-2d33-6ca5-a45f-08cdb65ad86c\",\n      \"load_state\": \"created\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"1969-10-14T23:38:08.600Z\",\n      \"offline_mode\": false,\n      \"speed_meters_per_second\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6109bd2-7c27-41f9-9917-6802ccb5a24d",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "jobs",
+                    ":job-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "job-id",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90317fe2-b040-4900-9c3f-9bf666e856cd",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "jobs",
+                    ":job-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "job-id",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adf674f6-13ee-4819-9700-23ac10b9ba6d",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "jobs",
+                    ":job-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "job-id",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5376192-5612-455f-9594-c03804245e6e",
+          "name": "Retrieve Location Histories for a Moving Site on a Job",
+          "request": {
+            "name": "Retrieve Location Histories for a Moving Site on a Job",
+            "description": {
+              "content": "Retrieve `LocationHistories` for a `MovingSite` on a `Job`.\n\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "companies",
+                ":company-id",
+                "jobs",
+                ":job-id",
+                "moving_sites",
+                ":moving-site-id",
+                "location_histories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[limit]",
+                  "value": "25",
+                  "description": "The maximum number of paginated results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "The cursor to start paginating after"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[before]",
+                  "value": "<string>",
+                  "description": "The cursor to stop paginating at"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "company-id",
+                  "description": "(Required) Company ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "job-id",
+                  "description": "(Required) Job ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "moving-site-id",
+                  "description": "(Required) MovingSite ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cbcbda6d-0d92-45a3-8424-3d5a71dfb78b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "jobs",
+                    ":job-id",
+                    "moving_sites",
+                    ":moving-site-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "job-id",
+                      "description": "(Required) Job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "moving-site-id",
+                      "description": "(Required) MovingSite ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Contains prev and next links for pagination",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"db3faba2-f4c9-9173-8b60-468b8d3f6e3a\",\n      \"lat\": \"string\",\n      \"load_id\": \"d8425439-4a60-d0d8-7a6f-4b73a4c5fdf1\",\n      \"load_state\": \"created\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"2023-03-01T20:19:11.840Z\",\n      \"offline_mode\": true,\n      \"speed_meters_per_second\": \"string\"\n    },\n    {\n      \"id\": \"a8b0a449-e4f9-c212-bbaf-addbeea7a94a\",\n      \"lat\": \"string\",\n      \"load_id\": \"d96247f2-34a3-264d-4e6f-1a186c19ee1c\",\n      \"load_state\": \"created\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"2005-09-28T16:56:49.704Z\",\n      \"offline_mode\": true,\n      \"speed_meters_per_second\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9431c7b-4583-4b8f-9b61-b526d11d93db",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "jobs",
+                    ":job-id",
+                    "moving_sites",
+                    ":moving-site-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "job-id",
+                      "description": "(Required) Job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "moving-site-id",
+                      "description": "(Required) MovingSite ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "660e6052-0598-408e-835e-f5e9ed5f34a5",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "jobs",
+                    ":job-id",
+                    "moving_sites",
+                    ":moving-site-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "job-id",
+                      "description": "(Required) Job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "moving-site-id",
+                      "description": "(Required) MovingSite ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "688300f4-e897-4d9d-88ff-581ada98d49a",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "jobs",
+                    ":job-id",
+                    "moving_sites",
+                    ":moving-site-id",
+                    "location_histories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "job-id",
+                      "description": "(Required) Job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "moving-site-id",
+                      "description": "(Required) MovingSite ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88ee8d33-fdef-4061-b8e3-95a3dffe069b",
+          "name": "Retrieve latest Location Histories for a Company",
+          "request": {
+            "name": "Retrieve latest Location Histories for a Company",
+            "description": {
+              "content": "Retrieve latest `LocationHistories` for a `Company`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "companies",
+                ":company-id",
+                "location_histories",
+                "latest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[order_id]",
+                  "value": "<string>",
+                  "description": "Filters location histories to include only those associated with the specified order's jobs "
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[job_id]",
+                  "value": "<string>",
+                  "description": "Filters location histories to include only those associated with the specific job "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company-id",
+                  "description": "(Required) Company ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "505859e5-27a4-4547-9a29-6befdf200777",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "location_histories",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[order_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[job_id]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"accuracy\": \"string\",\n      \"bearing_degrees\": \"string\",\n      \"created_at\": \"2013-10-18T22:53:17.084Z\",\n      \"device_id\": \"string\",\n      \"id\": \"05873fdb-c9d7-5af2-113a-b34393345919\",\n      \"job_id\": \"cda59a61-7488-3e11-0bb3-ded271516ae4\",\n      \"lat\": \"string\",\n      \"load_id\": \"fe1b290b-f10a-522d-53e7-7e311b17718a\",\n      \"load_state\": \"string\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"2019-07-26T12:16:16.138Z\",\n      \"order_id\": \"string\",\n      \"radii\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"speed_meters_per_second\": \"string\",\n      \"equipment\": {\n        \"license_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"zone\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"equipment_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"driver\": {\n        \"discarded_at\": \"1984-12-14T10:15:04.675Z\",\n        \"email\": \"string\",\n        \"external_id\": \"string\",\n        \"first_name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"last_name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone\": \"string\",\n        \"schedule_on\": false\n      },\n      \"vendor_job_assignment\": {\n        \"customer_account\": {\n          \"name\": \"string\"\n        },\n        \"vendor_account\": {\n          \"name\": \"string\"\n        }\n      },\n      \"dispatch_number\": {\n        \"id\": \"14a1436b-da68-dc51-b3f9-87a2e7db9c2d\",\n        \"name\": \"string\"\n      }\n    },\n    {\n      \"accuracy\": \"string\",\n      \"bearing_degrees\": \"string\",\n      \"created_at\": \"1989-11-09T05:02:32.789Z\",\n      \"device_id\": \"string\",\n      \"id\": \"6950b375-deb6-971d-18c5-01f52d40b3a2\",\n      \"job_id\": \"54291907-db55-523a-b7d5-e7126813ddc5\",\n      \"lat\": \"string\",\n      \"load_id\": \"23c88376-f4c5-206f-6123-6993e2a7d5fc\",\n      \"load_state\": \"string\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"2020-08-25T06:15:16.400Z\",\n      \"order_id\": \"string\",\n      \"radii\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"speed_meters_per_second\": \"string\",\n      \"equipment\": {\n        \"license_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"zone\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"equipment_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"driver\": {\n        \"discarded_at\": \"2020-07-16T20:04:19.745Z\",\n        \"email\": \"string\",\n        \"external_id\": \"string\",\n        \"first_name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"last_name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone\": \"string\",\n        \"schedule_on\": false\n      },\n      \"vendor_job_assignment\": {\n        \"customer_account\": {\n          \"name\": \"string\"\n        },\n        \"vendor_account\": {\n          \"name\": \"string\"\n        }\n      },\n      \"dispatch_number\": {\n        \"id\": \"df336cf3-b9b6-5080-1b23-8466ce8ea0c6\",\n        \"name\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "762ac573-1df2-463b-9cca-21e76ef8e217",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "location_histories",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[order_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[job_id]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b31e8e00-35be-47e4-a2ed-1f257badfab8",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "location_histories",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[order_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[job_id]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7ad86c8-30bd-413a-901b-0b4ad0c4de59",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "location_histories",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[order_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[job_id]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1790cb61-b079-46a5-b3b2-635da0890b9b",
+          "name": "Retrieve latest Location Histories for a Company",
+          "request": {
+            "name": "Retrieve latest Location Histories for a Company",
+            "description": {
+              "content": "Retrieve latest `LocationHistories` for a `Company`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "location_histories",
+                "latest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[order_id]",
+                  "value": "<string>",
+                  "description": "Filters location histories to include only those associated with the specified order's jobs "
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[job_id]",
+                  "value": "<string>",
+                  "description": "Filters location histories to include only those associated with the specific job "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4f2e396-fc2e-4436-97e3-c65ef0df3aff",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "location_histories",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[order_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[job_id]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"accuracy\": \"string\",\n      \"bearing_degrees\": \"string\",\n      \"created_at\": \"2024-07-19T13:11:41.853Z\",\n      \"device_id\": \"string\",\n      \"id\": \"9be4af4e-a03d-b66b-e26f-6b58144ffb64\",\n      \"job_id\": \"054bc15a-c7b4-0bbc-d7af-58ced3f9162b\",\n      \"lat\": \"string\",\n      \"load_id\": \"59af4882-c80f-7447-1e04-7eb4c36e08b9\",\n      \"load_state\": \"string\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"1988-11-04T22:58:32.119Z\",\n      \"order_id\": \"string\",\n      \"radii\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"speed_meters_per_second\": \"string\",\n      \"equipment\": {\n        \"license_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"zone\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"equipment_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"driver\": {\n        \"discarded_at\": \"1972-01-31T08:06:23.232Z\",\n        \"email\": \"string\",\n        \"external_id\": \"string\",\n        \"first_name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"last_name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone\": \"string\",\n        \"schedule_on\": true\n      },\n      \"vendor_job_assignment\": {\n        \"customer_account\": {\n          \"name\": \"string\"\n        },\n        \"vendor_account\": {\n          \"name\": \"string\"\n        }\n      },\n      \"dispatch_number\": {\n        \"id\": \"dfc47a52-69fc-3b8e-4ea6-4c3aef73164c\",\n        \"name\": \"string\"\n      }\n    },\n    {\n      \"accuracy\": \"string\",\n      \"bearing_degrees\": \"string\",\n      \"created_at\": \"1991-01-02T08:10:32.091Z\",\n      \"device_id\": \"string\",\n      \"id\": \"d9e2fbdf-d519-dc88-722f-b5be0b6d5e1f\",\n      \"job_id\": \"9c984297-c8ef-dd01-c5f2-8612bdf4030f\",\n      \"lat\": \"string\",\n      \"load_id\": \"fb733df7-bbb4-9edb-2712-28ae0a019941\",\n      \"load_state\": \"string\",\n      \"lon\": \"string\",\n      \"occurred_at\": \"1992-05-25T07:20:21.471Z\",\n      \"order_id\": \"string\",\n      \"radii\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"speed_meters_per_second\": \"string\",\n      \"equipment\": {\n        \"license_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"zone\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"equipment_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"driver\": {\n        \"discarded_at\": \"2001-11-27T13:00:13.012Z\",\n        \"email\": \"string\",\n        \"external_id\": \"string\",\n        \"first_name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"last_name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone\": \"string\",\n        \"schedule_on\": false\n      },\n      \"vendor_job_assignment\": {\n        \"customer_account\": {\n          \"name\": \"string\"\n        },\n        \"vendor_account\": {\n          \"name\": \"string\"\n        }\n      },\n      \"dispatch_number\": {\n        \"id\": \"0dbde172-3009-511c-cd79-b732e63d6256\",\n        \"name\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1da1547b-700a-4d3b-a26f-36cb824cb752",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "location_histories",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[order_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[job_id]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a8b79a4-9ca7-4e7e-a747-59dc6d0ffdae",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "location_histories",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[order_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[job_id]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84ea8cbf-eb85-4a15-85cb-75bfde162671",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "location_histories",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[order_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[job_id]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tread-horizon.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ef1af330-2b91-4445-8bc6-9f1e88f3d855",
+    "name": "Horizon API V1 AccountExternalTruckIdentifier LocationHistories API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the Version 1 implementation.\n\nWhen in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)\n\nContact Support:\n Name: Tread\n Email: developers@tread.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,334 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Foremen API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Foremen",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Foremen for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/foremen",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[expiring]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records."
+              },
+              {
+                "name": "filter[sender_company_types]",
+                "value": "",
+                "type": "query",
+                "description": "CompanyType enum filter. See CompanyType enum for accepted values."
+              }
+            ]
+          },
+          "docs": "Retrieve `Foremen` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Search Foremen based on the current Dispatch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/foremen/faceted_search",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              }
+            ]
+          },
+          "docs": "Searches `Foremen` in a typeahead style but instead of all `Foremen` for a `Company` this returns all `Foremen` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Foremen",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/foremen/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[expiring]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records."
+              },
+              {
+                "name": "filter[sender_company_types]",
+                "value": "",
+                "type": "query",
+                "description": "CompanyType enum filter. See CompanyType enum for accepted values."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `first_name` and `last_name` property on `Foremen` for a `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Foreman by ID for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/foremen/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Foreman ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Driver` by ID for a `Company`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

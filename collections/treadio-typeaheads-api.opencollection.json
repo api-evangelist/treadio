@@ -1,0 +1,3678 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Typeaheads API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Typeaheads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Typeahead search on Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/accounts/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_types]",
+                "value": "",
+                "type": "query",
+                "description": "AccountType filter"
+              },
+              {
+                "name": "filter[connected]",
+                "value": "",
+                "type": "query",
+                "description": "Only show connected Accounts"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Single Date Filter"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Accounts` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `legal_name` property for `Companies` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Accounts for a Company with with Capacity Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/accounts/capacity/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[availability]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record availability based on the `date` parameter/filter, defaulting to the current day."
+              },
+              {
+                "name": "filter[show_all]",
+                "value": "",
+                "type": "query",
+                "description": "Show all records. Deprecated in favor of `filter[availability]`"
+              },
+              {
+                "name": "filter[label_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic)."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The date to query for regarding capacity. In YYYY-MM-DD format."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `Accounts` for a `Company`.\n\nUnlike the standard typeahead, this endpoint includes additional fields with capacity data.\n\nAdditionally, this endpoint automatically filters to:\n\n- Connnected Accoubts\n- Vendor-type Accounts\n- Accounts that are currently scheduled on\n\nThe `availability` filter can be set to true/false to only include Accounts that are scheduled on or off for the `date` specified. If no `date` is specified then the current day is used."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Accounts for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/accounts/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_types]",
+                "value": "",
+                "type": "query",
+                "description": "AccountType filter"
+              },
+              {
+                "name": "filter[connected]",
+                "value": "",
+                "type": "query",
+                "description": "Only show connected Accounts"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Single Date Filter"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `Accounts` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on AddOns for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/add_ons/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[add_on_types]",
+                "value": "",
+                "type": "query",
+                "description": "AddOnTypes enum filter. See AddOnType enum for accepted values."
+              },
+              {
+                "name": "filter[add_on_rate_types]",
+                "value": "",
+                "type": "query",
+                "description": "AddOnRateTypes enum filter. See AddOnRateType enum for accepted values."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `AddOn` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Children for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/children/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `legal_name` property on `Children` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Daily Ticket Data Export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/data_export/tickets/day/:date",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path",
+                "description": "Date of daily report"
+              }
+            ]
+          },
+          "docs": "Returns a daily export of `tickets` for given company. Please\nnote, this endpoint is only available to users authenticating\nan `m2m_client`. This endpoint must be configured for customer\nby Tread. The file_url is signed and will be valid for 1 hour \nfrom time of api call."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Departments by Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/departments/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `Departments` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on DriverDays by Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/driver_days/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `driver_day_id` property for `DriverDays` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Search Drivers based on the current Dispatch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/drivers/faceted_search",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              }
+            ]
+          },
+          "docs": "Searches `Drivers` in a typeahead style but instead of all `Drivers` for a `Company` this returns all `Drivers` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Equipment for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/equipment/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[equipment_type_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType IDs"
+              },
+              {
+                "name": "filter[sender_company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Sender Company IDs"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `Equipment` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on EquipmentType for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/equipment_types/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `EquipmentType` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Search Foremen based on the current Dispatch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/foremen/faceted_search",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              }
+            ]
+          },
+          "docs": "Searches `Foremen` in a typeahead style but instead of all `Foremen` for a `Company` this returns all `Foremen` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Foremen",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/foremen/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[expiring]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records."
+              },
+              {
+                "name": "filter[sender_company_types]",
+                "value": "",
+                "type": "query",
+                "description": "CompanyType enum filter. See CompanyType enum for accepted values."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `first_name` and `last_name` property on `Foremen` for a `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on FuelPriceIndex for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/fuel_price_indices/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `FuelPriceIndex` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Jobs by Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `job_id` property for `Jobs` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Loads by Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/loads/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `load_id` property for `Loads` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Drivers for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/drivers/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Single Date Filter"
+              },
+              {
+                "name": "filter[availability]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record availability based on the `date` parameter/filter, defaulting to the current day."
+              },
+              {
+                "name": "filter[expiring]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records."
+              },
+              {
+                "name": "filter[show_all]",
+                "value": "",
+                "type": "query",
+                "description": "Show all records. Deprecated in favor of `filter[availability]`"
+              },
+              {
+                "name": "filter[sender_company_types]",
+                "value": "",
+                "type": "query",
+                "description": "CompanyType enum filter. See CompanyType enum for accepted values."
+              },
+              {
+                "name": "filter[label_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic)."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `first_name` and `last_name` properties on `Drivers` for a managed company. This includes both drivers owned by the managed company and drivers shared with the managed company."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Equipment for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/equipment/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` and `external_id` properties on `Equipment` for a managed company. This includes both equipment owned by the managed company and equipment shared with the managed company."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on EquipmentType for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/equipment_types/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `EquipmentType` for a managed company."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on MaterialRates for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/material_rates/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[site][query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries on Site"
+              },
+              {
+                "name": "filter[customer_account_id]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account ID"
+              },
+              {
+                "name": "filter[project_id]",
+                "value": "",
+                "type": "query",
+                "description": "Project ID filter"
+              },
+              {
+                "name": "filter[material_id]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material ID"
+              },
+              {
+                "name": "filter[site_id]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Site ID"
+              }
+            ]
+          },
+          "docs": "`search[site][query]` is a typeahead against the `MaterialRate`'s `Site`'s `name`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Material for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/materials/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `Material` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Search Dispatch Numbers based on the current Dispatch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/dispatch_numbers/faceted_search",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              }
+            ]
+          },
+          "docs": "Searches `DispatchNumbers` in a typeahead style but instead of all `DispatchNumbers` for a `Company` this returns all `DispatchNumbers` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Orders' Dispatch Number by Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/dispatch_numbers/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `dispatch_number` property on `Orders` by current `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Orders by Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `order_id` property for `Orders` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Order Phases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/phases",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "This returns all the `Phases` for an `Order`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Order Phases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/phases/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Phases` for an `Order` visible to a `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Projects for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/projects/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_id]",
+                "value": "",
+                "type": "query",
+                "description": "Account ID filter"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` or `external_id` property on `Projects` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Rates for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/rates/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[account_id]",
+                "value": "",
+                "type": "query",
+                "description": "Account ID filter"
+              },
+              {
+                "name": "filter[driver_id]",
+                "value": "",
+                "type": "query",
+                "description": "Driver ID filter"
+              },
+              {
+                "name": "filter[equipment_id]",
+                "value": "",
+                "type": "query",
+                "description": "Equipment ID filter"
+              },
+              {
+                "name": "filter[include_default]",
+                "value": "",
+                "type": "query",
+                "description": "Includes default rates when set to true"
+              },
+              {
+                "name": "filter[owner_type]",
+                "value": "",
+                "type": "query",
+                "description": "RateOwnerType filter"
+              },
+              {
+                "name": "filter[project_id]",
+                "value": "",
+                "type": "query",
+                "description": "Project ID filter"
+              },
+              {
+                "name": "filter[service_id]",
+                "value": "",
+                "type": "query",
+                "description": "Service ID filter"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[service_class_id]",
+                "value": "",
+                "type": "query",
+                "description": "The associated ServiceClass ID"
+              },
+              {
+                "name": "filter[equipment_type_id]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType ID"
+              }
+            ]
+          },
+          "docs": "Typeahead search on `Rates` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on ServiceClasses for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/service_classes/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `ServiceClass` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Services for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/services/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `Services` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites based on the current Dispatch results for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/dispatch",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "search[job][datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              },
+              {
+                "name": "facet[filter][waypoint][type]",
+                "value": "",
+                "type": "query",
+                "description": "A Waypoint type to filter on. Can be omitted to return all."
+              }
+            ]
+          },
+          "docs": "Returns `Sites`, but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites based on the current Dispatch results for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/dispatch/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "search[job][datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              },
+              {
+                "name": "facet[filter][waypoint][type]",
+                "value": "",
+                "type": "query",
+                "description": "A Waypoint type to filter on. Can be omitted to return all."
+              }
+            ]
+          },
+          "docs": "Returns `Sites` in a typeahead style but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Sites for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters (see SiteType enum for the list of values)"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name`, or `external_id` property on `Sites` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Users for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/users/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[iam_roles]",
+                "value": "",
+                "type": "query",
+                "description": "The IamRoles of the User. Allowed values: `platform_admin`, `company_admin`, `dispatcher`, `biller`, `foreman`, `driver`, `it_admin`, `manager`"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `first_name` and `last_name` property on `Users` for a `Company`.\n\nNote:\n- `filter[iam_roles]` array are applied as `OR` in the query"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on DriverDay Phases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/driver_days/:driver-day-id/phases/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "DriverDay ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Phases` for a `DriverDay` visible to the currently authenticated `Company`.\n\nThis returns all the `Phases` across `Orders` for the `Jobs` that are in a `DriverDay`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/equipment/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[equipment_type_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType IDs"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Equipment` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on EquipmentType",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/equipment_types/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `EquipmentType` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of `GET /v1/companies/{company-id}/jobs/typeahead`. Typeahead search against the `job_id` property for `Jobs` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Materials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/materials/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Material` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Order Phases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/phases",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "This returns all the `Phases` for an `Order`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Order Phases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/phases/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Phases` for an `Order` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Projects for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/external_ids/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_id]",
+                "value": "",
+                "type": "query",
+                "description": "Account ID filter"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `external_id` property all `Projects` that belong to current `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_id]",
+                "value": "",
+                "type": "query",
+                "description": "Account ID filter"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` or `external_id` property for `Projects` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Project Phases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/phases",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "This returns all the `Phases` for a `Project`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Project Phases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/phases/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Phases` for an `Project` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/rates/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[account_id]",
+                "value": "",
+                "type": "query",
+                "description": "Account ID filter"
+              },
+              {
+                "name": "filter[driver_id]",
+                "value": "",
+                "type": "query",
+                "description": "Driver ID filter"
+              },
+              {
+                "name": "filter[equipment_id]",
+                "value": "",
+                "type": "query",
+                "description": "Equipment ID filter"
+              },
+              {
+                "name": "filter[service_id]",
+                "value": "",
+                "type": "query",
+                "description": "Service ID filter"
+              },
+              {
+                "name": "filter[project_id]",
+                "value": "",
+                "type": "query",
+                "description": "Project ID filter"
+              },
+              {
+                "name": "filter[include_default]",
+                "value": "",
+                "type": "query",
+                "description": "Includes default rates when set to true"
+              },
+              {
+                "name": "filter[owner_type]",
+                "value": "",
+                "type": "query",
+                "description": "RateOwnerType filter"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[service_class_id]",
+                "value": "",
+                "type": "query",
+                "description": "The associated ServiceClass ID"
+              },
+              {
+                "name": "filter[equipment_type_id]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType ID"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Rates` visible to the currently authenticated `Company`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on ServiceClasses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/service_classes/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `ServiceClass` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/services/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Services` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites based on the current Dispatch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/dispatch",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "search[job][datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              },
+              {
+                "name": "facet[filter][waypoint][type]",
+                "value": "",
+                "type": "query",
+                "description": "A Waypoint type to filter on. Can be omitted to return all."
+              }
+            ]
+          },
+          "docs": "Returns `Sites`, but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites based on the current Dispatch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/dispatch/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "search[job][datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              },
+              {
+                "name": "facet[filter][waypoint][type]",
+                "value": "",
+                "type": "query",
+                "description": "A Waypoint type to filter on. Can be omitted to return all."
+              }
+            ]
+          },
+          "docs": "Returns `Sites` in a typeahead style but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name`, or `external_id` property for `Sites` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Traffic Control Plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/traffic_control_plans/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Traffic Control Plans` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/users/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[iam_roles]",
+                "value": "",
+                "type": "query",
+                "description": "The IamRoles of the User. Allowed values: `platform_admin`, `company_admin`, `dispatcher`, `biller`, `foreman`, `driver`, `it_admin`, `manager`"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `first_name` and `last_name` property for `Users` visible to the currently authenticated `Company`.\n\nNote:\n- `filter[iam_roles]` array are applied as `OR` in the query"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

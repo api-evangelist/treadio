@@ -1,0 +1,699 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Drivers API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Drivers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Drivers for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/drivers",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[availability]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record availability based on the `date` parameter/filter, defaulting to the current day."
+              },
+              {
+                "name": "filter[expiring]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records."
+              },
+              {
+                "name": "filter[show_all]",
+                "value": "",
+                "type": "query",
+                "description": "Show all records. Deprecated in favor of `filter[availability]`"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Single Date Filter"
+              },
+              {
+                "name": "filter[auto_add_ons]",
+                "value": "",
+                "type": "query",
+                "description": "Filter on whether the resource (e.g. Account, User) has associated AutoAddOns"
+              },
+              {
+                "name": "filter[sender_company_types]",
+                "value": "",
+                "type": "query",
+                "description": "CompanyType enum filter. See CompanyType enum for accepted values."
+              },
+              {
+                "name": "filter[label_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic)."
+              }
+            ]
+          },
+          "docs": "Retrieve `Drivers` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Search Drivers based on the current Dispatch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/drivers/faceted_search",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              }
+            ]
+          },
+          "docs": "Searches `Drivers` in a typeahead style but instead of all `Drivers` for a `Company` this returns all `Drivers` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Drivers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/drivers/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Single Date Filter"
+              },
+              {
+                "name": "filter[availability]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record availability based on the `date` parameter/filter, defaulting to the current day."
+              },
+              {
+                "name": "filter[expiring]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records."
+              },
+              {
+                "name": "filter[show_all]",
+                "value": "",
+                "type": "query",
+                "description": "Show all records. Deprecated in favor of `filter[availability]`"
+              },
+              {
+                "name": "filter[sender_company_types]",
+                "value": "",
+                "type": "query",
+                "description": "CompanyType enum filter. See CompanyType enum for accepted values."
+              },
+              {
+                "name": "filter[label_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic)."
+              },
+              {
+                "name": "sort[name]",
+                "value": "",
+                "type": "query",
+                "description": "Sort on Name `asc` or `desc`"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `first_name` and `last_name` property on `Drivers` for a `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Driver by ID for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/drivers/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Driver ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Driver` by ID for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Drivers for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/drivers",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[availability]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record availability based on the `date` parameter/filter, defaulting to the current day."
+              },
+              {
+                "name": "filter[expiring]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records."
+              },
+              {
+                "name": "filter[show_all]",
+                "value": "",
+                "type": "query",
+                "description": "Show all records. Deprecated in favor of `filter[availability]`"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Single Date Filter"
+              },
+              {
+                "name": "filter[auto_add_ons]",
+                "value": "",
+                "type": "query",
+                "description": "Filter on whether the resource (e.g. Account, User) has associated AutoAddOns"
+              },
+              {
+                "name": "filter[sender_company_types]",
+                "value": "",
+                "type": "query",
+                "description": "CompanyType enum filter. See CompanyType enum for accepted values."
+              }
+            ]
+          },
+          "docs": "Retrieve `Drivers` for a managed company. This includes both drivers owned by the managed company and drivers shared with the managed company."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Drivers for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/drivers/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[date]",
+                "value": "",
+                "type": "query",
+                "description": "Single Date Filter"
+              },
+              {
+                "name": "filter[availability]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record availability based on the `date` parameter/filter, defaulting to the current day."
+              },
+              {
+                "name": "filter[expiring]",
+                "value": "",
+                "type": "query",
+                "description": "Filter based on record expiry. Default is `null`, which means all records are returned, `true` will omit non-expiring records, `false` will omit expiring records."
+              },
+              {
+                "name": "filter[show_all]",
+                "value": "",
+                "type": "query",
+                "description": "Show all records. Deprecated in favor of `filter[availability]`"
+              },
+              {
+                "name": "filter[sender_company_types]",
+                "value": "",
+                "type": "query",
+                "description": "CompanyType enum filter. See CompanyType enum for accepted values."
+              },
+              {
+                "name": "filter[label_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic)."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `first_name` and `last_name` properties on `Drivers` for a managed company. This includes both drivers owned by the managed company and drivers shared with the managed company."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Driver by ID for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/drivers/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Driver ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Driver` by ID for a Managed Company"
+        },
+        {
+          "info": {
+            "name": "Update a Driver's State to off_duty",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/drivers/:driver-id/driver_state/off_duty",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-id",
+                "value": "",
+                "type": "path",
+                "description": "Driver ID"
+              }
+            ]
+          },
+          "docs": "Update the status of a `driver` to `off_duty`.\n\nThis endpoint requires the `edit_user` permission."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Driver by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/drivers/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Driver ID"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of \"Retrieve a `Driver` by ID for a `Company`\"\n\nRetrieve a `Driver` by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

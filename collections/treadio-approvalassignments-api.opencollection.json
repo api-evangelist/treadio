@@ -1,0 +1,374 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier ApprovalAssignments API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ApprovalAssignments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve ApprovalStatus for a Driver Day for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/driver_days/:driver-day-id/approval_status",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "Driver Day Id"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Retrieve  `ApprovalStatus` for a visible `DriverDay` for a specific `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve ApprovalAssignments for a DriverDay as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/driver_days/:driver-day-id/approvals",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "DriverDay ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `ApprovalAssignments` for a `DriverDay` as a `Company`"
+        },
+        {
+          "info": {
+            "name": "Approve a DriverDay as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/driver_days/:driver-day-id/approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "DriverDay ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve a `DriverDay` by ID as a `Company`\n\nThis endpoint requires the `approve_driver_day` permission."
+        },
+        {
+          "info": {
+            "name": "Unapprove a DriverDay as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/driver_days/:driver-day-id/unapprove",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "DriverDay ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unapprove a `DriverDay` by ID as a `Company`\n\n\nThis endpoint requires the `approve_driver_day` permission."
+        },
+        {
+          "info": {
+            "name": "Retrieve ApprovalStatus for a Job for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/approval_status",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Retrieve  `ApprovalStatus` for a visible `Job` for a specific `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve ApprovalAssignments for a Job for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/approvals",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all `ApprovalAssignments` visible to the specified `Company` for a `Job`"
+        },
+        {
+          "info": {
+            "name": "Retrieve ApprovalAssignments for a Load for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/loads/:load-id/approvals",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all `ApprovalAssignments` visible to the specified `Company` for a `Load`"
+        },
+        {
+          "info": {
+            "name": "Retrieve ApprovalStatus for a Driver Day",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/driver_days/:driver-day-id/approval_status",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "Driver Day Id"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of \"Retrieve  `ApprovalStatus` for a visible `DriverDay` for a Company\"\n\nRetrieve  `ApprovalStatus` for a visible `DriverDay`"
+        },
+        {
+          "info": {
+            "name": "Retrieve ApprovalAssignments for a Driver Day",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/driver_days/:driver-day-id/approvals",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "Driver Day Id"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of \"Retrieve `ApprovalAssignments` for a `DriverDay` as a `Company`\"\n\nRetrieve all `ApprovalAssignments` visible to your `Company` for a `DriverDay`"
+        },
+        {
+          "info": {
+            "name": "Retrieve ApprovalStatus for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/approval_status",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of \"Retrieve  `ApprovalStatus` for a visible `Job` for a Company\"\n\nRetrieve  `ApprovalStatus` for a visible `Job`"
+        },
+        {
+          "info": {
+            "name": "Retrieve ApprovalAssignments for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/approvals",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of \"Retrieve ApprovalAssignments for a Job for a Company\"\n\nRetrieve all `ApprovalAssignments` visible to your `Company` for a `Job`"
+        },
+        {
+          "info": {
+            "name": "Retrieve ApprovalAssignments for a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/approvals",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of \"Retrieve ApprovalAssignments for a Load for a Company\"\n\nRetrieve all `ApprovalAssignments` visible to your `Company` for a `Load`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

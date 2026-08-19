@@ -1,0 +1,1449 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Settlements API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Settlements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Settlement for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `Settlement` from approved `Invoices` for the specified company"
+        },
+        {
+          "info": {
+            "name": "Bulk Create Settlements",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/bulk_create",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk Create `Settlements` for `Customers`, `Vendors` and `Drivers`."
+        },
+        {
+          "info": {
+            "name": "Retrieve payable Settlements visible to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/payables",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[rate_types]",
+                "value": "",
+                "type": "query",
+                "description": "Array of rate types to filter by"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "sort[created_at]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by Created At timestamp `asc` or `desc`"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              }
+            ]
+          },
+          "docs": "Retrieve payable `Settlements` visible to a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve receivable Settlements visible to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/receivables",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[rate_types]",
+                "value": "",
+                "type": "query",
+                "description": "Array of rate types to filter by"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "sort[created_at]",
+                "value": "",
+                "type": "query",
+                "description": "Sort by Created At timestamp `asc` or `desc`"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              }
+            ]
+          },
+          "docs": "Retrieve receivable `Settlements` visible to a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Settlement for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Settlement` by ID for the specified company"
+        },
+        {
+          "info": {
+            "name": "Approve a Settlement as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve a `Settlement` by ID as a `Company`"
+        },
+        {
+          "info": {
+            "name": "Pay a Settlement as the Customer for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/customer_pay",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Pay a `Settlement` as the `Customer` by ID for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Email a Settlement (Company-scoped)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/email_settlement",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Email a `Settlement` using company-scoped endpoint\n\nThis requires `edit_settlement` permission.\n\nThis endpoint allows parent companies to email settlements for their child companies."
+        },
+        {
+          "info": {
+            "name": "Export Settlement to Agave",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/export",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Export a Settlement to Agave. The export is performed asynchronously."
+        },
+        {
+          "info": {
+            "name": "Get Invoices for a Settlement for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/invoices",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Get `Invoices` for a `Settlement` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Pay a Settlement as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/pay",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pay a `Settlement` by ID as a `Company`"
+        },
+        {
+          "info": {
+            "name": "Rebill a Settlement for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/rebill",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Create a new `Settlement` from a voided `Settlement` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Send a Settlement as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/send_settlement",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a `Settlement` by ID as a `Company`"
+        },
+        {
+          "info": {
+            "name": "Get SettlementEmailDeliveries for a Settlement as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/settlement_email_deliveries",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Get `SettlementEmailDeliveries` for a `Settlement` as a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve all SettlementLineItems that belongs to a Settlement as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/settlement_line_items",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "settlement_line_item_type",
+                "value": "",
+                "type": "query",
+                "description": "Override `Settlement`'s `settlement_line_item_type` for rendering `SettlementLineItems`. See `SettlementLineItemType` enum for values."
+              }
+            ]
+          },
+          "docs": "Retrieve all `SettlementLineItems` that belongs to a `Settlement` as a `Company`.\n\nNotes:\n- if the `Settlement`'s configuration has no grouping, then the array response would just contain a single grouped result without the `group` field and the `line_items` would be all the line items."
+        },
+        {
+          "info": {
+            "name": "Unapprove a Settlement as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/unapprove",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Unapprove a `Settlement` by ID as a `Company`"
+        },
+        {
+          "info": {
+            "name": "Undo pay on a Settlement as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/undo_pay",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Undo pay on a `Settlement` by ID as a `Company`"
+        },
+        {
+          "info": {
+            "name": "Void a Settlement as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/void",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Void a `Settlement` by ID as a `Company`"
+        },
+        {
+          "info": {
+            "name": "Create a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/settlements",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new `Settlement`"
+        },
+        {
+          "info": {
+            "name": "Retrieve payable Settlements visible to the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/settlements/payables",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[rate_types]",
+                "value": "",
+                "type": "query",
+                "description": "Array of rate types to filter by"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              }
+            ]
+          },
+          "docs": "Retrieve payable `Settlements` visible to the current `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve receivable Settlements visible to the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/settlements/receivables",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[rate_types]",
+                "value": "",
+                "type": "query",
+                "description": "Array of rate types to filter by"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              }
+            ]
+          },
+          "docs": "Retrieve receivable `Settlements` visible to the current `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/settlements/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Settlement` by ID"
+        },
+        {
+          "info": {
+            "name": "Update a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/settlements/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a `Settlement` by ID"
+        },
+        {
+          "info": {
+            "name": "Approve a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deprecated in favor of \"Approve a `Settlement` by ID as a `Company`\".\n\nApprove a `Settlement` by ID"
+        },
+        {
+          "info": {
+            "name": "Approve a Settlement as the Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/customer_approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve a `Settlement` as the `Customer` by ID"
+        },
+        {
+          "info": {
+            "name": "Pay a Settlement as the Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/customer_pay",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pay a `Settlement` as the `Customer` by ID"
+        },
+        {
+          "info": {
+            "name": "Email a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/email_settlement",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Email a `Settlement`\n\nThis requires `edit_settlement` permission.\n\n**Deprecated:** Use the company-scoped endpoint `/v1/companies/{company-id}/settlements/{settlement-id}/email_settlement` instead."
+        },
+        {
+          "info": {
+            "name": "Retrieve all FileAttachments for a given Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve all `FileAttachments` for a given `Settlement`"
+        },
+        {
+          "info": {
+            "name": "Create a FileAttachment on a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/file_attachments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FileAttachment` related to a `Settlement`. Requires permission to create attachment on `Project`—`create_settlement_attachments`.\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `file` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `file` must be a file."
+        },
+        {
+          "info": {
+            "name": "Rebill Settlement's Invoices Rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/invoices/rebill_rates",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rebill `Settlement`'s `Invoices` `Rates`"
+        },
+        {
+          "info": {
+            "name": "Pay a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/pay",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pay a `Settlement` by ID"
+        },
+        {
+          "info": {
+            "name": "Generate new Settlement for Rebill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/rebill",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ]
+          },
+          "docs": "Generate new `Settlement` for Rebill"
+        },
+        {
+          "info": {
+            "name": "Send a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/send_settlement",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deprecated in favor of \"Send a `Settlement` by ID as a `Company`\".\n\nSend a `Settlement` by ID"
+        },
+        {
+          "info": {
+            "name": "Get SettlementEmailDeliveries for a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/settlement_email_deliveries",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Get `SettlementEmailDeliveries` for a `Settlement`"
+        },
+        {
+          "info": {
+            "name": "Retrieve all SettlementLineItems that belongs to a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/settlement_line_items",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "settlement_line_item_type",
+                "value": "",
+                "type": "query",
+                "description": "Override `Settlement`'s `settlement_line_item_type` for rendering `SettlementLineItems`. See `SettlementLineItemType` enum for values."
+              }
+            ]
+          },
+          "docs": "Retrieve all `SettlementLineItems` that belongs to a `Settlement`.\n\nNotes:\n- if the `Settlement`'s configuration has no grouping, then the array response would just contain a single grouped result without the `group` field and the `line_items` would be all the line items."
+        },
+        {
+          "info": {
+            "name": "Unapprove a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/unapprove",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of \"Unapprove a `Settlement` by ID as a `Company`\".\n\nUnapprove a `Settlement` by ID"
+        },
+        {
+          "info": {
+            "name": "Void a Settlement by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/void",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Void a `Settlement` by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

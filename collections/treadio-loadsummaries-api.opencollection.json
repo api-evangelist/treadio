@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier LoadSummaries API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "LoadSummaries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update the LoadSummary for a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/summary",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the `LoadSummary` for a `Load`.\n\nThis endpoint requires the `edit_load_summaries` and `edit_job` `IamPermission`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

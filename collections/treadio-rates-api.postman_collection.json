@@ -1,0 +1,4114 @@
+{
+  "item": [
+    {
+      "id": "f4fbdf3a-e42c-4a43-ad73-ea4c6f80d7fe",
+      "name": "Rates",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ccac6fdd-4933-45a8-a155-1e7c922de481",
+          "name": "Retrieve Rates that belong to a Company",
+          "request": {
+            "name": "Retrieve Rates that belong to a Company",
+            "description": {
+              "content": "Retrieve `Rates` that belong to a `Company`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "companies",
+                ":company-id",
+                "rates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[limit]",
+                  "value": "25",
+                  "description": "The maximum number of paginated results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "The cursor to start paginating after"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[before]",
+                  "value": "<string>",
+                  "description": "The cursor to stop paginating at"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[account_id]",
+                  "value": "<string>",
+                  "description": "Account ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[account_type]",
+                  "value": "<string>",
+                  "description": "AccountType filter. See `AccountType` enum for accepted values."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[driver_id]",
+                  "value": "<string>",
+                  "description": "Driver ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[equipment_id]",
+                  "value": "<string>",
+                  "description": "Equipment ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[include_default]",
+                  "value": "<boolean>",
+                  "description": "Includes default rates when set to true"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[owner_type]",
+                  "value": "<string>",
+                  "description": "RateOwnerType filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[project_id]",
+                  "value": "<string>",
+                  "description": "Project ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[service_id]",
+                  "value": "<string>",
+                  "description": "Service ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[service_class_id]",
+                  "value": "<uuid>",
+                  "description": "The associated ServiceClass ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[equipment_type_id]",
+                  "value": "<uuid>",
+                  "description": "The associated EquipmentType ID"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "company-id",
+                  "description": "(Required) Company ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bfbe757e-95da-4a7a-8440-86dd45388ae8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Contains prev and next links for pagination",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"add_ons\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"fuel_surcharge_enabled\": true,\n      \"id\": \"2718aaaf-23a9-cd47-11ea-f7b4bbd68284\",\n      \"name\": \"string\",\n      \"owner_type\": \"driver\",\n      \"primary\": false,\n      \"projects\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"services\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"time_increment_minutes\": 3699,\n      \"time_minimum_minutes\": 2536,\n      \"time_rate\": 1079.8702100471114,\n      \"type\": \"string\",\n      \"account\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_type\": \"string\",\n      \"driver\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_class\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment_type\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"system\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"add_ons\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"fuel_surcharge_enabled\": false,\n      \"id\": \"cebc611f-98cb-28e2-6b16-56cd736f1296\",\n      \"name\": \"string\",\n      \"owner_type\": \"driver\",\n      \"primary\": true,\n      \"projects\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"services\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"time_increment_minutes\": 8846,\n      \"time_minimum_minutes\": 269,\n      \"time_rate\": 5868.320873175896,\n      \"type\": \"string\",\n      \"account\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_type\": \"string\",\n      \"driver\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_class\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment_type\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"system\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3999316-a87c-496e-84bd-cd20154c298e",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63b2efed-2b29-4611-9f00-00e8b8c8a517",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff977c5d-9570-4aad-9cf0-3dc4fe8d10f8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"errors\": [\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08411b88-777b-4318-9fd0-8caf71346ab1",
+          "name": "Typeahead search on Rates for a Company",
+          "request": {
+            "name": "Typeahead search on Rates for a Company",
+            "description": {
+              "content": "Typeahead search on `Rates` for a `Company`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "companies",
+                ":company-id",
+                "rates",
+                "typeahead"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[limit]",
+                  "value": "25",
+                  "description": "The maximum number of paginated results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "The cursor to start paginating after"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[before]",
+                  "value": "<string>",
+                  "description": "The cursor to stop paginating at"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[account_id]",
+                  "value": "<string>",
+                  "description": "Account ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[driver_id]",
+                  "value": "<string>",
+                  "description": "Driver ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[equipment_id]",
+                  "value": "<string>",
+                  "description": "Equipment ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[include_default]",
+                  "value": "<boolean>",
+                  "description": "Includes default rates when set to true"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[owner_type]",
+                  "value": "<string>",
+                  "description": "RateOwnerType filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[project_id]",
+                  "value": "<string>",
+                  "description": "Project ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[service_id]",
+                  "value": "<string>",
+                  "description": "Service ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "search[query]",
+                  "value": "<string>",
+                  "description": "Search string for queries"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[service_class_id]",
+                  "value": "<uuid>",
+                  "description": "The associated ServiceClass ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[equipment_type_id]",
+                  "value": "<uuid>",
+                  "description": "The associated EquipmentType ID"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "company-id",
+                  "description": "(Required) Company ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "59884116-af40-49be-8e3a-aa56ad1234a6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "rates",
+                    "typeahead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search[query]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Contains prev and next links for pagination",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"add_ons\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"fuel_surcharge_enabled\": true,\n      \"id\": \"ed90f6f3-d8ce-f272-c0bb-ab047965f925\",\n      \"name\": \"string\",\n      \"owner_type\": \"driver\",\n      \"primary\": false,\n      \"projects\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"services\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"time_increment_minutes\": 1987,\n      \"time_minimum_minutes\": 5028,\n      \"time_rate\": 3698.347979729578,\n      \"type\": \"string\",\n      \"account\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_type\": \"string\",\n      \"driver\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_class\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment_type\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"system\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"add_ons\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"fuel_surcharge_enabled\": true,\n      \"id\": \"eeabf3cc-5b6e-ffa5-13fb-f59a09ad73ef\",\n      \"name\": \"string\",\n      \"owner_type\": \"driver\",\n      \"primary\": false,\n      \"projects\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"services\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"time_increment_minutes\": 2022,\n      \"time_minimum_minutes\": 2240,\n      \"time_rate\": 4408.963128836353,\n      \"type\": \"string\",\n      \"account\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_type\": \"string\",\n      \"driver\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_class\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment_type\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"system\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a8565df-3f8a-47d4-a729-5f3cf62e7cee",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "rates",
+                    "typeahead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search[query]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34618c91-98ff-45af-a8e1-2a0cb4de22e1",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "rates",
+                    "typeahead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search[query]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7488931f-e21d-47c1-af54-9851a65e226b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "companies",
+                    ":company-id",
+                    "rates",
+                    "typeahead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search[query]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "company-id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"errors\": [\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "456e86ff-57cc-473f-ab02-63e23566e81c",
+          "name": "Create a Rate",
+          "request": {
+            "name": "Create a Rate",
+            "description": {
+              "content": "Create a `Rate`\n\nThis endpoint requires the `create_rate` permission\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "rates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"time_increment_minutes\": \"<integer>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_rate\": \"<number>\",\n  \"type\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"<string>\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"owner_type\": \"driver\",\n  \"driver_id\": \"<uuid>\",\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "977d1876-5ec5-4c32-b586-d44bc811a61f",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"time_increment_minutes\": \"<integer>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_rate\": \"<number>\",\n  \"type\": \"RatePerHour\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"owner_type\": \"driver\",\n  \"driver_id\": \"<uuid>\",\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"add_ons\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"company\": {\n      \"legal_name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"company_type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"equipment\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"fuel_surcharge_enabled\": true,\n    \"id\": \"f1ea7a12-44a0-6ebf-d33c-72a236782926\",\n    \"name\": \"string\",\n    \"owner_type\": \"driver\",\n    \"primary\": true,\n    \"projects\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"services\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"time_increment_minutes\": 3537,\n    \"time_minimum_minutes\": 9305,\n    \"time_rate\": 6475.12331695955,\n    \"type\": \"RatePerHour\",\n    \"account\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_types\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"external_id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"accounting_id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"schedule_on\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"billing_address\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"connected_company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"billing_contact\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"account_type\": \"customer\",\n    \"driver\": {\n      \"email\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"service_class\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"equipment_type\": {\n      \"id\": \"e555c45c-a39f-4ce9-b8bf-bf7fa6136157\",\n      \"name\": \"string\",\n      \"system\": true,\n      \"external_id\": \"string\",\n      \"accounting_id\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58559fa4-773b-4559-8769-b24352d87f63",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"time_increment_minutes\": \"<integer>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_rate\": \"<number>\",\n  \"type\": \"RatePerHour\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"owner_type\": \"driver\",\n  \"driver_id\": \"<uuid>\",\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8b80ce0-8e71-4628-a6fa-44c36d00e5a9",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"time_increment_minutes\": \"<integer>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_rate\": \"<number>\",\n  \"type\": \"RatePerHour\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"owner_type\": \"driver\",\n  \"driver_id\": \"<uuid>\",\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8333ec5-dd6e-423e-8a4d-1aaa29658d39",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"time_increment_minutes\": \"<integer>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_rate\": \"<number>\",\n  \"type\": \"RatePerHour\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"owner_type\": \"driver\",\n  \"driver_id\": \"<uuid>\",\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af498401-4d5a-40ae-82ac-0c2e855ff0b5",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"time_increment_minutes\": \"<integer>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_rate\": \"<number>\",\n  \"type\": \"RatePerHour\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"owner_type\": \"driver\",\n  \"driver_id\": \"<uuid>\",\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b7037b8-8b30-4472-b01e-387163eb5dcc",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"time_increment_minutes\": \"<integer>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_rate\": \"<number>\",\n  \"type\": \"RatePerHour\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"owner_type\": \"driver\",\n  \"driver_id\": \"<uuid>\",\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8fbc721-935a-4006-9618-2ef422609e97",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"time_increment_minutes\": \"<integer>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_rate\": \"<number>\",\n  \"type\": \"RatePerHour\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"owner_type\": \"driver\",\n  \"driver_id\": \"<uuid>\",\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"errors\": [\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85499002-3517-4dd5-8cb0-4cd2b371e9f5",
+          "name": "Retrieve Rates that belong to the current Company",
+          "request": {
+            "name": "Retrieve Rates that belong to the current Company",
+            "description": {
+              "content": "Retrieve `Rates` for a `Company`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "rates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[limit]",
+                  "value": "25",
+                  "description": "The maximum number of paginated results to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[after]",
+                  "value": "<string>",
+                  "description": "The cursor to start paginating after"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[before]",
+                  "value": "<string>",
+                  "description": "The cursor to stop paginating at"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[account_id]",
+                  "value": "<string>",
+                  "description": "Account ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[project_id]",
+                  "value": "<string>",
+                  "description": "Project ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[service_id]",
+                  "value": "<string>",
+                  "description": "Service ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[equipment_id]",
+                  "value": "<string>",
+                  "description": "Equipment ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[account_type]",
+                  "value": "<string>",
+                  "description": "Account type filter (deprecated, will only work if owner_type is not provided)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[include_default]",
+                  "value": "<boolean>",
+                  "description": "Includes default rates when set to true"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[owner_type]",
+                  "value": "<string>",
+                  "description": "RateOwnerType filter (should be used instead of account_type, this takes precedence over account_type)"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[driver_id]",
+                  "value": "<string>",
+                  "description": "Driver ID filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[service_class_id]",
+                  "value": "<uuid>",
+                  "description": "The associated ServiceClass ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[equipment_type_id]",
+                  "value": "<uuid>",
+                  "description": "The associated EquipmentType ID"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "765546f4-7f43-4ba8-8939-2c0f04aa67de",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Contains prev and next links for pagination",
+                  "key": "Link",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"add_ons\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"fuel_surcharge_enabled\": false,\n      \"id\": \"e2b3fb11-2e20-fa39-b0a9-e9381d60e0d6\",\n      \"name\": \"string\",\n      \"owner_type\": \"driver\",\n      \"primary\": true,\n      \"projects\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"services\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"time_increment_minutes\": 7633,\n      \"time_minimum_minutes\": 3173,\n      \"time_rate\": 5767.572936383634,\n      \"type\": \"RatePerHour\",\n      \"account\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_type\": \"customer\",\n      \"driver\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_class\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment_type\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"system\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    {\n      \"add_ons\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"fuel_surcharge_enabled\": false,\n      \"id\": \"42216a67-40ce-5891-abec-83297d3c6475\",\n      \"name\": \"string\",\n      \"owner_type\": \"driver\",\n      \"primary\": false,\n      \"projects\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"services\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"time_increment_minutes\": 4564,\n      \"time_minimum_minutes\": 7834,\n      \"time_rate\": 6366.2808355846955,\n      \"type\": \"RatePerHour\",\n      \"account\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_type\": \"customer\",\n      \"driver\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"service_class\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"equipment_type\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"system\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accounting_id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb795a8c-224c-4f33-b6ae-2fd1333360e9",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d90f238e-1485-4c25-9e9a-4902cd2dd1ea",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "465f62a2-7ddd-4210-8c64-cc3de789f758",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[limit]",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page[after]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[before]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[project_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[equipment_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[account_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[include_default]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[owner_type]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[driver_id]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[service_class_id]",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "filter[equipment_type_id]",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"errors\": [\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c460fc1-60b8-4a0b-9173-8a5318a1747a",
+          "name": "Retrieve a single Rate",
+          "request": {
+            "name": "Retrieve a single Rate",
+            "description": {
+              "content": "Retrieve `Rate` by ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "rates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Rate ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c38b8c5-b014-4d1c-9de4-aa3a050d1068",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"add_ons\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"company\": {\n      \"legal_name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"company_type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"equipment\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"fuel_surcharge_enabled\": true,\n    \"id\": \"f1ea7a12-44a0-6ebf-d33c-72a236782926\",\n    \"name\": \"string\",\n    \"owner_type\": \"driver\",\n    \"primary\": true,\n    \"projects\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"services\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"time_increment_minutes\": 3537,\n    \"time_minimum_minutes\": 9305,\n    \"time_rate\": 6475.12331695955,\n    \"type\": \"RatePerHour\",\n    \"account\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_types\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"external_id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"accounting_id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"schedule_on\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"billing_address\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"connected_company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"billing_contact\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"account_type\": \"customer\",\n    \"driver\": {\n      \"email\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"service_class\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"equipment_type\": {\n      \"id\": \"e555c45c-a39f-4ce9-b8bf-bf7fa6136157\",\n      \"name\": \"string\",\n      \"system\": true,\n      \"external_id\": \"string\",\n      \"accounting_id\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5dd2c8bf-7e4a-4d5b-8cf6-37cd0dbe6fe2",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "685b5881-1107-497b-8dce-31ed428bf7e9",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f0f90e4-d65f-41fa-81f5-ef3c0dc7b091",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "069acefc-53e8-471f-906b-ddf105d80fdc",
+          "name": "Update a Rate",
+          "request": {
+            "name": "Update a Rate",
+            "description": {
+              "content": "Update a `Rate` by ID\n\nThis endpoint requires the `edit_rate` permission",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "rates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Rate ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"<string>\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\",\n  \"time_rate\": \"<number>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_increment_minutes\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a241c0ba-859a-4470-9745-8b8f93a9e483",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"RatePerHour\",\n  \"name\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\",\n  \"time_rate\": \"<number>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_increment_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"add_ons\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"company\": {\n      \"legal_name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"company_type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"equipment\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"fuel_surcharge_enabled\": true,\n    \"id\": \"f1ea7a12-44a0-6ebf-d33c-72a236782926\",\n    \"name\": \"string\",\n    \"owner_type\": \"driver\",\n    \"primary\": true,\n    \"projects\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"services\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"time_increment_minutes\": 3537,\n    \"time_minimum_minutes\": 9305,\n    \"time_rate\": 6475.12331695955,\n    \"type\": \"RatePerHour\",\n    \"account\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_types\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"external_id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"accounting_id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"schedule_on\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"billing_address\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"connected_company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"billing_contact\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"account_type\": \"customer\",\n    \"driver\": {\n      \"email\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"service_class\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"equipment_type\": {\n      \"id\": \"e555c45c-a39f-4ce9-b8bf-bf7fa6136157\",\n      \"name\": \"string\",\n      \"system\": true,\n      \"external_id\": \"string\",\n      \"accounting_id\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd13690b-8dd0-4d36-8b79-93e5e2237953",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"RatePerHour\",\n  \"name\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\",\n  \"time_rate\": \"<number>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_increment_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c4f3037-e39c-4abc-8c7e-31642f3f867a",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"RatePerHour\",\n  \"name\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\",\n  \"time_rate\": \"<number>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_increment_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8490fe0f-6c40-429a-a926-b5496b9bb884",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"RatePerHour\",\n  \"name\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\",\n  \"time_rate\": \"<number>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_increment_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02d8ceb6-9cb5-4e01-b0f4-069ae6d4a312",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"RatePerHour\",\n  \"name\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\",\n  \"time_rate\": \"<number>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_increment_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60286da3-180a-4ae0-860e-24e08743ccdb",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"RatePerHour\",\n  \"name\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\",\n  \"time_rate\": \"<number>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_increment_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9db55c2-fa8e-4227-8e70-c595bdaa805c",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"RatePerHour\",\n  \"name\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\",\n  \"time_rate\": \"<number>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_increment_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a2e567d-503c-4b01-9f68-5e55a68688ae",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"RatePerHour\",\n  \"name\": \"<string>\",\n  \"account_id\": \"<uuid>\",\n  \"account_type\": \"customer\",\n  \"primary\": \"<boolean>\",\n  \"fuel_surcharge_enabled\": \"<boolean>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"add_on_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\",\n  \"time_rate\": \"<number>\",\n  \"time_minimum_minutes\": \"<integer>\",\n  \"time_increment_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"errors\": [\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "582f0c1c-ebfd-45de-bae0-15621d7a88ae",
+          "name": "Delete a Rate",
+          "request": {
+            "name": "Delete a Rate",
+            "description": {
+              "content": "Delete a `Rate` by ID\n\nThis endpoint requires the `delete_rate` permission",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "rates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Rate ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8bb88a43-afb5-4b81-89db-dfe668c42f58",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc1e6947-2c6c-4135-abf8-f9306e327e37",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61fd790f-4f9b-4d82-b983-8ac1cc6f42b8",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe6ea901-a008-4689-ac8c-26d494c00a3f",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65a5df1e-c0a0-40d5-ae22-ac54adcb8b93",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db3577db-d6cb-40e4-93a4-af904938493f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"errors\": [\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c24d60b6-ddf6-4ac3-abdc-e3bb1315bd0e",
+          "name": "Copy a Rate",
+          "request": {
+            "name": "Copy a Rate",
+            "description": {
+              "content": "Copy a `Rate` to another `Account` or `Driver`\n\nThis endpoint requires the `create_rate` permission\n\nUsage:\n- provide either `account_id` or `driver_id`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "rates",
+                ":rate-id",
+                "copy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "rate-id",
+                  "description": "(Required) Rate ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                "key": "Accept-Language",
+                "value": "en"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": \"<uuid>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"name\": \"<string>\",\n  \"driver_id\": \"<uuid>\",\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "768487fa-d4d3-433b-ad3e-a7eeb15a4ea2",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":rate-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rate-id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<uuid>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"name\": \"<string>\",\n  \"driver_id\": \"<uuid>\",\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"add_ons\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"company\": {\n      \"legal_name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"company_type\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"equipment\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"fuel_surcharge_enabled\": true,\n    \"id\": \"f1ea7a12-44a0-6ebf-d33c-72a236782926\",\n    \"name\": \"string\",\n    \"owner_type\": \"driver\",\n    \"primary\": true,\n    \"projects\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"services\": [\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    ],\n    \"time_increment_minutes\": 3537,\n    \"time_minimum_minutes\": 9305,\n    \"time_rate\": 6475.12331695955,\n    \"type\": \"RatePerHour\",\n    \"account\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"account_types\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"external_id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"accounting_id\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"schedule_on\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"billing_address\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"connected_company\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"billing_contact\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"account_type\": \"customer\",\n    \"driver\": {\n      \"email\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"service_class\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"equipment_type\": {\n      \"id\": \"e555c45c-a39f-4ce9-b8bf-bf7fa6136157\",\n      \"name\": \"string\",\n      \"system\": true,\n      \"external_id\": \"string\",\n      \"accounting_id\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a6528a1-969d-413e-9b6c-ec6e4aabe764",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":rate-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rate-id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<uuid>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"name\": \"<string>\",\n  \"driver_id\": \"<uuid>\",\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19932612-421a-4cd7-ad63-c96e6fee55cc",
+              "name": "Example response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":rate-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rate-id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<uuid>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"name\": \"<string>\",\n  \"driver_id\": \"<uuid>\",\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"error_type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89267832-07d7-4e2a-8e7f-ece69aaa28f2",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":rate-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rate-id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<uuid>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"name\": \"<string>\",\n  \"driver_id\": \"<uuid>\",\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca074832-7129-487b-a438-cb49fa6c1096",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":rate-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rate-id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<uuid>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"name\": \"<string>\",\n  \"driver_id\": \"<uuid>\",\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dbca2ba1-137e-4cf0-ad9a-66533aed8b9a",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":rate-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rate-id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<uuid>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"name\": \"<string>\",\n  \"driver_id\": \"<uuid>\",\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c745700c-1ecc-4d93-802a-e3b89777a1e7",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":rate-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rate-id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<uuid>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"name\": \"<string>\",\n  \"driver_id\": \"<uuid>\",\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8354d0d0-88b2-4bd4-a90b-9fde1d879ca1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rates",
+                    ":rate-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "rate-id",
+                      "description": "(Required) Rate ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. ",
+                    "key": "Accept-Language",
+                    "value": "en"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<uuid>\",\n  \"project_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"service_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"equipment_ids\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"name\": \"<string>\",\n  \"driver_id\": \"<uuid>\",\n  \"service_class_id\": \"<uuid>\",\n  \"equipment_type_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"errors\": [\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"model\": \"string\",\n        \"field\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tread-horizon.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "df377b56-aa16-4939-b05e-e7bb08c6d92e",
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Rates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the Version 1 implementation.\n\nWhen in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)\n\nContact Support:\n Name: Tread\n Email: developers@tread.io",
+      "type": "text/plain"
+    }
+  }
+}

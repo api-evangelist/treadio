@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier LoadCycles API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "LoadCycles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all LoadCycles for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/loads/cycles",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all `LoadCycles` for a `Job`. \n\nA `LoadCycle` is an edge between two consecutive `Loads` that have reached the `arrived_pickup` state on a given `Job`.\n\nThe response includes all calculated `LoadCycles` as well as the average time (in minutes)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

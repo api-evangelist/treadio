@@ -1,0 +1,626 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier FuelSurcharges API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "FuelSurcharges",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve FuelPriceIndices that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/fuel_price_indices",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `FuelPriceIndices` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Create a FuelPriceIndex for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/fuel_price_indices",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FuelPriceIndex` for a `Company`\n\nThis endpoint requires the `create_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on FuelPriceIndex for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/fuel_price_indices/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `FuelPriceIndex` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve FuelSurchargeSchedules that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/fuel_surcharge_schedules",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `FuelSurchargeSchedules` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Create a FuelSurchargeSchedule for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/fuel_surcharge_schedules",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FuelSurchargeSchedule` for a `Company`\n\nThis endpoint requires the `create_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on FuelSurchargeSchedule for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/fuel_surcharge_schedules/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `FuelSurchargeSchedule` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Fuel Prices that belong to a FuelPriceIndex",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/fuel_price_indices/:fuel-price-index-id/fuel_prices",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fuel-price-index-id",
+                "value": "",
+                "type": "path",
+                "description": "FuelPriceIndex ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `FuelPrices` that belong to a `FuelPriceIndex`"
+        },
+        {
+          "info": {
+            "name": "Create a FuelPrice for a FuelPriceIndex",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/fuel_price_indices/:fuel-price-index-id/fuel_prices",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fuel-price-index-id",
+                "value": "",
+                "type": "path",
+                "description": "FuelPriceIndex ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FuelPrice` for a `FuelPriceIndex`\n\nThis endpoint requires the `create_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Update FuelPriceIndex",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/fuel_price_indices/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "FuelPriceIndex ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `FuelPriceIndex` by `ID`\n\nThis endpoint requires the `edit_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Delete FuelPriceIndex",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/fuel_price_indices/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "FuelPriceIndex ID"
+              }
+            ]
+          },
+          "docs": "Delete `FuelPriceIndex` by `ID`\n\nThis endpoint requires the `delete_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Update FuelPrice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/fuel_prices/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "FuelPrice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `FuelPrice` by `ID`\n\nThis endpoint requires the `edit_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Delete FuelPrice",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/fuel_prices/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "FuelPrice ID"
+              }
+            ]
+          },
+          "docs": "Delete `FuelPrice` by `ID`\n\nThis endpoint requires the `delete_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Update FuelSurchargeSchedulePrice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/fuel_surcharge_schedule_prices/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "FuelSurchargeSchedulePrice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `FuelSurchargeSchedulePrice` by `ID`\n\nThis endpoint requires the `edit_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Delete FuelSurchargeSchedulePrice",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/fuel_surcharge_schedule_prices/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "FuelSurchargeSchedulePrice ID"
+              }
+            ]
+          },
+          "docs": "Delete `FuelSurchargeSchedulePrice` by `ID`\n\nThis endpoint requires the `delete_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve FuelSurchargeSchedulePrices that belong to a FuelSurchargeSchedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/fuel_surcharge_schedules/:fuel-surcharge-schedule-id/fuel_surcharge_schedule_prices",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fuel-surcharge-schedule-id",
+                "value": "",
+                "type": "path",
+                "description": "FuelSurchargeSchedule ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `FuelSurchargeSchedulePrices` that belong to a `FuelSurchargeSchedule`"
+        },
+        {
+          "info": {
+            "name": "Create a FuelSurchargeSchedulePrice for a FuelSurchargeSchedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/fuel_surcharge_schedules/:fuel-surcharge-schedule-id/fuel_surcharge_schedule_prices",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fuel-surcharge-schedule-id",
+                "value": "",
+                "type": "path",
+                "description": "FuelSurchargeSchedule ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `FuelSurchargeSchedulePrice` for a `FuelSurchargeSchedule`\n\nThis endpoint requires the `create_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Update FuelSurchargeSchedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/fuel_surcharge_schedules/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "FuelSurchargeSchedule ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `FuelSurchargeSchedule` by `ID`\n\nThis endpoint requires the `edit_fuel_price_indices` permission"
+        },
+        {
+          "info": {
+            "name": "Delete FuelSurchargeSchedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/fuel_surcharge_schedules/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "FuelSurchargeSchedule ID"
+              }
+            ]
+          },
+          "docs": "Delete `FuelSurchargeSchedule` by `ID`\n\nThis endpoint requires the `delete_fuel_price_indices` permission"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

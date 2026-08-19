@@ -1,0 +1,543 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Agave API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agave",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update an Agave-Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/agave/customers/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-Customer ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an `Agave-Customer`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Update an Agave-Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/agave/items/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-Item ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an `Agave-Item`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Update an Agave-LedgerAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/agave/ledger_accounts/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LedgerAccount ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an `Agave-LedgerAccount`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Create an AgaveLinkToken for the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/agave/link_tokens",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `AgaveLinkToken` for the current `Company`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Agave-LinkedAccounts for the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `Agave-LinkedAccounts` for the current `Company`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Create an Agave-LinkedAccount for the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `Agave-LinkedAccount` for the current `Company`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Delete an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete an `Agave-LinkedAccount` by id.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Agave-Customers for an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:linked-account-id/customers",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "linked-account-id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount id"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `Agave-Customers` for an `Agave-LinkedAccount`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Enqueue data import from an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:linked-account-id/import",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "linked-account-id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount ID"
+              }
+            ]
+          },
+          "docs": "Enqueue data import for an `Agave-LinkedAccount`\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Agave-Items for an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:linked-account-id/items",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "linked-account-id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `Agave-Items` for an `Agave-LinkedAccount`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on AddOns scoped to an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:linked-account-id/items/add_ons/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "linked-account-id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "`Typeahead` search on `AddOns` scoped to an `Agave-LinkedAccount`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Services scoped to an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:linked-account-id/items/services/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "linked-account-id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "`Typeahead` search on `Services` scoped to an `Agave-LinkedAccount`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Agave-LedgerAccounts for an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:linked-account-id/ledger_accounts",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "linked-account-id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `Agave-LedgerAccounts` for an `Agave-LinkedAccount`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Agave-Vendors for an Agave-LinkedAccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/agave/linked_accounts/:linked-account-id/vendors",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "linked-account-id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-LinkedAccount ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `Agave-Vendors` for an `Agave-LinkedAccount`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Update an Agave-Vendor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/agave/vendors/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Agave-Vendor ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an `Agave-Vendor`.\n\nThis endpoint requires the `manage_accounting_integration` `IamPermission`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier GeofenceTriggers API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GeofenceTriggers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate GeofenceTriggers for Drivers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/drivers/geofence_triggers",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate `GeofenceTriggers` for `Drivers` based on the provided `NextBillionGeofences`. \n\nThe `GeofenceTriggers` are not persisted."
+        },
+        {
+          "info": {
+            "name": "Generate GeofenceTriggers for Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/equipment/geofence_triggers",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate `GeofenceTriggers` for `Equipment` based on the provided `NextBillionGeofences`. \n\nThe `GeofenceTriggers` are not persisted."
+        },
+        {
+          "info": {
+            "name": "Calculate GeofenceTriggers for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/geofence_triggers",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Calculate `GeofenceTriggers` for a `Job` based on the strategy.\n\n- `historical`: Returns existing non-skipped geofence triggers for the job\n- `naive`: Calculates geofence triggers using naive strategy (requires `delay_seconds`)\n- `accuracy_strict`: Calculates geofence triggers using accuracy strict strategy (requires `delay_seconds`)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

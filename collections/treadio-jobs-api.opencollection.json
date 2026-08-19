@@ -1,0 +1,4060 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Jobs API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Device Status for a Driver",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/drivers/:driver-id/device_status",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-id",
+                "value": "",
+                "type": "path",
+                "description": "Driver ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Get GPS data and other data like device permissions for a Driver. Requires driver authorization."
+        },
+        {
+          "info": {
+            "name": "Retrieves Jobs that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs"
+              },
+              {
+                "name": "filter[driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs"
+              },
+              {
+                "name": "filter[material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "filter[service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs"
+              },
+              {
+                "name": "filter[equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs"
+              },
+              {
+                "name": "filter[external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External IDs"
+              },
+              {
+                "name": "filter[order][dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Order's DispatchNumber IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Primary IDs based on resource.id"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[foreman_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Foreman IDs"
+              },
+              {
+                "name": "filter[collaborator_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Collaborator IDs"
+              },
+              {
+                "name": "filter[salesperson_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Salesperson IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Jobs` for a `Company`.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `order_id`\n * `job_id`\n * `company.legal_name`\n * `account.name`\n * `project.name`\n * `order.dispatch_number`\n * user as driver: `driver.first_name` || `driver.last_name`\n * contact as foreman_contact: `foreman_contact.name` || `foreman_contact.email` || `foreman_contact.phone`\n * contact as collaborator_contact: `collaborator_contact.name` || `collaborator_contact.email` || `colla"
+        },
+        {
+          "info": {
+            "name": "Bulk Accept Jobs as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_accept",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept multiple `Jobs` based on the given `job_ids` asynchronously as a Company.\n\nTo accept a `Job` successfully, the principal should either be the `Driver` of the `Job` or has an `edit_job` permission."
+        },
+        {
+          "info": {
+            "name": "Bulk Assign Vendor to Jobs as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_assign",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns multiple `Jobs` to the given `Vendor` asynchronously as a Company.\n\nThis endpoint requires the `edit_job` permission\n\nDeprecated in favor of `PUT /v1/jobs/bulk_assign_vendors`"
+        },
+        {
+          "info": {
+            "name": "Bulk Assign Drivers to Jobs as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_assign_drivers",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns a list of multiple `Jobs` to the given `Driver` asynchronously as a Company.\n\nThis endpoint requires the `assign_job` permission"
+        },
+        {
+          "info": {
+            "name": "Bulk Assign Vendors to Jobs as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_assign_vendors",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns a list of multiple `Jobs` to the given `Vendor` asynchronously as a Company.\n\nThis endpoint requires the `assign_job` permission"
+        },
+        {
+          "info": {
+            "name": "Bulk cancel Jobs as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_cancel",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk cancel multiple `Jobs` by `id` asynchronously as a Company.\n\nThis endpoint requires the `cancel_job` permission.\n"
+        },
+        {
+          "info": {
+            "name": "Bulk Copy Assignments as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_copy_assignments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk Copy `JobAssignments` asynchronously as a Company.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Bulk delete Jobs as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_delete",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk delete multiple `Jobs` by `id` asynchronously as a Company.\n\nThis endpoint requires the `delete_job` permission.\n"
+        },
+        {
+          "info": {
+            "name": "Bulk Send Jobs as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_send",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send multiple `Driver`-assigned or `Vendor`-assigned `Jobs` based on the given `job_ids` and `order_ids` asynchronously as a Company.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Bulk Send Jobs for a Day",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_send_day",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send multiple `Driver`-assigned or `Vendor`-assigned `Jobs` for the given `date` asynchronously as a Company.\n\nThis endpoint requires the `edit_job` permission."
+        },
+        {
+          "info": {
+            "name": "Bulk unassign Jobs as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_unassign",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk unassign multiple `Jobs` by `id` asynchronously as a Company.\n\nThis endpoint requires the `assign_job` permission.\n"
+        },
+        {
+          "info": {
+            "name": "Bulk Update Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/bulk_update",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk update multiple `Jobs` with attributes defined in `data` asynchronously.\n\nThis endpoint requires the `edit_job` permission.\n\nBulk Updatable attributes: `notes`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Jobs by Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `job_id` property for `Jobs` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Job for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Job` by ID for a Company"
+        },
+        {
+          "info": {
+            "name": "Update a Job for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a `Job` by ID for a Compan\n\nThis endpoint requires the `edit_job` permission.\n\nIf setting the `driver_id`, the `assign_job` permission is also required."
+        },
+        {
+          "info": {
+            "name": "Accept a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/accept",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept a `Job` by ID as a Company\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Approve a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve a `Job` by ID as a Company.\n\nThis endpoint requires the `approve_job` permission.\n\nPrincipals with the `Company Admin` role can specify a specific `approval_type`."
+        },
+        {
+          "info": {
+            "name": "Arrive to site for a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/arrive",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Arrive to `site` for a `Job` by ID as a Company\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Assign a vendor to a Job for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/assign_vendor",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assign a `driver` to an `Account`, with `vendor` type for a company\n\nThis endpoint requires the `assign_job` `IAmPermission`"
+        },
+        {
+          "info": {
+            "name": "Cancel a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/cancel",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel a `Job` by ID as a Company\n\nThis endpoint requires the `cancel_job` permission"
+        },
+        {
+          "info": {
+            "name": "Complete a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/complete",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete a `Job` by ID as a Company\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Complete Load for a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/complete_load",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Load `material` for a `Job` by ID as a Company\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Get Device Status for Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/device_status",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Get GPS data and other data like device permissions for a Job. Requires job authorization."
+        },
+        {
+          "info": {
+            "name": "Move to Site for a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/enroute",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move to `site` for a `Job` by ID as a Company\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Flag a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/flag",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Flag a `Job` by ID as a Company.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Job with Invoices for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/invoicing",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Job` with `Receivable` and `Payable` `Invoices` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve all JobEvents that belong to a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/job_events",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              }
+            ]
+          },
+          "docs": "Retrieve `Job` `Job-Events` by `ID` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Load Material for a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/load_material",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Load `material` for a `Job` by ID as a Company\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Pay a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/pay",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pay a `Job` by ID as a Company.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Reject a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/reject",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reject a `Job` by ID as a Company\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Remove flag for a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/remove_flag",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove flag for a `Job` by ID as a Company.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Remove signoff for a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/remove_signoff",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove signoff for a `Job` by ID as a Company.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Request a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/request",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request a `Job` by ID to assigned `driver_id` on the job.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Resume a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/resume",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resume a `Job` by ID as a Company\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Review a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/review",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the `Job` by ID to `in_review` state as a Company.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Sign off a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/sign_off",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sign off a `Job` by ID as a Company.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve all Signatures for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/signatures",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve all `Signatures` for a `Job`"
+        },
+        {
+          "info": {
+            "name": "Create or update the DriverSignature on a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/signatures/driver",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Create or update the `DriverSignature` on a `Job`."
+        },
+        {
+          "info": {
+            "name": "Delete the DriverSignature from a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/signatures/driver",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Delete the `DriverSignature` from a `Job`."
+        },
+        {
+          "info": {
+            "name": "Create or update the DropoffSignature on a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/signatures/dropoff",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Create or update the `DropoffSignature` on a `Job`."
+        },
+        {
+          "info": {
+            "name": "Delete the DropoffSignature from a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/signatures/dropoff",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Delete the `DropoffSignature` from a `Job`."
+        },
+        {
+          "info": {
+            "name": "Unapprove a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/unapprove",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unapprove a `Job` by ID as a Company.\n\nThis endpoint requires the `approve_job` permission.\n\nPrincipals with the `Company Admin` role can specify a specific `approval_type`."
+        },
+        {
+          "info": {
+            "name": "Unassign the Driver or Vendor from a Job for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/unassign",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unassign a `vendor` for a `Job` by ID for a Company\n\nThis endpoint requires the `assign_job` permission"
+        },
+        {
+          "info": {
+            "name": "Unload the Material for a Job as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/unload_material",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unload `material` for a `Job` by ID as a Company\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs that belong to an Order as a specific Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/jobs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs"
+              },
+              {
+                "name": "filter[driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs"
+              },
+              {
+                "name": "filter[material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              },
+              {
+                "name": "filter[service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs"
+              },
+              {
+                "name": "filter[equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs"
+              },
+              {
+                "name": "filter[collaborator_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Collaborator IDs"
+              },
+              {
+                "name": "filter[salesperson_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Salesperson IDs"
+              },
+              {
+                "name": "filter[company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs "
+              },
+              {
+                "name": "filter[external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External IDs"
+              },
+              {
+                "name": "filter[foreman_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Foreman IDs"
+              },
+              {
+                "name": "filter[site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters (see SiteType enum for the list of values)"
+              }
+            ]
+          },
+          "docs": "Retrieve `Jobs` that belong to an `Order` and is visible to the currently authenticated Company.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `order_id`\n * `job_id`\n * `company.legal_name`\n * `account.name`\n * `project.name`\n * `order.dispatch_number`\n * user as driver: `driver.first_name` || `driver.last_name`\n * contact as foreman_contact: `foreman_contact.name` || `foreman_contact.email` || `foreman_contact.phone`\n * contact as collaborator_contact: `coll"
+        },
+        {
+          "info": {
+            "name": "Create a new Job for an Order for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/jobs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              }
+            ]
+          },
+          "docs": "Create a new `Job` for an `Order`.\n\nThis endpoint requires the `create_job` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs with Invoices that belong to an Order as a specific Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/jobs/invoicing",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs"
+              },
+              {
+                "name": "filter[driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs"
+              },
+              {
+                "name": "filter[material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              },
+              {
+                "name": "filter[service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs"
+              },
+              {
+                "name": "filter[equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs"
+              },
+              {
+                "name": "filter[collaborator_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Collaborator IDs"
+              },
+              {
+                "name": "filter[salesperson_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Salesperson IDs"
+              },
+              {
+                "name": "filter[company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs "
+              },
+              {
+                "name": "filter[external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External IDs"
+              },
+              {
+                "name": "filter[foreman_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Foreman IDs"
+              },
+              {
+                "name": "filter[site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[receivable_invoice][states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the Receivable Invoice"
+              },
+              {
+                "name": "filter[payable_invoice][states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the Payable Invoice"
+              }
+            ]
+          },
+          "docs": "Retrieve `Jobs` with `Receivable` and `Payable` `Invoices` that belong to an `Order` as a specific `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve the Timeline of an Order for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/timeline",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              }
+            ]
+          },
+          "docs": "Retrieve `Orders`'s Timeline by ID"
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs for the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "Job state filter"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs"
+              },
+              {
+                "name": "filter[driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs"
+              },
+              {
+                "name": "filter[material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              },
+              {
+                "name": "filter[service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs"
+              },
+              {
+                "name": "filter[equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Primary IDs based on resource.id"
+              },
+              {
+                "name": "filter[external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External IDs"
+              },
+              {
+                "name": "filter[order][dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Order's DispatchNumber IDs"
+              },
+              {
+                "name": "filter[foreman_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Foreman IDs"
+              },
+              {
+                "name": "filter[collaborator_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Collaborator IDs"
+              },
+              {
+                "name": "filter[salesperson_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Salesperson IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Jobs` for the current `Company`\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `order_id`\n * `job_id`\n * `company.legal_name`\n * `account.name`\n * `project.name`\n * `order.dispatch_number`\n * user as driver: `driver.first_name` || `driver.last_name`\n * contact as foreman_contact: `foreman_contact.name` || `foreman_contact.email` || `foreman_contact.phone`\n * contact as collaborator_contact: `collaborator_contact.name` || `collaborator_contact.email` "
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs for the current Company for approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/approval",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              }
+            ]
+          },
+          "docs": "Retrieve completed `Jobs` for the current `Company` which are ready for the `Foreman` to approve."
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs that are assigned to the current User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/assigned",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "Job state filter"
+              }
+            ]
+          },
+          "docs": "Retrieve current `User`'s `Jobs`\n\nFilter usage:\n* to filter a single state: `filter[states][]=created`\n* to filter multiple states: `filter[states][]=created&filter[states][]=arrived_dropoff`"
+        },
+        {
+          "info": {
+            "name": "Bulk Accept Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/bulk_accept",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept multiple `Jobs` based on the given `job_ids` asynchronously.\n\nTo accept a `Job` successfully, the principal should either be the `Driver` of the `Job` or has an `edit_job` permission."
+        },
+        {
+          "info": {
+            "name": "Bulk Assign Vendor to Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/bulk_assign",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns multiple `Jobs` to the given `Vendor` asynchronously.\n\nThis endpoint requires the `edit_job` permission\n\nDeprecated in favor of `PUT /v1/jobs/bulk_assign_vendors`"
+        },
+        {
+          "info": {
+            "name": "Bulk Assign Drivers to Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/bulk_assign_drivers",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns a list of multiple `Jobs` to the given `Driver` asynchronously.\n\nThis endpoint requires the `assign_job` permission"
+        },
+        {
+          "info": {
+            "name": "Bulk Assign Vendors to Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/bulk_assign_vendors",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns a list of multiple `Jobs` to the given `Vendor` asynchronously.\n\nThis endpoint requires the `assign_job` permission"
+        },
+        {
+          "info": {
+            "name": "Bulk Copy Assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/bulk_copy_assignments",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk Copy `JobAssignments` asynchronously.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Bulk delete Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/bulk_delete",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk delete multiple `Jobs` by `id` asynchronously.\n\nThis endpoint requires the `delete_job` permission.\n"
+        },
+        {
+          "info": {
+            "name": "Bulk send SMS to job's drivers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/bulk_driver_sms",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk send sms text to `Job`'s `drivers`."
+        },
+        {
+          "info": {
+            "name": "Bulk Send Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/bulk_send",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send multiple `Driver`-assigned or `Vendor`-assigned `Jobs` based on the given `job_ids` and `order_ids` asynchronously.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Bulk Update Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/jobs/bulk_update",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk update multiple `Jobs` with attributes defined in `data` asynchronously.\n\nThis endpoint requires the `edit_job` permission.\n\nBulk Updatable attributes: `notes`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs where the current User is a Collaborator",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/collaborator",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "Job state filter"
+              }
+            ]
+          },
+          "docs": "Retrieve `Jobs` where the current `User` is a `Collaborator`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs where the current User is a Driver",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/driver",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "Job state filter"
+              }
+            ]
+          },
+          "docs": "Retrieve `Jobs` where the current `User` is a `Driver`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs where the current User is a Foreman",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/foreman",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "Job state filter"
+              }
+            ]
+          },
+          "docs": "Retrieve `Jobs` where the current `User` is a `Foreman`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs where the current User is a Salesperson",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/salesperson",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "Job state filter"
+              }
+            ]
+          },
+          "docs": "Retrieve `Jobs` where the current `User` is a `Salesperson`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of `GET /v1/companies/{company-id}/jobs/typeahead`. Typeahead search against the `job_id` property for `Jobs` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Job` by ID"
+        },
+        {
+          "info": {
+            "name": "Update a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/jobs/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a `Job` by ID\n\nThis endpoint requires the `edit_job` permission.\n\nIf setting the `driver_id`, the `assign_job` permission is also required."
+        },
+        {
+          "info": {
+            "name": "Delete a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/jobs/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Delete a `Job` by ID\n\nThis endpoint requires the `delete_job` permission"
+        },
+        {
+          "info": {
+            "name": "Accept a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/accept",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Approve a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve a `Job` by ID\n\nThis endpoint requires the `approve_job` permission.\n\nPrincipals with the `Company Admin` role can specify a specific `approval_type`."
+        },
+        {
+          "info": {
+            "name": "Arrive to site for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/arrive",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Arrive to `site` for a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Assign a vendor to a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/assign_vendor",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assign a `driver` to an `Account`, with `vendor` type\n\nThis endpoint requires the `assign_job` `IAmPermission`"
+        },
+        {
+          "info": {
+            "name": "Cancel a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/cancel",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel a `Job` by ID\n\nThis endpoint requires the `cancel_job` permission"
+        },
+        {
+          "info": {
+            "name": "Complete a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/complete",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Complete Load for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/complete_load",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Load `material` for a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Copy a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/copy",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new `Job` with the same attributes as the job with provided `job-id`."
+        },
+        {
+          "info": {
+            "name": "Send SMS to a driver of a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/driver_sms",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send sms text to `driver` of a `Job`."
+        },
+        {
+          "info": {
+            "name": "Move to Site for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/enroute",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move to `site` for a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Flag a Job by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/flag",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Flag a `Job` by ID\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve all JobEvents that belong to a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/job_events",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              }
+            ]
+          },
+          "docs": "Retrieve `Job` `Job-Events` by `ID`"
+        },
+        {
+          "info": {
+            "name": "Load Material for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/load_material",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Load `material` for a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Retrieve Location Histories for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/location_histories",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `LocationHistories` for a `Job`.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Location Histories For MovingSite on A Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/moving_sites/:moving-site-id/location_histories",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "moving-site-id",
+                "value": "",
+                "type": "path",
+                "description": "Moving Site ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `LocationHistory` of a `MovingSite` for a `Job`.\n\n"
+        },
+        {
+          "info": {
+            "name": "Pause a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/pause",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pause a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Pay a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/pay",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pay a `Job` by ID\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Assign Phase to a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/phase",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assign a `Phase` to a `Job` which belongs to the `Job`'s `Order`.\n\nThis endpoint requires the `edit_job_phase` permission"
+        },
+        {
+          "info": {
+            "name": "Reject a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/reject",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reject a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Remove flag for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/remove_flag",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove flag for a `Job` by ID\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Remove signoff for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/remove_signoff",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove signoff for a `Job` by ID\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Request a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/request",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request a `Job` by ID to assigned `driver_id` on the job.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Resume a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/resume",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resume a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Review a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/review",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the `Job` by ID to `in_review` state.\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Sign off a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/sign_off",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sign off a `Job` by ID\n\nThis endpoint requires the `edit_job` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve Tickets for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/tickets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[from_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start range of ticket.created_at"
+              },
+              {
+                "name": "filter[to_date]",
+                "value": "",
+                "type": "query",
+                "description": "End range of ticket.created_at"
+              },
+              {
+                "name": "filter[flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only flagged or un-flagged Tickets"
+              },
+              {
+                "name": "filter[sources]",
+                "value": "",
+                "type": "query",
+                "description": "Array of sources (Tickets)"
+              }
+            ]
+          },
+          "docs": "Retrive `Tickets` for a `Job`.\nFilter usage:\n* to filter a from date: `filter[from_date]`\n* to filter a to date: `filter[to_date]`\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve the Timeline of a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/timeline",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Job`'s Timeline by ID"
+        },
+        {
+          "info": {
+            "name": "Unapprove a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/unapprove",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unapprove a `Job` by ID\n\nThis endpoint requires the `approve_job` permission.\n\nPrincipals with the `Company Admin` role can specify a specific `approval_type`."
+        },
+        {
+          "info": {
+            "name": "Unassign the Driver or Vendor from a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/unassign",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unassign a `vendor` for a `Job` by ID\n\nThis endpoint requires the `assign_job` permission"
+        },
+        {
+          "info": {
+            "name": "Unload the Material for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/unload_material",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unload `material` for a `Job` by ID\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Retrieve Jobs that belong to an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/jobs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs"
+              },
+              {
+                "name": "filter[driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs"
+              },
+              {
+                "name": "filter[material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              },
+              {
+                "name": "filter[service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs"
+              },
+              {
+                "name": "filter[equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs"
+              },
+              {
+                "name": "filter[collaborator_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Collaborator IDs"
+              },
+              {
+                "name": "filter[company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs "
+              },
+              {
+                "name": "filter[external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External IDs"
+              },
+              {
+                "name": "filter[foreman_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Foreman IDs"
+              },
+              {
+                "name": "filter[site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[salesperson_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Salesperson IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Jobs` that belong to an `Order` and is visible to the currently authenticated Company.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `order_id`\n * `job_id`\n * `company.legal_name`\n * `account.name`\n * `project.name`\n * `order.dispatch_number`\n * user as driver: `driver.first_name` || `driver.last_name`\n * contact as foreman_contact: `foreman_contact.name` || `foreman_contact.email` || `foreman_contact.phone`\n * contact as collaborator_contact: `coll"
+        },
+        {
+          "info": {
+            "name": "Create a new Job for an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/jobs",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              }
+            ]
+          },
+          "docs": "Create a new `Job` for an `Order`.\n\nThis endpoint requires the `create_job` `IamPermission`."
+        },
+        {
+          "info": {
+            "name": "Retrieve the Timeline of an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/timeline",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order Id"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              }
+            ]
+          },
+          "docs": "Retrieve `Orders`'s Timeline by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

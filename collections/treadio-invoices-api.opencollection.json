@@ -1,0 +1,853 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Invoices API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Invoices that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "filter[invoice_category]",
+                "value": "",
+                "type": "query",
+                "description": "The Invoice category filter. See InvoiceCategoryFilter for accepted values."
+              },
+              {
+                "name": "filter[grouped]",
+                "value": "",
+                "type": "query",
+                "description": "Only show Invoices that are part of a Settlement"
+              },
+              {
+                "name": "filter[customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[rate_types]",
+                "value": "",
+                "type": "query",
+                "description": "Array of rate types to filter by"
+              },
+              {
+                "name": "filter[invoiceable_type]",
+                "value": "",
+                "type": "query",
+                "description": "InvoiceableType enum filter (e.g. Job, DriverDay)"
+              },
+              {
+                "name": "filter[driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs"
+              },
+              {
+                "name": "filter[company_id]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company ID"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              }
+            ]
+          },
+          "docs": "Retrieve `Invoices` that visible to a `Company`"
+        },
+        {
+          "info": {
+            "name": "Update an Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an `Invoice` by ID for a `Company`\n\nThis endpoint requires the `edit_invoice` permission"
+        },
+        {
+          "info": {
+            "name": "Approve an Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Approve an `Invoice` for a `Company` by ID"
+        },
+        {
+          "info": {
+            "name": "Approve the Invoice as the Customer for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/customer_approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve the `Invoice` as the `Customer` for a `Company` by ID"
+        },
+        {
+          "info": {
+            "name": "Pay the Invoice as the Customer for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/customer_pay",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pay the `Invoice` as the `Customer` for a `Company` by ID"
+        },
+        {
+          "info": {
+            "name": "Export an Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/export",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export an `Invoice` for a `Company` by ID"
+        },
+        {
+          "info": {
+            "name": "Retrieve all InvoiceLineItems that belongs to an Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/invoice_line_items",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve all `InvoiceLineItem` for an `Invoice` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Batch update InvoiceLineItems for an Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/invoice_line_items",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Batch update `InvoiceLineItems` for an `Invoice` for a `Company`.\n\nThis endpoint allows updating, creating, deleting `InvoiceLineItems` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\n- no need to provide the `rate_type` field\ne.g.\n```json\ninvoice_line_items: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf deleting existing records:\n- must provide the `id` and the property"
+        },
+        {
+          "info": {
+            "name": "Generate InvoiceLineItems for an Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/invoice_line_items/generate",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate `InvoiceLineItems` for an `Invoice` for a `Company`\n\nThis endpoint only generates the `InvoiceLineItems` based on the inputs and does not store any data on the backend"
+        },
+        {
+          "info": {
+            "name": "Pay an Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/pay",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pay an `Invoice` for a `Company` by ID"
+        },
+        {
+          "info": {
+            "name": "Send the Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/send_invoice",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send the `Invoice` for a `Company` by ID"
+        },
+        {
+          "info": {
+            "name": "Unapprove an Invoice as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/unapprove",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Unapprove an `Invoice` by ID as a `Company`"
+        },
+        {
+          "info": {
+            "name": "Void an Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/void",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Void an `Invoice` for a `Company` by ID"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Payable Invoice for a given Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/payable",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Payable Invoice` for a given `Job` for a `Company`. \n\nThis can be a `Payable` for a `Vendor` or a `Driver`. "
+        },
+        {
+          "info": {
+            "name": "Retrieve a Receivable for a given Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/receivable",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Receivable Invoice` for a given `Job` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Invoices that belong to Jobs on an Order for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/invoices",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "filter[invoice_category]",
+                "value": "",
+                "type": "query",
+                "description": "The Invoice category filter. See InvoiceCategoryFilter for accepted values."
+              },
+              {
+                "name": "filter[grouped]",
+                "value": "",
+                "type": "query",
+                "description": "Only show Invoices that are part of a Settlement"
+              },
+              {
+                "name": "filter[customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs"
+              },
+              {
+                "name": "filter[vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              },
+              {
+                "name": "filter[project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs"
+              },
+              {
+                "name": "filter[rate_types]",
+                "value": "",
+                "type": "query",
+                "description": "Array of rate types to filter by"
+              },
+              {
+                "name": "filter[invoiceable_type]",
+                "value": "",
+                "type": "query",
+                "description": "InvoiceableType enum filter (e.g. Job, DriverDay)"
+              },
+              {
+                "name": "filter[driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              }
+            ]
+          },
+          "docs": "Retrieve `Invoices` that are on `Jobs` tied to an `Order` for a specific `Company`. "
+        },
+        {
+          "info": {
+            "name": "Retrieve a Payable Invoice for a given DriverDay",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/driver_days/:driver-day-id/payable",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "DriverDay ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Payable Invoice` for a given `DriverDay`."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Payable Invoice for a given Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/payable",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Payable Invoice` for a given `Job`. \n\nThis can be a `Payable` for a `Vendor` or a `Driver`. "
+        },
+        {
+          "info": {
+            "name": "Retrieve a Receivable for a given Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/receivable",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Receivable Invoice` for a given `Job`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

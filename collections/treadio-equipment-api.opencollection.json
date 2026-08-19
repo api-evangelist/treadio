@@ -1,0 +1,858 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Equipment API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Equipment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Equipment that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/equipment",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[equipment_type_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType IDs"
+              },
+              {
+                "name": "filter[sender_company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Sender Company IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Equipment` for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Create an Equipment for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/equipment",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `Equipment` for a `Company`\n\nThis endpoint requires the `create_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Equipment for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/equipment/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[equipment_type_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType IDs"
+              },
+              {
+                "name": "filter[sender_company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Sender Company IDs"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property on `Equipment` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Equipment by ID for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/equipment/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Equipment` by ID for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Equipment for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/equipment",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[equipment_type_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType IDs"
+              },
+              {
+                "name": "filter[sender_company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Sender Company IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Equipment` for a managed company. This includes both equipment owned by the managed company and equipment shared with the managed company."
+        },
+        {
+          "info": {
+            "name": "Create Equipment for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/equipment",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `Equipment` for a Managed `Company`\n\nThis endpoint requires the `create_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Equipment for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/equipment/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` and `external_id` properties on `Equipment` for a managed company. This includes both equipment owned by the managed company and equipment shared with the managed company."
+        },
+        {
+          "info": {
+            "name": "Retrieve Equipment by ID for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/equipment/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Equipment` by ID for a Managed Company"
+        },
+        {
+          "info": {
+            "name": "Update Equipment for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/equipment/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `Equipment` by ID for a Managed Company\n\nThis endpoint requires the `edit_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Delete Equipment for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/equipment/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              }
+            ]
+          },
+          "docs": "Delete `Equipment` by ID for a Managed Company\n\nThis endpoint requires the `delete_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/equipment",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[equipment_type_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType IDs"
+              },
+              {
+                "name": "filter[label_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic)."
+              }
+            ]
+          },
+          "docs": "Retrieve `Equipment` visible to a `Company`\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `external_id`\n * `license_number`\n * `name`\n"
+        },
+        {
+          "info": {
+            "name": "Create an Equipment in the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/equipment",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `Equipment` in the current `Company`\n\nThis endpoint requires the `create_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/equipment/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[dispatchable]",
+                "value": "",
+                "type": "query",
+                "description": "Filter dispatchable CompanyShareable models"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[equipment_type_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType IDs"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` property for `Equipment` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Activate an Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/equipment/:equipment-id/activate",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "equipment-id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activate an `Equipment`\n\nThis endpoint requires the `edit_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Deactivate an Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/equipment/:equipment-id/deactivate",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "equipment-id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deactivate an `Equipment`\n\nThis endpoint requires the `edit_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/equipment/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of \"Retrieve `Equipment` by ID for a `Company`\"\n\nRetrieve an `Equipment` by ID"
+        },
+        {
+          "info": {
+            "name": "Update an Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/equipment/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `Equipment` by ID\n\nThis endpoint required the `edit_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Delete an Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/equipment/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              }
+            ]
+          },
+          "docs": "Delete an `Equipment`\n\nThis endpoint required the `delete_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Assign Equipment to a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/additional_equipment",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assign additional `Equipment` to a `Job`\n\nThis endpoint requires the `edit_job_equipment` permission"
+        },
+        {
+          "info": {
+            "name": "Assign Equipment to a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/equipment",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assign `Equipment` to a `Job`\n\nThis endpoint requires the `edit_job_equipment` permission"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

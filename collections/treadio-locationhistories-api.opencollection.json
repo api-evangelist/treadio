@@ -1,0 +1,245 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier LocationHistories API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "LocationHistories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Location Histories for a DriverDay",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/driver_days/:driver-day-id/location_histories",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "DriverDay ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              }
+            ]
+          },
+          "docs": "Retrieve `LocationHistories` for a `DriverDay`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Location Histories for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/location_histories",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              }
+            ]
+          },
+          "docs": "Retrieve `LocationHistories` for a `Job`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Location Histories for a Moving Site on a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/moving_sites/:moving-site-id/location_histories",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "moving-site-id",
+                "value": "",
+                "type": "path",
+                "description": "MovingSite ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `LocationHistories` for a `MovingSite` on a `Job`.\n\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve latest Location Histories for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/location_histories/latest",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[order_id]",
+                "value": "",
+                "type": "query",
+                "description": "Filters location histories to include only those associated with the specified order's jobs "
+              },
+              {
+                "name": "filter[job_id]",
+                "value": "",
+                "type": "query",
+                "description": "Filters location histories to include only those associated with the specific job "
+              }
+            ]
+          },
+          "docs": "Retrieve latest `LocationHistories` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve latest Location Histories for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/location_histories/latest",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filter[order_id]",
+                "value": "",
+                "type": "query",
+                "description": "Filters location histories to include only those associated with the specified order's jobs "
+              },
+              {
+                "name": "filter[job_id]",
+                "value": "",
+                "type": "query",
+                "description": "Filters location histories to include only those associated with the specific job "
+              }
+            ]
+          },
+          "docs": "Retrieve latest `LocationHistories` for a `Company`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

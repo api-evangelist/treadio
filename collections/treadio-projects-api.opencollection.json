@@ -1,0 +1,711 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Projects API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Projects that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/projects",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "Project state filters."
+              },
+              {
+                "name": "filter[requester_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Requester IDs"
+              },
+              {
+                "name": "filter[external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External IDs"
+              },
+              {
+                "name": "filter[account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Account IDs filter"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[po_job_numbers]",
+                "value": "",
+                "type": "query",
+                "description": "The associated PO/Job Numbers"
+              },
+              {
+                "name": "filter[service_class_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated ServiceClass IDs"
+              },
+              {
+                "name": "filter[equipment_type_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType IDs"
+              },
+              {
+                "name": "filter[foreman_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Foreman IDs"
+              },
+              {
+                "name": "filter[collaborator_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Collaborator IDs"
+              },
+              {
+                "name": "filter[salesperson_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Salesperson IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Projects` for a `Company`.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `name`\n * `po_job_number`\n * `project_id`\n * `company.legal_name`\n * `account.name`\n * `external_id`\n\n Filter usage:\n* to filter a single state: `filter[states][]=active`\n* to filter multiple states: `filter[states][]=inactive&filter[states][]=active`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Projects where the current User is a Salesperson",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/projects/salesperson",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `Projects` where the current `User` is a `Salesperson`"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Projects for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/projects/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_id]",
+                "value": "",
+                "type": "query",
+                "description": "Account ID filter"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` or `external_id` property on `Projects` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Projects that belong to the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[requester_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Requester IDs"
+              },
+              {
+                "name": "filter[external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External IDs"
+              },
+              {
+                "name": "filter[account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "Account IDs filter"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[po_job_numbers]",
+                "value": "",
+                "type": "query",
+                "description": "The associated PO/Job Numbers"
+              },
+              {
+                "name": "filter[service_class_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated ServiceClass IDs"
+              },
+              {
+                "name": "filter[equipment_type_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated EquipmentType IDs"
+              },
+              {
+                "name": "filter[foreman_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Foreman IDs"
+              },
+              {
+                "name": "filter[collaborator_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Collaborator IDs"
+              },
+              {
+                "name": "filter[salesperson_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Salesperson IDs"
+              },
+              {
+                "name": "filter[pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs"
+              },
+              {
+                "name": "filter[dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Projects` for a `Company`.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `name`\n * `po_job_number`\n * `project_id`\n * `company.legal_name`\n * `account.name`\n * `external_id`"
+        },
+        {
+          "info": {
+            "name": "Create a Project in the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/projects",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new `Project`\n\nThis endpoint requires the `create_project` permission"
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Projects for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/external_ids/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_id]",
+                "value": "",
+                "type": "query",
+                "description": "Account ID filter"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `external_id` property all `Projects` that belong to current `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[account_id]",
+                "value": "",
+                "type": "query",
+                "description": "Account ID filter"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name` or `external_id` property for `Projects` visible to the currently authenticated `Company`.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Project` by ID"
+        },
+        {
+          "info": {
+            "name": "Update Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/projects/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `Project` by ID\n\nThis endpoint requires the `edit_project` permission"
+        },
+        {
+          "info": {
+            "name": "Delete Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/projects/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Delete `Project` by ID\n\nThis endpoint requires the `delete_project` permission"
+        },
+        {
+          "info": {
+            "name": "Activate a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/activate",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activate a `Project`\n\nThis endpoint requires the `edit_project` permission"
+        },
+        {
+          "info": {
+            "name": "Deactivate a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/deactivate",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deactivate a `Project`\n\nThis endpoint requires the `edit_project` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve default sites for a project, given a waypoint type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/default_sites/:waypoint-type",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "Project Id"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve the `Sites` that belong to the default list of an `Project`, given a particular 'WaypointType'.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,672 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier CompanyShares API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CompanyShares",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve CompanyShares for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/company_shares",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[sender_company_id]",
+                "value": "",
+                "type": "query",
+                "description": "Sender Company ID"
+              },
+              {
+                "name": "filter[receiver_company_id]",
+                "value": "",
+                "type": "query",
+                "description": "Receiver Company ID"
+              },
+              {
+                "name": "filter[between_company_id]",
+                "value": "",
+                "type": "query",
+                "description": "Between Company ID"
+              },
+              {
+                "name": "filter[company_shareable_type]",
+                "value": "",
+                "type": "query",
+                "description": "Company Shareable Type"
+              },
+              {
+                "name": "filter[company_shareable_id]",
+                "value": "",
+                "type": "query",
+                "description": "Company Shareable ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `CompanyShares` for a `Company`.\n\nNote that the `sender_company_id` and `receiver_company_id` filters are mutually exclusive with `between_company_id`."
+        },
+        {
+          "info": {
+            "name": "Create a Company Share",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/company_shares",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `CompanyShare`.\n\nThis endpoint requires the `create_companyshare` permission."
+        },
+        {
+          "info": {
+            "name": "Update a CompanyShare as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/company_shares/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "CompanyShare ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a `CompanyShare` as a `Company`.\n\nThis endpoint requires the `edit_company_share` permission.\n\nNote that `external_id` can only be updated by the receiver `Company`."
+        },
+        {
+          "info": {
+            "name": "Delete a CompanyShare as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/company_shares/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "CompanyShare ID"
+              }
+            ]
+          },
+          "docs": "Delete a `CompanyShare` as a `Company`.\n\nThis endpoint requires the `delete_companyshare` permission."
+        },
+        {
+          "info": {
+            "name": "Retrieve CompanyShares for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/company_shares",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[sender_company_id]",
+                "value": "",
+                "type": "query",
+                "description": "Sender Company ID"
+              },
+              {
+                "name": "filter[receiver_company_id]",
+                "value": "",
+                "type": "query",
+                "description": "Receiver Company ID"
+              },
+              {
+                "name": "filter[between_company_id]",
+                "value": "",
+                "type": "query",
+                "description": "Between Company ID"
+              },
+              {
+                "name": "filter[company_shareable_type]",
+                "value": "",
+                "type": "query",
+                "description": "Company Shareable Type"
+              },
+              {
+                "name": "filter[company_shareable_id]",
+                "value": "",
+                "type": "query",
+                "description": "Company Shareable ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `CompanyShares` for a managed company. This includes both shares sent by the managed company and shares received by the managed company."
+        },
+        {
+          "info": {
+            "name": "Create CompanyShare for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/company_shares",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `CompanyShare` for a Managed Company\n\nThis endpoint requires the `create_company_share` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve CompanyShare by ID for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/company_shares/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "CompanyShare ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `CompanyShare` by ID for a Managed Company"
+        },
+        {
+          "info": {
+            "name": "Update CompanyShare for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/company_shares/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "CompanyShare ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `CompanyShare` by ID for a Managed Company\n\nThis endpoint requires the `edit_company_share` permission"
+        },
+        {
+          "info": {
+            "name": "Delete CompanyShare for a Managed Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/managed_companies/:managed-company-id/company_shares/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managing Company ID"
+              },
+              {
+                "name": "managed-company-id",
+                "value": "",
+                "type": "path",
+                "description": "Managed Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "CompanyShare ID"
+              }
+            ]
+          },
+          "docs": "Delete `CompanyShare` by ID for a Managed Company\n\nThis endpoint requires the `delete_company_share` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve a single CompanyShare",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/company_shares/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "CompanyShare ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a single `CompanyShare` by ID."
+        },
+        {
+          "info": {
+            "name": "Update a CompanyShare",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/company_shares/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "CompanyShare ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deprecated in favor of \"Update a `CompanyShare` as a `Company`\"\n\nUpdate a `CompanyShare`.\n\nThis endpoint requires the `edit_company_share` permission.\n\nNote that `external_id` can only be updated by the receiver `Company`."
+        },
+        {
+          "info": {
+            "name": "Delete a CompanyShare",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/company_shares/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "CompanyShare ID"
+              }
+            ]
+          },
+          "docs": "Deprecated in favor of \"Delete a `CompanyShare` as a `Company`\"\n\nDelete a `CompanyShare`.\n\nThis endpoint requires the `delete_companyshare` permission."
+        },
+        {
+          "info": {
+            "name": "Retrieve CompanyShares for a Driver",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/drivers/:driver-id/company_shares",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-id",
+                "value": "",
+                "type": "path",
+                "description": "Driver ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `CompanyShares` for a `Driver`"
+        },
+        {
+          "info": {
+            "name": "Retrieve CompanyShares for an Equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/equipment/:equipment-id/company_shares",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "equipment-id",
+                "value": "",
+                "type": "path",
+                "description": "Equipment ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `CompanyShares` for an `Equipment`"
+        },
+        {
+          "info": {
+            "name": "Retrieve CompanyShares for a Foreman",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/foremen/:foreman-id/company_shares",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "foreman-id",
+                "value": "",
+                "type": "path",
+                "description": "Foreman ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `CompanyShares` for a `Foreman`"
+        },
+        {
+          "info": {
+            "name": "Retrieve CompanyShares for a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/company_shares",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `CompanyShares` for a `Site`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,965 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Loads API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Loads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Loads of a Job for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/jobs/:job-id/loads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[ticket][flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only loads with flagged or unflagged tickets"
+              },
+              {
+                "name": "filter[states][]",
+                "value": "",
+                "type": "query",
+                "description": "Filter loads by state. Multiple states can be provided to filter loads matching any of the specified states."
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Loads` of a `Job` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Loads by Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/loads/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `load_id` property for `Loads` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Approve a Load as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/loads/:load-id/approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve a `Load` by ID as a `Company`\n\nThis endpoint requires the `approve_load` permission."
+        },
+        {
+          "info": {
+            "name": "Complete a Load as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/loads/:load-id/complete",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ]
+          },
+          "docs": "Complete a `Load` by ID as a `Company`\n\nThis endpoint requires the `edit_job` permission or if the current user is the assigned driver"
+        },
+        {
+          "info": {
+            "name": "Unapprove a Load as a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/loads/:load-id/unapprove",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unapprove a `Load` by ID as a `Company`\n\nThis endpoint requires the `approve_load` permission."
+        },
+        {
+          "info": {
+            "name": "Retrieve Loads of an Order for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/loads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[ticket][flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only loads with flagged or unflagged tickets"
+              },
+              {
+                "name": "filter[states][]",
+                "value": "",
+                "type": "query",
+                "description": "Filter loads by state. Multiple states can be provided to filter loads matching any of the specified states."
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Loads` of an `Order` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Loads of a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/loads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[ticket][flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only loads with flagged or unflagged tickets"
+              },
+              {
+                "name": "filter[states][]",
+                "value": "",
+                "type": "query",
+                "description": "Filter loads by state. Multiple states can be provided to filter loads matching any of the specified states."
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Loads` of all `Orders` belonging to a `Settlement`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Loads of a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/loads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[ticket][flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only loads with flagged or unflagged tickets"
+              },
+              {
+                "name": "filter[states][]",
+                "value": "",
+                "type": "query",
+                "description": "Filter loads by state. Multiple states can be provided to filter loads matching any of the specified states."
+              }
+            ]
+          },
+          "docs": "Retrieve `Loads` of a `Job`."
+        },
+        {
+          "info": {
+            "name": "Add a new load to a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/loads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `Load` by for a `Job`\n\nThis endpoint requires the `create_loads` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve Loads for the current Company for approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/loads/approval",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[job][datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range"
+              },
+              {
+                "name": "filter[end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range"
+              }
+            ]
+          },
+          "docs": "Retrieve completed `Loads` for the current `Company` which are ready for the `Foreman` to approve."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/loads/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Load` by ID"
+        },
+        {
+          "info": {
+            "name": "Update a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/loads/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a `Load` by ID\n\nThis endpoint requires the `edit_load` permission"
+        },
+        {
+          "info": {
+            "name": "Delete a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/loads/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ]
+          },
+          "docs": "Delete a `Load` by ID\n\nThis endpoint requires the `delete_load` permission"
+        },
+        {
+          "info": {
+            "name": "Approve a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve a `Load` by ID\n\nThis endpoint requires the `approve_load` permission."
+        },
+        {
+          "info": {
+            "name": "Retrieve all Signatures for a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/signatures",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve all `Signatures` for a `Load`"
+        },
+        {
+          "info": {
+            "name": "Create or update the DriverSignature on a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/signatures/driver",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Create or update the `DriverSignature` on a `Load`."
+        },
+        {
+          "info": {
+            "name": "Delete the DriverSignature from a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/signatures/driver",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ]
+          },
+          "docs": "Delete the `DriverSignature` from a `Load`."
+        },
+        {
+          "info": {
+            "name": "Create or update the DropoffSignature on a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/signatures/dropoff",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Create or update the `DropoffSignature` on a `Load`. "
+        },
+        {
+          "info": {
+            "name": "Delete the DropoffSignature from a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/signatures/dropoff",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ]
+          },
+          "docs": "Delete the `DropoffSignature` from a `Load`"
+        },
+        {
+          "info": {
+            "name": "Unapprove a Load",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/loads/:load-id/unapprove",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path",
+                "description": "Load ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unapprove a `Load` by ID\n\nThis endpoint requires the `approve_load` permission."
+        },
+        {
+          "info": {
+            "name": "Retrieve Loads of an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/loads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[ticket][flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only loads with flagged or unflagged tickets"
+              },
+              {
+                "name": "filter[states][]",
+                "value": "",
+                "type": "query",
+                "description": "Filter loads by state. Multiple states can be provided to filter loads matching any of the specified states."
+              }
+            ]
+          },
+          "docs": "Retrieve `Loads` of an `Order`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,728 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Tickets API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tickets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Tickets for an Order for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/tickets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[from_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start range of ticket.created_at"
+              },
+              {
+                "name": "filter[to_date]",
+                "value": "",
+                "type": "query",
+                "description": "End range of ticket.created_at"
+              },
+              {
+                "name": "filter[flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only flagged or un-flagged Tickets"
+              },
+              {
+                "name": "filter[sources]",
+                "value": "",
+                "type": "query",
+                "description": "Array of sources (Tickets)"
+              }
+            ]
+          },
+          "docs": "Retrive `Tickets` for an `Order`.\nFilter usage:\n* to filter a from date: `filter[from_date]`\n* to filter a to date: `filter[to_date]`\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Ticket Rollup Summary for an Order for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/tickets/rollup_summary",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "filter[sources]",
+                "value": "",
+                "type": "query",
+                "description": "Array of sources (Tickets)"
+              }
+            ]
+          },
+          "docs": "Retrive `TicketRollupSummary` for an `Order`.\nFilter usage:\n* filter on ticket source: `filter[sources]`\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Tickets for a Settlement for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/tickets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `Tickets` for a `Settlement`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Tickets that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/tickets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[from_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start range of ticket.created_at"
+              },
+              {
+                "name": "filter[to_date]",
+                "value": "",
+                "type": "query",
+                "description": "End range of ticket.created_at"
+              },
+              {
+                "name": "filter[flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only flagged or un-flagged Tickets"
+              },
+              {
+                "name": "filter[sources]",
+                "value": "",
+                "type": "query",
+                "description": "Array of sources (Tickets)"
+              }
+            ]
+          },
+          "docs": "Retrieve `Tickets` that belong to a `Company` by `ID`\n\nFilter usage:\n* to filter a from date: `filter[from_date]`\n* to filter a to date: `filter[to_date]`"
+        },
+        {
+          "info": {
+            "name": "Create a DirectUpload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/direct_uploads",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `DirectUpload`.\n\nThe `checksum` _must_ be calculated exactly the way `rails` expects it ([javascript example](https://github.com/rails/rails/blob/main/activestorage/app/javascript/activestorage/file_checksum.js)).\n\nYou should upload the file to `direct_upload.url` using any provided headers from `direct_upload.headers`.\n\nOnce this is done you can use `signed_id` in place of a file in any endpoint that accepts file uploads."
+        },
+        {
+          "info": {
+            "name": "Retrieve Tickets for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/tickets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[from_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start range of ticket.created_at"
+              },
+              {
+                "name": "filter[to_date]",
+                "value": "",
+                "type": "query",
+                "description": "End range of ticket.created_at"
+              },
+              {
+                "name": "filter[flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only flagged or un-flagged Tickets"
+              },
+              {
+                "name": "filter[sources]",
+                "value": "",
+                "type": "query",
+                "description": "Array of sources (Tickets)"
+              }
+            ]
+          },
+          "docs": "Retrive `Tickets` for a `Job`.\nFilter usage:\n* to filter a from date: `filter[from_date]`\n* to filter a to date: `filter[to_date]`\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Tickets for an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/tickets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[from_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start range of ticket.created_at"
+              },
+              {
+                "name": "filter[to_date]",
+                "value": "",
+                "type": "query",
+                "description": "End range of ticket.created_at"
+              },
+              {
+                "name": "filter[flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only flagged or un-flagged Tickets"
+              },
+              {
+                "name": "filter[sources]",
+                "value": "",
+                "type": "query",
+                "description": "Array of sources (Tickets)"
+              }
+            ]
+          },
+          "docs": "Retrive `Tickets` for an `Order`.\nFilter usage:\n* to filter a from date: `filter[from_date]`\n* to filter a to date: `filter[to_date]`\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Ticket Rollup Summary for an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/tickets/rollup_summary",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "filter[sources]",
+                "value": "",
+                "type": "query",
+                "description": "Array of sources (Tickets)"
+              }
+            ]
+          },
+          "docs": "Retrive `TicketRollupSummary` for an `Order`.\nFilter usage:\n* filter on ticket source: `filter[sources]`\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Tickets that belong to the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/tickets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[from_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start range of ticket.created_at"
+              },
+              {
+                "name": "filter[to_date]",
+                "value": "",
+                "type": "query",
+                "description": "End range of ticket.created_at"
+              },
+              {
+                "name": "filter[flagged]",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only flagged or un-flagged Tickets"
+              }
+            ]
+          },
+          "docs": "Retrieve `Tickets` for a `Company`\n\nFilter usage:\n* to filter a from date: `filter[from_date]`\n* to filter a to date: `filter[to_date]`"
+        },
+        {
+          "info": {
+            "name": "Create a Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/tickets",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `Ticket`\n\nThis endpoint requires the `create_ticket` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/tickets/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Ticket ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Ticket` by ID"
+        },
+        {
+          "info": {
+            "name": "Update a Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/tickets/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Ticket ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a `Ticket` by ID\n\nThis endpoint requires the `edit_ticket` permission"
+        },
+        {
+          "info": {
+            "name": "Delete a Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/tickets/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Ticket ID"
+              }
+            ]
+          },
+          "docs": "Delete a `Ticket` by ID\n\nThis endpoint requires the `delete_ticket` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Ticket's AI metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/tickets/:ticket-id/ai_metadata",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ticket-id",
+                "value": "",
+                "type": "path",
+                "description": "Ticket ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `Ticket`'s AI metadata by ID"
+        },
+        {
+          "info": {
+            "name": "Approve a Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/tickets/:ticket-id/approve",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ticket-id",
+                "value": "",
+                "type": "path",
+                "description": "Ticket ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve a `Ticket` by ID\n\nThis endpoint requires the `edit_ticket` permission."
+        },
+        {
+          "info": {
+            "name": "Update the Image that belongs to a Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/tickets/:ticket-id/image",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ticket-id",
+                "value": "",
+                "type": "path",
+                "description": "Ticket ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add or replace the `image` for a `Ticket`. \n\nThis endpoint requires the `edit_ticket` `IamPermission`\n\nThe following restrictions apply:\n * `image` must be one of the following image types:`jpeg`, `jpg`.\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `image` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `image` must be a file."
+        },
+        {
+          "info": {
+            "name": "Delete the Image that belongs to a Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/tickets/:ticket-id/image",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ticket-id",
+                "value": "",
+                "type": "path",
+                "description": "Ticket ID"
+              }
+            ]
+          },
+          "docs": "Delete the `image` for a `Ticket`. \n\nThis endpoint requires the `delete_ticket` `IamPermission`"
+        },
+        {
+          "info": {
+            "name": "Void a Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/tickets/:ticket-id/void",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ticket-id",
+                "value": "",
+                "type": "path",
+                "description": "Ticket ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Void a `Ticket` by ID.\n\nThis endpoint requires the `edit_ticket` permission."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

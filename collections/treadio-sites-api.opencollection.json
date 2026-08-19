@@ -1,0 +1,1932 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier Sites API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve default sites for an order, given a waypoint type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/default_sites/:waypoint-type",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve the `Sites` that belong to the default list of an `Order`, given a particular 'WaypointType'.\n"
+        },
+        {
+          "info": {
+            "name": "Add a site to default site list on order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/default_sites/:waypoint-type/:site-id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ]
+          },
+          "docs": "Add a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'.\n\nNote: The underlying site grouping will be created automatically when the first \nsite is added for a given order. "
+        },
+        {
+          "info": {
+            "name": "Delete a single site from a default list of an order.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/default_sites/:waypoint-type/:site-id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ]
+          },
+          "docs": "Delete a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Sites that belong to Order's Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/orders/:order-id/sites/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name`, or `external_id` property for `Sites` that belong to the `Order`'s `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites that belong to a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              },
+              {
+                "name": "filter[site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[shared]",
+                "value": "",
+                "type": "query",
+                "description": "Filter shared CompanyShareable models"
+              },
+              {
+                "name": "filter[sender_company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Sender Company IDs"
+              }
+            ]
+          },
+          "docs": "Retrieve `Sites` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites based on the current Dispatch results for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/dispatch",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "search[job][datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              },
+              {
+                "name": "facet[filter][waypoint][type]",
+                "value": "",
+                "type": "query",
+                "description": "A Waypoint type to filter on. Can be omitted to return all."
+              }
+            ]
+          },
+          "docs": "Returns `Sites`, but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites based on the current Dispatch results for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/dispatch/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "search[job][datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              },
+              {
+                "name": "facet[filter][waypoint][type]",
+                "value": "",
+                "type": "query",
+                "description": "A Waypoint type to filter on. Can be omitted to return all."
+              }
+            ]
+          },
+          "docs": "Returns `Sites` in a typeahead style but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs that belong to a `Company`."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Sites for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              },
+              {
+                "name": "filter[site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters (see SiteType enum for the list of values)"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name`, or `external_id` property on `Sites` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Site for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Site` by ID for a `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve additional geofences for a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/:site-id/additional_geofences",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve additional `geofences` for a `Site` by `site_id`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Contacts for a Site within a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/:site-id/contacts",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve all `Contacts` for a `Site` within a specific `Company`. This endpoint includes explicit company-level authorization to ensure the site belongs to the specified company."
+        },
+        {
+          "info": {
+            "name": "Retrieve SiteEquipmentStats for given Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/sites/:site-id/stats",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ]
+          },
+          "docs": "Retrieve `SiteEquipmentStats` for given `Site` by `ID`."
+        },
+        {
+          "info": {
+            "name": "Retrieve default sites for an order, given a waypoint type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/default_sites/:waypoint-type",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve the `Sites` that belong to the default list of an `Order`, given a particular 'WaypointType'.\n"
+        },
+        {
+          "info": {
+            "name": "Add a site to default site list on order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/default_sites/:waypoint-type/:site-id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order id"
+              },
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site id"
+              }
+            ]
+          },
+          "docs": "Add a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'.\n\nNote: The underlying site grouping will be created automatically when the first \nsite is added for a given order. "
+        },
+        {
+          "info": {
+            "name": "Delete a single site from a default list of an order.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/default_sites/:waypoint-type/:site-id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order id"
+              },
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site id"
+              }
+            ]
+          },
+          "docs": "Delete a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Sites that belong to Order's Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/orders/:order-id/sites/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "order-id",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name`, or `external_id` property for `Sites` that belong to the `Order`'s `Company`"
+        },
+        {
+          "info": {
+            "name": "Retrieve default sites for a project, given a waypoint type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/default_sites/:waypoint-type",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "Project Id"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve the `Sites` that belong to the default list of an `Project`, given a particular 'WaypointType'.\n"
+        },
+        {
+          "info": {
+            "name": "Add a site to default site list on order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/default_sites/:waypoint-type/:site-id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site id"
+              },
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "Project id"
+              }
+            ]
+          },
+          "docs": "Add a `Site` to the default_site list for an `Project`, given a particular 'WaypointType'.\n\nNote: The underlying site grouping will be created automatically when the first \nsite is added for a given project. "
+        },
+        {
+          "info": {
+            "name": "Delete a single site from a default list of an order.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/projects/:project-id/default_sites/:waypoint-type/:site-id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "waypoint-type",
+                "value": "",
+                "type": "path",
+                "description": "Waypoint type"
+              },
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site id"
+              },
+              {
+                "name": "project-id",
+                "value": "",
+                "type": "path",
+                "description": "Project id"
+              }
+            ]
+          },
+          "docs": "Delete a `Site` to the default_site list for an `Order`, given a particular 'WaypointType'."
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites that belong to the current Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "filter[department_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Department IDs. Use 'none' to filter for records without a Department."
+              },
+              {
+                "name": "filter[site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters (see SiteType enum for the list of values)"
+              }
+            ]
+          },
+          "docs": "Retrieve `Site` for a `Company`."
+        },
+        {
+          "info": {
+            "name": "Create a new Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/sites",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new `Site`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites based on the current Dispatch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/dispatch",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "search[job][datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              },
+              {
+                "name": "facet[filter][waypoint][type]",
+                "value": "",
+                "type": "query",
+                "description": "A Waypoint type to filter on. Can be omitted to return all."
+              }
+            ]
+          },
+          "docs": "Returns `Sites`, but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve Sites based on the current Dispatch results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/dispatch/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "filter[dispatch_number_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated DispatchNumber IDs"
+              },
+              {
+                "name": "filter[job][company_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Company IDs for the Job"
+              },
+              {
+                "name": "filter[job][customer_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Customer Account IDs for the Job"
+              },
+              {
+                "name": "filter[job][driver_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The assigned Driver IDs for the Job"
+              },
+              {
+                "name": "filter[job][dropoff_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Dropoff Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][end_date]",
+                "value": "",
+                "type": "query",
+                "description": "End date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][equipment_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Equipment IDs for the Job"
+              },
+              {
+                "name": "filter[job][external_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated External Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][material_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Material IDs for the Job"
+              },
+              {
+                "name": "filter[job][pickup_site_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Pickup Site IDs for the Job"
+              },
+              {
+                "name": "filter[job][project_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Project IDs for the Job"
+              },
+              {
+                "name": "filter[job][service_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Service IDs for the Job"
+              },
+              {
+                "name": "filter[job][site_types]",
+                "value": "",
+                "type": "query",
+                "description": "SiteType enum filters for the Job (see SiteType enum for the list of values)"
+              },
+              {
+                "name": "filter[job][start_date]",
+                "value": "",
+                "type": "query",
+                "description": "Start date range for Job.job_start_at"
+              },
+              {
+                "name": "filter[job][states]",
+                "value": "",
+                "type": "query",
+                "description": "Job states"
+              },
+              {
+                "name": "filter[job][vendor_account_ids]",
+                "value": "",
+                "type": "query",
+                "description": "The associated Vendor Account IDs for the Job"
+              },
+              {
+                "name": "search[job][datagrid]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for datagrid queries"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "facet[search][query]",
+                "value": "",
+                "type": "query",
+                "description": "The typeahead search query. Matches on the models's `name` field"
+              },
+              {
+                "name": "facet[filter][waypoint][type]",
+                "value": "",
+                "type": "query",
+                "description": "A Waypoint type to filter on. Can be omitted to return all."
+              }
+            ]
+          },
+          "docs": "Returns `Sites` in a typeahead style but instead of all `Sites` for a `Company` this returns all `Sites` that are associated to the dispatch list, where the dispatch list is defined by the `filter` and `search` inputs."
+        },
+        {
+          "info": {
+            "name": "Typeahead search on Sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/typeahead",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              },
+              {
+                "name": "search[query]",
+                "value": "",
+                "type": "query",
+                "description": "Search string for queries"
+              },
+              {
+                "name": "filter[states]",
+                "value": "",
+                "type": "query",
+                "description": "States based on the resource (e.g. Order states or Job states)"
+              }
+            ]
+          },
+          "docs": "Typeahead search against the `name`, or `external_id` property for `Sites` visible to the currently authenticated `Company`."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a `Site` by ID"
+        },
+        {
+          "info": {
+            "name": "Update a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/sites/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update `Site` by ID\n\nThis endpoint required the 'edit_site' permission"
+        },
+        {
+          "info": {
+            "name": "Delete a Site by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/sites/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ]
+          },
+          "docs": "Delete a `Site` by ID\n\nThis endpoint requires the `delete_site` permission"
+        },
+        {
+          "info": {
+            "name": "Activate a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/activate",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activate a `Site` by ID\n\nThis endpoint requires the `edit_site` permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve additional geofences for a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/additional_geofences",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve additional `geofences` for a `Site` by `site_id`"
+        },
+        {
+          "info": {
+            "name": "Create an Additional Geofence for a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/additional_geofences",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `Additional Geofence` for a `Site`"
+        },
+        {
+          "info": {
+            "name": "Bulk assign Additional Geofences for a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/additional_geofences/bulk_assign",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk assign `Additional Geofences` for a `Site` by `ID`\n\nThis will rewrite all `Additional Geofences` for the `Site` with payload data."
+        },
+        {
+          "info": {
+            "name": "Retrieve an Additional Geofence by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/additional_geofences/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Additional Geofence ID"
+              }
+            ]
+          },
+          "docs": "Retrieve an `Geofence` for a `Site` by `ID`"
+        },
+        {
+          "info": {
+            "name": "Update an Additional Geofence for a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/additional_geofences/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Additional Geofence ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an `Additional Geofence` for a `Site` by `ID`"
+        },
+        {
+          "info": {
+            "name": "Retrieve Contacts for a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/contacts",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve all `Contacts` visible to your `Company` for a `Site`"
+        },
+        {
+          "info": {
+            "name": "Assign Contacts for a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/contacts/bulk_assign",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns `Contacts` for a `Site`"
+        },
+        {
+          "info": {
+            "name": "Deactivate a Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tread-horizon.com/v1/sites/:site-id/deactivate",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "site-id",
+                "value": "",
+                "type": "path",
+                "description": "Site ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deactivate a `Site` by ID\n\nThis endpoint requires the `edit_site` permission"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

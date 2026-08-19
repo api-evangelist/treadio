@@ -1,0 +1,644 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Horizon API V1 AccountExternalTruckIdentifier AddOnCharges API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AddOnCharges",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a single AddOnCharge",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/add_on_charges/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "AddOnCharge ID"
+              }
+            ]
+          },
+          "docs": "Retrieve a single `AddOnCharge` by ID"
+        },
+        {
+          "info": {
+            "name": "Update an AddOnCharge",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/add_on_charges/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "AddOnCharge ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an `AddOnCharge`"
+        },
+        {
+          "info": {
+            "name": "Delete an AddOnCharge",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tread-horizon.com/v1/add_on_charges/:id",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "AddOnCharge ID"
+              }
+            ]
+          },
+          "docs": "Delete an `AddOnCharge`"
+        },
+        {
+          "info": {
+            "name": "Retrieve AddOnCharges for an Invoice (company-scoped)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `AddOnCharges` for an `Invoice` within a specific company context.\n\nThis endpoint returns the applied `AddOnCharges` for an `Invoice` and validates that the company_id is authorized for the current user."
+        },
+        {
+          "info": {
+            "name": "Create an AddOnCharge for an Invoice (company-scoped)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `AddOnCharge` for an `Invoice` within a specific company scope.\n\nThis endpoint is used to apply an `AddOnCharge` for an `Invoice`."
+        },
+        {
+          "info": {
+            "name": "Batch update AddOnCharges for an Invoice for a Company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/invoices/:invoice-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "invoice-id",
+                "value": "",
+                "type": "path",
+                "description": "Invoice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Batch update `AddOnCharges` for an `Invoice` for a `Company`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the rec"
+        },
+        {
+          "info": {
+            "name": "Retrieve AddOnCharges for a Settlement (company-scoped)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `AddOnCharges` for a `Settlement` within a specific company context.\n\nThis endpoint returns the applied `AddOnCharges` for a `Settlement` and validates that the company_id is authorized for the current user."
+        },
+        {
+          "info": {
+            "name": "Create an AddOnCharge for a Settlement (company-scoped)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `AddOnCharge` for a `Settlement` within a specific company scope.\n\nThis endpoint is used to apply an `AddOnCharge` for a `Settlement`."
+        },
+        {
+          "info": {
+            "name": "Batch update AddOnCharges for a Settlement (Company-scoped)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/companies/:company-id/settlements/:settlement-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "company-id",
+                "value": "",
+                "type": "path",
+                "description": "Company ID"
+              },
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Batch update `AddOnCharges` for a `Settlement` using company-scoped endpoint.\n\nThis endpoint allows parent companies to manage add-on charges for settlements belonging to their child companies.\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve AddOnCharges for a DriverDay",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/driver_days/:driver-day-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "DriverDay ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `AddOnCharges` for a `DriverDay`.\n\nThis endpoint returns the applied `AddOnCharges` for a `DriverDay`."
+        },
+        {
+          "info": {
+            "name": "Create an AddOnCharge for a DriverDay",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/driver_days/:driver-day-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "DriverDay ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `AddOnCharge` for a `DriverDay`.\n\nThis endpoint is used to apply an `AddOnCharge` for a `DriverDay`."
+        },
+        {
+          "info": {
+            "name": "Batch update AddOnCharges for a DriverDay",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/driver_days/:driver-day-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "driver-day-id",
+                "value": "",
+                "type": "path",
+                "description": "DriverDay ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Batch update `AddOnCharges` for a `DriverDay`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```jso"
+        },
+        {
+          "info": {
+            "name": "Retrieve AddOnCharges for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `AddOnCharges` for a `Job`.\n\nThis endpoint returns the requested `AddOnCharges` for a `Job`."
+        },
+        {
+          "info": {
+            "name": "Create an AddOnCharge for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `AddOnCharge` for a `Job`.\n\nThis endpoint is used to request an `AddOnCharge` for a `Job` that can be applied on a billing object."
+        },
+        {
+          "info": {
+            "name": "Batch update AddOnCharges for a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/jobs/:job-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Batch update `AddOnCharges` for an `Job`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd"
+        },
+        {
+          "info": {
+            "name": "Retrieve AddOnCharges for a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              },
+              {
+                "name": "page[limit]",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of paginated results to return"
+              },
+              {
+                "name": "page[after]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to start paginating after"
+              },
+              {
+                "name": "page[before]",
+                "value": "",
+                "type": "query",
+                "description": "The cursor to stop paginating at"
+              }
+            ]
+          },
+          "docs": "Retrieve `AddOnCharges` for a `Settlement`.\n\nThis endpoint returns the applied `AddOnCharges` for a `Settlement`."
+        },
+        {
+          "info": {
+            "name": "Create an AddOnCharge for a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an `AddOnCharge` for a `Settlement`.\n\nThis endpoint is used to apply an `AddOnCharge` for an `Settlement`."
+        },
+        {
+          "info": {
+            "name": "Batch update AddOnCharges for a Settlement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.tread-horizon.com/v1/settlements/:settlement-id/add_on_charges",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "settlement-id",
+                "value": "",
+                "type": "path",
+                "description": "Settlement ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Batch update `AddOnCharges` for a `Settlement`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```js"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
