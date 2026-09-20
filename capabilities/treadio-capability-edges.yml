@@ -11,8 +11,30 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 6
+edge_count: 20
 edges:
+- tag: Telematics
+  spec_file: treadio-telematics-api-openapi.yml
+  capability_id: BC-2430.40
+  capability_id_l1: BC-2430
+  capability_name: Fleet Telematics and Monitoring
+  confidence: 0.9
+  evidence: '"Retrieve all Remote Vehicles for a Telematics Fleet"; schemas "TelematicsFleet-Read", "TelematicsProviderSource",
+    "TelematicsRemoteVehicle-Update"'
+  reason: Exposes telematics fleets and remote vehicles from telematics providers, which is fleet telematics
+    and asset monitoring.
+  recovered_from: vertical-transportation-logistics-edges.json
+- tag: FuelSurcharges
+  spec_file: treadio-fuelsurcharges-api-openapi.yml
+  capability_id: BC-2520.40
+  capability_id_l1: BC-2520
+  capability_name: Accessorial and Surcharge Management
+  confidence: 0.88
+  evidence: POST /v1/companies/{company-id}/fuel_surcharge_schedules — 'Create a FuelSurchargeSchedule
+    for a Company'; schemas FuelPriceIndex-Read, FuelSurchargeSchedulePrice-Create
+  reason: Operations define fuel price indices and fuel surcharge schedules used to price haulage — this
+    is definition and application of surcharges within freight rating, i.e. accessorial/surcharge management.
+  recovered_from: vertical-transportation-logistics-edges.json
 - tag: Invoices
   spec_file: treadio-invoices-api-openapi.yml
   capability_id: BC-200.30
@@ -23,6 +45,18 @@ edges:
     Company; PUT .../customer_pay  Pay the Invoice as the Customer; GET .../invoice_line_items
   reason: 'Customer invoice lifecycle: generate line items, approve, send, pay and export invoices — accounts
     receivable / customer invoicing and cash collection.'
+- tag: OmniReports
+  spec_file: treadio-omnireports-api-openapi.yml
+  capability_id: BC-610.50
+  capability_id_l1: BC-610
+  capability_name: Analytics & BI Management
+  confidence: 0.85
+  evidence: '"Retrieve embedded link for Omni Report that belongs to a Company", "Create a Report Category",
+    schemas "OmniReportLink-Read", "ReportCategory-Read"'
+  reason: The operations manage embedded analytical report definitions and report categories and hand
+    back embed links — a reporting/BI delivery surface. This is analytics and BI management, not a domain
+    business process.
+  recovered_from: vertical-automotive-mobility-edges.json
 - tag: Jobs
   spec_file: treadio-jobs-api-openapi.yml
   capability_id: BC-520.50
@@ -34,6 +68,33 @@ edges:
   reason: Operations assign drivers and vendors to haul jobs, dispatch/send, cancel and accept them, with
     Ticket, Equipment, DriverAssignment and Geofence schemas — this is transport dispatch execution, i.e.
     logistics operations management, not generic project management.
+- tag: AddOns
+  spec_file: treadio-add-ons-api-openapi.yml
+  capability_id: BC-2520.40
+  capability_id_l1: BC-2520
+  capability_name: Accessorial and Surcharge Management
+  confidence: 0.78
+  evidence: GET /v1/companies/{company-id}/add_ons/{id}/fuel_surcharge_rate 'Retrieve fuel surcharge rate
+    for an AddOn'; 'Create an AddOn'; schemas AddOnRateType, AddOnType, FuelSurchargeSchedule-Read-Nested
+  reason: AddOns define chargeable extras with rate types and fuel-surcharge schedules, assignable to
+    customer and vendor accounts — this is the definition and maintenance of accessorials and surcharges
+    used to price hauling work.
+  recovered_from: vertical-transportation-logistics-edges.json
+  reanchored_from: treadio-addons-api-openapi.yml
+- tag: AddOnCharges
+  spec_file: treadio-addoncharges-api-openapi.yml
+  capability_id: BC-2520.40
+  capability_id_l1: BC-2520
+  capability_name: Accessorial and Surcharge Management
+  confidence: 0.75
+  evidence: POST /v1/companies/{company-id}/invoices/{invoice-id}/add_on_charges 'Create an AddOnCharge
+    for an Invoice'; 'Create an AddOnCharge for a Settlement'; schemas AddOnRateType, AddOnCharge-Create,
+    OrderUnitOfMeasure
+  reason: AddOnCharges are extra charge lines (rated add-ons such as surcharges) applied to freight invoices,
+    settlements, jobs and driver days in a hauling TMS — i.e. accessorial and surcharge application within
+    freight rating. Some ambiguity between rating (BC-2520.40) and invoicing (BC-2530.10) keeps confidence
+    at 0.75.
+  recovered_from: vertical-transportation-logistics-edges.json
 - tag: Loads
   spec_file: treadio-loads-api-openapi.yml
   capability_id: BC-520.50
@@ -59,6 +120,38 @@ edges:
     split into payables and receivables with attached invoices — financial accounting of hauler payments
     and customer billing. Left at the L1 because the surface spans both Accounts Payable and Accounts
     Receivable.
+- tag: SiteRateSchedules
+  spec_file: treadio-siterateschedules-api-openapi.yml
+  capability_id: BC-2520
+  capability_id_l1: BC-2520
+  capability_name: Freight Rating & Tariff Management
+  confidence: 0.75
+  evidence: '"Create a SiteRateSchedule for a Project"; schemas "Rate-Read-Nested", "RateType", "NullableRateType"'
+  reason: Maintains rate schedules attached to project sites, i.e. freight rate/tariff definition used
+    to price hauling. Unclear whether these are published tariffs or negotiated contract rates, so L1
+    only.
+  recovered_from: vertical-transportation-logistics-edges.json
+- tag: JobAssignments
+  spec_file: treadio-jobassignments-api-openapi.yml
+  capability_id: BC-2420.10
+  capability_id_l1: BC-2420
+  capability_name: Dispatch Management
+  confidence: 0.72
+  evidence: POST /v1/jobs/{job-id}/job_assignments — 'Create a JobAssignment for a Job'; schemas JobAssignment-Create,
+    Account-Read-Nested, RateCommission-Read-Nested
+  reason: Assignment of hauling jobs to accounts/vendors carrying rates — assignment of loads to carriers/drivers
+    is dispatch management. Some chance it leans to carrier allocation, hence 0.72.
+  recovered_from: vertical-transportation-logistics-edges.json
+- tag: LocationHistories
+  spec_file: treadio-locationhistories-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.72
+  evidence: '"Retrieve latest Location Histories for a Company", "Retrieve Location Histories for a DriverDay"'
+  reason: GPS location history for drivers, equipment and jobs — fleet/vehicle tracking supporting transport
+    execution. Maps to Logistics Operations Management rather than any generic IT monitoring capability.
+  recovered_from: vertical-engineering-services-edges.json
 - tag: ResourceScopes
   spec_file: treadio-resourcescopes-api-openapi.yml
   capability_id: BC-620.20
@@ -70,6 +163,63 @@ edges:
   reason: Operations grant and revoke per-user scopes over resources across managed companies — authorisation/entitlement
     administration for users, i.e. Identity & Access Management. Confidence moderate because this could
     also be read as generic tenant configuration.
+- tag: DriverStateEvent
+  spec_file: treadio-driverstateevent-api-openapi.yml
+  capability_id: BC-2440.30
+  capability_id_l1: BC-2440
+  capability_name: Hours-of-Service and Fatigue Management
+  confidence: 0.7
+  evidence: '''Update Driver State to on_duty'', ''Update Driver State to off_duty'', ''Update Driver
+    State to break'', ''Retrieve the time driver logged today'''
+  reason: Duty-status transitions (on duty / off duty / break) and accumulated logged time are the standard
+    hours-of-service duty-status record for drivers. Confidence held at 0.7 because the API does not explicitly
+    reference an HOS/ELD regulatory regime, though the semantics match.
+  recovered_from: vertical-transportation-logistics-edges.json
+- tag: Drivers
+  spec_file: treadio-drivers-api-openapi.yml
+  capability_id: BC-2440
+  capability_id_l1: BC-2440
+  capability_name: Driver & Crew Operations Management
+  confidence: 0.7
+  evidence: '''Retrieve Drivers for a Company'', ''Search Drivers based on the current Dispatch results'',
+    "Update a Driver''s State to off_duty" (schemas Driver-Read, DriverStateEvent-Read, CompanyDayDriverStat-Read)'
+  reason: Driver roster retrieval, dispatch-scoped driver search, and duty-state change are driver operations
+    management for a road-haulage carrier. No single sub-capability dominates (roster lookup, dispatch
+    search, duty state), so only the L1 is asserted.
+  recovered_from: vertical-transportation-logistics-edges.json
+- tag: Equipment
+  spec_file: treadio-equipment-api-openapi.yml
+  capability_id: BC-2430
+  capability_id_l1: BC-2430
+  capability_name: Fleet & Mobile Asset Management
+  confidence: 0.7
+  evidence: '''Create an Equipment for a Company'', ''Retrieve Equipment by ID for a Company'', schemas
+    Equipment-Read, EquipmentType-Read-Nested, Job-AssignAdditionalEquipment'
+  reason: Equipment here means the hauler's trucks and trailers — a mobile-asset registry maintained per
+    company and managed company and assigned to jobs. That is fleet/mobile asset management; the operations
+    are registry CRUD rather than maintenance, telematics, or utilisation specifically, so no L2 is claimed.
+  recovered_from: vertical-transportation-logistics-edges.json
+- tag: GeofenceTriggers
+  spec_file: treadio-geofencetriggers-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.7
+  evidence: '"Generate GeofenceTriggers for Drivers", "Calculate GeofenceTriggers for a Job", schema "GeofenceTrigger-LocationHistory-Read-Nested"'
+  reason: Geofence entry/exit events for drivers, trucks and jobs underpin location tracking of haul execution
+    — transport/logistics operations.
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: IamRoles
+  spec_file: treadio-iam-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: '"Retrieve IamRoles that belong to a Company", schema "IamRole-Read"'
+  reason: Read-only listing of IAM roles — access control/role definitions, i.e. identity and access management,
+    though it is a thin read-only surface.
+  recovered_from: sweep-20260829T005356Z-edges.json
+  reanchored_from: treadio-iamroles-api-openapi.yml
 - tag: Orders
   spec_file: treadio-orders-api-openapi.yml
   capability_id: BC-520.40
@@ -81,3 +231,15 @@ edges:
   reason: In this hauling TMS an Order is the haul/delivery order that is created, estimated, accepted,
     dispatched and later invoiced — order promising and fulfilment orchestration. Order Fulfilment Management
     is the closest fit; some ambiguity with sales order capture keeps confidence at 0.7.
+- tag: Rates
+  spec_file: treadio-rates-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.7
+  evidence: '''Create a Rate'', ''Update a Rate'', ''Copy a Rate''; schemas RateTime-Create, RateFlatRate-Read,
+    RateCommission-Create'
+  reason: Tag maintains rate cards (flat rates, time-based rates, commissions) per company — price/rate
+    book maintenance for hauling services. Sub-capability choice between price list and pricing strategy
+    keeps confidence moderate.
+  recovered_from: sweep-20260829T005356Z-edges.json
