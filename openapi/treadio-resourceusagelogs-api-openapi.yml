@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier ResourceUsageLogs API
+  title: Horizon API V1 Resource Usage Logs API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -67,10 +67,7 @@ paths:
       description: 'Create a `ResourceUsageLog` for a `DriverDay`.
 
 
-        This endpoint requires the `create_resource_usage_log` `IamPermission`.
-
-
-        '
+        This endpoint requires the `create_resource_usage_log` `IamPermission`.'
       parameters: []
       requestBody:
         content:
@@ -389,7 +386,10 @@ paths:
       operationId: patch-v1-resource_usage_logs-id
       x-stoplight:
         id: vldlvzh0ks1at
-      description: "Update a `ResourceUsageLog`\n\nThis endpoint requires the `edit_resource_usage_log` `IamPermission`.\n "
+      description: 'Update a `ResourceUsageLog`
+
+
+        This endpoint requires the `edit_resource_usage_log` `IamPermission`.'
       requestBody:
         content:
           application/json:
@@ -419,11 +419,80 @@ paths:
       description: 'Deletes a `ResourceUsageLog` by `ID`
 
 
-        This endpoint requires the `delete_resource_usage_log` `IamPermission`.
-
-        '
+        This endpoint requires the `delete_resource_usage_log` `IamPermission`.'
 components:
   schemas:
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    Equipment-Read-Default-Nested:
+      title: Equipment-Read-Default-Nested
+      x-stoplight:
+        id: kojte9y4g6t9v
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        - equipment_type
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          external_id:
+            type:
+            - string
+            - 'null'
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: v25n5jka8apv0
     GpsStatus:
       title: GpsStatus
       x-stoplight:
@@ -443,12 +512,302 @@ components:
           - idle
           - no_signal
         last_ping_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: 1ikh7blmxdqcz
           format: date-time
-          nullable: true
       additionalProperties: false
+    Driver-Read-Nested:
+      title: Driver-Read-Nested
+      x-stoplight:
+        id: lcevfprple1sa
+      allOf:
+      - $ref: '#/components/schemas/Driver-Read-Typeahead'
+      - type: object
+        x-stoplight:
+          id: 19sn21xqtmd0w
+        required:
+        - email
+        properties:
+          email:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: ekvo9chmdhjkp
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
+      x-stoplight:
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: ttaijg77qmbgk
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: s4rscgptv68x3
+      additionalProperties: false
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Phase-Read:
+      title: Phase-Read
+      x-stoplight:
+        id: t87rtwp61n8ry
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - code
+        - primary
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: joxj6kldpdok8
+          code:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: mtoxuvguckczq
+          primary:
+            type: boolean
+            x-stoplight:
+              id: ww6q56py1x5wq
+      - $ref: '#/components/schemas/Timestamps'
+    Destroyable:
+      title: Destroyable
+      x-stoplight:
+        id: 2uftzhptd2l14
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: gx1ww996hmzqm
+          format: uuid
+          description: Required if `_destroy` is set
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 0xjwztkz4fmcr
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
+      additionalProperties: false
+    CompanyShare-Read-User-Nested:
+      title: CompanyShare-Read-User-Nested
+      x-stoplight:
+        id: 8czythac5qhgz
+      allOf:
+      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - type: object
+        properties:
+          default_equipment:
+            $ref: '#/components/schemas/Equipment-Read-Default-Nested'
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: c9ls3nrhbih3v
+          ticket_match_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: a1cd3nrhbih3v
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+    Equipment-Read-Nested:
+      title: Equipment-Read-Nested
+      x-stoplight:
+        id: 7ezenec7ycv5l
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
+      - type: object
+        required:
+        - license_number
+        - zone
+        - accounting_id
+        - equipment_id
+        properties:
+          license_number:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: hw1ooa17wsadq
+          zone:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 81hr4p8yp8btv
+          accounting_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: ere9qhs4cuwhi
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: gt7r3iqzx2w0u
+    Equipment-Read-Typeahead:
+      title: Equipment-Read-Typeahead
+      x-stoplight:
+        id: sv94osohm5xhg
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - equipment_type
+        - external_id
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: jrkz95htilck3
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: fkr9fkdtl996f
+    ResourceUsageLog-Update-Destroyable:
+      title: ResourceUsageLog-Update-Destroyable
+      x-stoplight:
+        id: jmj4biysbjpfr
+      allOf:
+      - $ref: '#/components/schemas/ResourceUsageLog-Update'
+      - $ref: '#/components/schemas/Destroyable'
     ResourceUsageLog-Read:
       title: ResourceUsageLog-Read
       x-stoplight:
@@ -483,269 +842,6 @@ components:
             x-stoplight:
               id: 3pgg849uxtyzy
             format: uuid
-    CompanyShare-Read-Nested:
-      title: CompanyShare-Read-Nested
-      x-stoplight:
-        id: makajouqsb7jq
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: s6h0nfzt2fjry
-        required:
-        - external_id
-        - ticket_match_id
-        - sender_company
-        - dispatchable
-        - schedule_on
-        - rate_override
-        - expires_at
-        properties:
-          external_id:
-            type: string
-            x-stoplight:
-              id: c9ls3nrhbih3v
-            nullable: true
-          ticket_match_id:
-            type: string
-            x-stoplight:
-              id: a1cd3nrhbih3v
-            nullable: true
-          sender_company:
-            $ref: '#/components/schemas/Company-Read-Nested'
-          dispatchable:
-            type: boolean
-            x-stoplight:
-              id: kd884ihz6qi6w
-          schedule_on:
-            type: boolean
-            x-stoplight:
-              id: kd884ihz61234
-          rate_override:
-            type: boolean
-            x-stoplight:
-              id: mq4osazzielxo
-          expires_at:
-            type: string
-            x-stoplight:
-              id: aaa111jpq0ga9
-            format: date-time
-            description: ISO8601 timestamp with local timezone
-            nullable: true
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    ResourceUsageLog-Update:
-      title: ResourceUsageLog-Update
-      x-stoplight:
-        id: v8we1vazn425k
-      type: object
-      properties:
-        usage_minutes:
-          type: integer
-          x-stoplight:
-            id: z51hhaqeaikzb
-        phase_id:
-          type: string
-          x-stoplight:
-            id: zxp12hofpm9zd
-          format: uuid
-          nullable: true
-        equipment_id:
-          type: string
-          x-stoplight:
-            id: fu47g4phlvxcp
-          format: uuid
-          nullable: true
-      additionalProperties: false
-    ResourceUsageLog-Create:
-      title: ResourceUsageLog-Create
-      x-stoplight:
-        id: ctlqt56dso5sp
-      type: object
-      required:
-      - usage_minutes
-      - date_of_use
-      - driver_id
-      properties:
-        usage_minutes:
-          type: integer
-          x-stoplight:
-            id: pgh45oidnpymr
-        date_of_use:
-          type: string
-          x-stoplight:
-            id: p9caze6rxyn5b
-          format: date
-        equipment_id:
-          type: string
-          x-stoplight:
-            id: 727hux7q1s5bn
-          format: uuid
-          nullable: true
-        driver_id:
-          type: string
-          x-stoplight:
-            id: jv0mr9v8rn4ht
-          format: uuid
-        phase_id:
-          type: string
-          x-stoplight:
-            id: gstyyn7mj0vga
-          format: uuid
-          nullable: true
-      additionalProperties: false
-    TreadId:
-      title: TreadId
-      x-stoplight:
-        id: 43k4t5tl359m4
-      type: object
-      required:
-      - tread_id
-      properties:
-        tread_id:
-          type: string
-          x-stoplight:
-            id: zi3ld7djflw6f
-          pattern: ^[0-9A-F]{6}$
-          minLength: 6
-          maxLength: 6
-          example: ABC123
-          description: Tread ID
-      additionalProperties: false
-    Label-Read-Nested:
-      title: Label-Read-Nested
-      x-stoplight:
-        id: lbl1readnest01
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: lbl1nestnm0001
-            description: Label name
-          color:
-            type: string
-            x-stoplight:
-              id: lbl1nestcol001
-            description: Hex color code for the label
-            pattern: ^#[0-9A-Fa-f]{6}$
-        required:
-        - name
-        - color
-    CompanyDayDriverStat-Read:
-      title: CompanyDayDriverStat-Read
-      x-stoplight:
-        id: 3grxlvq5qo470
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Timestamps'
-      - type: object
-        x-stoplight:
-          id: e0k1y5lyccj7x
-        properties:
-          day:
-            type: string
-            x-stoplight:
-              id: tq2kbgspesbyq
-            format: date
-          jobs_count:
-            type: integer
-            x-stoplight:
-              id: lq3o1iorx79vx
-      description: CompanyDayDriverStat
-    EquipmentType-Read-Nested:
-      title: EquipmentType-Read-Nested
-      x-stoplight:
-        id: em46i5kysysdh
-      type: object
-      required:
-      - id
-      - name
-      - system
-      - external_id
-      - accounting_id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 835oy22o6h24z
-          format: uuid
-        name:
-          type: string
-          x-stoplight:
-            id: tnszefd7lypln
-        system:
-          type: boolean
-          x-stoplight:
-            id: vimoqz5e8x6gx
-        external_id:
-          type: string
-          x-stoplight:
-            id: ttaijg77qmbgk
-          nullable: true
-        accounting_id:
-          type: string
-          x-stoplight:
-            id: s4rscgptv68x3
-          nullable: true
-      additionalProperties: false
-    Equipment-Read-Nested:
-      title: Equipment-Read-Nested
-      x-stoplight:
-        id: 7ezenec7ycv5l
-      allOf:
-      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
-      - type: object
-        required:
-        - license_number
-        - zone
-        - accounting_id
-        - equipment_id
-        properties:
-          license_number:
-            type: string
-            x-stoplight:
-              id: hw1ooa17wsadq
-            nullable: true
-          zone:
-            type: string
-            x-stoplight:
-              id: 81hr4p8yp8btv
-            nullable: true
-          accounting_id:
-            type: string
-            x-stoplight:
-              id: ere9qhs4cuwhi
-            nullable: true
-          equipment_id:
-            type: string
-            x-stoplight:
-              id: gt7r3iqzx2w0u
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
     GpsStatusable:
       title: GpsStatusable
       x-stoplight:
@@ -757,231 +853,6 @@ components:
         gps_status:
           $ref: '#/components/schemas/GpsStatus'
       additionalProperties: false
-    Destroyable:
-      title: Destroyable
-      x-stoplight:
-        id: 2uftzhptd2l14
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: gx1ww996hmzqm
-          format: uuid
-          description: Required if `_destroy` is set
-        _destroy:
-          type: integer
-          x-stoplight:
-            id: 0xjwztkz4fmcr
-          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
-      additionalProperties: false
-    ModelError-Item:
-      title: ModelError-Item
-      x-stoplight:
-        id: b93chwval2t8d
-      type: object
-      required:
-      - model
-      - field
-      - message
-      properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
-      additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    Equipment-Read-Default-Nested:
-      title: Equipment-Read-Default-Nested
-      x-stoplight:
-        id: kojte9y4g6t9v
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - external_id
-        - equipment_type
-        - equipment_id
-        properties:
-          name:
-            type: string
-            description: Equipment name
-          external_id:
-            type: string
-            nullable: true
-          equipment_type:
-            $ref: '#/components/schemas/EquipmentType-Read-Nested'
-          company_share:
-            $ref: '#/components/schemas/CompanyShare-Read-Nested'
-          equipment_id:
-            type: string
-            x-stoplight:
-              id: v25n5jka8apv0
-    Driver-Read-Nested:
-      title: Driver-Read-Nested
-      x-stoplight:
-        id: lcevfprple1sa
-      allOf:
-      - $ref: '#/components/schemas/Driver-Read-Typeahead'
-      - type: object
-        x-stoplight:
-          id: 19sn21xqtmd0w
-        required:
-        - email
-        properties:
-          email:
-            type: string
-            x-stoplight:
-              id: ekvo9chmdhjkp
-            nullable: true
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    Company-Read-Nested:
-      title: Company-Read-Nested
-      x-stoplight:
-        id: cb2kn77qmf1l7
-      description: Compact Company model for nested reads.
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-        x-stoplight:
-          id: jwsufva4znm91
-      - $ref: '#/components/schemas/TreadId'
-      - type: object
-        properties:
-          legal_name:
-            type: string
-            x-stoplight:
-              id: yc10t8hieecwk
-            description: The Company's name. Must be globally unique.
-          company_type:
-            $ref: '#/components/schemas/CompanyType'
-        required:
-        - legal_name
-        - company_type
-    ResourceUsageLog-Update-Destroyable:
-      title: ResourceUsageLog-Update-Destroyable
-      x-stoplight:
-        id: jmj4biysbjpfr
-      allOf:
-      - $ref: '#/components/schemas/ResourceUsageLog-Update'
-      - $ref: '#/components/schemas/Destroyable'
-    CompanyType:
-      title: CompanyType
-      x-stoplight:
-        id: dkzo7gjbtb1b3
-      enum:
-      - broker
-      - contractor
-      - hauler
-      - owner_operator
-      - producer
-      - super
-      example: hauler
-      description: Company Type
-    Phase-Read:
-      title: Phase-Read
-      x-stoplight:
-        id: t87rtwp61n8ry
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - code
-        - primary
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: joxj6kldpdok8
-          code:
-            type: string
-            x-stoplight:
-              id: mtoxuvguckczq
-            nullable: true
-          primary:
-            type: boolean
-            x-stoplight:
-              id: ww6q56py1x5wq
-      - $ref: '#/components/schemas/Timestamps'
     UnauthenticatedError-Response:
       title: UnauthenticatedError-Response
       x-stoplight:
@@ -993,56 +864,6 @@ components:
         error:
           $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
-    CompanyShare-Read-User-Nested:
-      title: CompanyShare-Read-User-Nested
-      x-stoplight:
-        id: 8czythac5qhgz
-      allOf:
-      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
-      - type: object
-        properties:
-          default_equipment:
-            $ref: '#/components/schemas/Equipment-Read-Default-Nested'
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    Equipment-Read-Typeahead:
-      title: Equipment-Read-Typeahead
-      x-stoplight:
-        id: sv94osohm5xhg
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - equipment_type
-        - external_id
-        - equipment_id
-        properties:
-          name:
-            type: string
-            description: Equipment name
-          equipment_type:
-            $ref: '#/components/schemas/EquipmentType-Read-Nested'
-          external_id:
-            type: string
-            x-stoplight:
-              id: jrkz95htilck3
-            nullable: true
-          company_share:
-            $ref: '#/components/schemas/CompanyShare-Read-Nested'
-          equipment_id:
-            type: string
-            x-stoplight:
-              id: fkr9fkdtl996f
     Driver-Read-Typeahead:
       allOf:
       - $ref: '#/components/schemas/Identifier'
@@ -1082,11 +903,12 @@ components:
           company_day_driver_stat:
             $ref: '#/components/schemas/CompanyDayDriverStat-Read'
           phone:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: y4l44re1zfaa9
             description: User's E.164 formatted phone number
-            nullable: true
           managed:
             type: boolean
             x-stoplight:
@@ -1098,7 +920,240 @@ components:
             description: Labels assigned to this driver
       - $ref: '#/components/schemas/GpsStatusable'
       title: Driver-Read-Typeahead
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ResourceUsageLog-Create:
+      title: ResourceUsageLog-Create
+      x-stoplight:
+        id: ctlqt56dso5sp
+      type: object
+      required:
+      - usage_minutes
+      - date_of_use
+      - driver_id
+      properties:
+        usage_minutes:
+          type: integer
+          x-stoplight:
+            id: pgh45oidnpymr
+        date_of_use:
+          type: string
+          x-stoplight:
+            id: p9caze6rxyn5b
+          format: date
+        equipment_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 727hux7q1s5bn
+          format: uuid
+        driver_id:
+          type: string
+          x-stoplight:
+            id: jv0mr9v8rn4ht
+          format: uuid
+        phase_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: gstyyn7mj0vga
+          format: uuid
+      additionalProperties: false
+    ResourceUsageLog-Update:
+      title: ResourceUsageLog-Update
+      x-stoplight:
+        id: v8we1vazn425k
+      type: object
+      properties:
+        usage_minutes:
+          type: integer
+          x-stoplight:
+            id: z51hhaqeaikzb
+        phase_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: zxp12hofpm9zd
+          format: uuid
+        equipment_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: fu47g4phlvxcp
+          format: uuid
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    CompanyDayDriverStat-Read:
+      title: CompanyDayDriverStat-Read
+      x-stoplight:
+        id: 3grxlvq5qo470
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: e0k1y5lyccj7x
+        properties:
+          day:
+            type: string
+            x-stoplight:
+              id: tq2kbgspesbyq
+            format: date
+          jobs_count:
+            type: integer
+            x-stoplight:
+              id: lq3o1iorx79vx
+      description: CompanyDayDriverStat
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Label-Read-Nested:
+      title: Label-Read-Nested
+      x-stoplight:
+        id: lbl1readnest01
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: lbl1nestnm0001
+            description: Label name
+          color:
+            type: string
+            x-stoplight:
+              id: lbl1nestcol001
+            description: Hex color code for the label
+            pattern: ^#[0-9A-Fa-f]{6}$
+        required:
+        - name
+        - color
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+  parameters:
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
   responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     ModelError:
       description: ''
       content:
@@ -1113,45 +1168,6 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
   securitySchemes:
     bearerAuth:
       type: http

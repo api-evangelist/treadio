@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier LoadCycles API
+  title: Horizon API V1 Load Cycles API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -69,26 +69,33 @@ paths:
       operationId: get-v1-jobs-job-id-loads-cycles
       x-stoplight:
         id: 9om38mymyv5al
-      description: "Retrieve all `LoadCycles` for a `Job`. \n\nA `LoadCycle` is an edge between two consecutive `Loads` that have reached the `arrived_pickup` state on a given `Job`.\n\nThe response includes all calculated `LoadCycles` as well as the average time (in minutes)."
+      description: 'Retrieve all `LoadCycles` for a `Job`.
+
+
+        A `LoadCycle` is an edge between two consecutive `Loads` that have reached the `arrived_pickup` state on a given `Job`.
+
+
+        The response includes all calculated `LoadCycles` as well as the average time (in minutes).'
       tags:
       - LoadCycles
 components:
-  responses:
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   schemas:
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
     LoadCycle-Read:
       title: LoadCycle-Read
       x-stoplight:
@@ -116,28 +123,6 @@ components:
           x-stoplight:
             id: lkmeu10eenb45
       additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
     Error:
       title: Error
       x-stoplight:
@@ -152,22 +137,28 @@ components:
           x-stoplight:
             id: 7o9x1t8v0bgfo
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
   parameters:
     Accept-Language:
       name: Accept-Language
@@ -177,6 +168,21 @@ components:
         default: en
         example: en
       description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+  responses:
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
   securitySchemes:
     bearerAuth:
       type: http

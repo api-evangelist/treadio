@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier Departments API
+  title: Horizon API V1 Departments API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -343,119 +343,24 @@ paths:
 
         This endpoint requires the `delete_department` permission'
 components:
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   schemas:
-    Department-Read:
-      title: Department-Read
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: gbl1sm5vgmgsc
+        id: nhp6714o4j1qt
+      description: A Model-specific error
       allOf:
-      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Error'
       - type: object
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: q2t54kc2rvabe
-            description: Department name
-          company:
-            $ref: '#/components/schemas/Company-Read-Nested'
         required:
-        - name
-        - company
-      - $ref: '#/components/schemas/Timestamps'
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    Department-Read-Typeahead:
-      title: Department-Read-Typeahead
-      x-stoplight:
-        id: p78wbrthl46mr
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: fy8jozdwbtq4k
-        required:
-        - name
+        - errors
         properties:
-          name:
-            type: string
+          errors:
+            type: array
             x-stoplight:
-              id: sh9gkn0s9k4bz
-    TreadId:
-      title: TreadId
-      x-stoplight:
-        id: 43k4t5tl359m4
-      type: object
-      required:
-      - tread_id
-      properties:
-        tread_id:
-          type: string
-          x-stoplight:
-            id: zi3ld7djflw6f
-          pattern: ^[0-9A-F]{6}$
-          minLength: 6
-          maxLength: 6
-          example: ABC123
-          description: Tread ID
-      additionalProperties: false
-    Department-Update:
-      title: Department-Update
-      x-stoplight:
-        id: be9uw3b7ztsjm
-      type: object
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: 7sx2ja5lhv3cd
-          description: Name of the department. Must be unique for a company.
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -482,74 +387,56 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    Department-Read:
+      title: Department-Read
       x-stoplight:
-        id: 202o69l0fs40h
+        id: gbl1sm5vgmgsc
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Identifier'
       - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
         properties:
-          error_type:
+          name:
             type: string
             x-stoplight:
-              id: wvq8c0qsym4hz
+              id: q2t54kc2rvabe
+            description: Department name
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
         required:
-        - error_type
-    ModelError:
-      title: ModelError
+        - name
+        - company
+      - $ref: '#/components/schemas/Timestamps'
+    TreadId:
+      title: TreadId
       x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
+        id: 43k4t5tl359m4
       type: object
       required:
-      - created_at
-      - updated_at
+      - tread_id
       properties:
-        created_at:
+        tread_id:
           type: string
           x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
       additionalProperties: false
-    Identifier:
-      title: Identifier
+    Error:
+      title: Error
       x-stoplight:
-        id: gnd39lue5v7ol
+        id: 3g57kkik3l464
       type: object
+      description: An Error.
       required:
-      - id
+      - code
       properties:
-        id:
+        code:
           type: string
           x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
+            id: 7o9x1t8v0bgfo
       additionalProperties: false
     Company-Read-Nested:
       title: Company-Read-Nested
@@ -573,6 +460,108 @@ components:
         required:
         - legal_name
         - company_type
+    Department-Update:
+      title: Department-Update
+      x-stoplight:
+        id: be9uw3b7ztsjm
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 7sx2ja5lhv3cd
+          description: Name of the department. Must be unique for a company.
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Department-Read-Typeahead:
+      title: Department-Read-Typeahead
+      x-stoplight:
+        id: p78wbrthl46mr
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: fy8jozdwbtq4k
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: sh9gkn0s9k4bz
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
     Department-Create:
       title: Department-Create
       x-stoplight:
@@ -587,6 +576,17 @@ components:
             id: 0goeospbs1mc3
           description: 'Department name, must be unique for the company '
       additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
     CompanyType:
       title: CompanyType
       x-stoplight:
@@ -600,44 +600,14 @@ components:
       - super
       example: hauler
       description: Company Type
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
   parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    search-query:
-      name: search[query]
+    page-after:
+      name: page[after]
       in: query
       required: false
       schema:
         type: string
-      description: Search string for queries
+      description: The cursor to start paginating after
     page-limit:
       name: page[limit]
       in: query
@@ -647,6 +617,21 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
     page-before:
       name: page[before]
       in: query
@@ -654,13 +639,28 @@ components:
       schema:
         type: string
       description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

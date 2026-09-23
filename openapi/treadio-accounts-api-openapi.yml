@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier Accounts API
+  title: Horizon API V1 Accounts API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -98,7 +98,19 @@ paths:
         id: vw1abhy4q38wk
       tags:
       - Accounts
-      description: "Retrieve `Accounts` visible to the currently authenticated `Company`.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `name`\n\nFilter usage:\n * to filter a single state: `filter[account_types][]=customer`\n * to filter multiple states: `filter[account_types][]=customer&filter[account_types][]=vendor`"
+      description: 'Retrieve `Accounts` visible to the currently authenticated `Company`.
+
+
+        Datagrid search (`search[datagrid]`) queries against the following properties:
+
+        * `name`
+
+
+        Filter usage:
+
+        * to filter a single state: `filter[account_types][]=customer`
+
+        * to filter multiple states: `filter[account_types][]=customer&filter[account_types][]=vendor`'
       parameters:
       - $ref: '#/components/parameters/page-limit'
       - $ref: '#/components/parameters/page-after'
@@ -200,7 +212,20 @@ paths:
       operationId: post-v1-accounts-connected
       x-stoplight:
         id: ee581r2nsvq13
-      description: "Create a connected `Account` between two `Companies`. \n\nThis endpoint creates two complimentary connected `Accounts`:\n * a \"sender\" `Account` owned by the `Company` specified by `sender_company_id` which has the provided `sender_account_types`\n * a \"receiver\" `Account` owned by the `Company` specified by `receiver_company_id` which has the opposite `account_types`\n \nThe newly created \"sender\" `Account` is returned.\n\nThis endpoint requires the `platform_admin` `IamRole`. "
+      description: 'Create a connected `Account` between two `Companies`.
+
+
+        This endpoint creates two complimentary connected `Accounts`:
+
+        * a "sender" `Account` owned by the `Company` specified by `sender_company_id` which has the provided `sender_account_types`
+
+        * a "receiver" `Account` owned by the `Company` specified by `receiver_company_id` which has the opposite `account_types`
+
+
+        The newly created "sender" `Account` is returned.
+
+
+        This endpoint requires the `platform_admin` `IamRole`.'
       requestBody:
         content:
           application/json:
@@ -275,7 +300,32 @@ paths:
           $ref: '#/components/responses/ModelError'
       x-stoplight:
         id: o9p7fcv3vchcq
-      description: "Invite a `Company` which is not yet on the `Tread` platform to connect through an `Account`.\n\nThis will create:\n * a new `Company` named `name` using `contact` data for `primary_contact ` and `billing_contact` \n * a new `User` with information from `contact` that has the `Company Admin` `IamRole`\n * a new `Account` owned by the currently authenticated `User`'s `Company` and connected to the newly created `Company`\n\nNote that all fields in `contact` are required.\n\nThe following unique constraints must be met or a `422` will be returned:\n * `name` must be globally unique to `Companies` \n * `contact.email` and `contact.phone` must be globally unique to `Users`\n\nIf successful the newly created `Account` will be returned.\n \nThis endpoint requires the `create_account` `IamPermission`\n \n"
+      description: 'Invite a `Company` which is not yet on the `Tread` platform to connect through an `Account`.
+
+
+        This will create:
+
+        * a new `Company` named `name` using `contact` data for `primary_contact ` and `billing_contact`
+
+        * a new `User` with information from `contact` that has the `Company Admin` `IamRole`
+
+        * a new `Account` owned by the currently authenticated `User`''s `Company` and connected to the newly created `Company`
+
+
+        Note that all fields in `contact` are required.
+
+
+        The following unique constraints must be met or a `422` will be returned:
+
+        * `name` must be globally unique to `Companies`
+
+        * `contact.email` and `contact.phone` must be globally unique to `Users`
+
+
+        If successful the newly created `Account` will be returned.
+
+
+        This endpoint requires the `create_account` `IamPermission`'
       requestBody:
         content:
           application/json:
@@ -320,9 +370,7 @@ paths:
       operationId: get-v1-accounts-typeahead
       x-stoplight:
         id: 249lre4wlspeo
-      description: 'Typeahead search against the `name` property for `Accounts` visible to the currently authenticated `Company`.
-
-        '
+      description: Typeahead search against the `name` property for `Accounts` visible to the currently authenticated `Company`.
       x-internal: true
       parameters:
       - $ref: '#/components/parameters/page-limit'
@@ -781,7 +829,14 @@ paths:
       operationId: get-v1-companies-company-id-accounts
       x-stoplight:
         id: dn0zfz8ziwm6x
-      description: "Retrieve `Accounts` for a `Company`.\n\nFilter usage:\n * to filter a single state: `filter[account_types][]=customer`\n * to filter multiple states: `filter[account_types][]=customer&filter[account_types][]=vendor`"
+      description: 'Retrieve `Accounts` for a `Company`.
+
+
+        Filter usage:
+
+        * to filter a single state: `filter[account_types][]=customer`
+
+        * to filter multiple states: `filter[account_types][]=customer&filter[account_types][]=vendor`'
       parameters:
       - $ref: '#/components/parameters/page-limit'
       - $ref: '#/components/parameters/page-after'
@@ -909,7 +964,23 @@ paths:
       operationId: post-v1-companies-company-id-accounts-connected
       x-stoplight:
         id: et13o92j8q1dx
-      description: "Create a connected `Account` between two `Companies` by use of a `tread_id`.\n\nThis endpoint creates two complimentary connected `Accounts`:\n * a \"sender\" `Account` owned by the `Company` specified in the `company-id` path param which has the provided `account_types`.\n * a \"receiver\" `Account` owned by the `Company` specified in the `tread_id` which has the opposite `account_types`\n \nThe newly created \"sender\" `Account` is returned.\n\nThis endpoint must be called by a principal authorized to act on behalf of the \"sender\" `Company`.\n\nThis endpoint requires the `connect_companies` `IamPermission`."
+      description: 'Create a connected `Account` between two `Companies` by use of a `tread_id`.
+
+
+        This endpoint creates two complimentary connected `Accounts`:
+
+        * a "sender" `Account` owned by the `Company` specified in the `company-id` path param which has the provided `account_types`.
+
+        * a "receiver" `Account` owned by the `Company` specified in the `tread_id` which has the opposite `account_types`
+
+
+        The newly created "sender" `Account` is returned.
+
+
+        This endpoint must be called by a principal authorized to act on behalf of the "sender" `Company`.
+
+
+        This endpoint requires the `connect_companies` `IamPermission`.'
       requestBody:
         content:
           application/json:
@@ -999,7 +1070,32 @@ paths:
       operationId: post-v1-companies-company-id-accounts-invite
       x-stoplight:
         id: v3m14cav2nznz
-      description: "Invite a `Company` which is not yet on the `Tread` platform to connect through an `Account` for a `Company`.\n\nThis will create:\n * a new `Company` named `name` using `contact` data for `primary_contact ` and `billing_contact` \n * a new `User` with information from `contact` that has the `Company Admin` `IamRole`\n * a new `Account` owned by the currently authenticated `User`'s `Company` and connected to the newly created `Company`\n\nNote that all fields in `contact` are required.\n\nThe following unique constraints must be met or a `422` will be returned:\n * `name` must be globally unique to `Companies` \n * `contact.email` and `contact.phone` must be globally unique to `Users`\n\nIf successful the newly created `Account` will be returned.\n \nThis endpoint requires the `create_account` `IamPermission`\n \n"
+      description: 'Invite a `Company` which is not yet on the `Tread` platform to connect through an `Account` for a `Company`.
+
+
+        This will create:
+
+        * a new `Company` named `name` using `contact` data for `primary_contact ` and `billing_contact`
+
+        * a new `User` with information from `contact` that has the `Company Admin` `IamRole`
+
+        * a new `Account` owned by the currently authenticated `User`''s `Company` and connected to the newly created `Company`
+
+
+        Note that all fields in `contact` are required.
+
+
+        The following unique constraints must be met or a `422` will be returned:
+
+        * `name` must be globally unique to `Companies`
+
+        * `contact.email` and `contact.phone` must be globally unique to `Users`
+
+
+        If successful the newly created `Account` will be returned.
+
+
+        This endpoint requires the `create_account` `IamPermission`'
       requestBody:
         content:
           application/json:
@@ -1106,7 +1202,15 @@ paths:
         '422':
           $ref: '#/components/responses/ModelError'
       operationId: get-v1-companies-daily-export-tickets-day
-      description: "Returns a daily export of `tickets` for given company. Please\nnote, this endpoint is only available to users authenticating\nan `m2m_client`. This endpoint must be configured for customer\nby Tread. The file_url is signed and will be valid for 1 hour \nfrom time of api call."
+      description: 'Returns a daily export of `tickets` for given company. Please
+
+        note, this endpoint is only available to users authenticating
+
+        an `m2m_client`. This endpoint must be configured for customer
+
+        by Tread. The file_url is signed and will be valid for 1 hour
+
+        from time of api call.'
       x-internal: true
       x-stoplight:
         id: p3jfje1rwgtac
@@ -1177,177 +1281,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Account-Update'
 components:
-  parameters:
-    filter-material_rates:
-      name: filter[material_rates]
-      in: query
-      required: false
-      schema:
-        type: boolean
-      description: Filter on whether the Account has associated MaterialRates
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    filter-connected:
-      name: filter[connected]
-      in: query
-      required: false
-      schema:
-        type: boolean
-      description: Only show connected Accounts
-    search-datagrid:
-      name: search[datagrid]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for datagrid queries
-    filter-department_ids:
-      name: filter[department_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Department IDs. Use 'none' to filter for records without a Department.
-    filter-availability:
-      name: filter[availability]
-      in: query
-      required: false
-      schema:
-        type: boolean
-      description: Filter based on record availability based on the `date` parameter/filter, defaulting to the current day.
-    filter-discarded:
-      name: filter[discarded]
-      in: query
-      required: false
-      schema:
-        type: boolean
-      description: Only show discarded Accounts
-    search-query:
-      name: search[query]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for queries
-    filter-show_all:
-      name: filter[show_all]
-      in: query
-      required: false
-      schema:
-        type: boolean
-      description: Show all records. Deprecated in favor of `filter[availability]`
-      deprecated: true
-    filter-auto_add_ons:
-      name: filter[auto_add_ons]
-      in: query
-      required: false
-      schema:
-        type: boolean
-      description: Filter on whether the resource (e.g. Account, User) has associated AutoAddOns
-    filter-connected_company-company_types:
-      name: filter[connected_company][company_types]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: Connected Company Type enum filters (see CompanyType enum for the list of values)
-    filter-account_types:
-      name: filter[account_types]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: AccountType filter
-    filter-label_ids:
-      name: filter[label_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-          format: uuid
-      description: Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic).
-    filter-date:
-      name: filter[date]
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date
-      description: Single Date Filter
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   schemas:
-    EquipmentState:
-      title: EquipmentState
-      x-stoplight:
-        id: eh1fgavft82kx
-      enum:
-      - active
-      - inactive
-      default: active
-      example: active
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
     AccountType:
       title: AccountType
       x-stoplight:
@@ -1356,49 +1290,23 @@ components:
       - customer
       - vendor
       example: customer
-    TreadId:
-      title: TreadId
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: 43k4t5tl359m4
-      type: object
-      required:
-      - tread_id
-      properties:
-        tread_id:
-          type: string
-          x-stoplight:
-            id: zi3ld7djflw6f
-          pattern: ^[0-9A-F]{6}$
-          minLength: 6
-          maxLength: 6
-          example: ABC123
-          description: Tread ID
-      additionalProperties: false
-    DailyExport-Read:
-      title: DailyExport-Read
-      x-stoplight:
-        id: omxur2zom8vrl
-      type: object
-      required:
-      - day
-      - created_at
-      - file_url
-      properties:
-        day:
-          type: string
-          x-stoplight:
-            id: 4ptbcq6ryqkfo
-          format: date
-        created_at:
-          type: string
-          x-stoplight:
-            id: dio0ll8zgt6g7
-          format: date-time
-        file_url:
-          type: string
-          x-stoplight:
-            id: 38lhuxnqd1xgx
-      additionalProperties: false
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     Address-Create:
       title: Address-Create
       x-stoplight:
@@ -1466,292 +1374,6 @@ components:
             id: xtuyrwo0rqzkh
           description: NextBillion placeID
       additionalProperties: false
-    Label-Read-Nested:
-      title: Label-Read-Nested
-      x-stoplight:
-        id: lbl1readnest01
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: lbl1nestnm0001
-            description: Label name
-          color:
-            type: string
-            x-stoplight:
-              id: lbl1nestcol001
-            description: Hex color code for the label
-            pattern: ^#[0-9A-Fa-f]{6}$
-        required:
-        - name
-        - color
-    Discardable:
-      title: Discardable
-      x-stoplight:
-        id: 46axlb8u5wjay
-      type: object
-      required:
-      - discarded_at
-      properties:
-        discarded_at:
-          type: string
-          x-stoplight:
-            id: cy8t6fecoyxbo
-          format: date-time
-          nullable: true
-      additionalProperties: false
-    Account-Invite:
-      title: Account-Invite
-      x-stoplight:
-        id: 8btqvy3ojzvxj
-      type: object
-      required:
-      - name
-      - contact
-      - address
-      - account_types
-      - auto_accept_orders
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: szxvxy8gtcs4d
-          description: name for the `Account` and `Company`
-        contact:
-          $ref: '#/components/schemas/Contact-Create'
-        address:
-          $ref: '#/components/schemas/Address-Create'
-        account_types:
-          type: array
-          x-stoplight:
-            id: xqelgawt2nuia
-          description: Account type allowing for multiple values
-          items:
-            $ref: '#/components/schemas/AccountType'
-        company_id:
-          type: string
-          x-stoplight:
-            id: vi6xr68lbj1ln
-          format: uuid
-          nullable: true
-        department:
-          type: string
-          x-stoplight:
-            id: bg894oo5aem0d
-          deprecated: true
-          nullable: true
-        department_id:
-          type: string
-          x-stoplight:
-            id: 7k6resx8we6g2
-          format: uuid
-          description: 'The ID of the associated **Department**.
-
-
-            This should be used instead of `department`.'
-          nullable: true
-        notes:
-          type: string
-          x-stoplight:
-            id: mozoefi7tn3vn
-          nullable: true
-        external_id:
-          type: string
-          x-stoplight:
-            id: ghv5udvm51jkh
-          description: Identifier used to associate an account to any external system
-          nullable: true
-        accounting_id:
-          type: string
-          x-stoplight:
-            id: hgv5udvm51jkh
-          description: The accounting ID of the Account mapping to any accounting system
-          nullable: true
-        truck_count:
-          type: integer
-          x-stoplight:
-            id: xxujn60891ma2
-          description: The allowable number of trucks that is dispatchable to the customer of this account.
-          nullable: true
-        auto_accept_orders:
-          type: boolean
-          x-stoplight:
-            id: osbpw6who0ya6
-          description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
-        send_invite:
-          $ref: '#/components/schemas/SendInvite'
-        company_type:
-          x-stoplight:
-            id: xbozhh7e5fbt9
-          enum:
-          - broker
-          - contractor
-          - hauler
-          - owner_operator
-          - producer
-          default: producer
-        equipment:
-          $ref: '#/components/schemas/Account-Invite-Equipment-Create'
-        time_zone:
-          $ref: '#/components/schemas/TimeZone'
-        scoped_company_id:
-          type: string
-          x-stoplight:
-            id: 9sfcuew1u5enw
-          format: uuid
-          nullable: true
-        internal_equipment:
-          $ref: '#/components/schemas/Account-Invite-Internal-Equipment-Create'
-        label_ids:
-          type: array
-          x-stoplight:
-            id: lbl1d5cr8inv1
-          description: Array of Label IDs to assign to this account.
-          items:
-            type: string
-            format: uuid
-      additionalProperties: false
-    Department-Read-Nested:
-      title: Department-Read-Nested
-      x-stoplight:
-        id: gv9tfg4scr2yx
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: 4y3gfdgq1brqf
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: 3718c2tvwwqsn
-            description: Department name.
-        required:
-        - name
-    Contact-Create:
-      title: Contact-Create
-      x-stoplight:
-        id: dhro09gmoiqgw
-      type: object
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: ehb4vhlggledw
-        email:
-          type: string
-          x-stoplight:
-            id: kxjggao5fm38r
-        phone:
-          type: string
-          x-stoplight:
-            id: 3dxv517oimpb1
-          example: '+18885551234'
-          description: Contact's E.164 formatted phone number
-      additionalProperties: false
-    Account-Read-Typeahead:
-      title: Account-Read-Typeahead
-      x-stoplight:
-        id: 0jtlv216ot4og
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: zinx4pmrlrvkg
-        required:
-        - name
-        - schedule_on
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: 675oqyzkv2xvp
-            description: Account name
-          connected_company:
-            type: object
-            x-stoplight:
-              id: 9e36j656fhsso
-            required:
-            - id
-            properties:
-              id:
-                type: string
-                x-stoplight:
-                  id: 8nxy7z0w3h51m
-                format: uuid
-          schedule_on:
-            type: boolean
-            x-stoplight:
-              id: 4yv7e5z57qmn2
-      x-internal: true
-    Address-Read-Nested:
-      title: Address-Read-Nested
-      x-stoplight:
-        id: cvym2dzuo375q
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Address-Read'
-    Scheduled-Time-Off-Read:
-      title: Scheduled-Time-Off-Read
-      x-stoplight:
-        id: u331truw5dg23
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: h8hb87yfchf0u
-        required:
-        - start_date
-        properties:
-          start_date:
-            type: string
-            x-stoplight:
-              id: ykovozns0x8k2
-            format: date-time
-          end_date:
-            type: string
-            x-stoplight:
-              id: rpad7acd8im3j
-            nullable: true
-      description: Scheduled Time Off
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    Scheduled-Time-Off-Create:
-      title: Scheduled-Time-Off-Create
-      x-stoplight:
-        id: kg82d261cjr4w
-      description: Scheduled Time Off - Create
-      type: object
-      required:
-      - start_date
-      - end_date
-      properties:
-        start_date:
-          type: string
-          x-stoplight:
-            id: gse6o5a3nswlz
-          format: date-time
-        end_date:
-          type: string
-          x-stoplight:
-            id: jxpl58y44m2kh
-          format: date-time
-      additionalProperties: false
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -1778,39 +1400,151 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    Department-Read-Nested:
+      title: Department-Read-Nested
       x-stoplight:
-        id: 202o69l0fs40h
+        id: gv9tfg4scr2yx
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Identifier'
       - type: object
         x-stoplight:
-          id: tg10dt7s0l6bw
+          id: 4y3gfdgq1brqf
         properties:
-          error_type:
+          name:
             type: string
             x-stoplight:
-              id: wvq8c0qsym4hz
+              id: 3718c2tvwwqsn
+            description: Department name.
         required:
-        - error_type
-    ModelError:
-      title: ModelError
+        - name
+    Account-Update:
+      title: Account-Update
       x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
+        id: 2zrntg5xhcmsd
+      description: Update model for `Account`
       allOf:
-      - $ref: '#/components/schemas/Error'
       - type: object
-        required:
-        - errors
         properties:
-          errors:
+          name:
+            type: string
+            x-stoplight:
+              id: cv2ymke8sutek
+            description: Account name
+          department:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: wtt5wqixu46yn
+            description: Department
+            deprecated: true
+          department_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: tkd8y8kgx83mc
+            format: uuid
+            description: 'The ID of the associated **Department**.
+
+
+              This should be used instead of `department`.'
+          primary_contact:
+            $ref: '#/components/schemas/Contact-Update'
+          billing_contact:
+            $ref: '#/components/schemas/Contact-Update'
+          address:
+            $ref: '#/components/schemas/Address-Update'
+          billing_address:
+            $ref: '#/components/schemas/Address-Update'
+          notes:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: tqs5b4rdilyyr
+            description: Notes
+          account_types:
             type: array
             x-stoplight:
-              id: m4ul9vcq2deh6
+              id: o8crnsajrp9ii
+            description: Account type allowing for multiple values
             items:
-              $ref: '#/components/schemas/ModelError-Item'
+              $ref: '#/components/schemas/AccountType'
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: uormrtrev82c5
+            description: Identifier used to associate an account to any external system
+          accounting_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: uosmrurev83c5
+            description: The accounting ID of the Account mapping to any accounting system
+          truck_count:
+            type: integer
+            x-stoplight:
+              id: wlti4u29w4els
+            description: The allowable number of trucks that is dispatchable to the customer of this account.
+            default: 0
+          auto_accept_orders:
+            type: boolean
+            x-stoplight:
+              id: r2hvfvnc54wx9
+            default: false
+            description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
+          connected_account:
+            $ref: '#/components/schemas/Account-Update-Connected'
+          label_ids:
+            type: array
+            x-stoplight:
+              id: h6l1mjd3to0yg
+            description: Array of Label IDs to assign to this Account
+            items:
+              type: string
+              format: uuid
+      - $ref: '#/components/schemas/AutoAddOn-BulkAssign'
+    Account-Update-Connected:
+      title: Account-Update
+      x-stoplight:
+        id: tqoelbcljuj2k
+      type: object
+      description: Update model for `Account`
+      properties:
+        truck_count:
+          type: integer
+          description: The allowable number of trucks that is dispatchable to the customer of this account.
+          default: 0
+      additionalProperties: false
+    DailyExport-Read:
+      title: DailyExport-Read
+      x-stoplight:
+        id: omxur2zom8vrl
+      type: object
+      required:
+      - day
+      - created_at
+      - file_url
+      properties:
+        day:
+          type: string
+          x-stoplight:
+            id: 4ptbcq6ryqkfo
+          format: date
+        created_at:
+          type: string
+          x-stoplight:
+            id: dio0ll8zgt6g7
+          format: date-time
+        file_url:
+          type: string
+          x-stoplight:
+            id: 38lhuxnqd1xgx
+      additionalProperties: false
     Account-Connected-Platform-Admin-Create:
       title: Account-Connected-Platform-Admin-Create
       x-stoplight:
@@ -2444,15 +2178,64 @@ components:
       - Zulu
       example: America/New_York
       default: America/New_York
-    EquipmentOwnership:
-      title: EquipmentOwnership
+    Account-Update-Bulk:
+      title: Account-Update-Bulk
       x-stoplight:
-        id: p5e75ayo8y6n5
-      enum:
-      - internal
-      - external
-      default: internal
-      example: internal
+        id: qksofp8c4556h
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 9kzx7a4764y6u
+        properties:
+          available:
+            type: boolean
+            description: Used to set the Account's scheduled time off/on status
+            x-stoplight:
+              id: lp2inoi5upycw
+          connected_account:
+            $ref: '#/components/schemas/Account-Update-Connected'
+      description: The bulk updates allowed for a single Account
+      x-internal: true
+    Scheduled-Time-Off-Create:
+      title: Scheduled-Time-Off-Create
+      x-stoplight:
+        id: kg82d261cjr4w
+      description: Scheduled Time Off - Create
+      type: object
+      required:
+      - start_date
+      - end_date
+      properties:
+        start_date:
+          type: string
+          x-stoplight:
+            id: gse6o5a3nswlz
+          format: date-time
+        end_date:
+          type: string
+          x-stoplight:
+            id: jxpl58y44m2kh
+          format: date-time
+      additionalProperties: false
+    SendInvite:
+      title: SendInvite
+      x-stoplight:
+        id: 85j5tkeowjyx9
+      type: object
+      properties:
+        email:
+          type: boolean
+          default: false
+          description: 'Whether to send an invitation via email along with the creation of the `User`.
+
+
+            Requires the `email` field to be present.'
+        sms:
+          type: boolean
+          default: false
+          description: "Whether to send an invitation via sms along with the creation of the `User`. \n\nRequires the `phone` field to be present."
+      additionalProperties: false
     AutoAddOn-BulkAssign:
       title: AutoAddOn-BulkAssign
       x-stoplight:
@@ -2471,28 +2254,6 @@ components:
               id: rrt11kfb86o87
             type: string
             format: uuid
-      additionalProperties: false
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
       additionalProperties: false
     Account-Invite-Equipment-Create:
       title: Account-Connected-Equipment-Create
@@ -2524,102 +2285,6 @@ components:
           x-stoplight:
             id: pmf52ug1jsgn0
       additionalProperties: false
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    Contact-Read-Nested:
-      title: Contact-Read-Nested
-      x-stoplight:
-        id: 3u6d8qhsz5ehn
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - email
-        - phone
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: sd80y9pbgvkok
-            nullable: true
-          email:
-            type: string
-            x-stoplight:
-              id: 883fmt34pdeaj
-            nullable: true
-          phone:
-            type: string
-            x-stoplight:
-              id: wdtqyju4t4u06
-            example: '+18885551234'
-            nullable: true
-      description: ''
-    Company-Read-Nested:
-      title: Company-Read-Nested
-      x-stoplight:
-        id: cb2kn77qmf1l7
-      description: Compact Company model for nested reads.
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-        x-stoplight:
-          id: jwsufva4znm91
-      - $ref: '#/components/schemas/TreadId'
-      - type: object
-        properties:
-          legal_name:
-            type: string
-            x-stoplight:
-              id: yc10t8hieecwk
-            description: The Company's name. Must be globally unique.
-          company_type:
-            $ref: '#/components/schemas/CompanyType'
-        required:
-        - legal_name
-        - company_type
-    Account-Update-Bulk:
-      title: Account-Update-Bulk
-      x-stoplight:
-        id: qksofp8c4556h
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: 9kzx7a4764y6u
-        properties:
-          available:
-            type: boolean
-            description: Used to set the Account's scheduled time off/on status
-            x-stoplight:
-              id: lp2inoi5upycw
-          connected_account:
-            $ref: '#/components/schemas/Account-Update-Connected'
-      description: The bulk updates allowed for a single Account
-      x-internal: true
-    Account-Update-Connected:
-      title: Account-Update
-      x-stoplight:
-        id: tqoelbcljuj2k
-      type: object
-      description: Update model for `Account`
-      properties:
-        truck_count:
-          type: integer
-          description: The allowable number of trucks that is dispatchable to the customer of this account.
-          default: 0
-      additionalProperties: false
     Contact-Update:
       title: Contact-Update
       x-stoplight:
@@ -2639,6 +2304,24 @@ components:
           x-stoplight:
             id: rtf4rqlgwt35i
           example: '+18885551234'
+      additionalProperties: false
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
       additionalProperties: false
     Account-Invite-Internal-Equipment-Create:
       title: Account-Invite-Internal-Equipment-Create
@@ -2663,12 +2346,29 @@ components:
         state:
           $ref: '#/components/schemas/EquipmentState'
         home_base_id:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: m3vqw8fx2k7nt
           format: uuid
-          nullable: true
       additionalProperties: false
+    Account-Connected-Customer-Create:
+      title: Account-Connected-Customer-Create
+      x-stoplight:
+        id: 8k1ulz2srbdfc
+      allOf:
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        x-stoplight:
+          id: 43gxez0djvi2s
+        required:
+        - account_types
+        properties:
+          account_types:
+            type: array
+            items:
+              $ref: '#/components/schemas/AccountType'
     Account-Read:
       title: Account-Read
       x-stoplight:
@@ -2689,11 +2389,12 @@ components:
           address:
             $ref: '#/components/schemas/Address-Read-Nested'
           notes:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: 2sjpg062n562q
             description: Notes
-            nullable: true
           truck_count:
             type: integer
             x-stoplight:
@@ -2718,19 +2419,104 @@ components:
             items:
               $ref: '#/components/schemas/Label-Read-Nested'
             description: Labels assigned to this account
-    CompanyType:
-      title: CompanyType
+    EquipmentOwnership:
+      title: EquipmentOwnership
       x-stoplight:
-        id: dkzo7gjbtb1b3
+        id: p5e75ayo8y6n5
       enum:
-      - broker
-      - contractor
-      - hauler
-      - owner_operator
-      - producer
-      - super
-      example: hauler
-      description: Company Type
+      - internal
+      - external
+      default: internal
+      example: internal
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+      additionalProperties: false
+    Account-Connected-Read-Nested:
+      title: Account-Connected-Read-Nested
+      x-stoplight:
+        id: pg8wjapp9i57b
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: afxdwofm2lvk9
+        required:
+        - account_types
+        - truck_count
+        - auto_accept_orders
+        properties:
+          account_types:
+            type: array
+            x-stoplight:
+              id: fuy2f5ufr4t1y
+            items:
+              $ref: '#/components/schemas/AccountType'
+          truck_count:
+            type: integer
+            x-stoplight:
+              id: qy4yfietl0bn9
+          auto_accept_orders:
+            type: boolean
+            x-stoplight:
+              id: 9i9aevgy5ke86
+      description: ''
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
     Account-Read-Capacity-Typeahead:
       title: Account-Read-Capacity-Typeahead
       x-stoplight:
@@ -2776,122 +2562,508 @@ components:
               $ref: '#/components/schemas/Label-Read-Nested'
             description: Labels assigned to this account
       x-internal: true
-    Account-Update:
-      title: Account-Update
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: 2zrntg5xhcmsd
-      description: Update model for `Account`
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    EquipmentState:
+      title: EquipmentState
+      x-stoplight:
+        id: eh1fgavft82kx
+      enum:
+      - active
+      - inactive
+      default: active
+      example: active
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
       allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - email
+        - phone
+        properties:
+          name:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: sd80y9pbgvkok
+          email:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 883fmt34pdeaj
+          phone:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+      description: ''
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    Address-Read:
+      title: Address-Read
+      x-stoplight:
+        id: v1mcd2qgns2tf
+      type: object
+      required:
+      - thoroughfare
+      - premise
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      - lat
+      - lon
+      - place_id
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: 8wrr7qkc9ilqn
+        premise:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: z4jth408out1q
+        locality:
+          type: string
+          x-stoplight:
+            id: kfby6wqpgvxbz
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: c9bkrloxf4t8d
+        postal_code:
+          type: string
+          x-stoplight:
+            id: 7zq51k1mof3o3
+        country:
+          type: string
+          x-stoplight:
+            id: iydw9q619ya01
+          pattern: ^[A-Z]{2}
+          example: US
+          minLength: 2
+          maxLength: 2
+        lat:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: kqu1qtf9rivh1
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+        lon:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: oly2yabkzpk9g
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+        place_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: im1fdq7qqxdij
+          description: NextBillion placeID
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Scheduled-Time-Off-Read:
+      title: Scheduled-Time-Off-Read
+      x-stoplight:
+        id: u331truw5dg23
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: h8hb87yfchf0u
+        required:
+        - start_date
+        properties:
+          start_date:
+            type: string
+            x-stoplight:
+              id: ykovozns0x8k2
+            format: date-time
+          end_date:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: rpad7acd8im3j
+      description: Scheduled Time Off
+    Account-Read-Typeahead:
+      title: Account-Read-Typeahead
+      x-stoplight:
+        id: 0jtlv216ot4og
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: zinx4pmrlrvkg
+        required:
+        - name
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 675oqyzkv2xvp
+            description: Account name
+          connected_company:
+            type: object
+            x-stoplight:
+              id: 9e36j656fhsso
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: 8nxy7z0w3h51m
+                format: uuid
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 4yv7e5z57qmn2
+      x-internal: true
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Contact-Create:
+      title: Contact-Create
+      x-stoplight:
+        id: dhro09gmoiqgw
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: ehb4vhlggledw
+        email:
+          type: string
+          x-stoplight:
+            id: kxjggao5fm38r
+        phone:
+          type: string
+          x-stoplight:
+            id: 3dxv517oimpb1
+          example: '+18885551234'
+          description: Contact's E.164 formatted phone number
+      additionalProperties: false
+    Account-Invite:
+      title: Account-Invite
+      x-stoplight:
+        id: 8btqvy3ojzvxj
+      type: object
+      required:
+      - name
+      - contact
+      - address
+      - account_types
+      - auto_accept_orders
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: szxvxy8gtcs4d
+          description: name for the `Account` and `Company`
+        contact:
+          $ref: '#/components/schemas/Contact-Create'
+        address:
+          $ref: '#/components/schemas/Address-Create'
+        account_types:
+          type: array
+          x-stoplight:
+            id: xqelgawt2nuia
+          description: Account type allowing for multiple values
+          items:
+            $ref: '#/components/schemas/AccountType'
+        company_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: vi6xr68lbj1ln
+          format: uuid
+        department:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: bg894oo5aem0d
+          deprecated: true
+        department_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 7k6resx8we6g2
+          format: uuid
+          description: 'The ID of the associated **Department**.
+
+
+            This should be used instead of `department`.'
+        notes:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: mozoefi7tn3vn
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: ghv5udvm51jkh
+          description: Identifier used to associate an account to any external system
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: hgv5udvm51jkh
+          description: The accounting ID of the Account mapping to any accounting system
+        truck_count:
+          type:
+          - integer
+          - 'null'
+          x-stoplight:
+            id: xxujn60891ma2
+          description: The allowable number of trucks that is dispatchable to the customer of this account.
+        auto_accept_orders:
+          type: boolean
+          x-stoplight:
+            id: osbpw6who0ya6
+          description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
+        send_invite:
+          $ref: '#/components/schemas/SendInvite'
+        company_type:
+          x-stoplight:
+            id: xbozhh7e5fbt9
+          enum:
+          - broker
+          - contractor
+          - hauler
+          - owner_operator
+          - producer
+          default: producer
+        equipment:
+          $ref: '#/components/schemas/Account-Invite-Equipment-Create'
+        time_zone:
+          $ref: '#/components/schemas/TimeZone'
+        scoped_company_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 9sfcuew1u5enw
+          format: uuid
+        internal_equipment:
+          $ref: '#/components/schemas/Account-Invite-Internal-Equipment-Create'
+        label_ids:
+          type: array
+          x-stoplight:
+            id: lbl1d5cr8inv1
+          description: Array of Label IDs to assign to this account.
+          items:
+            type: string
+            format: uuid
+      additionalProperties: false
+    Account-Create:
+      title: Account-Create
+      x-stoplight:
+        id: gxkg5vrqlzq89
+      type: object
+      required:
+      - name
+      - account_types
+      - auto_accept_orders
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 5298s0s0peapc
+          description: Account name
+        department:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: jcmgf3qz70e9w
+          description: Department
+          deprecated: true
+        department_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: ewd9im004flot
+          format: uuid
+          description: 'The ID of the associated **Department**.
+
+
+            This should be used instead of `department`.'
+        primary_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        billing_contact:
+          $ref: '#/components/schemas/Contact-Create'
+        address:
+          $ref: '#/components/schemas/Address-Create'
+        billing_address:
+          $ref: '#/components/schemas/Address-Create'
+        notes:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: cekepr6fg19fx
+          description: Notes
+        account_types:
+          type: array
+          x-stoplight:
+            id: fz4g38ct2r9l3
+          description: Account type allowing for multiple values
+          items:
+            $ref: '#/components/schemas/AccountType'
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: ck449dcgiige8
+          description: Identifier used to associate an account to any external system
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: ck459dchijge8
+          description: The accounting ID of the Account mapping to any accounting system
+        company_id:
+          type: string
+          x-stoplight:
+            id: x9ow3nfelos0a
+          format: uuid
+        truck_count:
+          type:
+          - integer
+          - 'null'
+          x-stoplight:
+            id: qzekegh1h2ztd
+          description: The allowable number of trucks that is dispatchable to the customer of this account.
+          default: 0
+        auto_accept_orders:
+          type: boolean
+          x-stoplight:
+            id: tjzapla5k8r8f
+          default: false
+          description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
+        label_ids:
+          type: array
+          x-stoplight:
+            id: lbl1d5cr8acc1
+          description: Array of Label IDs to assign to this account.
+          items:
+            type: string
+            format: uuid
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Label-Read-Nested:
+      title: Label-Read-Nested
+      x-stoplight:
+        id: lbl1readnest01
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
       - type: object
         properties:
           name:
             type: string
             x-stoplight:
-              id: cv2ymke8sutek
-            description: Account name
-          department:
+              id: lbl1nestnm0001
+            description: Label name
+          color:
             type: string
             x-stoplight:
-              id: wtt5wqixu46yn
-            description: Department
-            deprecated: true
-            nullable: true
-          department_id:
-            type: string
-            x-stoplight:
-              id: tkd8y8kgx83mc
-            format: uuid
-            description: 'The ID of the associated **Department**.
-
-
-              This should be used instead of `department`.'
-            nullable: true
-          primary_contact:
-            $ref: '#/components/schemas/Contact-Update'
-          billing_contact:
-            $ref: '#/components/schemas/Contact-Update'
-          address:
-            $ref: '#/components/schemas/Address-Update'
-          billing_address:
-            $ref: '#/components/schemas/Address-Update'
-          notes:
-            type: string
-            x-stoplight:
-              id: tqs5b4rdilyyr
-            description: Notes
-            nullable: true
-          account_types:
-            type: array
-            x-stoplight:
-              id: o8crnsajrp9ii
-            description: Account type allowing for multiple values
-            items:
-              $ref: '#/components/schemas/AccountType'
-          external_id:
-            type: string
-            x-stoplight:
-              id: uormrtrev82c5
-            description: Identifier used to associate an account to any external system
-            nullable: true
-          accounting_id:
-            type: string
-            x-stoplight:
-              id: uosmrurev83c5
-            description: The accounting ID of the Account mapping to any accounting system
-            nullable: true
-          truck_count:
-            type: integer
-            x-stoplight:
-              id: wlti4u29w4els
-            description: The allowable number of trucks that is dispatchable to the customer of this account.
-            default: 0
-          auto_accept_orders:
-            type: boolean
-            x-stoplight:
-              id: r2hvfvnc54wx9
-            default: false
-            description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
-          connected_account:
-            $ref: '#/components/schemas/Account-Update-Connected'
-          label_ids:
-            type: array
-            x-stoplight:
-              id: h6l1mjd3to0yg
-            description: Array of Label IDs to assign to this Account
-            items:
-              type: string
-              format: uuid
-      - $ref: '#/components/schemas/AutoAddOn-BulkAssign'
-    Account-Connected-Read-Nested:
-      title: Account-Connected-Read-Nested
-      x-stoplight:
-        id: pg8wjapp9i57b
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Discardable'
-      - type: object
-        x-stoplight:
-          id: afxdwofm2lvk9
+              id: lbl1nestcol001
+            description: Hex color code for the label
+            pattern: ^#[0-9A-Fa-f]{6}$
         required:
-        - account_types
-        - truck_count
-        - auto_accept_orders
-        properties:
-          account_types:
-            type: array
-            x-stoplight:
-              id: fuy2f5ufr4t1y
-            items:
-              $ref: '#/components/schemas/AccountType'
-          truck_count:
-            type: integer
-            x-stoplight:
-              id: qy4yfietl0bn9
-          auto_accept_orders:
-            type: boolean
-            x-stoplight:
-              id: 9i9aevgy5ke86
-      description: ''
+        - name
+        - color
     Account-Read-Nested:
       title: Account-Read-Nested
       x-stoplight:
@@ -2921,15 +3093,17 @@ components:
             items:
               $ref: '#/components/schemas/AccountType'
           external_id:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: yfrec4y0a90cb
-            nullable: true
           accounting_id:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: yfsec5y0a91cb
-            nullable: true
           company:
             type: object
             x-stoplight:
@@ -2952,126 +3126,6 @@ components:
             $ref: '#/components/schemas/Company-Read-Nested'
           billing_contact:
             $ref: '#/components/schemas/Contact-Read-Nested'
-    Address-Read:
-      title: Address-Read
-      x-stoplight:
-        id: v1mcd2qgns2tf
-      type: object
-      required:
-      - thoroughfare
-      - premise
-      - locality
-      - administrative_area
-      - postal_code
-      - country
-      - lat
-      - lon
-      - place_id
-      properties:
-        thoroughfare:
-          type: string
-          x-stoplight:
-            id: 8wrr7qkc9ilqn
-        premise:
-          type: string
-          x-stoplight:
-            id: z4jth408out1q
-          nullable: true
-        locality:
-          type: string
-          x-stoplight:
-            id: kfby6wqpgvxbz
-        administrative_area:
-          type: string
-          x-stoplight:
-            id: c9bkrloxf4t8d
-        postal_code:
-          type: string
-          x-stoplight:
-            id: 7zq51k1mof3o3
-        country:
-          type: string
-          x-stoplight:
-            id: iydw9q619ya01
-          pattern: ^[A-Z]{2}
-          example: US
-          minLength: 2
-          maxLength: 2
-        lat:
-          type: string
-          x-stoplight:
-            id: kqu1qtf9rivh1
-          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
-          nullable: true
-        lon:
-          type: string
-          x-stoplight:
-            id: oly2yabkzpk9g
-          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
-          nullable: true
-        place_id:
-          type: string
-          x-stoplight:
-            id: im1fdq7qqxdij
-          description: NextBillion placeID
-          nullable: true
-      additionalProperties: false
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    SendInvite:
-      title: SendInvite
-      x-stoplight:
-        id: 85j5tkeowjyx9
-      type: object
-      properties:
-        email:
-          type: boolean
-          default: false
-          description: 'Whether to send an invitation via email along with the creation of the `User`.
-
-
-            Requires the `email` field to be present.'
-        sms:
-          type: boolean
-          default: false
-          description: "Whether to send an invitation via sms along with the creation of the `User`. \n\nRequires the `phone` field to be present."
-      additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    Account-Connected-Customer-Create:
-      title: Account-Connected-Customer-Create
-      x-stoplight:
-        id: 8k1ulz2srbdfc
-      allOf:
-      - $ref: '#/components/schemas/TreadId'
-      - type: object
-        x-stoplight:
-          id: 43gxez0djvi2s
-        required:
-        - account_types
-        properties:
-          account_types:
-            type: array
-            items:
-              $ref: '#/components/schemas/AccountType'
     Address-Update:
       title: Address-Update
       x-stoplight:
@@ -3126,98 +3180,180 @@ components:
           description: 'If this is provided with value of `1` like so `_destroy: 1` then this `Address` will be deleted. The `id` must be set.'
       type: object
       additionalProperties: false
-    Account-Create:
-      title: Account-Create
+    ModelError-Response:
+      title: ModelError-Response
       x-stoplight:
-        id: gxkg5vrqlzq89
+        id: payf9ndh3l6np
       type: object
       required:
-      - name
-      - account_types
-      - auto_accept_orders
+      - error
       properties:
-        name:
-          type: string
-          x-stoplight:
-            id: 5298s0s0peapc
-          description: Account name
-        department:
-          type: string
-          x-stoplight:
-            id: jcmgf3qz70e9w
-          description: Department
-          deprecated: true
-          nullable: true
-        department_id:
-          type: string
-          x-stoplight:
-            id: ewd9im004flot
-          format: uuid
-          description: 'The ID of the associated **Department**.
-
-
-            This should be used instead of `department`.'
-          nullable: true
-        primary_contact:
-          $ref: '#/components/schemas/Contact-Create'
-        billing_contact:
-          $ref: '#/components/schemas/Contact-Create'
-        address:
-          $ref: '#/components/schemas/Address-Create'
-        billing_address:
-          $ref: '#/components/schemas/Address-Create'
-        notes:
-          type: string
-          x-stoplight:
-            id: cekepr6fg19fx
-          description: Notes
-          nullable: true
-        account_types:
-          type: array
-          x-stoplight:
-            id: fz4g38ct2r9l3
-          description: Account type allowing for multiple values
-          items:
-            $ref: '#/components/schemas/AccountType'
-        external_id:
-          type: string
-          x-stoplight:
-            id: ck449dcgiige8
-          description: Identifier used to associate an account to any external system
-          nullable: true
-        accounting_id:
-          type: string
-          x-stoplight:
-            id: ck459dchijge8
-          description: The accounting ID of the Account mapping to any accounting system
-          nullable: true
-        company_id:
-          type: string
-          x-stoplight:
-            id: x9ow3nfelos0a
-          format: uuid
-        truck_count:
-          type: integer
-          x-stoplight:
-            id: qzekegh1h2ztd
-          description: The allowable number of trucks that is dispatchable to the customer of this account.
-          default: 0
-          nullable: true
-        auto_accept_orders:
-          type: boolean
-          x-stoplight:
-            id: tjzapla5k8r8f
-          default: false
-          description: Indicates whether orders and their jobs will be accepted automatcially into the vendor account.
-        label_ids:
-          type: array
-          x-stoplight:
-            id: lbl1d5cr8acc1
-          description: Array of Label IDs to assign to this account.
-          items:
-            type: string
-            format: uuid
+        error:
+          $ref: '#/components/schemas/ModelError'
       additionalProperties: false
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+  parameters:
+    filter-show_all:
+      name: filter[show_all]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Show all records. Deprecated in favor of `filter[availability]`
+      deprecated: true
+    filter-department_ids:
+      name: filter[department_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Department IDs. Use 'none' to filter for records without a Department.
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    filter-discarded:
+      name: filter[discarded]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Only show discarded Accounts
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    filter-date:
+      name: filter[date]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date
+      description: Single Date Filter
+    filter-connected_company-company_types:
+      name: filter[connected_company][company_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: Connected Company Type enum filters (see CompanyType enum for the list of values)
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    filter-auto_add_ons:
+      name: filter[auto_add_ons]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter on whether the resource (e.g. Account, User) has associated AutoAddOns
+    filter-availability:
+      name: filter[availability]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter based on record availability based on the `date` parameter/filter, defaulting to the current day.
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    filter-material_rates:
+      name: filter[material_rates]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Filter on whether the Account has associated MaterialRates
+    filter-connected:
+      name: filter[connected]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Only show connected Accounts
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    filter-label_ids:
+      name: filter[label_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          format: uuid
+      description: Filter by Label IDs. Returns records that have ANY of the specified labels (OR logic).
+    filter-account_types:
+      name: filter[account_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: AccountType filter
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

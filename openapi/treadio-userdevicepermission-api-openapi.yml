@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier UserDevicePermission API
+  title: Horizon API V1 User Device Permission API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -62,31 +62,88 @@ paths:
             schema:
               $ref: '#/components/schemas/UserDevicePermission-Update'
 components:
-  responses:
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
   schemas:
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    UserDevicePermissionCombined:
+      title: UserDevicePermissionCombined
+      x-stoplight:
+        id: e3ix6tpc21ms7
+      type: object
+      description: This is an object which combines the permission name and state
+      required:
+      - user_device_permission
+      - user_device_permission_state
+      properties:
+        user_device_permission:
+          $ref: '#/components/schemas/DevicePermission'
+        user_device_permission_state:
+          $ref: '#/components/schemas/DevicePermissionState'
+      additionalProperties: false
+    DevicePermissionState:
+      title: DevicePermissionState
+      x-stoplight:
+        id: 3c1p4ft9qi1uj
+      description: These are the list of permission states a permission can have
+      enum:
+      - denied
+      - granted
+      - restricted
+      - limited
+      - permanently_denied
+      - provisional
+    DevicePermission:
+      title: DevicePermission
+      x-stoplight:
+        id: fog1bzwo59bxy
+      description: These are the list of permissions an app user can set
+      enum:
+      - location_while_using
+      - location_always
+      - notifications
+      - motion_and_fitness
+      - physical_activity
+      - ignore_battery_optimizations
+      - background_refresh
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
     UserDevicePermission-Update:
       title: UserDevicePermission-Update
       x-stoplight:
@@ -119,87 +176,30 @@ components:
         error:
           $ref: '#/components/schemas/Error'
       additionalProperties: false
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    DevicePermission:
-      title: DevicePermission
-      x-stoplight:
-        id: fog1bzwo59bxy
-      description: These are the list of permissions an app user can set
-      enum:
-      - location_while_using
-      - location_always
-      - notifications
-      - motion_and_fitness
-      - physical_activity
-      - ignore_battery_optimizations
-      - background_refresh
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+  responses:
     Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    DevicePermissionState:
-      title: DevicePermissionState
-      x-stoplight:
-        id: 3c1p4ft9qi1uj
-      description: These are the list of permission states a permission can have
-      enum:
-      - denied
-      - granted
-      - restricted
-      - limited
-      - permanently_denied
-      - provisional
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
     UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    UserDevicePermissionCombined:
-      title: UserDevicePermissionCombined
-      x-stoplight:
-        id: e3ix6tpc21ms7
-      type: object
-      description: This is an object which combines the permission name and state
-      required:
-      - user_device_permission
-      - user_device_permission_state
-      properties:
-        user_device_permission:
-          $ref: '#/components/schemas/DevicePermission'
-        user_device_permission_state:
-          $ref: '#/components/schemas/DevicePermissionState'
-      additionalProperties: false
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
   securitySchemes:
     bearerAuth:
       type: http

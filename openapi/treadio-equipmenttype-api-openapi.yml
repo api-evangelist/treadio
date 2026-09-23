@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier EquipmentType API
+  title: Horizon API V1 Equipment Type API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -452,169 +452,24 @@ paths:
 
         This endpoint requires the `delete_equipment_type` permission'
 components:
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    search-query:
-      name: search[query]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for queries
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
   schemas:
-    Error-Response:
-      title: Error-Response
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    EquipmentType-Update:
-      title: EquipmentType-Update
-      x-stoplight:
-        id: 5kvvzv0wgvjbt
-      type: object
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: ddokdnuaefpc5
-        external_id:
-          type: string
-          x-stoplight:
-            id: xzygl5jjbjm5z
-          nullable: true
-        gross_capacity:
-          type: number
-          x-stoplight:
-            id: td05udqzh5dts
-          nullable: true
-        gross_capacity_unit_of_measure:
-          $ref: '#/components/schemas/OrderUnitOfMeasure'
-        accounting_id:
-          type: string
-          x-stoplight:
-            id: u014zmk5zu7sl
-          nullable: true
-        additional_gross_capacities:
-          type: array
-          x-stoplight:
-            id: vf8bdqly5punq
-          items:
-            $ref: '#/components/schemas/GrossCapacity'
-      additionalProperties: false
-    EquipmentType-Create:
-      title: EquipmentType-Create
-      x-stoplight:
-        id: a8n3muqeklf15
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: nf5b9iy6b0ve0
-        external_id:
-          type: string
-          x-stoplight:
-            id: jtt0dgtonxogr
-          nullable: true
-        gross_capacity:
-          type: number
-          x-stoplight:
-            id: 65y5x4v0o1sjb
-          nullable: true
-        gross_capacity_unit_of_measure:
-          $ref: '#/components/schemas/OrderUnitOfMeasure'
-        accounting_id:
-          type: string
-          x-stoplight:
-            id: c89poagtxhk7z
-          nullable: true
-        additional_gross_capacities:
-          type: array
-          x-stoplight:
-            id: zll76adj5zhh8
-          items:
-            $ref: '#/components/schemas/GrossCapacity'
-        company_id:
-          type: string
-          x-stoplight:
-            id: vi6xr68lbj7ln
-          format: uuid
-          nullable: true
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -641,39 +496,105 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    EquipmentType-Read-Typeahead:
+      title: EquipmentType-Read-Typeahead
       x-stoplight:
-        id: 202o69l0fs40h
+        id: e6i4vca40gozl
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Identifier'
       - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
         properties:
-          error_type:
+          name:
             type: string
             x-stoplight:
-              id: wvq8c0qsym4hz
+              id: c78zqsegfn4u4
         required:
-        - error_type
-    ModelError:
-      title: ModelError
+        - name
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
       x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    EquipmentType-Update:
+      title: EquipmentType-Update
+      x-stoplight:
+        id: 5kvvzv0wgvjbt
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: ddokdnuaefpc5
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: xzygl5jjbjm5z
+        gross_capacity:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: td05udqzh5dts
+        gross_capacity_unit_of_measure:
+          $ref: '#/components/schemas/OrderUnitOfMeasure'
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: u014zmk5zu7sl
+        additional_gross_capacities:
+          type: array
+          x-stoplight:
+            id: vf8bdqly5punq
+          items:
+            $ref: '#/components/schemas/GrossCapacity'
+      additionalProperties: false
+    TicketSource:
+      title: TicketSource
+      x-stoplight:
+        id: z52hto616mgx1
+      enum:
+      - driver_app
+      - web
+      - api_integration
+      - agent
+      example: driver_app
+      default: driver_app
+      readOnly: true
     EquipmentType-Read:
       title: EquipmentType-Read
       x-stoplight:
@@ -699,29 +620,101 @@ components:
             x-stoplight:
               id: m1po5dcxo2e5n
           external_id:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: ojqq5vhdl5xsf
-            nullable: true
           gross_capacity:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: 86j559tl8ttid
-            nullable: true
           gross_capacity_unit_of_measure:
             $ref: '#/components/schemas/OrderUnitOfMeasure'
           source:
             $ref: '#/components/schemas/TicketSource'
           accounting_id:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: hrklzgg4dfg59
-            nullable: true
           additional_gross_capacities:
             type: array
             items:
               $ref: '#/components/schemas/GrossCapacity'
       - $ref: '#/components/schemas/Timestamps'
+    GrossCapacity:
+      title: GrossCapacity
+      x-stoplight:
+        id: shjax0sglmf7h
+      type: object
+      x-internal: true
+      required:
+      - capacity
+      - unit_of_measure
+      properties:
+        capacity:
+          type: string
+          x-stoplight:
+            id: danmldgefgpnd
+        unit_of_measure:
+          $ref: '#/components/schemas/OrderUnitOfMeasure'
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
     Timestamps:
       title: Timestamps
       x-stoplight:
@@ -744,95 +737,51 @@ components:
           format: date-time
           description: ISO8601 timestamp with local timezone
       additionalProperties: false
-    Identifier:
-      title: Identifier
+    EquipmentType-Create:
+      title: EquipmentType-Create
       x-stoplight:
-        id: gnd39lue5v7ol
+        id: a8n3muqeklf15
       type: object
       required:
-      - id
+      - name
       properties:
-        id:
+        name:
           type: string
           x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    TicketSource:
-      title: TicketSource
-      x-stoplight:
-        id: z52hto616mgx1
-      enum:
-      - driver_app
-      - web
-      - api_integration
-      - agent
-      example: driver_app
-      default: driver_app
-      readOnly: true
-    OrderUnitOfMeasure:
-      title: OrderUnitOfMeasure
-      x-stoplight:
-        id: kahcgn7w8swdv
-      enum:
-      - Load
-      - Tonne
-      - Ton
-      - Yard
-      - Meter
-      - Foot
-      - Liter
-      - Hour
-      - Bushel
-      - Gallon
-      - CubicMeter
-      - Mile
-      - Kilometer
-      - Barrel
-      - Bag
-      - Pallet
-      example: Load
-    EquipmentType-Read-Typeahead:
-      title: EquipmentType-Read-Typeahead
-      x-stoplight:
-        id: e6i4vca40gozl
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: c78zqsegfn4u4
-        required:
-        - name
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    GrossCapacity:
-      title: GrossCapacity
-      x-stoplight:
-        id: shjax0sglmf7h
-      type: object
-      x-internal: true
-      required:
-      - capacity
-      - unit_of_measure
-      properties:
-        capacity:
-          type: string
+            id: nf5b9iy6b0ve0
+        external_id:
+          type:
+          - string
+          - 'null'
           x-stoplight:
-            id: danmldgefgpnd
-        unit_of_measure:
+            id: jtt0dgtonxogr
+        gross_capacity:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: 65y5x4v0o1sjb
+        gross_capacity_unit_of_measure:
           $ref: '#/components/schemas/OrderUnitOfMeasure'
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: c89poagtxhk7z
+        additional_gross_capacities:
+          type: array
+          x-stoplight:
+            id: zll76adj5zhh8
+          items:
+            $ref: '#/components/schemas/GrossCapacity'
+        company_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: vi6xr68lbj7ln
+          format: uuid
       additionalProperties: false
     ModelError-Response:
       title: ModelError-Response
@@ -845,6 +794,67 @@ components:
         error:
           $ref: '#/components/schemas/ModelError'
       additionalProperties: false
+  parameters:
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

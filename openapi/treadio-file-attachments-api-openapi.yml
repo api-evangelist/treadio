@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier FileAttachments API
+  title: Horizon API V1 File Attachments API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -19,7 +19,7 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: FileAttachments
+- name: File Attachments
 paths:
   /v1/bulk_downloads:
     parameters:
@@ -27,7 +27,7 @@ paths:
     post:
       summary: Bulk download FileAttachments
       tags:
-      - FileAttachments
+      - File Attachments
       responses:
         '202':
           description: Accepted
@@ -52,7 +52,13 @@ paths:
       x-stoplight:
         id: qxegczlt0vjwh
       x-internal: true
-      description: "This endpoint starts a bulk download of `FileAttachments`. \n\nThe `job_ids` and `filter[jobs]` params are mutually exclusive and at least one of these is required.\n\nOn success the caller should subscribe to the `BulkDownloadResult` `RTU` using the `id` in the response."
+      description: 'This endpoint starts a bulk download of `FileAttachments`.
+
+
+        The `job_ids` and `filter[jobs]` params are mutually exclusive and at least one of these is required.
+
+
+        On success the caller should subscribe to the `BulkDownloadResult` `RTU` using the `id` in the response.'
       requestBody:
         content:
           application/json:
@@ -119,7 +125,7 @@ paths:
             schema:
               $ref: '#/components/schemas/FileAttachment-Create'
       tags:
-      - FileAttachments
+      - File Attachments
     get:
       summary: Retrieve all FileAttachments for a given Order
       responses:
@@ -154,7 +160,7 @@ paths:
         id: nmvovd2feee9c
       description: Retrieve all `FileAttachments` for a given `Order`
       tags:
-      - FileAttachments
+      - File Attachments
       parameters:
       - $ref: '#/components/parameters/page-after'
       - $ref: '#/components/parameters/page-before'
@@ -165,7 +171,7 @@ paths:
     post:
       summary: Create a DirectUpload
       tags:
-      - FileAttachments
+      - File Attachments
       responses:
         '201':
           description: Created
@@ -192,7 +198,7 @@ paths:
       description: 'Create a `DirectUpload`.
 
 
-        The `checksum` _must_ be calculated exactly the way `rails` expects it ([javascript example](https://github.com/rails/rails/blob/main/activestorage/app/javascript/activestorage/file_checksum.js)).
+        The `checksum` _must_ be calculated exactly the way `rails` expects it (javascript example).
 
 
         You should upload the file to `direct_upload.url` using any provided headers from `direct_upload.headers`.
@@ -217,7 +223,7 @@ paths:
     post:
       summary: Create a FileAttachment on a DriverDay
       tags:
-      - FileAttachments
+      - File Attachments
       responses:
         '201':
           description: Created
@@ -264,7 +270,7 @@ paths:
     get:
       summary: Retrieve all FileAttachments for a given DriverDay
       tags:
-      - FileAttachments
+      - File Attachments
       responses:
         '200':
           description: OK
@@ -335,7 +341,7 @@ paths:
         id: flpyoj876qp2p
       description: Read a specific `FileAttachment`
       tags:
-      - FileAttachments
+      - File Attachments
     patch:
       summary: Update a FileAttachment by ID
       responses:
@@ -365,9 +371,25 @@ paths:
       operationId: patch-v1-file_attachments-file_attachment_id
       x-stoplight:
         id: am4r9ekeskla9
-      description: "Update `FileAttachment` by ID. Requires permission to edit attachment on a particular object: \n\nFor Projects: `edit_project_attachments`\\\nFor Orders: `edit_order_attachments`\\\nFor Jobs: `edit_job_attachments`\\\nFor Loads: `edit_load_attachments`\\\nFor Driver Days: `edit_driver_day_attachments`\\\nFor Settlements: `edit_settlement_attachments`\\\n\nDrivers and Foremen that have this permission, can only edit `FileAttachments` that they have added."
+      description: 'Update `FileAttachment` by ID. Requires permission to edit attachment on a particular object:
+
+
+        For Projects: `edit_project_attachments`\
+
+        For Orders: `edit_order_attachments`\
+
+        For Jobs: `edit_job_attachments`\
+
+        For Loads: `edit_load_attachments`\
+
+        For Driver Days: `edit_driver_day_attachments`\
+
+        For Settlements: `edit_settlement_attachments`\
+
+
+        Drivers and Foremen that have this permission, can only edit `FileAttachments` that they have added.'
       tags:
-      - FileAttachments
+      - File Attachments
       requestBody:
         content:
           application/json:
@@ -389,9 +411,25 @@ paths:
       operationId: delete-v1-file_attachments-file_attachment_id
       x-stoplight:
         id: tgfqi473ukd0j
-      description: "Delete `FileAttachment` by ID. Requires permission to delete attachment on a particular object: \n\nFor Projects: `delete_project_attachments`\\\nFor Orders:`delete_order_attachments`\\\nFor Jobs: `delete_job_attachments`\\\nFor Loads: `delete_load_attachments`\\\nFor Driver Days: `delete_driver_day_attachments`\\\nFor Settlements: `delete_settlement_attachments`\\\n\nDrivers and Foremen that have this permission, can only delete `FileAttachments` that they have added."
+      description: 'Delete `FileAttachment` by ID. Requires permission to delete attachment on a particular object:
+
+
+        For Projects: `delete_project_attachments`\
+
+        For Orders:`delete_order_attachments`\
+
+        For Jobs: `delete_job_attachments`\
+
+        For Loads: `delete_load_attachments`\
+
+        For Driver Days: `delete_driver_day_attachments`\
+
+        For Settlements: `delete_settlement_attachments`\
+
+
+        Drivers and Foremen that have this permission, can only delete `FileAttachments` that they have added.'
       tags:
-      - FileAttachments
+      - File Attachments
   /v1/jobs/{job-id}/file_attachments:
     parameters:
     - schema:
@@ -446,7 +484,7 @@ paths:
             schema:
               $ref: '#/components/schemas/FileAttachment-Create'
       tags:
-      - FileAttachments
+      - File Attachments
       x-internal: true
     get:
       summary: Retrieve all FileAttachments for a given Job
@@ -482,7 +520,7 @@ paths:
         id: pbhvztovzeq3q
       description: Retrieve all `FileAttachments` for a given `Job`
       tags:
-      - FileAttachments
+      - File Attachments
       parameters:
       - $ref: '#/components/parameters/page-after'
       - $ref: '#/components/parameters/page-before'
@@ -500,7 +538,7 @@ paths:
     get:
       summary: Retrieve all associated FileAttachments for a Job
       tags:
-      - FileAttachments
+      - File Attachments
       responses:
         '200':
           description: OK
@@ -531,7 +569,13 @@ paths:
       operationId: get-v1-jobs-job-id-files
       x-stoplight:
         id: z4p1ctnwuedlr
-      description: "This endpoint retrieves all associated `FileAttachments` for a `Job`, specifically:\n * all `FileAttachments` on the `Job`\n * all `FileAttachments` on the `Job's` `Loads`\n * all `FileAttachments` on `Tickets` connected to this `Job`\n\n"
+      description: 'This endpoint retrieves all associated `FileAttachments` for a `Job`, specifically:
+
+        * all `FileAttachments` on the `Job`
+
+        * all `FileAttachments` on the `Job''s` `Loads`
+
+        * all `FileAttachments` on `Tickets` connected to this `Job`'
       parameters:
       - $ref: '#/components/parameters/page-limit'
       - $ref: '#/components/parameters/page-after'
@@ -590,7 +634,7 @@ paths:
             schema:
               $ref: '#/components/schemas/FileAttachment-Create'
       tags:
-      - FileAttachments
+      - File Attachments
     get:
       summary: Retrieve all FileAttachments for a given Load
       responses:
@@ -625,7 +669,7 @@ paths:
         id: g4ldnfvd0tf8g
       description: Retrieve all `FileAttachments` for a given `Load`
       tags:
-      - FileAttachments
+      - File Attachments
       parameters:
       - $ref: '#/components/parameters/page-after'
       - $ref: '#/components/parameters/page-before'
@@ -684,7 +728,7 @@ paths:
             schema:
               $ref: '#/components/schemas/FileAttachment-Create'
       tags:
-      - FileAttachments
+      - File Attachments
       deprecated: true
     get:
       summary: Retrieve all FileAttachments for a given Order
@@ -720,7 +764,7 @@ paths:
         id: rqdbk8gf13faa
       description: Retrieve all `FileAttachments` for a given `Order`
       tags:
-      - FileAttachments
+      - File Attachments
       parameters:
       - $ref: '#/components/parameters/page-after'
       - $ref: '#/components/parameters/page-before'
@@ -780,7 +824,7 @@ paths:
 
         * If you''re using a file then you must use the `multipart/form-data` mime-type and `file` must be a file.'
       tags:
-      - FileAttachments
+      - File Attachments
     get:
       summary: Retrieve all FileAttachments for a given Project
       responses:
@@ -815,111 +859,52 @@ paths:
         id: tfbkyg0njj4tt
       description: Retrieve all `FileAttachments` for a given `Project`
       tags:
-      - FileAttachments
+      - File Attachments
       parameters:
       - $ref: '#/components/parameters/page-after'
       - $ref: '#/components/parameters/page-before'
       - $ref: '#/components/parameters/page-limit'
 components:
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   schemas:
-    DirectUpload-Read:
-      title: DirectUpload-Read
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: ge5fs3tk8yb8k
-      type: object
-      required:
-      - id
-      - byte_size
-      - checksum
-      - content_type
-      - created_at
-      - filename
-      - key
-      - service_name
-      - signed_id
-      - direct_upload
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: lzwkhbbuc30lt
-          format: uuid
-        byte_size:
-          type: integer
-          x-stoplight:
-            id: zdq5i2km7dbdd
-        checksum:
-          type: string
-          x-stoplight:
-            id: pfgyb7ctywy3o
-        content_type:
-          type: string
-          x-stoplight:
-            id: id6fbesbolbxu
-        created_at:
-          type: string
-          x-stoplight:
-            id: qkkile7jxkghk
-          format: date-time
-        filename:
-          type: string
-          x-stoplight:
-            id: nh2lxjat0biia
-        key:
-          type: string
-          x-stoplight:
-            id: saakohyy5kvvz
-        metadata:
-          type: object
-          x-stoplight:
-            id: zlk0ufjqtjaxq
-        service_name:
-          type: string
-          x-stoplight:
-            id: br0ew9wo8145q
-        signed_id:
-          type: string
-          x-stoplight:
-            id: zvuflukjwdj16
-        direct_upload:
-          type: object
-          x-stoplight:
-            id: e4cw0bh9x1t4n
-          required:
-          - url
-          properties:
-            url:
-              type: string
-              x-stoplight:
-                id: l0qwu7ya2mng0
-              format: uri
-            headers:
-              type: object
-              x-stoplight:
-                id: jgxk00g0qfrub
-      additionalProperties: false
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    User-Read-Typeahead:
+      title: User-Read-Typeahead
+      x-stoplight:
+        id: ttbbss5b5k66f
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - first_name
+        - last_name
+        properties:
+          first_name:
+            type: string
+            description: First name
+            x-stoplight:
+              id: gwo999rcdahmg
+          last_name:
+            type: string
+            description: Last name
+            x-stoplight:
+              id: l9omnnsq644bh
+      description: ''
     FileAttachment-Create:
       title: FileAttachment-Create
       x-stoplight:
@@ -945,103 +930,6 @@ components:
           x-stoplight:
             id: u5wjqpawbht5v
       additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    TreadId:
-      title: TreadId
-      x-stoplight:
-        id: 43k4t5tl359m4
-      type: object
-      required:
-      - tread_id
-      properties:
-        tread_id:
-          type: string
-          x-stoplight:
-            id: zi3ld7djflw6f
-          pattern: ^[0-9A-F]{6}$
-          minLength: 6
-          maxLength: 6
-          example: ABC123
-          description: Tread ID
-      additionalProperties: false
-    FileAttachmentCategory:
-      title: FileAttachmentCategory
-      x-stoplight:
-        id: baiohh0t8x4x2
-      enum:
-      - Inspection Report
-      - Site Map
-      - Scale Ticket (External)
-      - Scale Ticket (Internal)
-      - Timesheet
-      - Other
-      default: Other
-    Discardable:
-      title: Discardable
-      x-stoplight:
-        id: 46axlb8u5wjay
-      type: object
-      required:
-      - discarded_at
-      properties:
-        discarded_at:
-          type: string
-          x-stoplight:
-            id: cy8t6fecoyxbo
-          format: date-time
-          nullable: true
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    JobState:
-      title: JobState
-      x-stoplight:
-        id: qyb8p2t7h0pnn
-      enum:
-      - created
-      - assigned
-      - accepted
-      - rejected
-      - to_pickup
-      - arrived_pickup
-      - loaded
-      - to_dropoff
-      - arrived_dropoff
-      - unloaded
-      - completed
-      - canceled
-      - ended
-      - sent
-      - in_review
-      - flagged
-      - signed_off
-      - paid
-      - load_completed
-      example: created
-      default: created
-      readOnly: true
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -1068,39 +956,6 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
     BulkDownload-Create:
       title: BulkDownload-Create
       x-stoplight:
@@ -1211,109 +1066,30 @@ components:
               items:
                 $ref: '#/components/schemas/FileAttachmentCategory'
       additionalProperties: false
-    Timestamps:
-      title: Timestamps
+    Principal-Read-Nested:
+      title: Principal-Read-Nested
       x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    DirectUpload-Create:
-      title: DirectUpload-Create
-      x-stoplight:
-        id: gu4eq95ccx5jq
-      type: object
-      x-internal: true
-      required:
-      - filename
-      - byte_size
-      - checksum
-      - content_type
-      properties:
-        filename:
-          type: string
-          x-stoplight:
-            id: npiq1r1p6z5sz
-        byte_size:
-          type: integer
-          x-stoplight:
-            id: 173ysh5cb9fj9
-        checksum:
-          type: string
-          x-stoplight:
-            id: u1cilwg6olbvu
-        content_type:
-          type: string
-          x-stoplight:
-            id: 2bz7ycohbo4zz
-        metadata:
-          type: object
-          x-stoplight:
-            id: 7zg8sn25q1paq
-      additionalProperties: false
-    Company-Read-Nested:
-      title: Company-Read-Nested
-      x-stoplight:
-        id: cb2kn77qmf1l7
-      description: Compact Company model for nested reads.
+        id: oyruvwz2a9ddh
       allOf:
-      - $ref: '#/components/schemas/Identifier'
-        x-stoplight:
-          id: jwsufva4znm91
-      - $ref: '#/components/schemas/TreadId'
       - type: object
-        properties:
-          legal_name:
-            type: string
-            x-stoplight:
-              id: yc10t8hieecwk
-            description: The Company's name. Must be globally unique.
-          company_type:
-            $ref: '#/components/schemas/CompanyType'
         required:
-        - legal_name
-        - company_type
-    FileAttachableType:
-      title: FileAttachableType
-      x-stoplight:
-        id: iabhoo1t2x4x8
-      enum:
-      - DriverDay
-      - Job
-      - Load
-      - Order
-      - Project
-      - Settlement
-      - Ticket
+        - type
+        properties:
+          type:
+            x-stoplight:
+              id: up9qg59l8x5s0
+            enum:
+            - User
+            - Company
+            - M2MClient
+            - Impersonation
+      - x-stoplight:
+          id: lz1m1s1btit0u
+        anyOf:
+        - $ref: '#/components/schemas/Company-Read-Nested'
+        - $ref: '#/components/schemas/M2MClient-Read-Nested'
+        - $ref: '#/components/schemas/User-Read-Minimal'
+        - $ref: '#/components/schemas/Impersonation-Read-Minimal'
     Impersonation-Read-Minimal:
       title: Impersonation-Read-Minimal
       x-stoplight:
@@ -1350,10 +1126,11 @@ components:
           category:
             $ref: '#/components/schemas/FileAttachmentCategory'
           description:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: tews9xplys3k7
-            nullable: true
           file_attachable_id:
             type: string
             x-stoplight:
@@ -1371,18 +1148,20 @@ components:
             x-stoplight:
               id: vxj0ktghbiic6
           preview_url:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: aa7aa0pkep7jl
             format: uri
             description: URL of the preview image. Clients should fall back to file_url if this is null.
-            nullable: true
           preview_mime_type:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: aaj0aaghbiic6
             description: mime-type of the preview. clients should fall back to mime_type if this is null.
-            nullable: true
           uploaded_by:
             $ref: '#/components/schemas/Principal-Read-Nested'
           file_name:
@@ -1399,30 +1178,123 @@ components:
               id: e3gtfckh2zwk3
       - $ref: '#/components/schemas/Identifier'
       - $ref: '#/components/schemas/Timestamps'
-    Principal-Read-Nested:
-      title: Principal-Read-Nested
+    FileAttachableType:
+      title: FileAttachableType
       x-stoplight:
-        id: oyruvwz2a9ddh
+        id: iabhoo1t2x4x8
+      enum:
+      - DriverDay
+      - Job
+      - Load
+      - Order
+      - Project
+      - Settlement
+      - Ticket
+    DirectUpload-Create:
+      title: DirectUpload-Create
+      x-stoplight:
+        id: gu4eq95ccx5jq
+      type: object
+      x-internal: true
+      required:
+      - filename
+      - byte_size
+      - checksum
+      - content_type
+      properties:
+        filename:
+          type: string
+          x-stoplight:
+            id: npiq1r1p6z5sz
+        byte_size:
+          type: integer
+          x-stoplight:
+            id: 173ysh5cb9fj9
+        checksum:
+          type: string
+          x-stoplight:
+            id: u1cilwg6olbvu
+        content_type:
+          type: string
+          x-stoplight:
+            id: 2bz7ycohbo4zz
+        metadata:
+          type: object
+          x-stoplight:
+            id: 7zg8sn25q1paq
+      additionalProperties: false
+    FileAttachmentCategory:
+      title: FileAttachmentCategory
+      x-stoplight:
+        id: baiohh0t8x4x2
+      enum:
+      - Inspection Report
+      - Site Map
+      - Scale Ticket (External)
+      - Scale Ticket (Internal)
+      - Timesheet
+      - Other
+      default: Other
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+      additionalProperties: false
+    M2MClient-Read-Nested:
+      title: M2MClient-Read-Nested
+      x-stoplight:
+        id: hf6su2qgixxmz
       allOf:
+      - $ref: '#/components/schemas/Identifier'
       - type: object
         required:
-        - type
+        - company
         properties:
-          type:
-            x-stoplight:
-              id: up9qg59l8x5s0
-            enum:
-            - User
-            - Company
-            - M2MClient
-            - Impersonation
-      - x-stoplight:
-          id: lz1m1s1btit0u
-        anyOf:
-        - $ref: '#/components/schemas/Company-Read-Nested'
-        - $ref: '#/components/schemas/M2MClient-Read-Nested'
-        - $ref: '#/components/schemas/User-Read-Minimal'
-        - $ref: '#/components/schemas/Impersonation-Read-Minimal'
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
     User-Read-Minimal:
       title: User-Read-Minimal
       x-stoplight:
@@ -1438,6 +1310,237 @@ components:
         properties:
           company:
             $ref: '#/components/schemas/Company-Read-Nested'
+    JobState:
+      title: JobState
+      x-stoplight:
+        id: qyb8p2t7h0pnn
+      enum:
+      - created
+      - assigned
+      - accepted
+      - rejected
+      - to_pickup
+      - arrived_pickup
+      - loaded
+      - to_dropoff
+      - arrived_dropoff
+      - unloaded
+      - completed
+      - canceled
+      - ended
+      - sent
+      - in_review
+      - flagged
+      - signed_off
+      - paid
+      - load_completed
+      example: created
+      default: created
+      readOnly: true
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    FileAttachment-Update:
+      title: FileAttachment-Update
+      x-stoplight:
+        id: rmdydg9b6ebmh
+      type: object
+      properties:
+        category:
+          $ref: '#/components/schemas/FileAttachmentCategory'
+        description:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: q4rqqwo2lrpkv
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    BulkDownload-Read:
+      title: BulkDownload-Read
+      x-stoplight:
+        id: 00dtsuvxgipoi
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    DirectUpload-Read:
+      title: DirectUpload-Read
+      x-stoplight:
+        id: ge5fs3tk8yb8k
+      type: object
+      required:
+      - id
+      - byte_size
+      - checksum
+      - content_type
+      - created_at
+      - filename
+      - key
+      - service_name
+      - signed_id
+      - direct_upload
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: lzwkhbbuc30lt
+          format: uuid
+        byte_size:
+          type: integer
+          x-stoplight:
+            id: zdq5i2km7dbdd
+        checksum:
+          type: string
+          x-stoplight:
+            id: pfgyb7ctywy3o
+        content_type:
+          type: string
+          x-stoplight:
+            id: id6fbesbolbxu
+        created_at:
+          type: string
+          x-stoplight:
+            id: qkkile7jxkghk
+          format: date-time
+        filename:
+          type: string
+          x-stoplight:
+            id: nh2lxjat0biia
+        key:
+          type: string
+          x-stoplight:
+            id: saakohyy5kvvz
+        metadata:
+          type: object
+          x-stoplight:
+            id: zlk0ufjqtjaxq
+        service_name:
+          type: string
+          x-stoplight:
+            id: br0ew9wo8145q
+        signed_id:
+          type: string
+          x-stoplight:
+            id: zvuflukjwdj16
+        direct_upload:
+          type: object
+          x-stoplight:
+            id: e4cw0bh9x1t4n
+          required:
+          - url
+          properties:
+            url:
+              type: string
+              x-stoplight:
+                id: l0qwu7ya2mng0
+              format: uri
+            headers:
+              type: object
+              x-stoplight:
+                id: jgxk00g0qfrub
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
     CompanyType:
       title: CompanyType
       x-stoplight:
@@ -1451,91 +1554,14 @@ components:
       - super
       example: hauler
       description: Company Type
-    FileAttachment-Update:
-      title: FileAttachment-Update
-      x-stoplight:
-        id: rmdydg9b6ebmh
-      type: object
-      properties:
-        category:
-          $ref: '#/components/schemas/FileAttachmentCategory'
-        description:
-          type: string
-          x-stoplight:
-            id: q4rqqwo2lrpkv
-          nullable: true
-      additionalProperties: false
-    BulkDownload-Read:
-      title: BulkDownload-Read
-      x-stoplight:
-        id: 00dtsuvxgipoi
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    User-Read-Typeahead:
-      title: User-Read-Typeahead
-      x-stoplight:
-        id: ttbbss5b5k66f
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - first_name
-        - last_name
-        properties:
-          first_name:
-            type: string
-            description: First name
-            x-stoplight:
-              id: gwo999rcdahmg
-          last_name:
-            type: string
-            description: Last name
-            x-stoplight:
-              id: l9omnnsq644bh
-      description: ''
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    M2MClient-Read-Nested:
-      title: M2MClient-Read-Nested
-      x-stoplight:
-        id: hf6su2qgixxmz
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - company
-        properties:
-          company:
-            $ref: '#/components/schemas/Company-Read-Nested'
   parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
+    page-after:
+      name: page[after]
+      in: query
+      required: false
       schema:
         type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+      description: The cursor to start paginating after
     page-limit:
       name: page[limit]
       in: query
@@ -1545,6 +1571,14 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
     page-before:
       name: page[before]
       in: query
@@ -1552,13 +1586,28 @@ components:
       schema:
         type: string
       description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

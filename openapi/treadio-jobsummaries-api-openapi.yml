@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier JobSummaries API
+  title: Horizon API V1 Job Summaries API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -185,137 +185,6 @@ paths:
         This endpoint requires the `edit_job_summary` `IamPermission`.'
 components:
   schemas:
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    JobSummary-Update:
-      title: JobSummary-Update
-      x-stoplight:
-        id: 3r4fsg3a0alzr
-      type: object
-      properties:
-        adjusted_logging_started_at:
-          type: string
-          x-stoplight:
-            id: qoe58miwjdbvt
-          format: date-time
-          nullable: true
-        adjusted_logging_ended_at:
-          type: string
-          x-stoplight:
-            id: i1ge0ww2arrw4
-          format: date-time
-          nullable: true
-        approved_work_time_minutes:
-          type: integer
-          x-stoplight:
-            id: up7lzq4othpmp
-          nullable: true
-      additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    OrderUnitOfMeasure:
-      title: OrderUnitOfMeasure
-      x-stoplight:
-        id: kahcgn7w8swdv
-      enum:
-      - Load
-      - Tonne
-      - Ton
-      - Yard
-      - Meter
-      - Foot
-      - Liter
-      - Hour
-      - Bushel
-      - Gallon
-      - CubicMeter
-      - Mile
-      - Kilometer
-      - Barrel
-      - Bag
-      - Pallet
-      example: Load
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    DeliveredQuantity-Read:
-      title: DeliveredQuantity-Read
-      x-stoplight:
-        id: trwwil0vsjrtn
-      type: object
-      required:
-      - delivered
-      - unit_of_measure
-      - material_name
-      - total
-      - ticketed
-      properties:
-        delivered:
-          type: string
-          x-stoplight:
-            id: xqo11su8z94my
-        unit_of_measure:
-          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
-        material_name:
-          type: string
-          x-stoplight:
-            id: h7jmwwi6jx02h
-          nullable: true
-        total:
-          type: string
-          x-stoplight:
-            id: 8ghxe07yz102y
-        ticketed:
-          type: boolean
-          nullable: true
-          x-stoplight:
-            id: hxg8e07yz102y
-      additionalProperties: false
     ModelError:
       title: ModelError
       x-stoplight:
@@ -333,17 +202,22 @@ components:
               id: m4ul9vcq2deh6
             items:
               $ref: '#/components/schemas/ModelError-Item'
-    ModelError-Response:
-      title: ModelError-Response
+    UnauthenticatedError:
+      title: UnauthenticatedError
       x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -376,8 +250,71 @@ components:
         id: rtlna368z495u
       allOf:
       - $ref: '#/components/schemas/OrderUnitOfMeasure'
-      type: string
-      nullable: true
+      type:
+      - string
+      - 'null'
+    DeliveredQuantity-Read:
+      title: DeliveredQuantity-Read
+      x-stoplight:
+        id: trwwil0vsjrtn
+      type: object
+      required:
+      - delivered
+      - unit_of_measure
+      - material_name
+      - total
+      - ticketed
+      properties:
+        delivered:
+          type: string
+          x-stoplight:
+            id: xqo11su8z94my
+        unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        material_name:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: h7jmwwi6jx02h
+        total:
+          type: string
+          x-stoplight:
+            id: 8ghxe07yz102y
+        ticketed:
+          type:
+          - boolean
+          - 'null'
+          x-stoplight:
+            id: hxg8e07yz102y
+      additionalProperties: false
+    JobSummary-Update:
+      title: JobSummary-Update
+      x-stoplight:
+        id: 3r4fsg3a0alzr
+      type: object
+      properties:
+        adjusted_logging_started_at:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: qoe58miwjdbvt
+          format: date-time
+        adjusted_logging_ended_at:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: i1ge0ww2arrw4
+          format: date-time
+        approved_work_time_minutes:
+          type:
+          - integer
+          - 'null'
+          x-stoplight:
+            id: up7lzq4othpmp
+      additionalProperties: false
     JobSummary-Read:
       title: JobSummary-Read
       x-stoplight:
@@ -418,17 +355,19 @@ components:
           x-stoplight:
             id: dgva6rsrz0vu1
         logging_started_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: tc4hi8okbshj9
           format: date-time
-          nullable: true
         logging_ended_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: 4zir4ztfsw4dn
           format: date-time
-          nullable: true
           description: The effective end time for logging. If clamping occurred (time between last activity and job end exceeded 120 minutes), this will be the clamped time (last activity time). The original value will be in pre_clamp_logging_ended_at.
         completed_loads_count:
           type: integer
@@ -439,7 +378,6 @@ components:
           type: integer
           x-stoplight:
             id: f4qypqki2mjhq
-          exclusiveMinimum: false
           minimum: 0
         work_time_minutes:
           type: integer
@@ -447,37 +385,43 @@ components:
             id: 88ilx1un65s44
           minimum: 0
         approved_work_time_minutes:
-          type: integer
+          type:
+          - integer
+          - 'null'
           x-stoplight:
             id: 6tshrxgraj12f
-          nullable: true
         first_geofence_entry_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: 14ppafk4hkc9q
           format: date-time
-          nullable: true
         last_geofence_exit_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: uti6t2fcazedd
           format: date-time
-          nullable: true
         job_phase_name:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: ka1g1qprw136q
-          nullable: true
         job_phase_code:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: 4mc97lx598wxk
-          nullable: true
         foreman_external_id:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: z31ikmks6ps4s
-          nullable: true
         delivered_quantities:
           type: array
           x-stoplight:
@@ -485,17 +429,19 @@ components:
           items:
             $ref: '#/components/schemas/DeliveredQuantity-Read'
         adjusted_logging_started_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: bbcfmvpk7hci8
           format: date-time
-          nullable: true
         adjusted_logging_ended_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: bag4ffzlbputs
           format: date-time
-          nullable: true
         editable:
           type: boolean
           x-stoplight:
@@ -506,65 +452,74 @@ components:
           x-stoplight:
             id: d1chn0k33894t
         pre_clamp_logging_ended_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: aq9ycutx6v5hn
           format: date-time
-          nullable: true
           description: Original logging_ended_at value before clamping was applied. Only set when clamping occurred (i.e., when the time between last activity and job end exceeded 120 minutes).
         travelled_distance_meters:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: td3l2m3n4o5p6
-          nullable: true
         first_sent_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: fs1a2b3c4d5e6
           format: date-time
-          nullable: true
           description: Earliest JobSent event timestamp
         sent_to_driver_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: st2d3e4f5g6h7
           format: date-time
-          nullable: true
           description: Latest JobSent event timestamp when driver is assigned
         driver_accepted_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: da3e4f5g6h7i8
           format: date-time
-          nullable: true
           description: Latest JobAccepted event timestamp where driver created it
         driver_declined_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: dd4f5g6h7i8j9
           format: date-time
-          nullable: true
           description: Latest JobDeclined event timestamp where driver created it
         first_accepted_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: fa5g6h7i8j9k0
           format: date-time
-          nullable: true
           description: Earliest JobAccepted event timestamp
         first_declined_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: fd6h7i8j9k0l1
           format: date-time
-          nullable: true
           description: Earliest JobDeclined event timestamp
         first_canceled_at:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: fc7i8j9k0l1m2
           format: date-time
-          nullable: true
           description: Earliest JobCanceled event timestamp
         pickup_geofence_entry_count:
           type: integer
@@ -579,66 +534,118 @@ components:
           minimum: 0
           description: Total count of site-tagged geofence entry events at dropoff location
         gps_active_period_minutes:
-          type: integer
+          type:
+          - integer
+          - 'null'
           x-stoplight:
             id: gps1a2b3c4d5e6
-          nullable: true
           minimum: 0
           description: Active work time in minutes excluding pauses and breaks
         gps_total_pings:
-          type: integer
+          type:
+          - integer
+          - 'null'
           x-stoplight:
             id: gps2b3c4d5e6f7
-          nullable: true
           minimum: 0
           description: Total GPS location pings recorded during the job
         gps_offline_pings:
-          type: integer
+          type:
+          - integer
+          - 'null'
           x-stoplight:
             id: gps3c4d5e6f7g8
-          nullable: true
           minimum: 0
           description: Count of GPS pings recorded in offline mode (batch uploaded)
         gps_expected_pings:
-          type: integer
+          type:
+          - integer
+          - 'null'
           x-stoplight:
             id: gps4d5e6f7g8h9
-          nullable: true
           minimum: 0
           description: Expected GPS pings based on active period and ping frequency
         gps_confidence_level:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: gps5e6f7g8h9i0
-          nullable: true
           enum:
           - high
           - medium
           - low
           description: GPS tracking confidence level based on coverage and gap analysis
       additionalProperties: false
-  responses:
     Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
+      x-stoplight:
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
   parameters:
     Accept-Language:
       name: Accept-Language
@@ -648,6 +655,28 @@ components:
         default: en
         example: en
       description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier AddOnCharges API
+  title: Horizon API V1 Add On Charges API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -253,7 +253,96 @@ paths:
       operationId: patch-v1-companies-company-id-invoices-invoice-id-add-on-charges
       x-stoplight:
         id: s2ctvyxv0q08n-company
-      description: "Batch update `AddOnCharges` for an `Invoice` for a `Company`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      description: 'Batch update `AddOnCharges` for an `Invoice` for a `Company`
+
+
+        This endpoint allows updating, creating, deleting `AddOnCharges` all at once.
+
+
+        If updating existing records:
+
+        - must provide the `id` for each record to be updated
+
+        - only provide the fields to be updated
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "quantity": 20.25,
+
+        "rate": 15.75
+
+        }
+
+        ]
+
+        ```
+
+
+        If creating new records:
+
+        - must not provide the `id` for each record to be created
+
+        - provide all the fields needed for the record
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "quantity": 20.25,
+
+        "rate": 12.5,
+
+        "add_on_rate_type": "RateForEach"
+
+        },
+
+        {
+
+        "percentage": 10,
+
+        "add_on_rate_type": "RatePercentOfTotal"
+
+        }
+
+        ]
+
+        ```
+
+
+        If deleting exisitng records:
+
+        - must provide the `id` and the property `_destroy: 1`
+
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "_destroy": 1
+
+        }
+
+        ]
+
+        ```'
       x-internal: true
       requestBody:
         content:
@@ -403,7 +492,99 @@ paths:
           $ref: '#/components/responses/ModelError'
       operationId: patch-v1-companies-company-id-settlements-settlement-id-add-on-charges
       x-internal: true
-      description: "Batch update `AddOnCharges` for a `Settlement` using company-scoped endpoint.\n\nThis endpoint allows parent companies to manage add-on charges for settlements belonging to their child companies.\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      description: 'Batch update `AddOnCharges` for a `Settlement` using company-scoped endpoint.
+
+
+        This endpoint allows parent companies to manage add-on charges for settlements belonging to their child companies.
+
+
+        This endpoint allows updating, creating, deleting `AddOnCharges` all at once.
+
+
+        If updating existing records:
+
+        - must provide the `id` for each record to be updated
+
+        - only provide the fields to be updated
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "quantity": 20.25,
+
+        "rate": 15.75
+
+        }
+
+        ]
+
+        ```
+
+
+        If creating new records:
+
+        - must not provide the `id` for each record to be created
+
+        - provide all the fields needed for the record
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "quantity": 20.25,
+
+        "rate": 12.5,
+
+        "add_on_rate_type": "RateForEach"
+
+        },
+
+        {
+
+        "percentage": 10,
+
+        "add_on_rate_type": "RatePercentOfTotal"
+
+        }
+
+        ]
+
+        ```
+
+
+        If deleting exisitng records:
+
+        - must provide the `id` and the property `_destroy: 1`
+
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "_destroy": 1
+
+        }
+
+        ]
+
+        ```'
       requestBody:
         content:
           application/json:
@@ -549,7 +730,96 @@ paths:
       x-stoplight:
         id: xuuovaurs6pkh
       x-internal: true
-      description: "Batch update `AddOnCharges` for a `DriverDay`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      description: 'Batch update `AddOnCharges` for a `DriverDay`
+
+
+        This endpoint allows updating, creating, deleting `AddOnCharges` all at once.
+
+
+        If updating existing records:
+
+        - must provide the `id` for each record to be updated
+
+        - only provide the fields to be updated
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "quantity": 20.25,
+
+        "rate": 15.75
+
+        }
+
+        ]
+
+        ```
+
+
+        If creating new records:
+
+        - must not provide the `id` for each record to be created
+
+        - provide all the fields needed for the record
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "quantity": 20.25,
+
+        "rate": 12.5,
+
+        "add_on_rate_type": "RateForEach"
+
+        },
+
+        {
+
+        "percentage": 10,
+
+        "add_on_rate_type": "RatePercentOfTotal"
+
+        }
+
+        ]
+
+        ```
+
+
+        If deleting exisitng records:
+
+        - must provide the `id` and the property `_destroy: 1`
+
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "_destroy": 1
+
+        }
+
+        ]
+
+        ```'
       requestBody:
         content:
           application/json:
@@ -698,7 +968,96 @@ paths:
       x-stoplight:
         id: i50mevcejjfoi
       x-internal: true
-      description: "Batch update `AddOnCharges` for an `Job`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      description: 'Batch update `AddOnCharges` for an `Job`
+
+
+        This endpoint allows updating, creating, deleting `AddOnCharges` all at once.
+
+
+        If updating existing records:
+
+        - must provide the `id` for each record to be updated
+
+        - only provide the fields to be updated
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "quantity": 20.25,
+
+        "rate": 15.75
+
+        }
+
+        ]
+
+        ```
+
+
+        If creating new records:
+
+        - must not provide the `id` for each record to be created
+
+        - provide all the fields needed for the record
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "quantity": 20.25,
+
+        "rate": 12.5,
+
+        "add_on_rate_type": "RateForEach"
+
+        },
+
+        {
+
+        "percentage": 10,
+
+        "add_on_rate_type": "RatePercentOfTotal"
+
+        }
+
+        ]
+
+        ```
+
+
+        If deleting exisitng records:
+
+        - must provide the `id` and the property `_destroy: 1`
+
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "_destroy": 1
+
+        }
+
+        ]
+
+        ```'
       requestBody:
         content:
           application/json:
@@ -848,7 +1207,96 @@ paths:
       x-stoplight:
         id: 75zqxlladu67l
       x-internal: true
-      description: "Batch update `AddOnCharges` for a `Settlement`\n\nThis endpoint allows updating, creating, deleting `AddOnCharges` all at once.\n\nIf updating existing records:\n- must provide the `id` for each record to be updated\n- only provide the fields to be updated\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"quantity\": 20.25,\n    \"rate\": 15.75\n  }\n]\n```\n\nIf creating new records:\n- must not provide the `id` for each record to be created\n- provide all the fields needed for the record\ne.g.\n```json\nadd_on_charges: [\n  {\n    \"quantity\": 20.25,\n    \"rate\": 12.5,\n    \"add_on_rate_type\": \"RateForEach\"\n  },\n  {\n    \"percentage\": 10,\n    \"add_on_rate_type\": \"RatePercentOfTotal\"\n  }\n]\n```\n\nIf deleting exisitng records:\n- must provide the `id` and the property `_destroy: 1`\n\ne.g. \n```json\nadd_on_charges: [\n  {\n    \"id\": \"some-uuid\"\n    \"_destroy\": 1\n  }\n]\n```"
+      description: 'Batch update `AddOnCharges` for a `Settlement`
+
+
+        This endpoint allows updating, creating, deleting `AddOnCharges` all at once.
+
+
+        If updating existing records:
+
+        - must provide the `id` for each record to be updated
+
+        - only provide the fields to be updated
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "quantity": 20.25,
+
+        "rate": 15.75
+
+        }
+
+        ]
+
+        ```
+
+
+        If creating new records:
+
+        - must not provide the `id` for each record to be created
+
+        - provide all the fields needed for the record
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "quantity": 20.25,
+
+        "rate": 12.5,
+
+        "add_on_rate_type": "RateForEach"
+
+        },
+
+        {
+
+        "percentage": 10,
+
+        "add_on_rate_type": "RatePercentOfTotal"
+
+        }
+
+        ]
+
+        ```
+
+
+        If deleting exisitng records:
+
+        - must provide the `id` and the property `_destroy: 1`
+
+
+        e.g.
+
+        ```json
+
+        add_on_charges: [
+
+        {
+
+        "id": "some-uuid"
+
+        "_destroy": 1
+
+        }
+
+        ]
+
+        ```'
       requestBody:
         content:
           application/json:
@@ -866,94 +1314,24 @@ paths:
                     - $ref: '#/components/schemas/AddOnCharge-Create'
                     - $ref: '#/components/schemas/AddOnCharge-Update-Destroyable'
 components:
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   schemas:
-    NullableAddOnRequestableType:
-      title: NullableAddOnRequestableType
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: jlbtlz8rtw77s
+        id: nhp6714o4j1qt
+      description: A Model-specific error
       allOf:
-      - $ref: '#/components/schemas/AddOnRequestableType'
-      nullable: true
-      type: string
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    AddOnRequestableType:
-      title: AddOnRequestableType
-      x-stoplight:
-        id: cmjs5zi8b8ejj
-      enum:
-      - Job
-      - DriverDay
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    AddOnCharge-Update-Destroyable:
-      title: AddOnCharge-Update-Destroyable
-      x-stoplight:
-        id: 18c6y7jy30z4l
-      allOf:
-      - $ref: '#/components/schemas/AddOnCharge-Update'
-      - $ref: '#/components/schemas/Destroyable'
-    Destroyable:
-      title: Destroyable
-      x-stoplight:
-        id: 2uftzhptd2l14
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: gx1ww996hmzqm
-          format: uuid
-          description: Required if `_destroy` is set
-        _destroy:
-          type: integer
-          x-stoplight:
-            id: 0xjwztkz4fmcr
-          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
-      additionalProperties: false
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -980,39 +1358,13 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    AddOnCharge-Update-Destroyable:
+      title: AddOnCharge-Update-Destroyable
       x-stoplight:
-        id: 202o69l0fs40h
+        id: 18c6y7jy30z4l
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
+      - $ref: '#/components/schemas/AddOnCharge-Update'
+      - $ref: '#/components/schemas/Destroyable'
     Job-Read-Nested:
       title: Job-Read-Nested
       x-stoplight:
@@ -1042,6 +1394,17 @@ components:
             format: date-time
           unit_of_measure:
             $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+    AddOnRateType:
+      title: AddOnRateType
+      x-stoplight:
+        id: 1c3m0qj0ofdao
+      enum:
+      - RateForEach
+      - RatePercentOfTotal
+      - PerLoad
+      - FuelSurcharge
+      example: RateForEach
+      default: RateForEach
     AddOnApplicableType:
       title: AddOnApplicableType
       x-stoplight:
@@ -1049,6 +1412,145 @@ components:
       enum:
       - Invoice
       - Settlement
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
+      x-stoplight:
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    NullableAddOnApplicableType:
+      title: NullableAddOnApplicableType
+      x-stoplight:
+        id: iy7f8dnx4g1zp
+      allOf:
+      - $ref: '#/components/schemas/AddOnApplicableType'
+      type:
+      - string
+      - 'null'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Destroyable:
+      title: Destroyable
+      x-stoplight:
+        id: 2uftzhptd2l14
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: gx1ww996hmzqm
+          format: uuid
+          description: Required if `_destroy` is set
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 0xjwztkz4fmcr
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
+      additionalProperties: false
+    NullableOrderUnitOfMeasure:
+      title: NullableOrderUnitOfMeasure
+      x-stoplight:
+        id: rtlna368z495u
+      allOf:
+      - $ref: '#/components/schemas/OrderUnitOfMeasure'
+      type:
+      - string
+      - 'null'
+    AddOnCharge-Update:
+      title: AddOnCharge-Update
+      x-stoplight:
+        id: 60xqncbbobhdt
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: sdrteeih2f5ef
+        percentage:
+          type: number
+          x-stoplight:
+            id: 2d0so3qv1y6gb
+          minimum: -100
+          maximum: 100
+        quantity:
+          type: number
+          x-stoplight:
+            id: 6dh4gnh91kzdc
+        rate:
+          type: number
+          x-stoplight:
+            id: 7quwi593vqe1j
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        add_on_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: xadjpeuivo54i
+          format: uuid
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: vt46ss6zjf04a
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: b3dq6kqlgcbm5
+        revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: tps5oztw4p2xn
+          description: The cost rate or buy price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        rebill_revenue_rate_value:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: 9d1ov81cnxbos
+        rebill_percentage:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: guajxqjnam0r2
+      additionalProperties: false
     AddOnCharge-Read:
       title: AddOnCharge-Read
       x-stoplight:
@@ -1091,10 +1593,11 @@ components:
             x-stoplight:
               id: t4dnjvisijock
           external_id:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: tof8dd3gihjox
-            nullable: true
           revenue_rate_value:
             type: string
             x-stoplight:
@@ -1128,26 +1631,29 @@ components:
                   id: 2do1g0k27ex1x
                 format: uuid
           add_on_requestable_id:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: 3j73z3acol2rf
             format: uuid
-            nullable: true
           add_on_requestable_type:
             $ref: '#/components/schemas/NullableAddOnRequestableType'
           add_on_applicable_id:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: jsajp8fcd2i93
             format: uuid
-            nullable: true
           add_on_applicable_type:
             $ref: '#/components/schemas/NullableAddOnApplicableType'
           accounting_id:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: icf2yhgyoisrw
-            nullable: true
           rate:
             type: string
             x-stoplight:
@@ -1168,120 +1674,24 @@ components:
                 format: uuid
           job:
             $ref: '#/components/schemas/Job-Read-Nested'
-            nullable: true
           rebill_revenue_rate_value:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: sshbcnm4bi3x4
-            nullable: true
           rebill_total_amount:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: wkcpvyuj6zgle
-            nullable: true
           rebill_percentage:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: c25guuq8lau3w
-            nullable: true
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    OrderUnitOfMeasure:
-      title: OrderUnitOfMeasure
-      x-stoplight:
-        id: kahcgn7w8swdv
-      enum:
-      - Load
-      - Tonne
-      - Ton
-      - Yard
-      - Meter
-      - Foot
-      - Liter
-      - Hour
-      - Bushel
-      - Gallon
-      - CubicMeter
-      - Mile
-      - Kilometer
-      - Barrel
-      - Bag
-      - Pallet
-      example: Load
-    AddOnCharge-Update:
-      title: AddOnCharge-Update
-      x-stoplight:
-        id: 60xqncbbobhdt
-      type: object
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: sdrteeih2f5ef
-        percentage:
-          type: number
-          x-stoplight:
-            id: 2d0so3qv1y6gb
-          minimum: -100
-          maximum: 100
-        quantity:
-          type: number
-          x-stoplight:
-            id: 6dh4gnh91kzdc
-        rate:
-          type: number
-          x-stoplight:
-            id: 7quwi593vqe1j
-          deprecated: true
-          description: Deprecated in favor of `revenue_rate_value`.
-        add_on_rate_type:
-          $ref: '#/components/schemas/AddOnRateType'
-        add_on_id:
-          type: string
-          x-stoplight:
-            id: xadjpeuivo54i
-          format: uuid
-          nullable: true
-        external_id:
-          type: string
-          x-stoplight:
-            id: vt46ss6zjf04a
-          nullable: true
-        accounting_id:
-          type: string
-          x-stoplight:
-            id: b3dq6kqlgcbm5
-          nullable: true
-        revenue_rate_value:
-          type: number
-          x-stoplight:
-            id: tps5oztw4p2xn
-          description: The cost rate or buy price of the add on.
-        revenue_cost_rate_type:
-          $ref: '#/components/schemas/AddOnRateType'
-        rebill_revenue_rate_value:
-          type: number
-          x-stoplight:
-            id: 9d1ov81cnxbos
-          nullable: true
-        rebill_percentage:
-          type: number
-          x-stoplight:
-            id: guajxqjnam0r2
-          nullable: true
-      additionalProperties: false
     UnauthenticatedError-Response:
       title: UnauthenticatedError-Response
       x-stoplight:
@@ -1324,11 +1734,12 @@ components:
         add_on_rate_type:
           $ref: '#/components/schemas/AddOnRateType'
         add_on_id:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: ogjl6lwfu5bi2
           format: uuid
-          nullable: true
         invoice_id:
           type: string
           x-stoplight:
@@ -1336,15 +1747,17 @@ components:
           format: uuid
           deprecated: true
         external_id:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: gxftfsiuujera
-          nullable: true
         accounting_id:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: q9dmpj8zoqg5s
-          nullable: true
         load_id:
           type: string
           x-stoplight:
@@ -1358,30 +1771,82 @@ components:
         revenue_cost_rate_type:
           $ref: '#/components/schemas/AddOnRateType'
         rebill_revenue_rate_value:
-          type: number
+          type:
+          - number
+          - 'null'
           x-stoplight:
             id: 1ujqtxpv3l88g
-          nullable: true
         rebill_percentage:
-          type: number
+          type:
+          - number
+          - 'null'
           x-stoplight:
             id: 16xhc04qcup8d
-          nullable: true
         cost_rate_value:
-          type: number
+          type:
+          - number
+          - 'null'
           x-stoplight:
             id: sj881cp6tx9v8
           description: The cost rate or buy price of the add on.
-          nullable: true
       additionalProperties: false
-    NullableAddOnApplicableType:
-      title: NullableAddOnApplicableType
+    Error-Response:
+      title: Error-Response
       x-stoplight:
-        id: iy7f8dnx4g1zp
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
       allOf:
-      - $ref: '#/components/schemas/AddOnApplicableType'
-      nullable: true
-      type: string
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    NullableAddOnRequestableType:
+      title: NullableAddOnRequestableType
+      x-stoplight:
+        id: jlbtlz8rtw77s
+      allOf:
+      - $ref: '#/components/schemas/AddOnRequestableType'
+      type:
+      - string
+      - 'null'
+    AddOnRequestableType:
+      title: AddOnRequestableType
+      x-stoplight:
+        id: cmjs5zi8b8ejj
+      enum:
+      - Job
+      - DriverDay
     ModelError-Response:
       title: ModelError-Response
       x-stoplight:
@@ -1393,34 +1858,14 @@ components:
         error:
           $ref: '#/components/schemas/ModelError'
       additionalProperties: false
-    NullableOrderUnitOfMeasure:
-      title: NullableOrderUnitOfMeasure
-      x-stoplight:
-        id: rtlna368z495u
-      allOf:
-      - $ref: '#/components/schemas/OrderUnitOfMeasure'
-      type: string
-      nullable: true
-    AddOnRateType:
-      title: AddOnRateType
-      x-stoplight:
-        id: 1c3m0qj0ofdao
-      enum:
-      - RateForEach
-      - RatePercentOfTotal
-      - PerLoad
-      - FuelSurcharge
-      example: RateForEach
-      default: RateForEach
   parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
+    page-after:
+      name: page[after]
+      in: query
+      required: false
       schema:
         type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+      description: The cursor to start paginating after
     page-limit:
       name: page[limit]
       in: query
@@ -1430,6 +1875,14 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
     page-before:
       name: page[before]
       in: query
@@ -1437,13 +1890,28 @@ components:
       schema:
         type: string
       description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

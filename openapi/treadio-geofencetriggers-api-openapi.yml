@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier GeofenceTriggers API
+  title: Horizon API V1 Geofence Triggers API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -70,7 +70,10 @@ paths:
       operationId: post-v1-companies-company-id-drivers-geofence_triggers
       x-stoplight:
         id: lkzb3w5dg6aor
-      description: "Generate `GeofenceTriggers` for `Drivers` based on the provided `NextBillionGeofences`. \n\nThe `GeofenceTriggers` are not persisted."
+      description: 'Generate `GeofenceTriggers` for `Drivers` based on the provided `NextBillionGeofences`.
+
+
+        The `GeofenceTriggers` are not persisted.'
       requestBody:
         content:
           application/json:
@@ -119,7 +122,10 @@ paths:
       operationId: post-v1-companies-company-id-equipment-geofence_triggers
       x-stoplight:
         id: j5lfl7mio6rce
-      description: "Generate `GeofenceTriggers` for `Equipment` based on the provided `NextBillionGeofences`. \n\nThe `GeofenceTriggers` are not persisted."
+      description: 'Generate `GeofenceTriggers` for `Equipment` based on the provided `NextBillionGeofences`.
+
+
+        The `GeofenceTriggers` are not persisted.'
       requestBody:
         content:
           application/json:
@@ -190,160 +196,59 @@ paths:
         '422':
           $ref: '#/components/responses/ModelError'
 components:
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   schemas:
-    Order-Read-Minimal:
-      title: Order-Read-Minimal
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: wpgfl9nff3zhz
+        id: nhp6714o4j1qt
+      description: A Model-specific error
       allOf:
-      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Error'
       - type: object
-        x-stoplight:
-          id: crmvgzs6hb81e
         required:
-        - order_id
+        - errors
         properties:
-          order_id:
-            type: string
+          errors:
+            type: array
             x-stoplight:
-              id: 7ac5dtqqp7juv
-    NextBillionGeofence-Create:
-      $ref: '#/components/schemas/Geofence-Data'
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    GeofenceTrigger-CalculateForJob:
+      title: GeofenceTrigger-CalculateForJob
       x-stoplight:
-        id: 8b9d859e5388e
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
+        id: k8m3n9p2q4r5s
       type: object
-      required:
-      - error
+      description: When present, geofences override the job's default geofences (from its sites) for :naive and :accuracy_strict strategies.
       properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    Driver-Read-Minimal:
-      title: Driver-Read-Minimal
-      x-stoplight:
-        id: f1d1he04n4yjs
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: x918p1q0av9nk
-        required:
-        - first_name
-        - last_name
-        properties:
-          first_name:
-            type: string
-            x-stoplight:
-              id: pvqq6tp23r5eq
-          last_name:
-            type: string
-            x-stoplight:
-              id: 74tvy3qy47xc0
-    GeofenceType:
-      title: GeofenceType
-      x-stoplight:
-        id: geahowr9r8ly1
-      nullable: true
-      enum:
-      - moving
-      - circle
-      - polygon
-      readOnly: true
-    GeofenceTrigger-Read:
-      title: GeofenceTrigger-Read
-      x-stoplight:
-        id: cyjkjb1roiwj8
-      type: object
-      required:
-      - geofence_trigger_type
-      - triggered_location
-      - geofence
-      properties:
-        geofence_trigger_type:
-          $ref: '#/components/schemas/GeofenceTriggerType'
-        triggered_location:
-          $ref: '#/components/schemas/GeofenceTrigger-LocationHistory-Read-Nested'
-        geofence:
-          $ref: '#/components/schemas/Geofence-Data'
-      additionalProperties: false
-    GeofenceTag:
-      title: GeofenceTag
-      x-stoplight:
-        id: anytkmb3ydi6c
-      enum:
-      - scaling
-      - site
-      - loading
-      - unloading
-      - check_in
-      - ticketing
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
+        strategy:
+          type:
+          - string
+          - 'null'
           x-stoplight:
-            id: 7o9x1t8v0bgfo
+            id: t7u8v9w0x1y2z
+          enum:
+          - historical
+          - naive
+          - accuracy_strict
+          default: historical
+        delay_seconds:
+          type:
+          - integer
+          - 'null'
+          x-stoplight:
+            id: a3b4c5d6e7f8g
+          description: Only valid for :naive and :accuracy_strict strategies
+        geofences:
+          type:
+          - array
+          - 'null'
+          x-stoplight:
+            id: p4q5r6s7t8u9v
+          description: Inline geofence definitions to use instead of the job's default geofences. Only used for :naive and :accuracy_strict strategies.
+          items:
+            $ref: '#/components/schemas/NextBillionGeofence-Create'
       additionalProperties: false
-    Equipment-Read-Minimal:
-      title: Equipment-Read-Minimal
-      x-stoplight:
-        id: m3uxip3u2g73e
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - external_id
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: 8j8x3f9jezxeq
-          external_id:
-            type: string
-            x-stoplight:
-              id: y33jc1a9rphsf
-            nullable: true
-    GeofenceTriggerType:
-      title: GeofenceTriggerType
-      x-stoplight:
-        id: vmzafgjn6h2y7
-      enum:
-      - enter
-      - exit
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -370,39 +275,101 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    GeofenceTriggerType:
+      title: GeofenceTriggerType
       x-stoplight:
-        id: 202o69l0fs40h
+        id: vmzafgjn6h2y7
+      enum:
+      - enter
+      - exit
+    GeofenceTag:
+      title: GeofenceTag
+      x-stoplight:
+        id: anytkmb3ydi6c
+      enum:
+      - scaling
+      - site
+      - loading
+      - unloading
+      - check_in
+      - ticketing
+    Job-Read-Minimal:
+      title: Job-Read-Minimal
+      x-stoplight:
+        id: phqsqzej6mcm3
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Identifier'
       - type: object
         x-stoplight:
-          id: tg10dt7s0l6bw
+          id: ic6xdggfjavde
+        required:
+        - job_id
         properties:
-          error_type:
+          job_id:
             type: string
             x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError:
-      title: ModelError
+              id: pcseir7z97s0x
+    GeofenceTrigger-Read:
+      title: GeofenceTrigger-Read
       x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
+        id: cyjkjb1roiwj8
+      type: object
+      required:
+      - geofence_trigger_type
+      - triggered_location
+      - geofence
+      properties:
+        geofence_trigger_type:
+          $ref: '#/components/schemas/GeofenceTriggerType'
+        triggered_location:
+          $ref: '#/components/schemas/GeofenceTrigger-LocationHistory-Read-Nested'
+        geofence:
+          $ref: '#/components/schemas/Geofence-Data'
+      additionalProperties: false
+    NullableGeofenceType:
+      title: NullableGeofenceType
+      x-stoplight:
+        id: ii94t82oqh5xo
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/GeofenceType'
+      type:
+      - string
+      - 'null'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Driver-Read-Minimal:
+      title: Driver-Read-Minimal
+      x-stoplight:
+        id: f1d1he04n4yjs
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
       - type: object
+        x-stoplight:
+          id: x918p1q0av9nk
         required:
-        - errors
+        - first_name
+        - last_name
         properties:
-          errors:
-            type: array
+          first_name:
+            type: string
             x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
+              id: pvqq6tp23r5eq
+          last_name:
+            type: string
+            x-stoplight:
+              id: 74tvy3qy47xc0
     GeofenceTrigger-LocationHistory-Read-Nested:
       title: GeofenceTrigger-LocationHistory-Read-Nested
       x-stoplight:
@@ -436,103 +403,6 @@ components:
             x-stoplight:
               id: oj1vsapa4j117
             format: date-time
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    NullableGeofenceType:
-      title: NullableGeofenceType
-      x-stoplight:
-        id: ii94t82oqh5xo
-      allOf:
-      - $ref: '#/components/schemas/GeofenceType'
-      nullable: true
-      type: string
-    Job-Read-Minimal:
-      title: Job-Read-Minimal
-      x-stoplight:
-        id: phqsqzej6mcm3
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: ic6xdggfjavde
-        required:
-        - job_id
-        properties:
-          job_id:
-            type: string
-            x-stoplight:
-              id: pcseir7z97s0x
-    GeofenceTrigger-Create:
-      title: GeofenceTrigger-Create
-      x-stoplight:
-        id: eno1vsjpxuisc
-      type: object
-      required:
-      - start_at
-      - end_at
-      - geofences
-      properties:
-        start_at:
-          type: string
-          x-stoplight:
-            id: 3ydgzv1jer1xl
-          format: date-time
-        end_at:
-          type: string
-          x-stoplight:
-            id: a5l3vmiykl1wm
-          format: date-time
-        geofences:
-          type: array
-          x-stoplight:
-            id: nx7ajzteskf3d
-          items:
-            $ref: '#/components/schemas/NextBillionGeofence-Create'
-      additionalProperties: false
-    GeofenceTrigger-CalculateForJob:
-      title: GeofenceTrigger-CalculateForJob
-      x-stoplight:
-        id: k8m3n9p2q4r5s
-      type: object
-      description: When present, geofences override the job's default geofences (from its sites) for :naive and :accuracy_strict strategies.
-      properties:
-        strategy:
-          type: string
-          x-stoplight:
-            id: t7u8v9w0x1y2z
-          enum:
-          - historical
-          - naive
-          - accuracy_strict
-          default: historical
-          nullable: true
-        delay_seconds:
-          type: integer
-          x-stoplight:
-            id: a3b4c5d6e7f8g
-          description: Only valid for :naive and :accuracy_strict strategies
-          nullable: true
-        geofences:
-          type: array
-          x-stoplight:
-            id: p4q5r6s7t8u9v
-          description: Inline geofence definitions to use instead of the job's default geofences. Only used for :naive and :accuracy_strict strategies.
-          items:
-            $ref: '#/components/schemas/NextBillionGeofence-Create'
-          nullable: true
-      additionalProperties: false
     Geofence-Data:
       title: Geofence-Data
       x-stoplight:
@@ -653,6 +523,124 @@ components:
         error:
           $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
+    Equipment-Read-Minimal:
+      title: Equipment-Read-Minimal
+      x-stoplight:
+        id: m3uxip3u2g73e
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 8j8x3f9jezxeq
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: y33jc1a9rphsf
+    Order-Read-Minimal:
+      title: Order-Read-Minimal
+      x-stoplight:
+        id: wpgfl9nff3zhz
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: crmvgzs6hb81e
+        required:
+        - order_id
+        properties:
+          order_id:
+            type: string
+            x-stoplight:
+              id: 7ac5dtqqp7juv
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    NextBillionGeofence-Create:
+      $ref: '#/components/schemas/Geofence-Data'
+      x-stoplight:
+        id: 8b9d859e5388e
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    GeofenceTrigger-Create:
+      title: GeofenceTrigger-Create
+      x-stoplight:
+        id: eno1vsjpxuisc
+      type: object
+      required:
+      - start_at
+      - end_at
+      - geofences
+      properties:
+        start_at:
+          type: string
+          x-stoplight:
+            id: 3ydgzv1jer1xl
+          format: date-time
+        end_at:
+          type: string
+          x-stoplight:
+            id: a5l3vmiykl1wm
+          format: date-time
+        geofences:
+          type: array
+          x-stoplight:
+            id: nx7ajzteskf3d
+          items:
+            $ref: '#/components/schemas/NextBillionGeofence-Create'
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    GeofenceType:
+      title: GeofenceType
+      x-stoplight:
+        id: geahowr9r8ly1
+      enum:
+      - moving
+      - circle
+      - polygon
+      readOnly: true
     ModelError-Response:
       title: ModelError-Response
       x-stoplight:
@@ -664,6 +652,28 @@ components:
         error:
           $ref: '#/components/schemas/ModelError'
       additionalProperties: false
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   parameters:
     Accept-Language:
       name: Accept-Language

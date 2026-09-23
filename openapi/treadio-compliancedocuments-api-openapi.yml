@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier ComplianceDocuments API
+  title: Horizon API V1 Compliance Documents API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -73,7 +73,6 @@ paths:
           $ref: '#/components/responses/Error'
         '422':
           $ref: '#/components/responses/ModelError'
-      description: Create Compliance Document for Account
     get:
       summary: List Compliance Documents for Account
       operationId: get-account-compliance-documents
@@ -104,7 +103,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: List Compliance Documents for Account
   /v1/companies/{company-id}/accounts/{account-id}/compliance_documents/checklist:
     parameters:
     - schema:
@@ -144,7 +142,6 @@ paths:
                         compliance_document_type:
                           $ref: '#/components/schemas/ComplianceDocumentType-Read-Nested'
                         compliance_document:
-                          nullable: true
                           allOf:
                           - $ref: '#/components/schemas/ComplianceDocument-Read-Nested'
                 required:
@@ -155,7 +152,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: Get Compliance Checklist for Account
   /v1/companies/{company-id}/accounts/{account-id}/compliance_documents/{id}:
     parameters:
     - schema:
@@ -206,7 +202,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: Show Compliance Document
     patch:
       summary: Update Compliance Document
       operationId: patch-account-compliance-document
@@ -245,7 +240,6 @@ paths:
           $ref: '#/components/responses/Error'
         '422':
           $ref: '#/components/responses/ModelError'
-      description: Update Compliance Document
     delete:
       summary: Delete Compliance Document
       operationId: delete-account-compliance-document
@@ -264,7 +258,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: Delete Compliance Document
   /v1/companies/{company-id}/equipment/{equipment-id}/compliance_documents:
     parameters:
     - schema:
@@ -317,7 +310,6 @@ paths:
           $ref: '#/components/responses/Error'
         '422':
           $ref: '#/components/responses/ModelError'
-      description: Create Compliance Document for Equipment
     get:
       summary: List Compliance Documents for Equipment
       operationId: get-equipment-compliance-documents
@@ -348,7 +340,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: List Compliance Documents for Equipment
   /v1/companies/{company-id}/equipment/{equipment-id}/compliance_documents/checklist:
     parameters:
     - schema:
@@ -388,7 +379,6 @@ paths:
                         compliance_document_type:
                           $ref: '#/components/schemas/ComplianceDocumentType-Read-Nested'
                         compliance_document:
-                          nullable: true
                           allOf:
                           - $ref: '#/components/schemas/ComplianceDocument-Read-Nested'
                 required:
@@ -399,7 +389,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: Get Compliance Checklist for Equipment
   /v1/companies/{company-id}/equipment/{equipment-id}/compliance_documents/{id}:
     parameters:
     - schema:
@@ -450,7 +439,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: Show Compliance Document for Equipment
     patch:
       summary: Update Compliance Document for Equipment
       operationId: patch-equipment-compliance-document
@@ -489,7 +477,6 @@ paths:
           $ref: '#/components/responses/Error'
         '422':
           $ref: '#/components/responses/ModelError'
-      description: Update Compliance Document for Equipment
     delete:
       summary: Delete Compliance Document for Equipment
       operationId: delete-equipment-compliance-document
@@ -508,7 +495,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: Delete Compliance Document for Equipment
   /v1/companies/{company-id}/users/{user-id}/compliance_documents:
     parameters:
     - schema:
@@ -561,7 +547,6 @@ paths:
           $ref: '#/components/responses/Error'
         '422':
           $ref: '#/components/responses/ModelError'
-      description: Create Compliance Document for User
     get:
       summary: List Compliance Documents for User
       operationId: get-user-compliance-documents
@@ -592,7 +577,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: List Compliance Documents for User
   /v1/companies/{company-id}/users/{user-id}/compliance_documents/checklist:
     parameters:
     - schema:
@@ -632,7 +616,6 @@ paths:
                         compliance_document_type:
                           $ref: '#/components/schemas/ComplianceDocumentType-Read-Nested'
                         compliance_document:
-                          nullable: true
                           allOf:
                           - $ref: '#/components/schemas/ComplianceDocument-Read-Nested'
                 required:
@@ -643,7 +626,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: Get Compliance Checklist for User
   /v1/companies/{company-id}/users/{user-id}/compliance_documents/{id}:
     parameters:
     - schema:
@@ -694,7 +676,6 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: Show Compliance Document for User
     patch:
       summary: Update Compliance Document for User
       operationId: patch-user-compliance-document
@@ -733,7 +714,6 @@ paths:
           $ref: '#/components/responses/Error'
         '422':
           $ref: '#/components/responses/ModelError'
-      description: Update Compliance Document for User
     delete:
       summary: Delete Compliance Document for User
       operationId: delete-user-compliance-document
@@ -752,31 +732,51 @@ paths:
           $ref: '#/components/responses/Error'
         '406':
           $ref: '#/components/responses/Error'
-      description: Delete Compliance Document for User
 components:
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   schemas:
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
     ComplianceDocument-Read-Nested:
       title: ComplianceDocument-Read-Nested
       x-stoplight:
@@ -806,118 +806,20 @@ components:
             format: uuid
             description: ID of the entity this document belongs to
           value:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: e9y7iak5s1b3q
-            nullable: true
             description: Custom value for this document
           expires_at:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: f0z8jbl4t2c6r
             format: date-time
-            nullable: true
             description: Expiration date of the document
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    ComplianceDocument-Update:
-      title: ComplianceDocument-Update
-      x-stoplight:
-        id: cd1update00001
-      type: object
-      properties:
-        value:
-          type: string
-          x-stoplight:
-            id: cd1updatval001
-          description: Custom value
-        expires_at:
-          type: string
-          x-stoplight:
-            id: cd1updatexp001
-          format: date-time
-          description: Expiration date
-      additionalProperties: false
-    ComplianceDocumentType-Read-Nested:
-      title: ComplianceDocumentType-Read-Nested
-      x-stoplight:
-        id: k7m2xpqr9w4nf
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: v3h8yjzl5t1qb
-        required:
-        - name
-        - field_type
-        - has_expiration
-        - dispatch_gating
-        - required_vendors
-        - required_internal_drivers
-        - required_shared_drivers
-        - required_equipment
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: r4n6wkf8j2m1x
-            description: Display name of the document type
-          external_id:
-            type: string
-            x-stoplight:
-              id: p9c3qvh7e5s2y
-            description: External identifier for integration with external systems
-            nullable: true
-          field_type:
-            type: string
-            x-stoplight:
-              id: w1d5bnm4g8t6z
-            enum:
-            - none
-            - string
-            - number
-            - date
-            - boolean
-            description: Type of custom value field
-          has_expiration:
-            type: boolean
-            x-stoplight:
-              id: a2f7xlj3k9u0c
-            description: Whether this type has an expiration date
-          dispatch_gating:
-            type: boolean
-            x-stoplight:
-              id: b6g1yre8n4v5d
-            description: Whether expired/missing docs trigger dispatch warnings
-          required_vendors:
-            type: boolean
-            x-stoplight:
-              id: e8h3zsp2q7w6f
-            description: Whether vendors must have this document
-          required_internal_drivers:
-            type: boolean
-            x-stoplight:
-              id: f5j9atm1r0x8g
-            description: Whether internal company drivers must have this document
-          required_shared_drivers:
-            type: boolean
-            x-stoplight:
-              id: h0k4bun6s3y2i
-            description: Whether shared/vendor drivers must have this document
-          required_equipment:
-            type: boolean
-            x-stoplight:
-              id: j7l8cvp5t2z9m
-            description: Whether equipment must have this document
     Error:
       title: Error
       x-stoplight:
@@ -931,154 +833,6 @@ components:
           type: string
           x-stoplight:
             id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    ComplianceDocument-Read:
-      title: ComplianceDocument-Read
-      x-stoplight:
-        id: cd1read0000001
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          compliant_type:
-            type: string
-            x-stoplight:
-              id: cd1readct00001
-            enum:
-            - Account
-            - User
-            - Equipment
-            description: Type of entity this document belongs to
-          compliant_id:
-            type: string
-            x-stoplight:
-              id: cd1readci00001
-            format: uuid
-            description: ID of the entity this document belongs to
-          value:
-            type: string
-            x-stoplight:
-              id: cd1readval0001
-            nullable: true
-            description: Custom value for this document
-          expires_at:
-            type: string
-            x-stoplight:
-              id: cd1readexp0001
-            format: date-time
-            nullable: true
-            description: Expiration date of the document
-          notification_sent_at:
-            type: string
-            x-stoplight:
-              id: cd1readnsa0001
-            format: date-time
-            nullable: true
-            description: Timestamp when expiration notification was sent
-          compliance_document_type:
-            $ref: '#/components/schemas/ComplianceDocumentType-Read-Nested'
-            x-stoplight:
-              id: cd1readcdt0001
-            description: The document type
-        required:
-        - compliant_type
-        - compliant_id
-        - compliance_document_type
-      - $ref: '#/components/schemas/Timestamps'
-    ModelError-Item:
-      title: ModelError-Item
-      x-stoplight:
-        id: b93chwval2t8d
-      type: object
-      required:
-      - model
-      - field
-      - message
-      properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
-      additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
       additionalProperties: false
     ComplianceDocument-Create:
       title: ComplianceDocument-Create
@@ -1132,6 +886,215 @@ components:
         error:
           $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
+    ComplianceDocument-Update:
+      title: ComplianceDocument-Update
+      x-stoplight:
+        id: cd1update00001
+      type: object
+      properties:
+        value:
+          type: string
+          x-stoplight:
+            id: cd1updatval001
+          description: Custom value
+        expires_at:
+          type: string
+          x-stoplight:
+            id: cd1updatexp001
+          format: date-time
+          description: Expiration date
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    ComplianceDocumentType-Read-Nested:
+      title: ComplianceDocumentType-Read-Nested
+      x-stoplight:
+        id: k7m2xpqr9w4nf
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: v3h8yjzl5t1qb
+        required:
+        - name
+        - field_type
+        - has_expiration
+        - dispatch_gating
+        - required_vendors
+        - required_internal_drivers
+        - required_shared_drivers
+        - required_equipment
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: r4n6wkf8j2m1x
+            description: Display name of the document type
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: p9c3qvh7e5s2y
+            description: External identifier for integration with external systems
+          field_type:
+            type: string
+            x-stoplight:
+              id: w1d5bnm4g8t6z
+            enum:
+            - none
+            - string
+            - number
+            - date
+            - boolean
+            description: Type of custom value field
+          has_expiration:
+            type: boolean
+            x-stoplight:
+              id: a2f7xlj3k9u0c
+            description: Whether this type has an expiration date
+          dispatch_gating:
+            type: boolean
+            x-stoplight:
+              id: b6g1yre8n4v5d
+            description: Whether expired/missing docs trigger dispatch warnings
+          required_vendors:
+            type: boolean
+            x-stoplight:
+              id: e8h3zsp2q7w6f
+            description: Whether vendors must have this document
+          required_internal_drivers:
+            type: boolean
+            x-stoplight:
+              id: f5j9atm1r0x8g
+            description: Whether internal company drivers must have this document
+          required_shared_drivers:
+            type: boolean
+            x-stoplight:
+              id: h0k4bun6s3y2i
+            description: Whether shared/vendor drivers must have this document
+          required_equipment:
+            type: boolean
+            x-stoplight:
+              id: j7l8cvp5t2z9m
+            description: Whether equipment must have this document
+    ComplianceDocument-Read:
+      title: ComplianceDocument-Read
+      x-stoplight:
+        id: cd1read0000001
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          compliant_type:
+            type: string
+            x-stoplight:
+              id: cd1readct00001
+            enum:
+            - Account
+            - User
+            - Equipment
+            description: Type of entity this document belongs to
+          compliant_id:
+            type: string
+            x-stoplight:
+              id: cd1readci00001
+            format: uuid
+            description: ID of the entity this document belongs to
+          value:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: cd1readval0001
+            description: Custom value for this document
+          expires_at:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: cd1readexp0001
+            format: date-time
+            description: Expiration date of the document
+          notification_sent_at:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: cd1readnsa0001
+            format: date-time
+            description: Timestamp when expiration notification was sent
+          compliance_document_type:
+            $ref: '#/components/schemas/ComplianceDocumentType-Read-Nested'
+            x-stoplight:
+              id: cd1readcdt0001
+            description: The document type
+        required:
+        - compliant_type
+        - compliant_id
+        - compliance_document_type
+      - $ref: '#/components/schemas/Timestamps'
     ModelError-Response:
       title: ModelError-Response
       x-stoplight:
@@ -1144,14 +1107,13 @@ components:
           $ref: '#/components/schemas/ModelError'
       additionalProperties: false
   parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
+    page-after:
+      name: page[after]
+      in: query
+      required: false
       schema:
         type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+      description: The cursor to start paginating after
     page-limit:
       name: page[limit]
       in: query
@@ -1161,6 +1123,14 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
     page-before:
       name: page[before]
       in: query
@@ -1168,13 +1138,28 @@ components:
       schema:
         type: string
       description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

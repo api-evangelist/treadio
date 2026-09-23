@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Horizon API V1 AccountExternalTruckIdentifier Companies API
+  title: Horizon API V1 Companies API
   version: '1.0'
   contact:
     name: Tread
@@ -9,7 +9,7 @@ info:
   description: 'This is the Version 1 implementation.
 
 
-    When in doubt we default to the practices outlined [here](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#advanced-queries)'
+    When in doubt we default to the practices outlined here'
   license:
     name: Private
     url: https://tread.io
@@ -94,7 +94,22 @@ paths:
         '406':
           $ref: '#/components/responses/Error'
       operationId: get-v1-companies
-      description: "Retrieve `Companies` visible to the currently authenticated `Company`.\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `legal_name`\n * `dba_name`\n * `parent_company:legal_name`\n * `type`\n * `saas_billing_plan`\n * `usage_status`"
+      description: 'Retrieve `Companies` visible to the currently authenticated `Company`.
+
+
+        Datagrid search (`search[datagrid]`) queries against the following properties:
+
+        * `legal_name`
+
+        * `dba_name`
+
+        * `parent_company:legal_name`
+
+        * `type`
+
+        * `saas_billing_plan`
+
+        * `usage_status`'
       parameters:
       - $ref: '#/components/parameters/page-limit'
       - $ref: '#/components/parameters/page-after'
@@ -141,7 +156,10 @@ paths:
       x-stoplight:
         id: u2m9q5u0bdimj
       x-internal: true
-      description: "Retrieve a `Company` by a `Tread ID`. \n\nThis endpoint requires the `connect_companies` `IamPermission`."
+      description: 'Retrieve a `Company` by a `Tread ID`.
+
+
+        This endpoint requires the `connect_companies` `IamPermission`.'
   /v1/companies/typeahead:
     parameters:
     - $ref: '#/components/parameters/Accept-Language'
@@ -173,9 +191,7 @@ paths:
         '406':
           $ref: '#/components/responses/Error'
       operationId: get-v1-companies-typeahead
-      description: 'Typeahead search against the `legal_name` property for `Companies` visible to the currently authenticated `Company`.
-
-        '
+      description: Typeahead search against the `legal_name` property for `Companies` visible to the currently authenticated `Company`.
       x-internal: true
       parameters:
       - $ref: '#/components/parameters/page-limit'
@@ -227,7 +243,22 @@ paths:
       operationId: get-v1-companies-id-children
       x-stoplight:
         id: l2m3v9uf24jvn
-      description: "Return child `Companies` for a `Company`\n\nDatagrid search (`search[datagrid]`) queries against the following properties:\n * `legal_name`\n * `dba_name`\n * `parent_company:legal_name`\n * `type`\n * `saas_billing_plan`\n * `usage_status`"
+      description: 'Return child `Companies` for a `Company`
+
+
+        Datagrid search (`search[datagrid]`) queries against the following properties:
+
+        * `legal_name`
+
+        * `dba_name`
+
+        * `parent_company:legal_name`
+
+        * `type`
+
+        * `saas_billing_plan`
+
+        * `usage_status`'
       parameters:
       - $ref: '#/components/parameters/page-limit'
       - $ref: '#/components/parameters/page-after'
@@ -374,9 +405,7 @@ paths:
       operationId: get-v1-companies-company-id-connected_companies-typeahead
       x-stoplight:
         id: lbdv3e80844da
-      description: 'Typeahead search against the `legal_name` property on connected `Companies` for a given `Company`.
-
-        '
+      description: Typeahead search against the `legal_name` property on connected `Companies` for a given `Company`.
       parameters:
       - $ref: '#/components/parameters/page-limit'
       - $ref: '#/components/parameters/page-after'
@@ -420,7 +449,22 @@ paths:
           $ref: '#/components/responses/Error'
         '422':
           $ref: '#/components/responses/ModelError'
-      description: "Add or replace the `logo` for a `Company`. \n\nThis endpoint requires the `edit_company` `IamPermission`\n\n* If you're using a `DirectUpload` then you must use the `application/json` mime-type and `logo` must be the `DirectUpload`'s `signed_id`\n* If you're using a file then you must use the `multipart/form-data` mime-type and `logo` must be a file.\n\nIn both cases the following restrictions apply:\n * `logo` cannot be larger than 100kb.\n * `logo` must be one of the following image types: `png`, `jpeg`, `gif`."
+      description: 'Add or replace the `logo` for a `Company`.
+
+
+        This endpoint requires the `edit_company` `IamPermission`
+
+
+        * If you''re using a `DirectUpload` then you must use the `application/json` mime-type and `logo` must be the `DirectUpload`''s `signed_id`
+
+        * If you''re using a file then you must use the `multipart/form-data` mime-type and `logo` must be a file.
+
+
+        In both cases the following restrictions apply:
+
+        * `logo` cannot be larger than 100kb.
+
+        * `logo` must be one of the following image types: `png`, `jpeg`, `gif`.'
       requestBody:
         content:
           multipart/form-data:
@@ -873,7 +917,7 @@ paths:
       description: 'Create a `DirectUpload`.
 
 
-        The `checksum` _must_ be calculated exactly the way `rails` expects it ([javascript example](https://github.com/rails/rails/blob/main/activestorage/app/javascript/activestorage/file_checksum.js)).
+        The `checksum` _must_ be calculated exactly the way `rails` expects it (javascript example).
 
 
         You should upload the file to `direct_upload.url` using any provided headers from `direct_upload.headers`.
@@ -887,176 +931,24 @@ paths:
             schema:
               $ref: '#/components/schemas/DirectUpload-Create'
 components:
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   schemas:
-    SystemOfMeasure:
-      title: SystemOfMeasure
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: hu40i1qp6a4ed
-      enum:
-      - imperial
-      - metric
-      example: imperial
-      default: imperial
-      description: Unit system to use when displaying non-distance measurements
-    DirectUpload-Read:
-      title: DirectUpload-Read
-      x-stoplight:
-        id: ge5fs3tk8yb8k
-      type: object
-      required:
-      - id
-      - byte_size
-      - checksum
-      - content_type
-      - created_at
-      - filename
-      - key
-      - service_name
-      - signed_id
-      - direct_upload
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: lzwkhbbuc30lt
-          format: uuid
-        byte_size:
-          type: integer
-          x-stoplight:
-            id: zdq5i2km7dbdd
-        checksum:
-          type: string
-          x-stoplight:
-            id: pfgyb7ctywy3o
-        content_type:
-          type: string
-          x-stoplight:
-            id: id6fbesbolbxu
-        created_at:
-          type: string
-          x-stoplight:
-            id: qkkile7jxkghk
-          format: date-time
-        filename:
-          type: string
-          x-stoplight:
-            id: nh2lxjat0biia
-        key:
-          type: string
-          x-stoplight:
-            id: saakohyy5kvvz
-        metadata:
-          type: object
-          x-stoplight:
-            id: zlk0ufjqtjaxq
-        service_name:
-          type: string
-          x-stoplight:
-            id: br0ew9wo8145q
-        signed_id:
-          type: string
-          x-stoplight:
-            id: zvuflukjwdj16
-        direct_upload:
-          type: object
-          x-stoplight:
-            id: e4cw0bh9x1t4n
-          required:
-          - url
-          properties:
-            url:
-              type: string
-              x-stoplight:
-                id: l0qwu7ya2mng0
-              format: uri
-            headers:
-              type: object
-              x-stoplight:
-                id: jgxk00g0qfrub
-      additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    SaasBillingPlan:
-      title: SaasBillingPlan
-      x-stoplight:
-        id: e7hyhw2zszf6l
-      enum:
-      - basic
-      - standard
-      - pro
-      example: basic
-      default: basic
-      x-internal: true
-    DateFormat:
-      title: DateFormat
-      x-stoplight:
-        id: i3g08ad8vmf6g
-      enum:
-      - MM/DD/YYYY
-      - DD/MM/YYYY
-      - YYYY/MM/DD
-      example: MM/DD/YYYY
-      default: MM/DD/YYYY
-    Company-Logo-Create:
-      title: Company-Logo-Create
-      x-stoplight:
-        id: 0ftrms8gtiarc
-      type: object
-      description: Company model for logo creation
-      required:
-      - logo
-      properties:
-        logo:
-          x-stoplight:
-            id: 4fqw52unkx3b1
-          anyOf:
-          - x-stoplight:
-              id: 34t5ri5242fzy
-            format: binary
-          - x-stoplight:
-              id: mmnbbtiuaqj1u
-          type: string
-      additionalProperties: false
-    TimeFormat:
-      title: TimeFormat
-      x-stoplight:
-        id: 2fy67ypn6nohz
-      enum:
-      - 12-hour
-      - 24-hour
-      example: 12-hour
-      default: 12-hour
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     Address-Create:
       title: Address-Create
       x-stoplight:
@@ -1124,23 +1016,41 @@ components:
             id: xtuyrwo0rqzkh
           description: NextBillion placeID
       additionalProperties: false
-    TreadId:
-      title: TreadId
+    UnitOfDistance:
+      title: UnitOfDistance
       x-stoplight:
-        id: 43k4t5tl359m4
+        id: 5mw7vxpvk84iu
+      enum:
+      - mile
+      - kilometer
+      example: mile
+      default: mile
+      description: Unit to use when displaying distances
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
       type: object
       required:
-      - tread_id
+      - model
+      - field
+      - message
       properties:
-        tread_id:
+        model:
           type: string
           x-stoplight:
-            id: zi3ld7djflw6f
-          pattern: ^[0-9A-F]{6}$
-          minLength: 6
-          maxLength: 6
-          example: ABC123
-          description: Tread ID
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
     Company-Read:
       title: Company-Read
@@ -1178,11 +1088,12 @@ components:
         - default_geofence_delay_seconds
         properties:
           dba_name:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: 82k7xebdtasux
             description: Doing Business As name. Must be globally unique
-            nullable: true
           tread_customer:
             type: boolean
             x-stoplight:
@@ -1191,11 +1102,12 @@ components:
           address:
             $ref: '#/components/schemas/Address-Read-Nested'
           stytch_organization_id:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: 4jj13auzko3ud
             description: Stytch Organization ID of this `Company`. Must be globally unique.
-            nullable: true
           language:
             $ref: '#/components/schemas/Language'
           time_format:
@@ -1217,9 +1129,10 @@ components:
           logo_url:
             x-stoplight:
               id: mnw8c7bini09x
-            type: string
+            type:
+            - string
+            - 'null'
             format: uri
-            nullable: true
           billing_status:
             $ref: '#/components/schemas/BillingStatus'
           saas_billing_plan:
@@ -1248,154 +1161,50 @@ components:
               id: ai2review3loads
             description: Enable AI review of loads for this company
           default_lat:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: 27ftmnviz2er7
             example: '43.648947'
-            nullable: true
           default_lon:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: mr9iazlac5hu5
             example: '-79.389193'
-            nullable: true
           site_radius:
-            type: string
+            type:
+            - string
+            - 'null'
             x-stoplight:
               id: 1fhl9nsdxt5k7
-            nullable: true
           default_geofence_delay_seconds:
             type: integer
             x-stoplight:
               id: 7oqwj60jyv1jg
       description: 'Company model for reads. '
-    UnitOfDistance:
-      title: UnitOfDistance
+    Company-Logo-Create:
+      title: Company-Logo-Create
       x-stoplight:
-        id: 5mw7vxpvk84iu
-      enum:
-      - mile
-      - kilometer
-      example: mile
-      default: mile
-      description: Unit to use when displaying distances
-    Company-Read-Typeahead:
-      title: Company-Read-Typeahead
-      x-stoplight:
-        id: vl8vd87brmcah
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          legal_name:
-            type: string
-            description: Company Legal Name
-            x-stoplight:
-              id: gy5vtcbh7agl2
-        required:
-        - legal_name
-      x-internal: true
-    Contact-Create:
-      title: Contact-Create
-      x-stoplight:
-        id: dhro09gmoiqgw
+        id: 0ftrms8gtiarc
       type: object
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: ehb4vhlggledw
-        email:
-          type: string
-          x-stoplight:
-            id: kxjggao5fm38r
-        phone:
-          type: string
-          x-stoplight:
-            id: 3dxv517oimpb1
-          example: '+18885551234'
-          description: Contact's E.164 formatted phone number
-      additionalProperties: false
-    Address-Read-Nested:
-      title: Address-Read-Nested
-      x-stoplight:
-        id: cvym2dzuo375q
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Address-Read'
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
+      description: Company model for logo creation
       required:
-      - code
+      - logo
       properties:
-        code:
-          type: string
+        logo:
           x-stoplight:
-            id: 7o9x1t8v0bgfo
+            id: 4fqw52unkx3b1
+          anyOf:
+          - x-stoplight:
+              id: 34t5ri5242fzy
+            format: binary
+          - x-stoplight:
+              id: mmnbbtiuaqj1u
+          type: string
       additionalProperties: false
-    ModelError-Item:
-      title: ModelError-Item
-      x-stoplight:
-        id: b93chwval2t8d
-      type: object
-      required:
-      - model
-      - field
-      - message
-      properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
-      additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
     TimeZone:
       title: TimeZone
       x-stoplight:
@@ -2001,143 +1810,6 @@ components:
       - Zulu
       example: America/New_York
       default: America/New_York
-    Company-Logo-Read:
-      title: Company-Logo-Read
-      x-stoplight:
-        id: rq1csqrap8fr
-      description: Company logo information for reads.
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          logo_url:
-            type: string
-            nullable: true
-            description: URL to the company's logo image
-            x-stoplight:
-              id: logo_url_prop_id
-        required:
-        - logo_url
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    Contact-Read-Nested:
-      title: Contact-Read-Nested
-      x-stoplight:
-        id: 3u6d8qhsz5ehn
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - email
-        - phone
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: sd80y9pbgvkok
-            nullable: true
-          email:
-            type: string
-            x-stoplight:
-              id: 883fmt34pdeaj
-            nullable: true
-          phone:
-            type: string
-            x-stoplight:
-              id: wdtqyju4t4u06
-            example: '+18885551234'
-            nullable: true
-      description: ''
-    DirectUpload-Create:
-      title: DirectUpload-Create
-      x-stoplight:
-        id: gu4eq95ccx5jq
-      type: object
-      x-internal: true
-      required:
-      - filename
-      - byte_size
-      - checksum
-      - content_type
-      properties:
-        filename:
-          type: string
-          x-stoplight:
-            id: npiq1r1p6z5sz
-        byte_size:
-          type: integer
-          x-stoplight:
-            id: 173ysh5cb9fj9
-        checksum:
-          type: string
-          x-stoplight:
-            id: u1cilwg6olbvu
-        content_type:
-          type: string
-          x-stoplight:
-            id: 2bz7ycohbo4zz
-        metadata:
-          type: object
-          x-stoplight:
-            id: 7zg8sn25q1paq
-      additionalProperties: false
-    Company-Read-Nested:
-      title: Company-Read-Nested
-      x-stoplight:
-        id: cb2kn77qmf1l7
-      description: Compact Company model for nested reads.
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-        x-stoplight:
-          id: jwsufva4znm91
-      - $ref: '#/components/schemas/TreadId'
-      - type: object
-        properties:
-          legal_name:
-            type: string
-            x-stoplight:
-              id: yc10t8hieecwk
-            description: The Company's name. Must be globally unique.
-          company_type:
-            $ref: '#/components/schemas/CompanyType'
-        required:
-        - legal_name
-        - company_type
     Company-Create:
       title: Company-Create
       x-stoplight:
@@ -2162,12 +1834,13 @@ components:
       - company_type
       properties:
         parent_company_id:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: jgui5qyj4dznz
           description: The parent `Company` of this `Company`
           format: uuid
-          nullable: true
         legal_name:
           type: string
           x-stoplight:
@@ -2175,11 +1848,12 @@ components:
           example: Tread
           description: Legal registered name of the `Company` - used for billing. Must be globally unique
         dba_name:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: 8u3g04bxtnusn
           description: Doing Business As name. Must be globally unique
-          nullable: true
         address:
           $ref: '#/components/schemas/Address-Create'
         tread_customer:
@@ -2237,39 +1911,91 @@ components:
             id: ai1review2loads
           description: Enable AI review of loads for this company
         default_lat:
-          type: number
+          type:
+          - number
+          - 'null'
           x-stoplight:
             id: c52z2j5usqkpr
           minimum: -90
           maximum: 90
-          nullable: true
         default_lon:
-          type: number
+          type:
+          - number
+          - 'null'
           x-stoplight:
             id: wub8z625fvpll
           minimum: -180
           maximum: 180
-          nullable: true
         site_radius:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: 4gqppk2brel41
-          nullable: true
         default_geofence_delay_seconds:
           type: integer
           x-stoplight:
             id: b4fdc0ksu5l85
       additionalProperties: false
-    Currency:
-      title: Currency
+    DirectUpload-Create:
+      title: DirectUpload-Create
       x-stoplight:
-        id: 6omugo38dl0jl
+        id: gu4eq95ccx5jq
+      type: object
+      x-internal: true
+      required:
+      - filename
+      - byte_size
+      - checksum
+      - content_type
+      properties:
+        filename:
+          type: string
+          x-stoplight:
+            id: npiq1r1p6z5sz
+        byte_size:
+          type: integer
+          x-stoplight:
+            id: 173ysh5cb9fj9
+        checksum:
+          type: string
+          x-stoplight:
+            id: u1cilwg6olbvu
+        content_type:
+          type: string
+          x-stoplight:
+            id: 2bz7ycohbo4zz
+        metadata:
+          type: object
+          x-stoplight:
+            id: 7zg8sn25q1paq
+      additionalProperties: false
+    SaasBillingPlan:
+      title: SaasBillingPlan
+      x-stoplight:
+        id: e7hyhw2zszf6l
       enum:
-      - CAD
-      - USD
-      example: USD
-      default: USD
-      description: Currency
+      - basic
+      - standard
+      - pro
+      example: basic
+      default: basic
+      x-internal: true
+    UsageStatus:
+      title: UsageStatus
+      x-stoplight:
+        id: m57ggtmxjg5pi
+      enum:
+      - demo
+      - onboarding
+      - active
+      - suspended
+      - churned
+      - deleted
+      description: Usage status
+      default: demo
+      example: demo
+      x-internal: true
     Contact-Update:
       title: Contact-Update
       x-stoplight:
@@ -2290,21 +2016,24 @@ components:
             id: rtf4rqlgwt35i
           example: '+18885551234'
       additionalProperties: false
-    UsageStatus:
-      title: UsageStatus
+    TreadId:
+      title: TreadId
       x-stoplight:
-        id: m57ggtmxjg5pi
-      enum:
-      - demo
-      - onboarding
-      - active
-      - suspended
-      - churned
-      - deleted
-      description: Usage status
-      default: demo
-      example: demo
-      x-internal: true
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
     Language:
       title: Language
       x-stoplight:
@@ -2316,94 +2045,51 @@ components:
       - fr
       example: en
       default: en
-    CompanyType:
-      title: CompanyType
+    Error:
+      title: Error
       x-stoplight:
-        id: dkzo7gjbtb1b3
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Company-Read-Typeahead:
+      title: Company-Read-Typeahead
+      x-stoplight:
+        id: vl8vd87brmcah
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            description: Company Legal Name
+            x-stoplight:
+              id: gy5vtcbh7agl2
+        required:
+        - legal_name
+      x-internal: true
+    BillingStatus:
+      title: BillingStatus
+      x-stoplight:
+        id: 3d3i9tmtxbbf5
       enum:
-      - broker
-      - contractor
-      - hauler
-      - owner_operator
-      - producer
-      - super
-      example: hauler
-      description: Company Type
-    Address-Read:
-      title: Address-Read
-      x-stoplight:
-        id: v1mcd2qgns2tf
-      type: object
-      required:
-      - thoroughfare
-      - premise
-      - locality
-      - administrative_area
-      - postal_code
-      - country
-      - lat
-      - lon
-      - place_id
-      properties:
-        thoroughfare:
-          type: string
-          x-stoplight:
-            id: 8wrr7qkc9ilqn
-        premise:
-          type: string
-          x-stoplight:
-            id: z4jth408out1q
-          nullable: true
-        locality:
-          type: string
-          x-stoplight:
-            id: kfby6wqpgvxbz
-        administrative_area:
-          type: string
-          x-stoplight:
-            id: c9bkrloxf4t8d
-        postal_code:
-          type: string
-          x-stoplight:
-            id: 7zq51k1mof3o3
-        country:
-          type: string
-          x-stoplight:
-            id: iydw9q619ya01
-          pattern: ^[A-Z]{2}
-          example: US
-          minLength: 2
-          maxLength: 2
-        lat:
-          type: string
-          x-stoplight:
-            id: kqu1qtf9rivh1
-          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
-          nullable: true
-        lon:
-          type: string
-          x-stoplight:
-            id: oly2yabkzpk9g
-          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
-          nullable: true
-        place_id:
-          type: string
-          x-stoplight:
-            id: im1fdq7qqxdij
-          description: NextBillion placeID
-          nullable: true
-      additionalProperties: false
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
+      - unpaid
+      - free_trial
+      - paid
+      - overdue
+      - suspended
+      - churned
+      default: unpaid
+      example: unpaid
+      description: Billing Status
+      x-internal: true
     Company-Update:
       title: Company-Update
       x-stoplight:
@@ -2415,9 +2101,10 @@ components:
           example: Tread
           description: Legal registered name of the `Company` - used for billing. Must be globally unique
         dba_name:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Doing Business As name. Must be globally unique
-          nullable: true
         address:
           $ref: '#/components/schemas/Address-Update'
         tread_customer:
@@ -2468,36 +2155,379 @@ components:
             id: ai3review4loads
           description: Enable AI review of loads for this company
         default_lat:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: 5ddw2beimkdbg
-          nullable: true
         default_lon:
-          type: string
+          type:
+          - string
+          - 'null'
           x-stoplight:
             id: mor2bcbxiu7zx
-          nullable: true
         site_radius:
-          type: number
+          type:
+          - number
+          - 'null'
           x-stoplight:
             id: qvg3rpedhjo8b
-          nullable: true
         default_geofence_delay_seconds:
           type: integer
           x-stoplight:
             id: a2pit27zk3wjw
       additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
+    Company-Read-Nested:
+      title: Company-Read-Nested
       x-stoplight:
-        id: payf9ndh3l6np
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    DateFormat:
+      title: DateFormat
+      x-stoplight:
+        id: i3g08ad8vmf6g
+      enum:
+      - MM/DD/YYYY
+      - DD/MM/YYYY
+      - YYYY/MM/DD
+      example: MM/DD/YYYY
+      default: MM/DD/YYYY
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    Currency:
+      title: Currency
+      x-stoplight:
+        id: 6omugo38dl0jl
+      enum:
+      - CAD
+      - USD
+      example: USD
+      default: USD
+      description: Currency
+    TimeFormat:
+      title: TimeFormat
+      x-stoplight:
+        id: 2fy67ypn6nohz
+      enum:
+      - 12-hour
+      - 24-hour
+      example: 12-hour
+      default: 12-hour
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
       type: object
       required:
       - error
       properties:
         error:
-          $ref: '#/components/schemas/ModelError'
+          $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - email
+        - phone
+        properties:
+          name:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: sd80y9pbgvkok
+          email:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 883fmt34pdeaj
+          phone:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+      description: ''
+    AuthMethod:
+      title: AuthMethod
+      x-stoplight:
+        id: 4h7bxzt0hkx3o
+      enum:
+      - sso
+      - magic_link
+      - password
+      - google_auth
+      - microsoft_auth
+      - otp_sms
+      description: ''
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    Address-Read:
+      title: Address-Read
+      x-stoplight:
+        id: v1mcd2qgns2tf
+      type: object
+      required:
+      - thoroughfare
+      - premise
+      - locality
+      - administrative_area
+      - postal_code
+      - country
+      - lat
+      - lon
+      - place_id
+      properties:
+        thoroughfare:
+          type: string
+          x-stoplight:
+            id: 8wrr7qkc9ilqn
+        premise:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: z4jth408out1q
+        locality:
+          type: string
+          x-stoplight:
+            id: kfby6wqpgvxbz
+        administrative_area:
+          type: string
+          x-stoplight:
+            id: c9bkrloxf4t8d
+        postal_code:
+          type: string
+          x-stoplight:
+            id: 7zq51k1mof3o3
+        country:
+          type: string
+          x-stoplight:
+            id: iydw9q619ya01
+          pattern: ^[A-Z]{2}
+          example: US
+          minLength: 2
+          maxLength: 2
+        lat:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: kqu1qtf9rivh1
+          description: "latitude of the `Address`. \n\nMust be a stringified number between -90 and 90 inclusive.\n\nRequired if `lon` is present."
+        lon:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: oly2yabkzpk9g
+          description: "longitude of the `Address`. \n\nMust be a stringified number between -180 and 180 inclusive.\n\nRequired if `lat` is present."
+        place_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: im1fdq7qqxdij
+          description: NextBillion placeID
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Contact-Create:
+      title: Contact-Create
+      x-stoplight:
+        id: dhro09gmoiqgw
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: ehb4vhlggledw
+        email:
+          type: string
+          x-stoplight:
+            id: kxjggao5fm38r
+        phone:
+          type: string
+          x-stoplight:
+            id: 3dxv517oimpb1
+          example: '+18885551234'
+          description: Contact's E.164 formatted phone number
+      additionalProperties: false
+    DirectUpload-Read:
+      title: DirectUpload-Read
+      x-stoplight:
+        id: ge5fs3tk8yb8k
+      type: object
+      required:
+      - id
+      - byte_size
+      - checksum
+      - content_type
+      - created_at
+      - filename
+      - key
+      - service_name
+      - signed_id
+      - direct_upload
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: lzwkhbbuc30lt
+          format: uuid
+        byte_size:
+          type: integer
+          x-stoplight:
+            id: zdq5i2km7dbdd
+        checksum:
+          type: string
+          x-stoplight:
+            id: pfgyb7ctywy3o
+        content_type:
+          type: string
+          x-stoplight:
+            id: id6fbesbolbxu
+        created_at:
+          type: string
+          x-stoplight:
+            id: qkkile7jxkghk
+          format: date-time
+        filename:
+          type: string
+          x-stoplight:
+            id: nh2lxjat0biia
+        key:
+          type: string
+          x-stoplight:
+            id: saakohyy5kvvz
+        metadata:
+          type: object
+          x-stoplight:
+            id: zlk0ufjqtjaxq
+        service_name:
+          type: string
+          x-stoplight:
+            id: br0ew9wo8145q
+        signed_id:
+          type: string
+          x-stoplight:
+            id: zvuflukjwdj16
+        direct_upload:
+          type: object
+          x-stoplight:
+            id: e4cw0bh9x1t4n
+          required:
+          - url
+          properties:
+            url:
+              type: string
+              x-stoplight:
+                id: l0qwu7ya2mng0
+              format: uri
+            headers:
+              type: object
+              x-stoplight:
+                id: jgxk00g0qfrub
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    SystemOfMeasure:
+      title: SystemOfMeasure
+      x-stoplight:
+        id: hu40i1qp6a4ed
+      enum:
+      - imperial
+      - metric
+      example: imperial
+      default: imperial
+      description: Unit system to use when displaying non-distance measurements
     Address-Update:
       title: Address-Update
       x-stoplight:
@@ -2552,56 +2582,56 @@ components:
           description: 'If this is provided with value of `1` like so `_destroy: 1` then this `Address` will be deleted. The `id` must be set.'
       type: object
       additionalProperties: false
-    AuthMethod:
-      title: AuthMethod
+    ModelError-Response:
+      title: ModelError-Response
       x-stoplight:
-        id: 4h7bxzt0hkx3o
-      enum:
-      - sso
-      - magic_link
-      - password
-      - google_auth
-      - microsoft_auth
-      - otp_sms
-      description: ''
-    BillingStatus:
-      title: BillingStatus
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Company-Logo-Read:
+      title: Company-Logo-Read
       x-stoplight:
-        id: 3d3i9tmtxbbf5
+        id: rq1csqrap8fr
+      description: Company logo information for reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          logo_url:
+            type:
+            - string
+            - 'null'
+            description: URL to the company's logo image
+            x-stoplight:
+              id: logo_url_prop_id
+        required:
+        - logo_url
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
       enum:
-      - unpaid
-      - free_trial
-      - paid
-      - overdue
-      - suspended
-      - churned
-      default: unpaid
-      example: unpaid
-      description: Billing Status
-      x-internal: true
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
   parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    search-datagrid:
-      name: search[datagrid]
+    page-after:
+      name: page[after]
       in: query
       required: false
       schema:
         type: string
-      description: Search string for datagrid queries
-    search-query:
-      name: search[query]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for queries
+      description: The cursor to start paginating after
     page-limit:
       name: page[limit]
       in: query
@@ -2611,6 +2641,28 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
     page-before:
       name: page[before]
       in: query
@@ -2618,13 +2670,28 @@ components:
       schema:
         type: string
       description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http
