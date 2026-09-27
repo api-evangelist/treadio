@@ -190,24 +190,29 @@ paths:
       x-internal: true
       description: Delete a `KMLFile` by `ID`
 components:
-  schemas:
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  schemas:
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -233,6 +238,72 @@ components:
           x-stoplight:
             id: bmgbrtmw17qsj
           description: The Error message
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
       additionalProperties: false
     KMLFile-Read:
       title: KMLFile-Read
@@ -264,19 +335,30 @@ components:
               id: 6wngh6szemo44
       - $ref: '#/components/schemas/Timestamps'
       x-internal: true
-    Error:
-      title: Error
+    KMLFile-Update:
+      title: KMLFile-Update
       x-stoplight:
-        id: 3g57kkik3l464
+        id: 7fz259ifcoo0c
       type: object
-      description: An Error.
-      required:
-      - code
       properties:
-        code:
-          type: string
+        name:
+          type:
+          - string
+          - 'null'
           x-stoplight:
-            id: 7o9x1t8v0bgfo
+            id: 50w95tkilhwpb
+      x-internal: true
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
       additionalProperties: false
     UnauthenticatedError-Response:
       title: UnauthenticatedError-Response
@@ -312,46 +394,19 @@ components:
           x-stoplight:
             id: fh11vr7g2ltt7
       additionalProperties: false
-    Error-Response:
-      title: Error-Response
+    Error:
+      title: Error
       x-stoplight:
-        id: 52cydhphee3qe
+        id: 3g57kkik3l464
       type: object
+      description: An Error.
       required:
-      - error
+      - code
       properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    KMLFile-Update:
-      title: KMLFile-Update
-      x-stoplight:
-        id: 7fz259ifcoo0c
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
+        code:
+          type: string
           x-stoplight:
-            id: 50w95tkilhwpb
-      x-internal: true
+            id: 7o9x1t8v0bgfo
       additionalProperties: false
     Identifier:
       title: Identifier
@@ -367,47 +422,7 @@ components:
             id: 2e38hjk4zd58m
           format: uuid
       additionalProperties: false
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
   parameters:
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
     page-limit:
       name: page[limit]
       in: query
@@ -417,6 +432,20 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
     Accept-Language:
       name: Accept-Language
       in: header
@@ -425,35 +454,6 @@ components:
         default: en
         example: en
       description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

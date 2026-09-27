@@ -110,7 +110,106 @@ paths:
       - $ref: '#/components/parameters/page-after'
       - $ref: '#/components/parameters/page-before'
 components:
+  parameters:
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   schemas:
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    MaterialType-Read:
+      type: object
+      x-stoplight:
+        id: puv3xcstbwvh3
+      required:
+      - id
+      - name
+      - system
+      - source
+      - external_id
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        system:
+          type: boolean
+        source:
+          $ref: '#/components/schemas/TicketSource'
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 3vzhucq5m4hoo
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
     UnauthenticatedError:
       title: UnauthenticatedError
       x-stoplight:
@@ -150,105 +249,6 @@ components:
         error:
           $ref: '#/components/schemas/Error'
       additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    MaterialType-Read:
-      type: object
-      x-stoplight:
-        id: puv3xcstbwvh3
-      required:
-      - id
-      - name
-      - system
-      - source
-      - external_id
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        system:
-          type: boolean
-        source:
-          $ref: '#/components/schemas/TicketSource'
-        external_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: 3vzhucq5m4hoo
-      additionalProperties: false
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-  responses:
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   securitySchemes:
     bearerAuth:
       type: http

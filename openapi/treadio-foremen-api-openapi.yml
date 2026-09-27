@@ -237,24 +237,29 @@ paths:
         id: hmdgtpa0dua5o
       description: Retrieve a `Driver` by ID for a `Company`
 components:
-  schemas:
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  schemas:
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -280,6 +285,80 @@ components:
           x-stoplight:
             id: bmgbrtmw17qsj
           description: The Error message
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    Foreman-Read-Show:
+      title: Foreman-Read-Show
+      x-stoplight:
+        id: jss11n7eh34lo
+      allOf:
+      - $ref: '#/components/schemas/Foreman-Read'
+      - type: object
+        x-stoplight:
+          id: jyqx3u1iuq9x7
+        properties:
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Foreman-Nested'
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
       additionalProperties: false
     TimeZone:
       title: TimeZone
@@ -886,18 +965,93 @@ components:
       - Zulu
       example: America/New_York
       default: America/New_York
-    CompanyShare-Read-Foreman-Nested:
-      title: CompanyShare-Read-Foreman-Nested
+    Foreman-Read:
+      title: Foreman-Read
       x-stoplight:
-        id: ofb9lm02kntr7
+        id: dlggce9n4miju
       allOf:
-      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - $ref: '#/components/schemas/Foreman-Read-Nested'
       - type: object
         x-stoplight:
-          id: b1rs2tfs6wv3b
+          id: aur5ass0lfrk8
+        required:
+        - external_id
+        - time_zone
+        - managed
+        - labels
         properties:
-          receiver_account:
-            $ref: '#/components/schemas/Account-Read-Foreman-Nested'
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: k0x1iqwweh62q
+          time_zone:
+            $ref: '#/components/schemas/TimeZone'
+          managed:
+            type: boolean
+            x-stoplight:
+              id: 2badqtvuy3vby
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this foreman
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    Foreman-Read-Nested:
+      title: Foreman-Read-Nested
+      x-stoplight:
+        id: f9iqzaesw4aij
+      allOf:
+      - $ref: '#/components/schemas/Foreman-Read-Typeahead'
+      - type: object
+        x-stoplight:
+          id: m5idk3cd24zti
+        required:
+        - email
+        - company
+        properties:
+          email:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: ft77ezeftemb1
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+      - $ref: '#/components/schemas/Discardable'
     Account-Read-Foreman-Nested:
       title: Account-Read-Foreman-Nested
       x-stoplight:
@@ -924,61 +1078,16 @@ components:
               id: j5lovsve92d2z
           company:
             $ref: '#/components/schemas/Company-Read-Nested'
-    TreadId:
-      title: TreadId
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: 43k4t5tl359m4
+        id: o477eph7ttbzt
       type: object
       required:
-      - tread_id
+      - error
       properties:
-        tread_id:
-          type: string
-          x-stoplight:
-            id: zi3ld7djflw6f
-          pattern: ^[0-9A-F]{6}$
-          minLength: 6
-          maxLength: 6
-          example: ABC123
-          description: Tread ID
-      additionalProperties: false
-    Foreman-Read-Nested:
-      title: Foreman-Read-Nested
-      x-stoplight:
-        id: f9iqzaesw4aij
-      allOf:
-      - $ref: '#/components/schemas/Foreman-Read-Typeahead'
-      - type: object
-        x-stoplight:
-          id: m5idk3cd24zti
-        required:
-        - email
-        - company
-        properties:
-          email:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: ft77ezeftemb1
-          company:
-            $ref: '#/components/schemas/Company-Read-Nested'
-      - $ref: '#/components/schemas/Discardable'
-    Discardable:
-      title: Discardable
-      x-stoplight:
-        id: 46axlb8u5wjay
-      type: object
-      required:
-      - discarded_at
-      properties:
-        discarded_at:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: cy8t6fecoyxbo
-          format: date-time
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
     Foreman-Read-Typeahead:
       title: Foreman-Read-Typeahead
@@ -1013,74 +1122,34 @@ components:
             x-stoplight:
               id: 7b5vdi0y2qt5m
             description: User's E.164 formatted phone number
-    Error:
-      title: Error
+    Discardable:
+      title: Discardable
       x-stoplight:
-        id: 3g57kkik3l464
+        id: 46axlb8u5wjay
       type: object
-      description: An Error.
       required:
-      - code
+      - discarded_at
       properties:
-        code:
-          type: string
+        discarded_at:
+          type:
+          - string
+          - 'null'
           x-stoplight:
-            id: 7o9x1t8v0bgfo
+            id: cy8t6fecoyxbo
+          format: date-time
       additionalProperties: false
-    Company-Read-Nested:
-      title: Company-Read-Nested
+    CompanyShare-Read-Foreman-Nested:
+      title: CompanyShare-Read-Foreman-Nested
       x-stoplight:
-        id: cb2kn77qmf1l7
-      description: Compact Company model for nested reads.
+        id: ofb9lm02kntr7
       allOf:
-      - $ref: '#/components/schemas/Identifier'
-        x-stoplight:
-          id: jwsufva4znm91
-      - $ref: '#/components/schemas/TreadId'
-      - type: object
-        properties:
-          legal_name:
-            type: string
-            x-stoplight:
-              id: yc10t8hieecwk
-            description: The Company's name. Must be globally unique.
-          company_type:
-            $ref: '#/components/schemas/CompanyType'
-        required:
-        - legal_name
-        - company_type
-    Foreman-Read:
-      title: Foreman-Read
-      x-stoplight:
-        id: dlggce9n4miju
-      allOf:
-      - $ref: '#/components/schemas/Foreman-Read-Nested'
+      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
       - type: object
         x-stoplight:
-          id: aur5ass0lfrk8
-        required:
-        - external_id
-        - time_zone
-        - managed
-        - labels
+          id: b1rs2tfs6wv3b
         properties:
-          external_id:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: k0x1iqwweh62q
-          time_zone:
-            $ref: '#/components/schemas/TimeZone'
-          managed:
-            type: boolean
-            x-stoplight:
-              id: 2badqtvuy3vby
-          labels:
-            type: array
-            items:
-              $ref: '#/components/schemas/Label-Read-Nested'
-            description: Labels assigned to this foreman
+          receiver_account:
+            $ref: '#/components/schemas/Account-Read-Foreman-Nested'
     CompanyShare-Read-Nested:
       title: CompanyShare-Read-Nested
       x-stoplight:
@@ -1133,58 +1202,33 @@ components:
               id: aaa111jpq0ga9
             format: date-time
             description: ISO8601 timestamp with local timezone
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
+    Error:
+      title: Error
       x-stoplight:
-        id: o477eph7ttbzt
+        id: 3g57kkik3l464
       type: object
+      description: An Error.
       required:
-      - error
+      - code
       properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
+        code:
           type: string
           x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
+            id: 7o9x1t8v0bgfo
       additionalProperties: false
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
     Label-Read-Nested:
       title: Label-Read-Nested
       x-stoplight:
@@ -1207,64 +1251,21 @@ components:
         required:
         - name
         - color
-    Foreman-Read-Show:
-      title: Foreman-Read-Show
+    Identifier:
+      title: Identifier
       x-stoplight:
-        id: jss11n7eh34lo
-      allOf:
-      - $ref: '#/components/schemas/Foreman-Read'
-      - type: object
-        x-stoplight:
-          id: jyqx3u1iuq9x7
-        properties:
-          company_share:
-            $ref: '#/components/schemas/CompanyShare-Read-Foreman-Nested'
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
+        id: gnd39lue5v7ol
       type: object
       required:
-      - error
+      - id
       properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
       additionalProperties: false
-    CompanyType:
-      title: CompanyType
-      x-stoplight:
-        id: dkzo7gjbtb1b3
-      enum:
-      - broker
-      - contractor
-      - hauler
-      - owner_operator
-      - producer
-      - super
-      example: hauler
-      description: Company Type
   parameters:
-    filter-job-company_ids:
-      name: filter[job][company_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Company IDs for the Job
-    filter-job-vendor_account_ids:
-      name: filter[job][vendor_account_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Vendor Account IDs for the Job
-    filter-job-site_types:
-      name: filter[job][site_types]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: SiteType enum filters for the Job (see SiteType enum for the list of values)
     filter-sender_company_types:
       name: filter[sender_company_types]
       in: query
@@ -1272,27 +1273,13 @@ components:
       schema:
         type: array
       description: CompanyType enum filter. See CompanyType enum for accepted values.
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    filter-job-states:
-      name: filter[job][states]
+    filter-job-driver_ids:
+      name: filter[job][driver_ids]
       in: query
       required: false
       schema:
         type: array
-      description: Job states
-    filter-job-equipment_ids:
-      name: filter[job][equipment_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Equipment IDs for the Job
+      description: The assigned Driver IDs for the Job
     page-limit:
       name: page[limit]
       in: query
@@ -1302,34 +1289,27 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
-    filter-job-end_date:
-      name: filter[job][end_date]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: End date range for Job.job_start_at
-    filter-job-pickup_site_ids:
-      name: filter[job][pickup_site_ids]
+    filter-job-site_types:
+      name: filter[job][site_types]
       in: query
       required: false
       schema:
         type: array
-      description: The associated Pickup Site IDs for the Job
-    search-query:
-      name: search[query]
+      description: SiteType enum filters for the Job (see SiteType enum for the list of values)
+    filter-job-vendor_account_ids:
+      name: filter[job][vendor_account_ids]
       in: query
       required: false
       schema:
-        type: string
-      description: Search string for queries
-    search-datagrid:
-      name: search[datagrid]
+        type: array
+      description: The associated Vendor Account IDs for the Job
+    filter-job-states:
+      name: filter[job][states]
       in: query
       required: false
       schema:
-        type: string
-      description: Search string for datagrid queries
+        type: array
+      description: Job states
     filter-dispatch_number_ids:
       name: filter[dispatch_number_ids]
       in: query
@@ -1337,21 +1317,20 @@ components:
       schema:
         type: array
       description: The associated DispatchNumber IDs
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    filter-job-start_date:
-      name: filter[job][start_date]
+    filter-job-material_ids:
+      name: filter[job][material_ids]
       in: query
       required: false
       schema:
-        type: string
-      description: Start date range for Job.job_start_at
+        type: array
+      description: The associated Material IDs for the Job
+    filter-job-company_ids:
+      name: filter[job][company_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Company IDs for the Job
     page-before:
       name: page[before]
       in: query
@@ -1366,6 +1345,20 @@ components:
       schema:
         type: array
       description: The associated Customer Account IDs for the Job
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    filter-job-end_date:
+      name: filter[job][end_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: End date range for Job.job_start_at
     filter-shared:
       name: filter[shared]
       in: query
@@ -1373,13 +1366,70 @@ components:
       schema:
         type: boolean
       description: Filter shared CompanyShareable models
-    filter-job-driver_ids:
-      name: filter[job][driver_ids]
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    filter-job-dropoff_site_ids:
+      name: filter[job][dropoff_site_ids]
       in: query
       required: false
       schema:
         type: array
-      description: The assigned Driver IDs for the Job
+      description: The associated Dropoff Site IDs for the Job
+    filter-job-project_ids:
+      name: filter[job][project_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Project IDs for the Job
+    filter-job-pickup_site_ids:
+      name: filter[job][pickup_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Pickup Site IDs for the Job
+    filter-job-start_date:
+      name: filter[job][start_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Start date range for Job.job_start_at
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    filter-job-equipment_ids:
+      name: filter[job][equipment_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Equipment IDs for the Job
+    filter-job-service_ids:
+      name: filter[job][service_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Service IDs for the Job
     filter-expiring:
       name: filter[expiring]
       in: query
@@ -1394,27 +1444,6 @@ components:
       schema:
         type: string
       description: The typeahead search query. Matches on the models's `name` field
-    filter-job-service_ids:
-      name: filter[job][service_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Service IDs for the Job
-    filter-job-dropoff_site_ids:
-      name: filter[job][dropoff_site_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Dropoff Site IDs for the Job
-    filter-job-material_ids:
-      name: filter[job][material_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Material IDs for the Job
     filter-job-external_ids:
       name: filter[job][external_ids]
       in: query
@@ -1422,35 +1451,6 @@ components:
       schema:
         type: array
       description: The associated External Project IDs for the Job
-    filter-job-project_ids:
-      name: filter[job][project_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Project IDs for the Job
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

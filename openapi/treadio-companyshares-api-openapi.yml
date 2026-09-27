@@ -786,24 +786,29 @@ paths:
       - $ref: '#/components/parameters/page-after'
       - $ref: '#/components/parameters/page-before'
 components:
-  schemas:
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  schemas:
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -830,6 +835,72 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
     TreadId:
       title: TreadId
       x-stoplight:
@@ -848,19 +919,25 @@ components:
           example: ABC123
           description: Tread ID
       additionalProperties: false
-    Error:
-      title: Error
+    CompanyShareableType:
+      title: CompanyShareType
       x-stoplight:
-        id: 3g57kkik3l464
+        id: o6j5rtwll4fvm
+      enum:
+      - User
+      - Equipment
+      - Site
+      description: ''
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
       type: object
-      description: An Error.
       required:
-      - code
+      - error
       properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
+        error:
+          $ref: '#/components/schemas/ModelError'
       additionalProperties: false
     Company-Read-Nested:
       title: Company-Read-Nested
@@ -884,6 +961,103 @@ components:
         required:
         - legal_name
         - company_type
+    CompanyShare-Create:
+      title: CompanyShare-Create
+      x-stoplight:
+        id: 8bgp42ntgizqx
+      type: object
+      required:
+      - receiver_company_id
+      - company_shareable_id
+      - company_shareable_type
+      properties:
+        receiver_company_id:
+          type: string
+          x-stoplight:
+            id: ueempsmbg5dpq
+          format: uuid
+        company_shareable_id:
+          type: string
+          x-stoplight:
+            id: bptnrqwak0r5i
+          format: uuid
+        company_shareable_type:
+          $ref: '#/components/schemas/CompanyShareableType'
+        dispatchable:
+          type: boolean
+          x-stoplight:
+            id: 3k6wflbl3vsqh
+          description: 'Whether the receiver `Company` can dispatch to the shared model.
+
+
+            `dispatchable` defaults to `false` for `Equipment` and `true` for `User`. '
+        rate_override:
+          type: boolean
+          x-stoplight:
+            id: hcmpiszi75zt3
+          description: 'Whether the receiver `Company` can override the `Rate` that will be used by the shared model when dispatched.
+
+
+            `rate_override` is always `false` for `Equipment` and defaults to `false` for `User` (can be edited to `true`)'
+        expires_at:
+          type: string
+          x-stoplight:
+            id: izsipmch75zt3
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        ticket_match_id:
+          type: string
+          x-stoplight:
+            id: tmid8bgp42n
+      additionalProperties: false
+    CompanyShare-Read:
+      title: CompanyShare-Read
+      x-stoplight:
+        id: 3fw8no6g8e334
+      allOf:
+      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: 5tvsur0wkmwr3
+        required:
+        - parent_company_share_id
+        - company_shareable_id
+        - company_shareable_type
+        - receiver_company
+        - company_shareable
+        properties:
+          parent_company_share_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: hl0lvh254bdch
+            format: uuid
+          company_shareable_id:
+            type: string
+            x-stoplight:
+              id: l5wwd21py5c6e
+            format: uuid
+            deprecated: true
+          company_shareable_type:
+            $ref: '#/components/schemas/CompanyShareableType'
+            deprecated: true
+          receiver_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          company_shareable:
+            $ref: '#/components/schemas/CompanyShareable-Read-Nested'
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
     CompanyShare-Read-Nested:
       title: CompanyShare-Read-Nested
       x-stoplight:
@@ -936,54 +1110,33 @@ components:
               id: aaa111jpq0ga9
             format: date-time
             description: ISO8601 timestamp with local timezone
-    CompanyShare-Read:
-      title: CompanyShare-Read
+    Error:
+      title: Error
       x-stoplight:
-        id: 3fw8no6g8e334
-      allOf:
-      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
-      - $ref: '#/components/schemas/Timestamps'
-      - type: object
-        x-stoplight:
-          id: 5tvsur0wkmwr3
-        required:
-        - parent_company_share_id
-        - company_shareable_id
-        - company_shareable_type
-        - receiver_company
-        - company_shareable
-        properties:
-          parent_company_share_id:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: hl0lvh254bdch
-            format: uuid
-          company_shareable_id:
-            type: string
-            x-stoplight:
-              id: l5wwd21py5c6e
-            format: uuid
-            deprecated: true
-          company_shareable_type:
-            $ref: '#/components/schemas/CompanyShareableType'
-            deprecated: true
-          receiver_company:
-            $ref: '#/components/schemas/Company-Read-Nested'
-          company_shareable:
-            $ref: '#/components/schemas/CompanyShareable-Read-Nested'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
+        id: 3g57kkik3l464
       type: object
+      description: An Error.
       required:
-      - error
+      - code
       properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
       additionalProperties: false
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
     CompanyShare-Update:
       title: CompanyShare-Update
       x-stoplight:
@@ -1034,96 +1187,6 @@ components:
           format: date-time
           description: ISO8601 timestamp with local timezone
       additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    CompanyShare-Create:
-      title: CompanyShare-Create
-      x-stoplight:
-        id: 8bgp42ntgizqx
-      type: object
-      required:
-      - receiver_company_id
-      - company_shareable_id
-      - company_shareable_type
-      properties:
-        receiver_company_id:
-          type: string
-          x-stoplight:
-            id: ueempsmbg5dpq
-          format: uuid
-        company_shareable_id:
-          type: string
-          x-stoplight:
-            id: bptnrqwak0r5i
-          format: uuid
-        company_shareable_type:
-          $ref: '#/components/schemas/CompanyShareableType'
-        dispatchable:
-          type: boolean
-          x-stoplight:
-            id: 3k6wflbl3vsqh
-          description: 'Whether the receiver `Company` can dispatch to the shared model.
-
-
-            `dispatchable` defaults to `false` for `Equipment` and `true` for `User`. '
-        rate_override:
-          type: boolean
-          x-stoplight:
-            id: hcmpiszi75zt3
-          description: 'Whether the receiver `Company` can override the `Rate` that will be used by the shared model when dispatched.
-
-
-            `rate_override` is always `false` for `Equipment` and defaults to `false` for `User` (can be edited to `true`)'
-        expires_at:
-          type: string
-          x-stoplight:
-            id: izsipmch75zt3
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        ticket_match_id:
-          type: string
-          x-stoplight:
-            id: tmid8bgp42n
-      additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
     CompanyShareable-Read-Nested:
       title: CompanyShareable-Read-Nested
       x-stoplight:
@@ -1143,69 +1206,21 @@ components:
               id: m0zwbwf2ta0tr
           type:
             $ref: '#/components/schemas/CompanyShareableType'
-    Timestamps:
-      title: Timestamps
+    Identifier:
+      title: Identifier
       x-stoplight:
-        id: t82ecgfu0oj00
+        id: gnd39lue5v7ol
       type: object
       required:
-      - created_at
-      - updated_at
+      - id
       properties:
-        created_at:
+        id:
           type: string
           x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
+            id: 2e38hjk4zd58m
+          format: uuid
       additionalProperties: false
-    CompanyShareableType:
-      title: CompanyShareType
-      x-stoplight:
-        id: o6j5rtwll4fvm
-      enum:
-      - User
-      - Equipment
-      - Site
-      description: ''
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    CompanyType:
-      title: CompanyType
-      x-stoplight:
-        id: dkzo7gjbtb1b3
-      enum:
-      - broker
-      - contractor
-      - hauler
-      - owner_operator
-      - producer
-      - super
-      example: hauler
-      description: Company Type
   parameters:
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
     page-limit:
       name: page[limit]
       in: query
@@ -1215,6 +1230,20 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
     Accept-Language:
       name: Accept-Language
       in: header
@@ -1223,35 +1252,6 @@ components:
         default: en
         example: en
       description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

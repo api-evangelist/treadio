@@ -239,24 +239,29 @@ paths:
       parameters:
       - $ref: '#/components/parameters/Accept-Language'
 components:
-  schemas:
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  schemas:
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -283,41 +288,23 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    Label-Create:
-      title: Label-Create
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: lbl1create0001
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: lbl1name000001
-          description: Label name, must be unique for the company
-        color:
-          type: string
-          x-stoplight:
-            id: lbl1color00001
-          description: Hex color code for the label (e.g., '#FF5733'). Defaults to '#6B7280' if not provided.
-          pattern: ^#[0-9A-Fa-f]{6}$
-          default: '#6B7280'
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     Label-Read:
       title: Label-Read
       x-stoplight:
@@ -341,28 +328,6 @@ components:
         - name
         - color
       - $ref: '#/components/schemas/Timestamps'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
     UnauthenticatedError:
       title: UnauthenticatedError
       x-stoplight:
@@ -379,38 +344,6 @@ components:
               id: wvq8c0qsym4hz
         required:
         - error_type
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    Label-Update:
-      title: Label-Update
-      x-stoplight:
-        id: lbl1update0001
-      type: object
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: lbl1updname001
-          description: Label name. Must be unique for a company.
-        color:
-          type: string
-          x-stoplight:
-            id: lbl1updcolor01
-          description: Hex color code for the label (e.g., '#FF5733')
-          pattern: ^#[0-9A-Fa-f]{6}$
-      additionalProperties: false
     Timestamps:
       title: Timestamps
       x-stoplight:
@@ -433,6 +366,35 @@ components:
           format: date-time
           description: ISO8601 timestamp with local timezone
       additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    Label-Update:
+      title: Label-Update
+      x-stoplight:
+        id: lbl1update0001
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: lbl1updname001
+          description: Label name. Must be unique for a company.
+        color:
+          type: string
+          x-stoplight:
+            id: lbl1updcolor01
+          description: Hex color code for the label (e.g., '#FF5733')
+          pattern: ^#[0-9A-Fa-f]{6}$
+      additionalProperties: false
     ModelError-Response:
       title: ModelError-Response
       x-stoplight:
@@ -444,14 +406,67 @@ components:
         error:
           $ref: '#/components/schemas/ModelError'
       additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Label-Create:
+      title: Label-Create
+      x-stoplight:
+        id: lbl1create0001
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: lbl1name000001
+          description: Label name, must be unique for the company
+        color:
+          type: string
+          x-stoplight:
+            id: lbl1color00001
+          description: Hex color code for the label (e.g., '#FF5733'). Defaults to '#6B7280' if not provided.
+          pattern: ^#[0-9A-Fa-f]{6}$
+          default: '#6B7280'
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
   parameters:
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
     page-limit:
       name: page[limit]
       in: query
@@ -461,6 +476,20 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
     Accept-Language:
       name: Accept-Language
       in: header
@@ -469,35 +498,6 @@ components:
         default: en
         example: en
       description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

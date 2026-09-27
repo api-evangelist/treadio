@@ -184,40 +184,65 @@ paths:
 
         This endpoint requires the `edit_job_summary` `IamPermission`.'
 components:
-  schemas:
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
+  responses:
     UnauthenticatedError:
-      title: UnauthenticatedError
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  schemas:
+    NullableOrderUnitOfMeasure:
+      title: NullableOrderUnitOfMeasure
       x-stoplight:
-        id: 202o69l0fs40h
+        id: rtlna368z495u
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
+      - $ref: '#/components/schemas/OrderUnitOfMeasure'
+      type:
+      - string
+      - 'null'
+    JobSummary-Update:
+      title: JobSummary-Update
+      x-stoplight:
+        id: 3r4fsg3a0alzr
+      type: object
+      properties:
+        adjusted_logging_started_at:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: qoe58miwjdbvt
+          format: date-time
+        adjusted_logging_ended_at:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: i1ge0ww2arrw4
+          format: date-time
+        approved_work_time_minutes:
+          type:
+          - integer
+          - 'null'
+          x-stoplight:
+            id: up7lzq4othpmp
+      additionalProperties: false
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -244,15 +269,48 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    NullableOrderUnitOfMeasure:
-      title: NullableOrderUnitOfMeasure
+    ModelError-Response:
+      title: ModelError-Response
       x-stoplight:
-        id: rtlna368z495u
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
       allOf:
-      - $ref: '#/components/schemas/OrderUnitOfMeasure'
-      type:
-      - string
-      - 'null'
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     DeliveredQuantity-Read:
       title: DeliveredQuantity-Read
       x-stoplight:
@@ -287,33 +345,6 @@ components:
           - 'null'
           x-stoplight:
             id: hxg8e07yz102y
-      additionalProperties: false
-    JobSummary-Update:
-      title: JobSummary-Update
-      x-stoplight:
-        id: 3r4fsg3a0alzr
-      type: object
-      properties:
-        adjusted_logging_started_at:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: qoe58miwjdbvt
-          format: date-time
-        adjusted_logging_ended_at:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: i1ge0ww2arrw4
-          format: date-time
-        approved_work_time_minutes:
-          type:
-          - integer
-          - 'null'
-          x-stoplight:
-            id: up7lzq4othpmp
       additionalProperties: false
     JobSummary-Read:
       title: JobSummary-Read
@@ -577,20 +608,6 @@ components:
           - low
           description: GPS tracking confidence level based on coverage and gap analysis
       additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
     UnauthenticatedError-Response:
       title: UnauthenticatedError-Response
       x-stoplight:
@@ -602,28 +619,22 @@ components:
         error:
           $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
+    UnauthenticatedError:
+      title: UnauthenticatedError
       x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
     OrderUnitOfMeasure:
       title: OrderUnitOfMeasure
       x-stoplight:
@@ -646,6 +657,17 @@ components:
       - Bag
       - Pallet
       example: Load
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
   parameters:
     Accept-Language:
       name: Accept-Language
@@ -655,28 +677,6 @@ components:
         default: en
         example: en
       description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
   securitySchemes:
     bearerAuth:
       type: http

@@ -162,68 +162,67 @@ paths:
             schema:
               $ref: '#/components/schemas/TelematicsRemoteVehicle-Update'
 components:
-  schemas:
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     ModelError:
-      title: ModelError
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  schemas:
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
       x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    TelematicsRemoteVehicle-Read:
-      title: TelematicsRemoteVehicle-Read
-      x-stoplight:
-        id: r0q7f0r1ybb0i
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Timestamps'
-      - type: object
-        x-stoplight:
-          id: d4k8j1wny76bs
-        required:
-        - telematics_fleet_id
-        - remote_vehicle_external_id
-        - remote_vehicle_external_name
-        - remote_vehicle_external_model
-        - remote_vehicle_external_license_plate_number
-        properties:
-          telematics_fleet_id:
-            type: string
-            x-stoplight:
-              id: xvj9akg8ywblc
-            format: uuid
-          remote_vehicle_external_id:
-            type: number
-            x-stoplight:
-              id: xq7860839zn6c
-          remote_vehicle_external_name:
-            type: string
-            x-stoplight:
-              id: jm4jg52cm924u
-          remote_vehicle_external_model:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: pz3xuif93dwk1
-          remote_vehicle_external_license_plate_number:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 5acxe97clnqtp
-          equipment:
-            $ref: '#/components/schemas/Equipment-Read-Nested'
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: ttaijg77qmbgk
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: s4rscgptv68x3
+      additionalProperties: false
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -250,6 +249,39 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
     TelematicsRemoteVehicle-Update:
       title: TelematicsRemoteVehicle-Update
       x-stoplight:
@@ -289,43 +321,73 @@ components:
           x-stoplight:
             id: ek1b4yla11ugq
       additionalProperties: false
-    EquipmentType-Read-Nested:
-      title: EquipmentType-Read-Nested
+    Equipment-Read-Nested:
+      title: Equipment-Read-Nested
       x-stoplight:
-        id: em46i5kysysdh
+        id: 7ezenec7ycv5l
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
+      - type: object
+        required:
+        - license_number
+        - zone
+        - accounting_id
+        - equipment_id
+        properties:
+          license_number:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: hw1ooa17wsadq
+          zone:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 81hr4p8yp8btv
+          accounting_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: ere9qhs4cuwhi
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: gt7r3iqzx2w0u
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
       type: object
       required:
-      - id
-      - name
-      - system
-      - external_id
-      - accounting_id
+      - created_at
+      - updated_at
       properties:
-        id:
+        created_at:
           type: string
           x-stoplight:
-            id: 835oy22o6h24z
-          format: uuid
-        name:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
           type: string
           x-stoplight:
-            id: tnszefd7lypln
-        system:
-          type: boolean
-          x-stoplight:
-            id: vimoqz5e8x6gx
-        external_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: ttaijg77qmbgk
-        accounting_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: s4rscgptv68x3
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
       additionalProperties: false
     TreadId:
       title: TreadId
@@ -345,19 +407,46 @@ components:
           example: ABC123
           description: Tread ID
       additionalProperties: false
-    Error:
-      title: Error
+    Equipment-Read-Typeahead:
+      title: Equipment-Read-Typeahead
       x-stoplight:
-        id: 3g57kkik3l464
+        id: sv94osohm5xhg
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - equipment_type
+        - external_id
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: jrkz95htilck3
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: fkr9fkdtl996f
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
       type: object
-      description: An Error.
       required:
-      - code
+      - error
       properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
+        error:
+          $ref: '#/components/schemas/ModelError'
       additionalProperties: false
     Company-Read-Nested:
       title: Company-Read-Nested
@@ -381,13 +470,45 @@ components:
         required:
         - legal_name
         - company_type
-    TelematicsProviderSource:
-      title: TelematicsProviderSource
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: 9csrn2g21o443
-      enum:
-      - axle
-      - paver_tracker
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    TelematicsFleet-Read:
+      title: TelematicsFleet-Read
+      x-stoplight:
+        id: 7morriwrzyhd3
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: 3iqx1q7krh4mi
+        required:
+        - external_remote_fleet_id
+        - provider_source
+        - company_id
+        properties:
+          external_remote_fleet_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: jbfwmpk7iq9r5
+          provider_source:
+            $ref: '#/components/schemas/TelematicsProviderSource'
+          company_id:
+            type: string
+            x-stoplight:
+              id: vr38u0i2aebz8
+            format: uuid
     CompanyShare-Read-Nested:
       title: CompanyShare-Read-Nested
       x-stoplight:
@@ -440,137 +561,84 @@ components:
               id: aaa111jpq0ga9
             format: date-time
             description: ISO8601 timestamp with local timezone
-    Equipment-Read-Nested:
-      title: Equipment-Read-Nested
+    Error:
+      title: Error
       x-stoplight:
-        id: 7ezenec7ycv5l
-      allOf:
-      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
-      - type: object
-        required:
-        - license_number
-        - zone
-        - accounting_id
-        - equipment_id
-        properties:
-          license_number:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: hw1ooa17wsadq
-          zone:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 81hr4p8yp8btv
-          accounting_id:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: ere9qhs4cuwhi
-          equipment_id:
-            type: string
-            x-stoplight:
-              id: gt7r3iqzx2w0u
-    Equipment-Read-Typeahead:
-      title: Equipment-Read-Typeahead
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    TelematicsRemoteVehicle-Read:
+      title: TelematicsRemoteVehicle-Read
       x-stoplight:
-        id: sv94osohm5xhg
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - equipment_type
-        - external_id
-        - equipment_id
-        properties:
-          name:
-            type: string
-            description: Equipment name
-          equipment_type:
-            $ref: '#/components/schemas/EquipmentType-Read-Nested'
-          external_id:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: jrkz95htilck3
-          company_share:
-            $ref: '#/components/schemas/CompanyShare-Read-Nested'
-          equipment_id:
-            type: string
-            x-stoplight:
-              id: fkr9fkdtl996f
-    TelematicsFleet-Read:
-      title: TelematicsFleet-Read
-      x-stoplight:
-        id: 7morriwrzyhd3
+        id: r0q7f0r1ybb0i
       allOf:
       - $ref: '#/components/schemas/Identifier'
       - $ref: '#/components/schemas/Timestamps'
       - type: object
         x-stoplight:
-          id: 3iqx1q7krh4mi
+          id: d4k8j1wny76bs
         required:
-        - external_remote_fleet_id
-        - provider_source
-        - company_id
+        - telematics_fleet_id
+        - remote_vehicle_external_id
+        - remote_vehicle_external_name
+        - remote_vehicle_external_model
+        - remote_vehicle_external_license_plate_number
         properties:
-          external_remote_fleet_id:
+          telematics_fleet_id:
+            type: string
+            x-stoplight:
+              id: xvj9akg8ywblc
+            format: uuid
+          remote_vehicle_external_id:
+            type: number
+            x-stoplight:
+              id: xq7860839zn6c
+          remote_vehicle_external_name:
+            type: string
+            x-stoplight:
+              id: jm4jg52cm924u
+          remote_vehicle_external_model:
             type:
             - string
             - 'null'
             x-stoplight:
-              id: jbfwmpk7iq9r5
-          provider_source:
-            $ref: '#/components/schemas/TelematicsProviderSource'
-          company_id:
-            type: string
+              id: pz3xuif93dwk1
+          remote_vehicle_external_license_plate_number:
+            type:
+            - string
+            - 'null'
             x-stoplight:
-              id: vr38u0i2aebz8
-            format: uuid
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
+              id: 5acxe97clnqtp
+          equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+    CompanyType:
+      title: CompanyType
       x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    Error-Response:
-      title: Error-Response
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    TelematicsProviderSource:
+      title: TelematicsProviderSource
       x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
+        id: 9csrn2g21o443
+      enum:
+      - axle
+      - paver_tracker
     Identifier:
       title: Identifier
       x-stoplight:
@@ -585,60 +653,7 @@ components:
             id: 2e38hjk4zd58m
           format: uuid
       additionalProperties: false
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    CompanyType:
-      title: CompanyType
-      x-stoplight:
-        id: dkzo7gjbtb1b3
-      enum:
-      - broker
-      - contractor
-      - hauler
-      - owner_operator
-      - producer
-      - super
-      example: hauler
-      description: Company Type
   parameters:
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
     page-limit:
       name: page[limit]
       in: query
@@ -648,13 +663,20 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
-    search-datagrid:
-      name: search[datagrid]
+    page-before:
+      name: page[before]
       in: query
       required: false
       schema:
         type: string
-      description: Search string for datagrid queries
+      description: The cursor to stop paginating at
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
     Accept-Language:
       name: Accept-Language
       in: header
@@ -663,35 +685,13 @@ components:
         default: en
         example: en
       description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-before:
-      name: page[before]
+    search-datagrid:
+      name: search[datagrid]
       in: query
       required: false
       schema:
         type: string
-      description: The cursor to stop paginating at
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
+      description: Search string for datagrid queries
   securitySchemes:
     bearerAuth:
       type: http
