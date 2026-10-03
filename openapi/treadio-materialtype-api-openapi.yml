@@ -110,68 +110,19 @@ paths:
       - $ref: '#/components/parameters/page-after'
       - $ref: '#/components/parameters/page-before'
 components:
-  parameters:
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
   schemas:
-    Error:
-      title: Error
+    TicketSource:
+      title: TicketSource
       x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
+        id: z52hto616mgx1
+      enum:
+      - driver_app
+      - web
+      - api_integration
+      - agent
+      example: driver_app
+      default: driver_app
+      readOnly: true
     MaterialType-Read:
       type: object
       x-stoplight:
@@ -199,6 +150,17 @@ components:
           x-stoplight:
             id: 3vzhucq5m4hoo
       additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
     UnauthenticatedError-Response:
       title: UnauthenticatedError-Response
       x-stoplight:
@@ -209,6 +171,20 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
       additionalProperties: false
     UnauthenticatedError:
       title: UnauthenticatedError
@@ -226,29 +202,53 @@ components:
               id: wvq8c0qsym4hz
         required:
         - error_type
-    TicketSource:
-      title: TicketSource
-      x-stoplight:
-        id: z52hto616mgx1
-      enum:
-      - driver_app
-      - web
-      - api_integration
-      - agent
-      example: driver_app
-      default: driver_app
-      readOnly: true
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
+  responses:
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
   securitySchemes:
     bearerAuth:
       type: http

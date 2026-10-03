@@ -613,27 +613,6 @@ paths:
       deprecated: true
 components:
   responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
     StateError:
       description: Example response
       content:
@@ -641,7 +620,140 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/StateError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
   schemas:
+    Material-Read-Typeahead:
+      title: Material-Read-Typeahead
+      x-stoplight:
+        id: 30glh3las0ydb
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        properties:
+          name:
+            type: string
+            description: Material name
+          external_id:
+            type:
+            - string
+            - 'null'
+            description: Material external_id
+            x-stoplight:
+              id: ml0l0yvuz5u6d
+    StateError:
+      title: StateError
+      x-stoplight:
+        id: zgcsl4t8bsn3c
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: ntvt2atfotcge
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: noi1jg6o8psl7
+            items:
+              $ref: '#/components/schemas/StateError-Item'
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -668,23 +780,107 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    ModelError:
-      title: ModelError
+    TreadId:
+      title: TreadId
       x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
+        id: 43k4t5tl359m4
+      type: object
+      required:
+      - tread_id
+      properties:
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
+      additionalProperties: false
+    Material-Update:
+      title: Material-Update
+      x-stoplight:
+        id: n895nez95yq3o
+      type: object
+      description: The model for updating Materials
+      properties:
+        name:
+          type: string
+          description: Name of the `Material`.
+        material_type_id:
+          x-stoplight:
+            id: esz3iuitl0yg2
+          type: string
+          format: uuid
+          description: ID of `MaterialType`
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 2ky5fn1mftpam
+        state:
+          $ref: '#/components/schemas/MaterialState'
+      additionalProperties: false
+    Company-Read-Nested:
+      title: Company-Read-Nested
+      x-stoplight:
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
       - type: object
-        required:
-        - errors
         properties:
-          errors:
-            type: array
+          legal_name:
+            type: string
             x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    MaterialType-Read-Nested:
+      type: object
+      x-stoplight:
+        id: eb0713e9ab180
+      required:
+      - id
+      - name
+      - system
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: ttpt631g6p07c
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: lwt1eafxok791
+        system:
+          type: boolean
+          x-stoplight:
+            id: 1z3wyp0ckkusa
+      additionalProperties: false
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
     Material-Read:
       title: Material-Read
       x-stoplight:
@@ -723,22 +919,43 @@ components:
         - state
         - external_id
       - $ref: '#/components/schemas/Timestamps'
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    Error:
+      title: Error
       x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    MaterialState:
+      title: MaterialState
+      x-stoplight:
+        id: li8t934rfnen9
+      enum:
+      - active
+      - inactive
+      default: active
+      description: Material States
     Timestamps:
       title: Timestamps
       x-stoplight:
@@ -761,126 +978,6 @@ components:
           format: date-time
           description: ISO8601 timestamp with local timezone
       additionalProperties: false
-    MaterialState:
-      title: MaterialState
-      x-stoplight:
-        id: li8t934rfnen9
-      enum:
-      - active
-      - inactive
-      default: active
-      description: Material States
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    StateError-Item:
-      title: StateError-Item
-      x-stoplight:
-        id: dgw2jdmi7ozjj
-      allOf:
-      - $ref: '#/components/schemas/ModelError-Item'
-      - type: object
-        x-stoplight:
-          id: jrgi7oapao3e5
-        required:
-        - state
-        - event
-        properties:
-          state:
-            type: string
-            x-stoplight:
-              id: mah8jye43io32
-            description: The current state value of the field on this Model
-          event:
-            type: string
-            x-stoplight:
-              id: dtgu62ni9ofuh
-            description: The failed state event called on the Model
-    Material-Update:
-      title: Material-Update
-      x-stoplight:
-        id: n895nez95yq3o
-      type: object
-      description: The model for updating Materials
-      properties:
-        name:
-          type: string
-          description: Name of the `Material`.
-        material_type_id:
-          x-stoplight:
-            id: esz3iuitl0yg2
-          type: string
-          format: uuid
-          description: ID of `MaterialType`
-        external_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: 2ky5fn1mftpam
-        state:
-          $ref: '#/components/schemas/MaterialState'
-      additionalProperties: false
-    TreadId:
-      title: TreadId
-      x-stoplight:
-        id: 43k4t5tl359m4
-      type: object
-      required:
-      - tread_id
-      properties:
-        tread_id:
-          type: string
-          x-stoplight:
-            id: zi3ld7djflw6f
-          pattern: ^[0-9A-F]{6}$
-          minLength: 6
-          maxLength: 6
-          example: ABC123
-          description: Tread ID
-      additionalProperties: false
-    MaterialType-Read-Nested:
-      type: object
-      x-stoplight:
-        id: eb0713e9ab180
-      required:
-      - id
-      - name
-      - system
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: ttpt631g6p07c
-          format: uuid
-        name:
-          type: string
-          x-stoplight:
-            id: lwt1eafxok791
-        system:
-          type: boolean
-          x-stoplight:
-            id: 1z3wyp0ckkusa
-      additionalProperties: false
-    StateError-Response:
-      title: StateError-Response
-      x-stoplight:
-        id: i0wsk2gmnaqup
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/StateError'
-      additionalProperties: false
     ModelError-Response:
       title: ModelError-Response
       x-stoplight:
@@ -892,105 +989,34 @@ components:
         error:
           $ref: '#/components/schemas/ModelError'
       additionalProperties: false
-    Company-Read-Nested:
-      title: Company-Read-Nested
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: cb2kn77qmf1l7
-      description: Compact Company model for nested reads.
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-        x-stoplight:
-          id: jwsufva4znm91
-      - $ref: '#/components/schemas/TreadId'
-      - type: object
-        properties:
-          legal_name:
-            type: string
-            x-stoplight:
-              id: yc10t8hieecwk
-            description: The Company's name. Must be globally unique.
-          company_type:
-            $ref: '#/components/schemas/CompanyType'
-        required:
-        - legal_name
-        - company_type
-    StateError:
-      title: StateError
-      x-stoplight:
-        id: zgcsl4t8bsn3c
+        id: nhp6714o4j1qt
+      description: A Model-specific error
       allOf:
       - $ref: '#/components/schemas/Error'
       - type: object
-        x-stoplight:
-          id: ntvt2atfotcge
         required:
         - errors
         properties:
           errors:
             type: array
             x-stoplight:
-              id: noi1jg6o8psl7
+              id: m4ul9vcq2deh6
             items:
-              $ref: '#/components/schemas/StateError-Item'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
+              $ref: '#/components/schemas/ModelError-Item'
+    StateError-Response:
+      title: StateError-Response
       x-stoplight:
-        id: o477eph7ttbzt
+        id: i0wsk2gmnaqup
       type: object
       required:
       - error
       properties:
         error:
-          $ref: '#/components/schemas/UnauthenticatedError'
+          $ref: '#/components/schemas/StateError'
       additionalProperties: false
-    Material-Read-Typeahead:
-      title: Material-Read-Typeahead
-      x-stoplight:
-        id: 30glh3las0ydb
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - external_id
-        properties:
-          name:
-            type: string
-            description: Material name
-          external_id:
-            type:
-            - string
-            - 'null'
-            description: Material external_id
-            x-stoplight:
-              id: ml0l0yvuz5u6d
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    CompanyType:
-      title: CompanyType
-      x-stoplight:
-        id: dkzo7gjbtb1b3
-      enum:
-      - broker
-      - contractor
-      - hauler
-      - owner_operator
-      - producer
-      - super
-      example: hauler
-      description: Company Type
     Material-Create:
       title: Material-Create
       x-stoplight:
@@ -1020,66 +1046,40 @@ components:
         state:
           $ref: '#/components/schemas/MaterialState'
       additionalProperties: false
-    Identifier:
-      title: Identifier
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: gnd39lue5v7ol
+        id: o477eph7ttbzt
       type: object
       required:
-      - id
+      - error
       properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
-  parameters:
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    search-query:
-      name: search[query]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for queries
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    search-datagrid:
-      name: search[datagrid]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for datagrid queries
+    StateError-Item:
+      title: StateError-Item
+      x-stoplight:
+        id: dgw2jdmi7ozjj
+      allOf:
+      - $ref: '#/components/schemas/ModelError-Item'
+      - type: object
+        x-stoplight:
+          id: jrgi7oapao3e5
+        required:
+        - state
+        - event
+        properties:
+          state:
+            type: string
+            x-stoplight:
+              id: mah8jye43io32
+            description: The current state value of the field on this Model
+          event:
+            type: string
+            x-stoplight:
+              id: dtgu62ni9ofuh
+            description: The failed state event called on the Model
   securitySchemes:
     bearerAuth:
       type: http

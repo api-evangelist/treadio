@@ -420,125 +420,26 @@ paths:
             schema:
               $ref: '#/components/schemas/SSOConnection-Query'
 components:
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
   schemas:
-    ModelError-Item:
-      title: ModelError-Item
+    Error-Response:
+      title: Error-Response
       x-stoplight:
-        id: b93chwval2t8d
+        id: 52cydhphee3qe
       type: object
       required:
-      - model
-      - field
-      - message
+      - error
       properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
-      additionalProperties: false
-    SSOConnection-Read:
-      title: SSOConnection-Read
-      x-stoplight:
-        id: ywkp0lw5wbama
-      type: object
-      properties:
-        display_name:
-          type: string
-          x-stoplight:
-            id: 89u98u98u98uj
-        stytch_connection_id:
-          type: string
-          x-stoplight:
-            id: 9u98u98u98uj8
-        start_url:
-          type: string
-          x-stoplight:
-            id: u98u98u98uj89
-        stytch_identity_provider:
-          $ref: '#/components/schemas/StytchIdentityProvider'
-      additionalProperties: false
-    AuthResetPassword-Create:
-      title: AuthResetPassword-Create
-      x-stoplight:
-        id: lm7pdhq3u14ad
-      type: object
-      required:
-      - password_reset_token
-      - password
-      properties:
-        password_reset_token:
-          type: string
-          x-stoplight:
-            id: 8p1wdtma8btj4
-        password:
-          type: string
-          x-stoplight:
-            id: q6or96jyfcc54
-          format: password
-      additionalProperties: false
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    AuthMethod-Query:
-      title: AuthMethod-Query
-      x-stoplight:
-        id: izjmfp3545323
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          x-stoplight:
-            id: yfrodtjkxwn56
-          format: email
+        error:
+          $ref: '#/components/schemas/Error'
       additionalProperties: false
     MagicLink-Create:
       title: MagicLink-Create
@@ -570,99 +471,64 @@ components:
               id: wvq8c0qsym4hz
         required:
         - error_type
-    AuthSignup-Create:
-      title: AuthSignup-Create
+    ModelError-Item:
+      title: ModelError-Item
       x-stoplight:
-        id: qtdog0h0a1f08
+        id: b93chwval2t8d
       type: object
-      description: Input parameters for signing up.
       required:
-      - password
-      - magic_links_token
+      - model
+      - field
+      - message
       properties:
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
+      additionalProperties: false
+    AuthResetPassword-Create:
+      title: AuthResetPassword-Create
+      x-stoplight:
+        id: lm7pdhq3u14ad
+      type: object
+      required:
+      - password_reset_token
+      - password
+      properties:
+        password_reset_token:
+          type: string
+          x-stoplight:
+            id: 8p1wdtma8btj4
         password:
           type: string
           x-stoplight:
-            id: 0enw4rnm5mxmx
+            id: q6or96jyfcc54
           format: password
-        magic_links_token:
-          type: string
-          x-stoplight:
-            id: 75knswwo21hzi
       additionalProperties: false
-    AuthLogin-Create:
-      title: AuthLogin-Create
+    AuthForgotPassword-Create:
+      title: AuthForgotPassword-Create
       x-stoplight:
-        id: 8r1bzidjyz1mz
+        id: 2saioda2pdq5n
       type: object
-      description: 'AuthLogin model for creates. '
       required:
       - email
-      - password
       properties:
         email:
           type: string
           x-stoplight:
-            id: umhqb7sb8n19u
+            id: tsl52wj7j5xm9
           format: email
-        password:
-          type: string
-          x-stoplight:
-            id: 6dy0x2lf783vm
-          format: password
-      additionalProperties: false
-    OtpSms-Read:
-      title: OtpSms-Read
-      x-stoplight:
-        id: 57qcip70tiv75
-      type: object
-      required:
-      - phone_id
-      properties:
-        phone_id:
-          type: string
-          x-stoplight:
-            id: pr5k9mgthwcsb
-      additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    AuthMethod-List:
-      title: AuthMethod-List
-      x-stoplight:
-        id: u7wycypgxm1cg
-      type: object
-      required:
-      - auth_methods
-      properties:
-        auth_methods:
-          type: array
-          x-stoplight:
-            id: jum90iupeh3eo
-          items:
-            $ref: '#/components/schemas/AuthMethod'
-      additionalProperties: false
-    AuthToken:
-      title: AuthToken
-      x-stoplight:
-        id: cjpfb2fy29h16
-      type: object
-      description: 'AuthToken model for reads. '
-      required:
-      - session_jwt
-      properties:
-        session_jwt:
-          type: string
-          x-stoplight:
-            id: m8326118lib99
       additionalProperties: false
     SSOConnection-Query:
       title: SSOConnection-Query
@@ -678,16 +544,30 @@ components:
             id: j89u98u98u98u
           format: email
       additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
+    AuthMethod:
+      title: AuthMethod
       x-stoplight:
-        id: payf9ndh3l6np
+        id: 4h7bxzt0hkx3o
+      enum:
+      - sso
+      - magic_link
+      - password
+      - google_auth
+      - microsoft_auth
+      - otp_sms
+      description: ''
+    OtpSms-Create:
+      title: OtpSms-Create
+      x-stoplight:
+        id: dcxf9hhuegc5q
       type: object
       required:
-      - error
+      - phone
       properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
+        phone:
+          type: string
+          x-stoplight:
+            id: h2sbeiy3xhoa3
       additionalProperties: false
     StytchIdentityProvider:
       title: StytchIdentityProvider
@@ -710,83 +590,6 @@ components:
       - salesforce
       - shibboleth
       description: Identity provider type from Stytch SSO (OIDC/SAML)
-    SSO-Login:
-      title: SSO-Login
-      x-stoplight:
-        id: 4ex5ekm3oekn4
-      type: object
-      required:
-      - sso_token
-      properties:
-        sso_token:
-          type: string
-          x-stoplight:
-            id: f3rshmpkuzlwl
-      additionalProperties: false
-    AuthForgotPassword-Create:
-      title: AuthForgotPassword-Create
-      x-stoplight:
-        id: 2saioda2pdq5n
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          x-stoplight:
-            id: tsl52wj7j5xm9
-          format: email
-      additionalProperties: false
-    AuthMethod:
-      title: AuthMethod
-      x-stoplight:
-        id: 4h7bxzt0hkx3o
-      enum:
-      - sso
-      - magic_link
-      - password
-      - google_auth
-      - microsoft_auth
-      - otp_sms
-      description: ''
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    OtpSms-Create:
-      title: OtpSms-Create
-      x-stoplight:
-        id: dcxf9hhuegc5q
-      type: object
-      required:
-      - phone
-      properties:
-        phone:
-          type: string
-          x-stoplight:
-            id: h2sbeiy3xhoa3
-      additionalProperties: false
     OtpSms-Login:
       title: OtpSms-Login
       x-stoplight:
@@ -805,6 +608,66 @@ components:
           x-stoplight:
             id: nu64nbrq17hcv
       additionalProperties: false
+    SSO-Login:
+      title: SSO-Login
+      x-stoplight:
+        id: 4ex5ekm3oekn4
+      type: object
+      required:
+      - sso_token
+      properties:
+        sso_token:
+          type: string
+          x-stoplight:
+            id: f3rshmpkuzlwl
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    OtpSms-Read:
+      title: OtpSms-Read
+      x-stoplight:
+        id: 57qcip70tiv75
+      type: object
+      required:
+      - phone_id
+      properties:
+        phone_id:
+          type: string
+          x-stoplight:
+            id: pr5k9mgthwcsb
+      additionalProperties: false
+    AuthSignup-Create:
+      title: AuthSignup-Create
+      x-stoplight:
+        id: qtdog0h0a1f08
+      type: object
+      description: Input parameters for signing up.
+      required:
+      - password
+      - magic_links_token
+      properties:
+        password:
+          type: string
+          x-stoplight:
+            id: 0enw4rnm5mxmx
+          format: password
+        magic_links_token:
+          type: string
+          x-stoplight:
+            id: 75knswwo21hzi
+      additionalProperties: false
     MagicLink-Login:
       title: MagicLink-Login
       x-stoplight:
@@ -818,15 +681,152 @@ components:
           x-stoplight:
             id: 2rf3hmpkuzlwl
       additionalProperties: false
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    AuthMethod-List:
+      title: AuthMethod-List
+      x-stoplight:
+        id: u7wycypgxm1cg
+      type: object
+      required:
+      - auth_methods
+      properties:
+        auth_methods:
+          type: array
+          x-stoplight:
+            id: jum90iupeh3eo
+          items:
+            $ref: '#/components/schemas/AuthMethod'
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    AuthLogin-Create:
+      title: AuthLogin-Create
+      x-stoplight:
+        id: 8r1bzidjyz1mz
+      type: object
+      description: 'AuthLogin model for creates. '
+      required:
+      - email
+      - password
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: umhqb7sb8n19u
+          format: email
+        password:
+          type: string
+          x-stoplight:
+            id: 6dy0x2lf783vm
+          format: password
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    SSOConnection-Read:
+      title: SSOConnection-Read
+      x-stoplight:
+        id: ywkp0lw5wbama
+      type: object
+      properties:
+        display_name:
+          type: string
+          x-stoplight:
+            id: 89u98u98u98uj
+        stytch_connection_id:
+          type: string
+          x-stoplight:
+            id: 9u98u98u98uj8
+        start_url:
+          type: string
+          x-stoplight:
+            id: u98u98u98uj89
+        stytch_identity_provider:
+          $ref: '#/components/schemas/StytchIdentityProvider'
+      additionalProperties: false
+    AuthToken:
+      title: AuthToken
+      x-stoplight:
+        id: cjpfb2fy29h16
+      type: object
+      description: 'AuthToken model for reads. '
+      required:
+      - session_jwt
+      properties:
+        session_jwt:
+          type: string
+          x-stoplight:
+            id: m8326118lib99
+      additionalProperties: false
+    AuthMethod-Query:
+      title: AuthMethod-Query
+      x-stoplight:
+        id: izjmfp3545323
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          x-stoplight:
+            id: yfrodtjkxwn56
+          format: email
+      additionalProperties: false
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

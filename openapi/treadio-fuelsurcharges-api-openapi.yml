@@ -796,123 +796,86 @@ paths:
 
         This endpoint requires the `delete_fuel_price_indices` permission'
 components:
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
   schemas:
-    ModelError-Item:
-      title: ModelError-Item
+    FuelPriceIndex-Read:
+      title: FuelPriceIndex-Read
       x-stoplight:
-        id: b93chwval2t8d
-      type: object
-      required:
-      - model
-      - field
-      - message
-      properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
-      additionalProperties: false
-    FuelSurchargeSchedule-Read-Typeahead:
-      title: FuelSurchargeSchedule-Read-Typeahead
-      x-stoplight:
-        id: 0he4xx9e2z3vn
+        id: 9q9bvvi0f977s
       allOf:
       - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
       - type: object
         x-stoplight:
-          id: w8t1qlz5d7k88
+          id: eyybrb6bmt2yt
         required:
         - name
         properties:
           name:
             type: string
             x-stoplight:
-              id: pk7vc6u73nl7o
-    ModelError:
-      title: ModelError
+              id: 5gbynft50wi90
+    FuelPrice-Read:
+      title: FuelPrice-Read
       x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    FuelPrice-Create:
-      title: FuelPrice-Create
-      x-stoplight:
-        id: pykob9emn260a
-      type: object
-      required:
-      - date
-      - price
-      properties:
-        date:
-          type: string
-          x-stoplight:
-            id: 05ak4lkj1wrau
-          format: date
-        price:
-          type: number
-          x-stoplight:
-            id: 3y21sppsb67f8
-      additionalProperties: false
-    FuelPriceIndex-Read-Typeahead:
-      title: FuelPriceIndex-Typeahead
-      x-stoplight:
-        id: uuokb9twnidv2
+        id: ynx4ubsv2knje
       allOf:
       - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
       - type: object
         x-stoplight:
-          id: qybhimj3u03ty
+          id: o08ke84wb6bnm
         required:
-        - name
+        - date
+        - price
         properties:
-          name:
+          date:
             type: string
             x-stoplight:
-              id: kju9qtd39dsrv
+              id: ytbhduf1axc2d
+            format: date
+          price:
+            type: string
+            x-stoplight:
+              id: zcrrius16gvav
     FuelSurchargeSchedulePrice-Read:
       title: FuelSurchargeSchedulePrice-Read
       x-stoplight:
@@ -940,61 +903,36 @@ components:
             type: string
             x-stoplight:
               id: gaxj1uqzjh56w
-    FuelSurchargeSchedule-Read:
-      title: FuelSurchargeSchedule-Read
+    Error-Response:
+      title: Error-Response
       x-stoplight:
-        id: 81byeas3bbklu
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Timestamps'
-      - type: object
-        x-stoplight:
-          id: i66e7uew8m6pl
-        required:
-        - name
-        - fuel_price_index
-        - surcharge_type
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: w2khek3m07je7
-          fuel_price_index:
-            $ref: '#/components/schemas/FuelPriceIndex-Read-Nested'
-          surcharge_type:
-            $ref: '#/components/schemas/FuelSurchargeScheduleType'
-    FuelPrice-Update:
-      title: FuelPrice-Update
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    FuelSurchargeSchedulePrice-Update:
+      title: FuelSurchargeSchedulePrice-Update
       x-stoplight:
-        id: mpj5kio2ts4q7
+        id: 4y30ln4olyimq
       type: object
       properties:
-        date:
-          type: string
-          x-stoplight:
-            id: rsjrltbk9exa0
         price:
           type: number
           x-stoplight:
-            id: ffu7ki07t1h08
-      additionalProperties: false
-    FuelSurchargeScheduleType:
-      title: FuelSurchargeScheduleType
-      x-stoplight:
-        id: w280lnuzi5auy
-      enum:
-      - percentage
-      - per_unit
-    FuelPriceIndex-Update:
-      title: FuelPriceIndex-Update
-      x-stoplight:
-        id: excovpp86o6k7
-      type: object
-      properties:
-        name:
-          type: string
+            id: 0lb482me1iv8b
+        bill_surcharge_percentage:
+          type: number
           x-stoplight:
-            id: wpck2maua6k55
+            id: zb98i2h7vnw0d
+          deprecated: true
+        bill_surcharge:
+          type: number
+          x-stoplight:
+            id: 0xz5e4s5kg2w9
       additionalProperties: false
     UnauthenticatedError:
       title: UnauthenticatedError
@@ -1012,55 +950,171 @@ components:
               id: wvq8c0qsym4hz
         required:
         - error_type
-    Timestamps:
-      title: Timestamps
+    ModelError-Item:
+      title: ModelError-Item
       x-stoplight:
-        id: t82ecgfu0oj00
+        id: b93chwval2t8d
       type: object
       required:
-      - created_at
-      - updated_at
+      - model
+      - field
+      - message
       properties:
-        created_at:
+        model:
           type: string
           x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
           type: string
           x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
-    FuelPriceIndex-Read:
-      title: FuelPriceIndex-Read
+    FuelPriceIndex-Read-Nested:
+      title: FuelPriceIndex-Read-Nested
       x-stoplight:
-        id: 9q9bvvi0f977s
+        id: 75z95xmkmafzu
       allOf:
       - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Timestamps'
       - type: object
         x-stoplight:
-          id: eyybrb6bmt2yt
+          id: gt6hyd6yv56qg
         required:
         - name
         properties:
           name:
             type: string
             x-stoplight:
-              id: 5gbynft50wi90
-    Error-Response:
-      title: Error-Response
+              id: mnpmw9znthk98
+    FuelPrice-Create:
+      title: FuelPrice-Create
       x-stoplight:
-        id: 52cydhphee3qe
+        id: pykob9emn260a
       type: object
       required:
-      - error
+      - date
+      - price
       properties:
-        error:
-          $ref: '#/components/schemas/Error'
+        date:
+          type: string
+          x-stoplight:
+            id: 05ak4lkj1wrau
+          format: date
+        price:
+          type: number
+          x-stoplight:
+            id: 3y21sppsb67f8
+      additionalProperties: false
+    FuelPrice-Update:
+      title: FuelPrice-Update
+      x-stoplight:
+        id: mpj5kio2ts4q7
+      type: object
+      properties:
+        date:
+          type: string
+          x-stoplight:
+            id: rsjrltbk9exa0
+        price:
+          type: number
+          x-stoplight:
+            id: ffu7ki07t1h08
+      additionalProperties: false
+    FuelSurchargeSchedule-Create:
+      title: FuelSurchargeSchedule-Create
+      x-stoplight:
+        id: n6il53t5wo7wa
+      type: object
+      required:
+      - name
+      - fuel_price_index_id
+      - surcharge_type
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: uhq664n2olcyv
+        fuel_price_index_id:
+          type: string
+          x-stoplight:
+            id: 30tssu05k3j1a
+          format: uuid
+        surcharge_type:
+          $ref: '#/components/schemas/FuelSurchargeScheduleType'
+      additionalProperties: false
+    FuelPriceIndex-Update:
+      title: FuelPriceIndex-Update
+      x-stoplight:
+        id: excovpp86o6k7
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: wpck2maua6k55
+      additionalProperties: false
+    FuelPriceIndex-Read-Typeahead:
+      title: FuelPriceIndex-Typeahead
+      x-stoplight:
+        id: uuokb9twnidv2
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: qybhimj3u03ty
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: kju9qtd39dsrv
+    FuelPriceIndex-Create:
+      title: FuelPriceIndex-Create
+      x-stoplight:
+        id: bx2dcqc8pabka
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 0nbbobxnefm75
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
       additionalProperties: false
     FuelSurchargeSchedulePrice-Create:
       title: FuelSurchargeSchedulePrice-Create
@@ -1085,149 +1139,50 @@ components:
           x-stoplight:
             id: 1ro4kf3cu0hxy
       additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
+    FuelSurchargeSchedule-Read:
+      title: FuelSurchargeSchedule-Read
       x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    FuelSurchargeSchedule-Create:
-      title: FuelSurchargeSchedule-Create
-      x-stoplight:
-        id: n6il53t5wo7wa
-      type: object
-      required:
-      - name
-      - fuel_price_index_id
-      - surcharge_type
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: uhq664n2olcyv
-        fuel_price_index_id:
-          type: string
-          x-stoplight:
-            id: 30tssu05k3j1a
-          format: uuid
-        surcharge_type:
-          $ref: '#/components/schemas/FuelSurchargeScheduleType'
-      additionalProperties: false
-    FuelPriceIndex-Create:
-      title: FuelPriceIndex-Create
-      x-stoplight:
-        id: bx2dcqc8pabka
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: 0nbbobxnefm75
-      additionalProperties: false
-    FuelSurchargeSchedulePrice-Update:
-      title: FuelSurchargeSchedulePrice-Update
-      x-stoplight:
-        id: 4y30ln4olyimq
-      type: object
-      properties:
-        price:
-          type: number
-          x-stoplight:
-            id: 0lb482me1iv8b
-        bill_surcharge_percentage:
-          type: number
-          x-stoplight:
-            id: zb98i2h7vnw0d
-          deprecated: true
-        bill_surcharge:
-          type: number
-          x-stoplight:
-            id: 0xz5e4s5kg2w9
-      additionalProperties: false
-    FuelPriceIndex-Read-Nested:
-      title: FuelPriceIndex-Read-Nested
-      x-stoplight:
-        id: 75z95xmkmafzu
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: gt6hyd6yv56qg
-        required:
-        - name
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: mnpmw9znthk98
-    FuelPrice-Read:
-      title: FuelPrice-Read
-      x-stoplight:
-        id: ynx4ubsv2knje
+        id: 81byeas3bbklu
       allOf:
       - $ref: '#/components/schemas/Identifier'
       - $ref: '#/components/schemas/Timestamps'
       - type: object
         x-stoplight:
-          id: o08ke84wb6bnm
+          id: i66e7uew8m6pl
         required:
-        - date
-        - price
+        - name
+        - fuel_price_index
+        - surcharge_type
         properties:
-          date:
+          name:
             type: string
             x-stoplight:
-              id: ytbhduf1axc2d
-            format: date
-          price:
-            type: string
-            x-stoplight:
-              id: zcrrius16gvav
-    Identifier:
-      title: Identifier
+              id: w2khek3m07je7
+          fuel_price_index:
+            $ref: '#/components/schemas/FuelPriceIndex-Read-Nested'
+          surcharge_type:
+            $ref: '#/components/schemas/FuelSurchargeScheduleType'
+    Timestamps:
+      title: Timestamps
       x-stoplight:
-        id: gnd39lue5v7ol
+        id: t82ecgfu0oj00
       type: object
       required:
-      - id
+      - created_at
+      - updated_at
       properties:
-        id:
+        created_at:
           type: string
           x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
       additionalProperties: false
     FuelSurchargeSchedule-Update:
       title: FuelSurchargeSchedule-Update
@@ -1247,45 +1202,90 @@ components:
         surcharge_type:
           $ref: '#/components/schemas/FuelSurchargeScheduleType'
       additionalProperties: false
-  parameters:
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    search-query:
-      name: search[query]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for queries
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    FuelSurchargeScheduleType:
+      title: FuelSurchargeScheduleType
+      x-stoplight:
+        id: w280lnuzi5auy
+      enum:
+      - percentage
+      - per_unit
+    FuelSurchargeSchedule-Read-Typeahead:
+      title: FuelSurchargeSchedule-Read-Typeahead
+      x-stoplight:
+        id: 0he4xx9e2z3vn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: w8t1qlz5d7k88
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: pk7vc6u73nl7o
+  responses:
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

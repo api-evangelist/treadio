@@ -787,30 +787,112 @@ paths:
               type: object
               $ref: '#/components/schemas/Agave-Vendor-Update'
 components:
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
   schemas:
-    Agave-LinkedAccount-Create:
-      title: Agave-LinkedAccount-Create
+    FuelSurchargeSchedule-Read-Nested:
+      title: FuelSurchargeSchedule-Read-Nested
       x-stoplight:
-        id: 2zhawfbdfuxfx
+        id: cfxi1bfv03rdl
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: ug5goi9re1abe
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 2izdii9s4bcmr
+    Agave-LedgerAccount-Read:
+      title: Agave-LedgerAccount-Read
+      x-stoplight:
+        id: c8xz4r4fu7c8l
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - x-stoplight:
+          id: ny6m1mju5zd0z
+        type: object
+        required:
+        - data
+        - type
+        properties:
+          data:
+            $ref: '#/components/schemas/AgaveApi-LedgerAccount-Read'
+          type:
+            $ref: '#/components/schemas/NullableAgaveLedgerAccountType'
+    Agave-LinkToken-Read:
+      title: Agave-LinkToken-Read
+      x-stoplight:
+        id: okrbkuk60vl0s
       type: object
-      x-internal: true
       required:
-      - public_token
+      - link_token
       properties:
-        public_token:
+        link_token:
           type: string
           x-stoplight:
-            id: 05rrotk62krdw
+            id: jt5ppwx344ey0
+      x-internal: true
       additionalProperties: false
-    NullableAgaveItemizableType:
-      title: NullableAgaveItemizableType
+    AgaveLedgerAccountType:
+      title: AgaveLedgerAccountType
       x-stoplight:
-        id: zl9obcee7qvmi
-      allOf:
-      - $ref: '#/components/schemas/AgaveItemizableType'
-      type:
-      - string
-      - 'null'
+        id: 0fw523s0lhy2s
+      enum:
+      - AccountsPayable
+      - AccountsReceivable
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
     AddOnRateType:
       title: AddOnRateType
       x-stoplight:
@@ -822,6 +904,22 @@ components:
       - FuelSurcharge
       example: RateForEach
       default: RateForEach
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -848,41 +946,63 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    Agave-LinkedAccount-Read:
-      title: Agave-LinkedAccount-Read
+    AgaveApi-Address-Read:
+      title: AgaveApi-Address-Read
       x-stoplight:
-        id: 0sjsyp9wacv42
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Timestamps'
-      - type: object
-        x-stoplight:
-          id: 6oqjh5b78v7kp
-        required:
-        - status
-        - agave_source_system
-        - synchronized_at
-        properties:
-          status:
-            x-stoplight:
-              id: 7aabj92ggrge9
-            enum:
-            - pending
-            - unlinked
-            - linked
-            - invalid
-          synchronized_at:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: aaa123jpq0ga9
-            format: date-time
-            description: ISO8601 timestamp with local timezone
-          agave_source_system:
-            $ref: '#/components/schemas/Agave-SourceSystem-Read'
-      x-internal: true
+        id: mcba4yux8n6m1
       type: object
+      required:
+      - street_1
+      - street_2
+      - city
+      - state
+      - country
+      - postal_code
+      properties:
+        street_1:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: ujgrcodw2nj27
+          description: The first line of a street address
+        street_2:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 0rwny8l9504sl
+          description: The second line of a street address (e.g. a Unit, PO Box).
+        city:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 3ag6k1f0toxh6
+          description: '
+
+            The name of the city.'
+        state:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 8vgr1vvvg16ro
+          description: The name of the state, region, or province.
+        country:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: bdtqg791guxco
+          description: The name of the country.
+        postal_code:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: bu3buwx0xagde
+          description: The postal or ZIP code.
       additionalProperties: false
     Agave-Customer-Read:
       title: Agave-Customer-Read
@@ -901,62 +1021,51 @@ components:
             $ref: '#/components/schemas/AgaveApi-Customer-Read'
           customer_account:
             $ref: '#/components/schemas/Account-Read-Nested'
-    ModelError:
-      title: ModelError
+    Service-Read-Typeahead:
+      title: Service-Read-Typeahead
       x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
+        id: hzokhwqcwvue5
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: Service name
+        required:
+        - name
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
       - type: object
         required:
-        - errors
+        - name
+        - email
+        - phone
         properties:
-          errors:
-            type: array
+          name:
+            type:
+            - string
+            - 'null'
             x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    AgaveApi-Vendor-Read:
-      title: AgaveApi-Vendor-Read
-      x-stoplight:
-        id: kv3rvmvyo1ya9
-      type: object
-      required:
-      - id
-      - alternate_name
-      - status
-      - name
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: iy3btyiyap029
-          description: The UUID of the Vendor assigned by Agave
-        address:
-          $ref: '#/components/schemas/AgaveApi-Address-Read'
-        alternate_name:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: fs8p5vvvm8f8z
-          description: An alternate name for the Vendor (e.g. the trade name or Doing Business As (DBA) name).
-        status:
-          x-stoplight:
-            id: g2lqmodijkcnj
-          description: The current status of the Vendor.
-          enum:
-          - Active
-          - Archived
-          - Inactive
-        name:
-          type: string
-          x-stoplight:
-            id: t07wexv03qzds
-          description: The name of the Vendor.
-      additionalProperties: false
+              id: sd80y9pbgvkok
+          email:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 883fmt34pdeaj
+          phone:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+      description: ''
     AgaveApi-Item-Read:
       title: AgaveApi-Item-Read
       x-stoplight:
@@ -1027,151 +1136,52 @@ components:
             id: xpys33kys219u
           description: The unit price of the Item.
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    Agave-LedgerAccount-Update:
+      title: Agave-LedgerAccount-Update
       x-stoplight:
-        id: 202o69l0fs40h
+        id: 9ey64eey6day2
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          $ref: '#/components/schemas/NullableAgaveLedgerAccountType'
+      additionalProperties: false
+    AddOn-Read-Typeahead:
+      title: AddOn-Read-Typeahead
+      x-stoplight:
+        id: b30cmjc02mvjh
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Identifier'
       - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
+        required:
+        - name
+        - add_on_rate_type
         properties:
-          error_type:
+          name:
             type: string
             x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    Timestamps:
-      title: Timestamps
+              id: tfqmw2od0zvng
+          add_on_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+            deprecated: true
+            description: Deprecated in favor of `revenue_cost_rate_type`.
+          fuel_surcharge_schedule:
+            $ref: '#/components/schemas/FuelSurchargeSchedule-Read-Nested'
+    Agave-LinkedAccount-Create:
+      title: Agave-LinkedAccount-Create
       x-stoplight:
-        id: t82ecgfu0oj00
+        id: 2zhawfbdfuxfx
       type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    Agave-Vendor-Update:
-      title: Agave-Vendor-Update
-      x-stoplight:
-        id: lr3wtd2gkfou2
-      type: object
-      required:
-      - vendor_account_id
-      properties:
-        vendor_account_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: b16yo6eo40982
-      additionalProperties: false
-    AgaveApi-Address-Read:
-      title: AgaveApi-Address-Read
-      x-stoplight:
-        id: mcba4yux8n6m1
-      type: object
-      required:
-      - street_1
-      - street_2
-      - city
-      - state
-      - country
-      - postal_code
-      properties:
-        street_1:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: ujgrcodw2nj27
-          description: The first line of a street address
-        street_2:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: 0rwny8l9504sl
-          description: The second line of a street address (e.g. a Unit, PO Box).
-        city:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: 3ag6k1f0toxh6
-          description: '
-
-            The name of the city.'
-        state:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: 8vgr1vvvg16ro
-          description: The name of the state, region, or province.
-        country:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: bdtqg791guxco
-          description: The name of the country.
-        postal_code:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: bu3buwx0xagde
-          description: The postal or ZIP code.
-      additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    Agave-LinkToken-Read:
-      title: Agave-LinkToken-Read
-      x-stoplight:
-        id: okrbkuk60vl0s
-      type: object
-      required:
-      - link_token
-      properties:
-        link_token:
-          type: string
-          x-stoplight:
-            id: jt5ppwx344ey0
       x-internal: true
+      required:
+      - public_token
+      properties:
+        public_token:
+          type: string
+          x-stoplight:
+            id: 05rrotk62krdw
       additionalProperties: false
-    NullableAgaveLedgerAccountType:
-      title: NullableAgaveLedgerAccountType
-      x-stoplight:
-        id: d2of30zah7p6r
-      allOf:
-      - $ref: '#/components/schemas/AgaveLedgerAccountType'
-      type:
-      - string
-      - 'null'
     TreadId:
       title: TreadId
       x-stoplight:
@@ -1190,138 +1200,31 @@ components:
           example: ABC123
           description: Tread ID
       additionalProperties: false
-    FuelSurchargeSchedule-Read-Nested:
-      title: FuelSurchargeSchedule-Read-Nested
+    Discardable:
+      title: Discardable
       x-stoplight:
-        id: cfxi1bfv03rdl
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: ug5goi9re1abe
-        required:
-        - name
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: 2izdii9s4bcmr
-    AgaveItemizableType:
-      title: AgaveItemizableType
-      x-stoplight:
-        id: a3cc4ur8termc
-      enum:
-      - AddOn
-      - Service
-      - LineItemType
-      example: AddOn
-    Agave-Item-Update:
-      title: Agave-Item-Update
-      x-stoplight:
-        id: pw1b19ip50dot
+        id: 46axlb8u5wjay
       type: object
-      x-internal: false
       required:
-      - agave_itemizable_id
-      - agave_itemizable_type
+      - discarded_at
       properties:
-        agave_itemizable_id:
+        discarded_at:
           type:
           - string
           - 'null'
           x-stoplight:
-            id: zkob6evr1r1rp
-        agave_itemizable_type:
-          $ref: '#/components/schemas/NullableAgaveItemizableType'
+            id: cy8t6fecoyxbo
+          format: date-time
       additionalProperties: false
-    Agave-Customer-Update:
-      title: Agave-Customer-Update
+    NullableAgaveLedgerAccountType:
+      title: NullableAgaveLedgerAccountType
       x-stoplight:
-        id: odjq98dxwzjlz
-      type: object
-      required:
-      - customer_account_id
-      properties:
-        customer_account_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: 438paww6n3w02
-      additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    Account-Read-Nested:
-      title: Account-Read-Nested
-      x-stoplight:
-        id: zo8r3gsz1tm5h
+        id: d2of30zah7p6r
       allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Discardable'
-      - type: object
-        x-stoplight:
-          id: gl7hua7pv8xka
-        required:
-        - name
-        - account_types
-        - external_id
-        - accounting_id
-        - company
-        - schedule_on
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: a7g065w5byfcf
-          account_types:
-            type: array
-            x-stoplight:
-              id: a0e9c3lpr1wad
-            items:
-              $ref: '#/components/schemas/AccountType'
-          external_id:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: yfrec4y0a90cb
-          accounting_id:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: yfsec5y0a91cb
-          company:
-            type: object
-            x-stoplight:
-              id: 9loqtu14mvlnq
-            required:
-            - id
-            properties:
-              id:
-                type: string
-                x-stoplight:
-                  id: udjkdjrz08pzr
-                format: uuid
-          billing_address:
-            $ref: '#/components/schemas/Address-Read-Nested'
-          schedule_on:
-            type: boolean
-            x-stoplight:
-              id: 0g9kx77zym4ok
-          connected_company:
-            $ref: '#/components/schemas/Company-Read-Nested'
-          billing_contact:
-            $ref: '#/components/schemas/Contact-Read-Nested'
+      - $ref: '#/components/schemas/AgaveLedgerAccountType'
+      type:
+      - string
+      - 'null'
     Company-Read-Nested:
       title: Company-Read-Nested
       x-stoplight:
@@ -1344,165 +1247,111 @@ components:
         required:
         - legal_name
         - company_type
-    AddOn-Read-Typeahead:
-      title: AddOn-Read-Typeahead
+    CompanyType:
+      title: CompanyType
       x-stoplight:
-        id: b30cmjc02mvjh
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    Agave-Item-Update:
+      title: Agave-Item-Update
+      x-stoplight:
+        id: pw1b19ip50dot
+      type: object
+      x-internal: false
+      required:
+      - agave_itemizable_id
+      - agave_itemizable_type
+      properties:
+        agave_itemizable_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: zkob6evr1r1rp
+        agave_itemizable_type:
+          $ref: '#/components/schemas/NullableAgaveItemizableType'
+      additionalProperties: false
+    Agave-Vendor-Update:
+      title: Agave-Vendor-Update
+      x-stoplight:
+        id: lr3wtd2gkfou2
+      type: object
+      required:
+      - vendor_account_id
+      properties:
+        vendor_account_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: b16yo6eo40982
+      additionalProperties: false
+    Agave-Itemizable-Read:
+      title: Agave-Itemizable-Read
+      x-stoplight:
+        id: 3172d842y14iu
       allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
+      - required:
+        - type
         - name
-        - add_on_rate_type
+        type: object
         properties:
+          type:
+            $ref: '#/components/schemas/AgaveItemizableType'
           name:
             type: string
             x-stoplight:
-              id: tfqmw2od0zvng
-          add_on_rate_type:
-            $ref: '#/components/schemas/AddOnRateType'
-            deprecated: true
-            description: Deprecated in favor of `revenue_cost_rate_type`.
-          fuel_surcharge_schedule:
-            $ref: '#/components/schemas/FuelSurchargeSchedule-Read-Nested'
-    Agave-Vendor-Read:
-      title: Agave-Vendor-Read
+              id: oqzh1lv82z4hc
+      - $ref: '#/components/schemas/Identifier'
+    Agave-Item-Read:
+      title: Agave-Item-Read
       x-stoplight:
-        id: 19aj32kx08rlz
+        id: a3vb8ahcciykx
       allOf:
       - $ref: '#/components/schemas/Identifier'
       - $ref: '#/components/schemas/Timestamps'
       - x-stoplight:
-          id: 9nl3xiebb1fae
+          id: idddaealkdwnh
         type: object
         required:
         - data
         properties:
           data:
-            $ref: '#/components/schemas/AgaveApi-Vendor-Read'
-          vendor_account:
-            $ref: '#/components/schemas/Account-Read-Nested'
-    Contact-Read-Nested:
-      title: Contact-Read-Nested
+            $ref: '#/components/schemas/AgaveApi-Item-Read'
+          agave_itemizable:
+            $ref: '#/components/schemas/Agave-Itemizable-Read'
+    AgaveItemizableType:
+      title: AgaveItemizableType
       x-stoplight:
-        id: 3u6d8qhsz5ehn
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - email
-        - phone
-        properties:
-          name:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: sd80y9pbgvkok
-          email:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 883fmt34pdeaj
-          phone:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: wdtqyju4t4u06
-            example: '+18885551234'
-      description: ''
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
+        id: a3cc4ur8termc
+      enum:
+      - AddOn
+      - Service
+      - LineItemType
+      example: AddOn
+    Agave-Customer-Update:
+      title: Agave-Customer-Update
       x-stoplight:
-        id: o477eph7ttbzt
+        id: odjq98dxwzjlz
       type: object
       required:
-      - error
+      - customer_account_id
       properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
+        customer_account_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 438paww6n3w02
       additionalProperties: false
-    AgaveApi-LedgerAccount-Read:
-      title: AgaveApi-LedgerAccount-Read
-      x-stoplight:
-        id: xnztk1jdedlwh
-      type: object
-      required:
-      - id
-      - name
-      - status
-      - type
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: yun29z38ypgq7
-          description: The UUID of the Ledger Account assigned by Agave
-        name:
-          type: string
-          x-stoplight:
-            id: fghknpzzlfn9o
-          description: The name of the Ledger Account.
-        status:
-          x-stoplight:
-            id: xnalbmbfezk3f
-          description: The current status of the Ledger Account.
-          enum:
-          - Active
-          - Archived
-          - Pending
-          - Unknown
-        type:
-          $ref: '#/components/schemas/AgaveLedgerAccountType'
-      additionalProperties: false
-    AgaveApi-Customer-Read:
-      title: AgaveApi-Customer-Read
-      x-stoplight:
-        id: sqntew6ys60i2
-      type: object
-      required:
-      - id
-      - addresses
-      - status
-      - name
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: nlb1zu8ktng0m
-          format: uuid
-          description: The UUID of the Customer assigned by Agave.
-        addresses:
-          type: array
-          x-stoplight:
-            id: jeugz0nz6bkv7
-          items:
-            $ref: '#/components/schemas/AgaveApi-Address-Read'
-        status:
-          x-stoplight:
-            id: 3n3k635ybypr0
-          description: The current status of the Customer.
-          enum:
-          - Active
-          - Archived
-          - Inactive
-          - Unknown
-        name:
-          type: string
-          x-stoplight:
-            id: 3k0yxt8u9vq4d
-          description: The name of the Customer.
-      additionalProperties: false
-    Address-Read-Nested:
-      title: Address-Read-Nested
-      x-stoplight:
-        id: cvym2dzuo375q
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Address-Read'
     Address-Read:
       title: Address-Read
       x-stoplight:
@@ -1571,28 +1420,44 @@ components:
             id: im1fdq7qqxdij
           description: NextBillion placeID
       additionalProperties: false
-    AgaveLedgerAccountType:
-      title: AgaveLedgerAccountType
+    AgaveApi-Vendor-Read:
+      title: AgaveApi-Vendor-Read
       x-stoplight:
-        id: 0fw523s0lhy2s
-      enum:
-      - AccountsPayable
-      - AccountsReceivable
-    Discardable:
-      title: Discardable
-      x-stoplight:
-        id: 46axlb8u5wjay
+        id: kv3rvmvyo1ya9
       type: object
       required:
-      - discarded_at
+      - id
+      - alternate_name
+      - status
+      - name
       properties:
-        discarded_at:
+        id:
+          type: string
+          x-stoplight:
+            id: iy3btyiyap029
+          description: The UUID of the Vendor assigned by Agave
+        address:
+          $ref: '#/components/schemas/AgaveApi-Address-Read'
+        alternate_name:
           type:
           - string
           - 'null'
           x-stoplight:
-            id: cy8t6fecoyxbo
-          format: date-time
+            id: fs8p5vvvm8f8z
+          description: An alternate name for the Vendor (e.g. the trade name or Doing Business As (DBA) name).
+        status:
+          x-stoplight:
+            id: g2lqmodijkcnj
+          description: The current status of the Vendor.
+          enum:
+          - Active
+          - Archived
+          - Inactive
+        name:
+          type: string
+          x-stoplight:
+            id: t07wexv03qzds
+          description: The name of the Vendor.
       additionalProperties: false
     Error:
       title: Error
@@ -1608,30 +1473,140 @@ components:
           x-stoplight:
             id: 7o9x1t8v0bgfo
       additionalProperties: false
-    Agave-LedgerAccount-Update:
-      title: Agave-LedgerAccount-Update
+    AgaveApi-Customer-Read:
+      title: AgaveApi-Customer-Read
       x-stoplight:
-        id: 9ey64eey6day2
+        id: sqntew6ys60i2
       type: object
       required:
-      - type
+      - id
+      - addresses
+      - status
+      - name
       properties:
-        type:
-          $ref: '#/components/schemas/NullableAgaveLedgerAccountType'
+        id:
+          type: string
+          x-stoplight:
+            id: nlb1zu8ktng0m
+          format: uuid
+          description: The UUID of the Customer assigned by Agave.
+        addresses:
+          type: array
+          x-stoplight:
+            id: jeugz0nz6bkv7
+          items:
+            $ref: '#/components/schemas/AgaveApi-Address-Read'
+        status:
+          x-stoplight:
+            id: 3n3k635ybypr0
+          description: The current status of the Customer.
+          enum:
+          - Active
+          - Archived
+          - Inactive
+          - Unknown
+        name:
+          type: string
+          x-stoplight:
+            id: 3k0yxt8u9vq4d
+          description: The name of the Customer.
       additionalProperties: false
-    CompanyType:
-      title: CompanyType
+    AccountType:
+      title: AccountType
       x-stoplight:
-        id: dkzo7gjbtb1b3
+        id: i4vfmd4rwrq8p
       enum:
-      - broker
-      - contractor
-      - hauler
-      - owner_operator
-      - producer
-      - super
-      example: hauler
-      description: Company Type
+      - customer
+      - vendor
+      example: customer
+    NullableAgaveItemizableType:
+      title: NullableAgaveItemizableType
+      x-stoplight:
+        id: zl9obcee7qvmi
+      allOf:
+      - $ref: '#/components/schemas/AgaveItemizableType'
+      type:
+      - string
+      - 'null'
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Address-Read-Nested:
+      title: Address-Read-Nested
+      x-stoplight:
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    Agave-LinkedAccount-Read:
+      title: Agave-LinkedAccount-Read
+      x-stoplight:
+        id: 0sjsyp9wacv42
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: 6oqjh5b78v7kp
+        required:
+        - status
+        - agave_source_system
+        - synchronized_at
+        properties:
+          status:
+            x-stoplight:
+              id: 7aabj92ggrge9
+            enum:
+            - pending
+            - unlinked
+            - linked
+            - invalid
+          synchronized_at:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: aaa123jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+          agave_source_system:
+            $ref: '#/components/schemas/Agave-SourceSystem-Read'
+      x-internal: true
+      type: object
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
     Agave-SourceSystem-Read:
       title: Agave-SourceSystem-Read
       x-stoplight:
@@ -1657,93 +1632,62 @@ components:
           type: object
           $ref: '#/components/schemas/Agave-SourceSystem-Theme-Read'
       additionalProperties: false
-    Agave-Item-Read:
-      title: Agave-Item-Read
+    Agave-Vendor-Read:
+      title: Agave-Vendor-Read
       x-stoplight:
-        id: a3vb8ahcciykx
+        id: 19aj32kx08rlz
       allOf:
       - $ref: '#/components/schemas/Identifier'
       - $ref: '#/components/schemas/Timestamps'
       - x-stoplight:
-          id: idddaealkdwnh
+          id: 9nl3xiebb1fae
         type: object
         required:
         - data
         properties:
           data:
-            $ref: '#/components/schemas/AgaveApi-Item-Read'
-          agave_itemizable:
-            $ref: '#/components/schemas/Agave-Itemizable-Read'
-    Agave-LedgerAccount-Read:
-      title: Agave-LedgerAccount-Read
+            $ref: '#/components/schemas/AgaveApi-Vendor-Read'
+          vendor_account:
+            $ref: '#/components/schemas/Account-Read-Nested'
+    ModelError-Response:
+      title: ModelError-Response
       x-stoplight:
-        id: c8xz4r4fu7c8l
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Timestamps'
-      - x-stoplight:
-          id: ny6m1mju5zd0z
-        type: object
-        required:
-        - data
-        - type
-        properties:
-          data:
-            $ref: '#/components/schemas/AgaveApi-LedgerAccount-Read'
-          type:
-            $ref: '#/components/schemas/NullableAgaveLedgerAccountType'
-    AccountType:
-      title: AccountType
-      x-stoplight:
-        id: i4vfmd4rwrq8p
-      enum:
-      - customer
-      - vendor
-      example: customer
-    Service-Read-Typeahead:
-      title: Service-Read-Typeahead
-      x-stoplight:
-        id: hzokhwqcwvue5
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: Service name
-        required:
-        - name
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
+        id: payf9ndh3l6np
       type: object
       required:
-      - id
+      - error
       properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
+        error:
+          $ref: '#/components/schemas/ModelError'
       additionalProperties: false
-    Agave-Itemizable-Read:
-      title: Agave-Itemizable-Read
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: 3172d842y14iu
+        id: nhp6714o4j1qt
+      description: A Model-specific error
       allOf:
-      - required:
-        - type
-        - name
-        type: object
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
         properties:
-          type:
-            $ref: '#/components/schemas/AgaveItemizableType'
-          name:
-            type: string
+          errors:
+            type: array
             x-stoplight:
-              id: oqzh1lv82z4hc
-      - $ref: '#/components/schemas/Identifier'
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
     Agave-SourceSystem-Theme-Read:
       title: Agave-SourceSystem-Theme-Read
       x-stoplight:
@@ -1759,14 +1703,102 @@ components:
           format: uri
           description: The Source System's square image (128 by 128 pixels).
       additionalProperties: false
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
+    AgaveApi-LedgerAccount-Read:
+      title: AgaveApi-LedgerAccount-Read
+      x-stoplight:
+        id: xnztk1jdedlwh
+      type: object
+      required:
+      - id
+      - name
+      - status
+      - type
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: yun29z38ypgq7
+          description: The UUID of the Ledger Account assigned by Agave
+        name:
+          type: string
+          x-stoplight:
+            id: fghknpzzlfn9o
+          description: The name of the Ledger Account.
+        status:
+          x-stoplight:
+            id: xnalbmbfezk3f
+          description: The current status of the Ledger Account.
+          enum:
+          - Active
+          - Archived
+          - Pending
+          - Unknown
+        type:
+          $ref: '#/components/schemas/AgaveLedgerAccountType'
+      additionalProperties: false
+    Account-Read-Nested:
+      title: Account-Read-Nested
+      x-stoplight:
+        id: zo8r3gsz1tm5h
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: gl7hua7pv8xka
+        required:
+        - name
+        - account_types
+        - external_id
+        - accounting_id
+        - company
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: a7g065w5byfcf
+          account_types:
+            type: array
+            x-stoplight:
+              id: a0e9c3lpr1wad
+            items:
+              $ref: '#/components/schemas/AccountType'
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: yfrec4y0a90cb
+          accounting_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: yfsec5y0a91cb
+          company:
             type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
+            x-stoplight:
+              id: 9loqtu14mvlnq
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: udjkdjrz08pzr
+                format: uuid
+          billing_address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 0g9kx77zym4ok
+          connected_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          billing_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+  responses:
     ModelError:
       description: ''
       content:
@@ -1774,6 +1806,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/ModelError-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     Error:
       description: Error response
       content:
@@ -1781,45 +1820,6 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/Error-Response'
-  parameters:
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    search-query:
-      name: search[query]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for queries
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
   securitySchemes:
     bearerAuth:
       type: http

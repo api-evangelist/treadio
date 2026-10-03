@@ -104,53 +104,6 @@ paths:
       operationId: get-v1-iam_roles
       description: Retrieve `IamRoles` for the users company along with all system roles
 components:
-  parameters:
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-  responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
   schemas:
     IamRole-Read:
       title: Iam-Role-Read
@@ -187,63 +140,6 @@ components:
       - $ref: '#/components/schemas/Timestamps'
       - $ref: '#/components/schemas/Printable'
       description: Retrieve IamRoles
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    Printable:
-      title: Printable
-      x-stoplight:
-        id: ha84mxua63ysd
-      type: object
-      properties:
-        ordinality:
-          type: integer
-          x-stoplight:
-            id: y2rm2equnu4fz
-          minimum: 0
-        visible:
-          type: boolean
-          x-stoplight:
-            id: uekpedm5x21mk
-      additionalProperties: false
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
     Timestamps:
       title: Timestamps
       x-stoplight:
@@ -266,6 +162,58 @@ components:
           format: date-time
           description: ISO8601 timestamp with local timezone
       additionalProperties: false
+    Printable:
+      title: Printable
+      x-stoplight:
+        id: ha84mxua63ysd
+      type: object
+      properties:
+        ordinality:
+          type: integer
+          x-stoplight:
+            id: y2rm2equnu4fz
+          minimum: 0
+        visible:
+          type: boolean
+          x-stoplight:
+            id: uekpedm5x21mk
+      additionalProperties: false
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
     Identifier:
       title: Identifier
       x-stoplight:
@@ -280,17 +228,69 @@ components:
             id: 2e38hjk4zd58m
           format: uuid
       additionalProperties: false
-    Error-Response:
-      title: Error-Response
+    UnauthenticatedError:
+      title: UnauthenticatedError
       x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+  responses:
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
   securitySchemes:
     bearerAuth:
       type: http

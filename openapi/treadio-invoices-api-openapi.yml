@@ -1159,20 +1159,6 @@ paths:
       parameters: []
 components:
   responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
     StateError:
       description: Example response
       content:
@@ -1180,6 +1166,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/StateError-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     ModelError:
       description: ''
       content:
@@ -1187,180 +1180,172 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  parameters:
+    filter-project_ids:
+      name: filter[project_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Project IDs
+    filter-vendor_account_ids:
+      name: filter[vendor_account_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Vendor Account IDs
+    filter-end_date:
+      name: filter[end_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: End date range
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    filter-start_date:
+      name: filter[start_date]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Start date range
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    filter-grouped:
+      name: filter[grouped]
+      in: query
+      required: false
+      schema:
+        type: boolean
+      description: Only show Invoices that are part of a Settlement
+    filter-driver_ids:
+      name: filter[driver_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The assigned Driver IDs
+    filter-dropoff_site_ids:
+      name: filter[dropoff_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Dropoff Site IDs
+    filter-pickup_site_ids:
+      name: filter[pickup_site_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Pickup Site IDs
+    filter-invoiceable_type:
+      name: filter[invoiceable_type]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - Job
+        - DriverDay
+      description: InvoiceableType enum filter (e.g. Job, DriverDay)
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    filter-customer_account_ids:
+      name: filter[customer_account_ids]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: The associated Customer Account IDs
+    filter-invoice_category:
+      name: filter[invoice_category]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The Invoice category filter. See InvoiceCategoryFilter for accepted values.
+    filter-states:
+      name: filter[states]
+      in: query
+      schema:
+        type: array
+      description: States based on the resource (e.g. Order states or Job states)
+    filter-company_id:
+      name: filter[company_id]
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+      description: The associated Company ID
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    search-datagrid:
+      name: search[datagrid]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for datagrid queries
+    filter-rate_types:
+      name: filter[rate_types]
+      in: query
+      required: false
+      schema:
+        type: array
+      description: Array of rate types to filter by
   schemas:
-    NullableOrderUnitOfMeasure:
-      title: NullableOrderUnitOfMeasure
+    StateError:
+      title: StateError
       x-stoplight:
-        id: rtlna368z495u
-      allOf:
-      - $ref: '#/components/schemas/OrderUnitOfMeasure'
-      type:
-      - string
-      - 'null'
-    AddOnRateType:
-      title: AddOnRateType
-      x-stoplight:
-        id: 1c3m0qj0ofdao
-      enum:
-      - RateForEach
-      - RatePercentOfTotal
-      - PerLoad
-      - FuelSurcharge
-      example: RateForEach
-      default: RateForEach
-    InvoiceLineItemType:
-      title: InvoiceLineItemType
-      x-stoplight:
-        id: clkyxnscmds4j
-      enum:
-      - InvoiceLineItem
-      - MaterialRateLineItem
-      - FreightRateLineItem
-      default: InvoiceLineItem
-    ModelError-Item:
-      title: ModelError-Item
-      x-stoplight:
-        id: b93chwval2t8d
-      type: object
-      required:
-      - model
-      - field
-      - message
-      properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
-      additionalProperties: false
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
+        id: zgcsl4t8bsn3c
       allOf:
       - $ref: '#/components/schemas/Error'
       - type: object
+        x-stoplight:
+          id: ntvt2atfotcge
         required:
         - errors
         properties:
           errors:
             type: array
             x-stoplight:
-              id: m4ul9vcq2deh6
+              id: noi1jg6o8psl7
             items:
-              $ref: '#/components/schemas/ModelError-Item'
-    Equipment-Read-Default-Nested:
-      title: Equipment-Read-Default-Nested
-      x-stoplight:
-        id: kojte9y4g6t9v
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - external_id
-        - equipment_type
-        - equipment_id
-        properties:
-          name:
-            type: string
-            description: Equipment name
-          external_id:
-            type:
-            - string
-            - 'null'
-          equipment_type:
-            $ref: '#/components/schemas/EquipmentType-Read-Nested'
-          company_share:
-            $ref: '#/components/schemas/CompanyShare-Read-Nested'
-          equipment_id:
-            type: string
-            x-stoplight:
-              id: v25n5jka8apv0
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    Equipment-Read-Nested:
-      title: Equipment-Read-Nested
-      x-stoplight:
-        id: 7ezenec7ycv5l
-      allOf:
-      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
-      - type: object
-        required:
-        - license_number
-        - zone
-        - accounting_id
-        - equipment_id
-        properties:
-          license_number:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: hw1ooa17wsadq
-          zone:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 81hr4p8yp8btv
-          accounting_id:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: ere9qhs4cuwhi
-          equipment_id:
-            type: string
-            x-stoplight:
-              id: gt7r3iqzx2w0u
+              $ref: '#/components/schemas/StateError-Item'
     RatePerUnit-Read-Nested:
       title: RatePerUnit-Read-Nested
       x-stoplight:
@@ -1383,6 +1368,128 @@ components:
             type: number
             x-stoplight:
               id: szqf3p2vkmb0x
+    EquipmentType-Read-Nested:
+      title: EquipmentType-Read-Nested
+      x-stoplight:
+        id: em46i5kysysdh
+      type: object
+      required:
+      - id
+      - name
+      - system
+      - external_id
+      - accounting_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 835oy22o6h24z
+          format: uuid
+        name:
+          type: string
+          x-stoplight:
+            id: tnszefd7lypln
+        system:
+          type: boolean
+          x-stoplight:
+            id: vimoqz5e8x6gx
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: ttaijg77qmbgk
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: s4rscgptv68x3
+      additionalProperties: false
+    Site-Read-Nested:
+      title: Site-Read-Nested
+      x-stoplight:
+        id: rt6xqxsfzf4iv
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - lat
+        - lon
+        - full_address
+        - routable
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 7r0x7wicrvwyy
+          lat:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: cr6y5v0hdl5oo
+          lon:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: f23mkvamncbuw
+          address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          full_address:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: uxixxnmgfi47i
+          routable:
+            type: boolean
+            x-stoplight:
+              id: uobfxkm0hujhv
+          next_billion_geofence:
+            $ref: '#/components/schemas/NextBillionGeofence-Read'
+      - $ref: '#/components/schemas/Discardable'
+    InvoiceLineItem-Update:
+      title: InvoiceLineItem-Update
+      x-stoplight:
+        id: bqeqs6grf9mkb
+      allOf:
+      - $ref: '#/components/schemas/Destroyable'
+      - type: object
+        properties:
+          quantity:
+            type: number
+            x-stoplight:
+              id: 7blob4b6rlg8z
+          rate:
+            type: number
+            x-stoplight:
+              id: erb5hyci036n8
+          pay_start_time:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: kyf9icu2pmkx9
+            format: date-time
+          pay_end_time:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: vsmc30j8j8t2n
+            format: date-time
+          billing_adjustment_minutes:
+            type: integer
+            x-stoplight:
+              id: o792d7cilq8g7
+          load_id:
+            type: string
+            x-stoplight:
+              id: yc4s45yy1dpx0
+            format: uuid
     Error-Response:
       title: Error-Response
       x-stoplight:
@@ -1393,6 +1500,177 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    RateFlatCommission-Read-Nested:
+      title: RateFlatCommission-Read-Nested
+      x-stoplight:
+        id: wtdgoiw8tlpl3
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - commission_amount
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: yt5g1alyyd6fu
+          type:
+            $ref: '#/components/schemas/RateType'
+          commission_amount:
+            type: number
+            x-stoplight:
+              id: 14a1jkho85lpw
+    AddOnRateType:
+      title: AddOnRateType
+      x-stoplight:
+        id: 1c3m0qj0ofdao
+      enum:
+      - RateForEach
+      - RatePercentOfTotal
+      - PerLoad
+      - FuelSurcharge
+      example: RateForEach
+      default: RateForEach
+    InvoiceLineItem-Read:
+      title: InvoiceLineItem-Read
+      x-stoplight:
+        id: lbb9n9hfx009r
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - quantity
+        - total_amount
+        - revenue_rate_value
+        - revenue_cost_rate_type
+        - billing_adjustment_minutes
+        - pay_start_time
+        - pay_end_time
+        - invoice_id
+        - name
+        - delivered_quantity
+        - line_item_type
+        - rate
+        - rate_type
+        - material_rate_unit_of_measure
+        properties:
+          quantity:
+            type: string
+            x-stoplight:
+              id: vja2bsq172org
+          total_amount:
+            type: string
+            x-stoplight:
+              id: fwmhuuc6afo05
+          revenue_rate_value:
+            type: string
+            x-stoplight:
+              id: w8kyneeororyn
+            description: The revenue rate or sell price of the invoice line item
+          revenue_cost_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+          billing_adjustment_minutes:
+            type: integer
+            x-stoplight:
+              id: 7kzoo1b5fjcua
+          pay_start_time:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 5hk8kdv3tf7fu
+            format: date-time
+          pay_end_time:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: frlpnr1dsx6xk
+            format: date-time
+          invoice_id:
+            type: string
+            x-stoplight:
+              id: cxgoc5hzxs0hm
+            format: uuid
+          load:
+            $ref: '#/components/schemas/Load-Read-Nested'
+          name:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: p4gxwco1xm5f4
+          delivered_quantity:
+            type: string
+            x-stoplight:
+              id: n36bkwjaot8f6
+          line_item_type:
+            $ref: '#/components/schemas/InvoiceLineItemType'
+          rate:
+            type: string
+            x-stoplight:
+              id: 17aohzilbnz8d
+            deprecated: true
+            description: Deprecated in favor of `revenue_rate_value`.
+          rate_type:
+            type: string
+            x-stoplight:
+              id: h454x8xipq8gm
+            deprecated: true
+            description: Deprecated in favor of `revenue_cost_rate_type`.
+          material_rate_unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+    Invoice-Job-Read-Nested:
+      title: Invoice-Job-Read-Nested
+      x-stoplight:
+        id: rq1csqrap8fr
+      allOf:
+      - $ref: '#/components/schemas/Job-Read-Nested'
+      - type: object
+        properties:
+          driver:
+            $ref: '#/components/schemas/User-Read-Minimal'
+          vendor_job_assignment:
+            x-stoplight:
+              id: k8m3nv2qwp7x9
+            $ref: '#/components/schemas/JobAssignment-Read-Nested'
+    DeliveredQuantity-Read:
+      title: DeliveredQuantity-Read
+      x-stoplight:
+        id: trwwil0vsjrtn
+      type: object
+      required:
+      - delivered
+      - unit_of_measure
+      - material_name
+      - total
+      - ticketed
+      properties:
+        delivered:
+          type: string
+          x-stoplight:
+            id: xqo11su8z94my
+        unit_of_measure:
+          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+        material_name:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: h7jmwwi6jx02h
+        total:
+          type: string
+          x-stoplight:
+            id: 8ghxe07yz102y
+        ticketed:
+          type:
+          - boolean
+          - 'null'
+          x-stoplight:
+            id: hxg8e07yz102y
       additionalProperties: false
     DriverDay-Read-Nested:
       title: DriverDay-Read-Nested
@@ -1410,248 +1688,133 @@ components:
             type: string
             x-stoplight:
               id: 3gdox3ymd2d7l
-    StateError-Item:
-      title: StateError-Item
+    GpsStatus:
+      title: GpsStatus
       x-stoplight:
-        id: dgw2jdmi7ozjj
-      allOf:
-      - $ref: '#/components/schemas/ModelError-Item'
-      - type: object
-        x-stoplight:
-          id: jrgi7oapao3e5
-        required:
-        - state
-        - event
-        properties:
-          state:
-            type: string
-            x-stoplight:
-              id: mah8jye43io32
-            description: The current state value of the field on this Model
-          event:
-            type: string
-            x-stoplight:
-              id: dtgu62ni9ofuh
-            description: The failed state event called on the Model
-    TreadId:
-      title: TreadId
-      x-stoplight:
-        id: 43k4t5tl359m4
+        id: 3b02180lfd6ve
+      description: GPS Ping status for a record
       type: object
       required:
-      - tread_id
+      - status
+      - last_ping_at
       properties:
-        tread_id:
-          type: string
+        status:
           x-stoplight:
-            id: zi3ld7djflw6f
-          pattern: ^[0-9A-F]{6}$
-          minLength: 6
-          maxLength: 6
-          example: ABC123
-          description: Tread ID
-      additionalProperties: false
-    User-Read-Typeahead:
-      title: User-Read-Typeahead
-      x-stoplight:
-        id: ttbbss5b5k66f
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - first_name
-        - last_name
-        properties:
-          first_name:
-            type: string
-            description: First name
-            x-stoplight:
-              id: gwo999rcdahmg
-          last_name:
-            type: string
-            description: Last name
-            x-stoplight:
-              id: l9omnnsq644bh
-      description: ''
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    Driver-Read-Typeahead:
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: 5vacab4kzhkj4
-        required:
-        - first_name
-        - last_name
-        - schedule_on
-        - phone
-        - managed
-        - company
-        properties:
-          first_name:
-            type: string
-            x-stoplight:
-              id: 4gb9hhpizab3h
-            description: First name
-          last_name:
-            type: string
-            x-stoplight:
-              id: my6q150nen1kb
-            description: Last name
-          company:
-            $ref: '#/components/schemas/Company-Read-Nested'
-          company_share:
-            $ref: '#/components/schemas/CompanyShare-Read-User-Nested'
-          equipment:
-            $ref: '#/components/schemas/Equipment-Read-Nested'
-          default_equipment:
-            $ref: '#/components/schemas/Equipment-Read-Nested'
-          schedule_on:
-            type: boolean
-            x-stoplight:
-              id: 7dq6dvne8bqcr
-          company_day_driver_stat:
-            $ref: '#/components/schemas/CompanyDayDriverStat-Read'
-          phone:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: y4l44re1zfaa9
-            description: User's E.164 formatted phone number
-          managed:
-            type: boolean
-            x-stoplight:
-              id: k8m3xq0sz6wt4
-          labels:
-            type: array
-            items:
-              $ref: '#/components/schemas/Label-Read-Nested'
-            description: Labels assigned to this driver
-      - $ref: '#/components/schemas/GpsStatusable'
-      title: Driver-Read-Typeahead
-    InvoiceStateEvent:
-      title: InvoiceStateEvent
-      x-stoplight:
-        id: 1a2ulz2srbdfc
-      enum:
-      - approve
-      - customer_pay
-      - export
-      - pay
-      - send_invoice
-      - unapprove
-      - void
-    StateError:
-      title: StateError
-      x-stoplight:
-        id: zgcsl4t8bsn3c
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: ntvt2atfotcge
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: noi1jg6o8psl7
-            items:
-              $ref: '#/components/schemas/StateError-Item'
-    GeofenceType:
-      title: GeofenceType
-      x-stoplight:
-        id: geahowr9r8ly1
-      enum:
-      - moving
-      - circle
-      - polygon
-      readOnly: true
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    Address-Read-Nested:
-      title: Address-Read-Nested
-      x-stoplight:
-        id: cvym2dzuo375q
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Address-Read'
-    Load-Read-Nested:
-      title: Load-Read-Nested
-      x-stoplight:
-        id: zpc98ohudvz2m
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: 4rcl2v4mcwxe5
-        required:
-        - quantity
-        - unit_of_measure
-        - load_id
-        - ordinality
-        properties:
-          quantity:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 3crm24cakhqhf
-          unit_of_measure:
-            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
-          load_id:
-            type: string
-            x-stoplight:
-              id: xwweeqwdfh9pg
-          ordinality:
-            type: integer
-            x-stoplight:
-              id: 4xdv8c9e9p4o8
-          ticket:
-            $ref: '#/components/schemas/Ticket-Read-Nested'
-    Invoice-Update:
-      title: Invoice-Update
-      x-stoplight:
-        id: iczefh3dwzi9z
-      type: object
-      properties:
-        rate_id:
+            id: 7f6aqydupq3ac
+          enum:
+          - online
+          - offline
+          - idle
+          - no_signal
+        last_ping_at:
           type:
           - string
           - 'null'
           x-stoplight:
-            id: 497k59qqxopps
-          format: uuid
-        rate_value:
-          type:
-          - number
-          - 'null'
-          x-stoplight:
-            id: t0k1lqv968zqx
-        rate_type:
-          $ref: '#/components/schemas/NullableRateType'
+            id: 1ikh7blmxdqcz
+          format: date-time
       additionalProperties: false
+    Invoice-Read-Nested:
+      title: Invoice-Read-Nested
+      x-stoplight:
+        id: 0525dchkpowb4
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - rate_value
+        - rate_type
+        - total_amount
+        - add_on_charges_total_amount
+        - add_on_charges_count
+        - invoice_line_items_total_amount
+        - invoice_id
+        - state_events
+        - state
+        - approved
+        - approvable
+        - unapprovable
+        - billing_approved_at
+        - tax_pretax_amount
+        - tax_total_amount
+        - tax_rate
+        - tax_description
+        properties:
+          rate_value:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 0wfmhvpihc7j6
+          rate_type:
+            $ref: '#/components/schemas/NullableRateType'
+          total_amount:
+            type: string
+            x-stoplight:
+              id: 23xlnfsn2ptyr
+          add_on_charges_total_amount:
+            type: string
+            x-stoplight:
+              id: mkzwn7og9nbjz
+          add_on_charges_count:
+            type: integer
+            x-stoplight:
+              id: avp0fywku8t5l
+          invoice_line_items_total_amount:
+            type: string
+            x-stoplight:
+              id: j9ndl5bftvae6
+          invoice_id:
+            type: string
+            x-stoplight:
+              id: dl998g3qajtn5
+          state_events:
+            type: array
+            x-stoplight:
+              id: mgi3t11cazoxb
+            items:
+              $ref: '#/components/schemas/InvoiceStateEvent'
+          state:
+            $ref: '#/components/schemas/InvoiceState'
+          approved:
+            type: boolean
+            x-stoplight:
+              id: l6wcqkh500hax
+          approvable:
+            type: boolean
+            x-stoplight:
+              id: 2amn5g39apfvm
+          unapprovable:
+            type: boolean
+            x-stoplight:
+              id: e9udldzfmf7kg
+          billing_approved_at:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: bdvp0dbzp234t
+            format: date-time
+          tax_pretax_amount:
+            type:
+            - string
+            - 'null'
+            description: Pre-tax amount of the invoice
+          tax_total_amount:
+            type:
+            - string
+            - 'null'
+            description: Total tax amount applied to the invoice
+          tax_rate:
+            type:
+            - string
+            - 'null'
+            description: Tax rate percentage applied to the invoice
+          tax_description:
+            type:
+            - string
+            - 'null'
+            description: Description of what was taxed
     InvoiceLineItem-Read-Generated:
       title: InvoiceLineItem-Read-Generated
       x-stoplight:
@@ -1723,135 +1886,302 @@ components:
         line_item_type:
           $ref: '#/components/schemas/InvoiceLineItemType'
       additionalProperties: false
-    RateType:
-      title: RateType
+    Company-Read-Nested:
+      title: Company-Read-Nested
       x-stoplight:
-        id: zn2jb7gsifkk3
-      enum:
-      - RatePerHour
-      - RatePerDay
-      - RatePerLoad
-      - RatePerTon
-      - RatePerTonne
-      - RatePerYard
-      - RatePerBushel
-      - RateCommission
-      - RateFlatCommission
-      - RateFlatRate
-      example: RatePerHour
-    Discardable:
-      title: Discardable
+        id: cb2kn77qmf1l7
+      description: Compact Company model for nested reads.
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+        x-stoplight:
+          id: jwsufva4znm91
+      - $ref: '#/components/schemas/TreadId'
+      - type: object
+        properties:
+          legal_name:
+            type: string
+            x-stoplight:
+              id: yc10t8hieecwk
+            description: The Company's name. Must be globally unique.
+          company_type:
+            $ref: '#/components/schemas/CompanyType'
+        required:
+        - legal_name
+        - company_type
+    Geofence-Data:
+      title: Geofence-Data
       x-stoplight:
-        id: 46axlb8u5wjay
+        id: ay73k76oae8gm
       type: object
-      required:
-      - discarded_at
       properties:
-        discarded_at:
-          type:
-          - string
-          - 'null'
+        id:
+          type: string
+          format: uuid
           x-stoplight:
-            id: cy8t6fecoyxbo
-          format: date-time
+            id: m9n8p7q6r5s4t
+          description: NextBillionGeofence ID
+        geofence:
+          type: object
+          x-stoplight:
+            id: bo67u046r1ibk
+          required:
+          - name
+          - type
+          properties:
+            id:
+              type: string
+              x-stoplight:
+                id: nm2o97jli2zqm
+              format: uuid
+              description: NextBillion Geofence ID
+            name:
+              type: string
+              x-stoplight:
+                id: x5sp8wq8d2ack
+            type:
+              type: string
+              x-stoplight:
+                id: d91rv1gbtfkm0
+              description: '`circle` or `polygon`'
+            geojson:
+              type: object
+              x-stoplight:
+                id: vk7dx7ipdbuxa
+              required:
+              - type
+              - coordinates
+              properties:
+                type:
+                  type: string
+                  x-stoplight:
+                    id: 65qatpxdox3e9
+                  description: type should be `Polygon`
+                coordinates:
+                  type: array
+                  x-stoplight:
+                    id: 3an8g587wblcs
+                  description: 'This should be an enclosed polygon.
+
+
+                    Example format:
+
+                    [[[-118.226140484,34.048200454],[-118.22616052,34.046872766],[-118.226198738,34.04952736],[-118.226140484,34.048200454]]]'
+                  items:
+                    x-stoplight:
+                      id: 2kltvjxl5xks6
+                    type: array
+                    items:
+                      x-stoplight:
+                        id: k93dt39dghru4
+                      type: array
+                      items: {}
+            circle_center:
+              type: object
+              x-stoplight:
+                id: 6xr3h683f7cl9
+              required:
+              - lat
+              - lon
+              properties:
+                lat:
+                  type: number
+                  x-stoplight:
+                    id: y70xc1ptapv1g
+                lon:
+                  type: number
+                  x-stoplight:
+                    id: uy3twrpcueq9m
+            circle_radius:
+              type: number
+              x-stoplight:
+                id: qrnq301sqfl3d
+            tag:
+              x-stoplight:
+                id: debfy3x1l48zc
+              enum:
+              - pickup
+              - loading
+              - drop_off
+              - unloading
+              - check_in
+              - scaling
+              - ticketing
+              deprecated: true
+        moving_geofence:
+          type: boolean
+          x-stoplight:
+            id: y15533dbr62js
+          default: false
+        tag:
+          $ref: '#/components/schemas/GeofenceTag'
+        geofence_type:
+          $ref: '#/components/schemas/NullableGeofenceType'
       additionalProperties: false
-    CompanyShare-Read-Nested:
-      title: CompanyShare-Read-Nested
+    JobAssignment-Read-Nested:
+      title: JobAssignment-Read-Nested
       x-stoplight:
-        id: makajouqsb7jq
+        id: mg7965bt1bm8u
       allOf:
       - $ref: '#/components/schemas/Identifier'
       - type: object
         x-stoplight:
-          id: s6h0nfzt2fjry
+          id: 7cm7nl6s8xho7
         required:
-        - external_id
-        - ticket_match_id
-        - sender_company
-        - dispatchable
-        - schedule_on
-        - rate_override
-        - expires_at
+        - rate_value
+        - rate_type
+        - commission_rate_value
+        - commission_rate_type
         properties:
-          external_id:
+          customer_account:
+            $ref: '#/components/schemas/Account-Read-Nested'
+          vendor_account:
+            $ref: '#/components/schemas/Account-Read-Nested'
+          rate:
+            x-stoplight:
+              id: dbq76i8yjcmwt
+            anyOf:
+            - $ref: '#/components/schemas/RateTime-Read-Nested'
+            - $ref: '#/components/schemas/RateCommission-Read-Nested'
+            - $ref: '#/components/schemas/RatePerUnit-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatCommission-Read-Nested'
+            - $ref: '#/components/schemas/RateFlatRate-Read-Nested'
+          rate_value:
             type:
             - string
             - 'null'
             x-stoplight:
-              id: c9ls3nrhbih3v
-          ticket_match_id:
+              id: 1vstlgt31c0wg
+          rate_type:
+            $ref: '#/components/schemas/NullableRateType'
+          commission_rate_value:
             type:
             - string
             - 'null'
             x-stoplight:
-              id: a1cd3nrhbih3v
-          sender_company:
-            $ref: '#/components/schemas/Company-Read-Nested'
-          dispatchable:
-            type: boolean
-            x-stoplight:
-              id: kd884ihz6qi6w
-          schedule_on:
-            type: boolean
-            x-stoplight:
-              id: kd884ihz61234
-          rate_override:
-            type: boolean
-            x-stoplight:
-              id: mq4osazzielxo
-          expires_at:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: aaa111jpq0ga9
-            format: date-time
-            description: ISO8601 timestamp with local timezone
-    CompanyType:
-      title: CompanyType
+              id: kl1p5p4ii7nyy
+            description: This is the applied value when the `rate_type` is commission-based.
+          commission_rate_type:
+            $ref: '#/components/schemas/NullableRateType'
+    AccountType:
+      title: AccountType
       x-stoplight:
-        id: dkzo7gjbtb1b3
+        id: i4vfmd4rwrq8p
       enum:
-      - broker
-      - contractor
-      - hauler
-      - owner_operator
-      - producer
-      - super
-      example: hauler
-      description: Company Type
-    RateFlatCommission-Read-Nested:
-      title: RateFlatCommission-Read-Nested
+      - customer
+      - vendor
+      example: customer
+    Address-Read-Nested:
+      title: Address-Read-Nested
       x-stoplight:
-        id: wtdgoiw8tlpl3
+        id: cvym2dzuo375q
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Address-Read'
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
+    Driver-Read-Typeahead:
       allOf:
       - $ref: '#/components/schemas/Identifier'
       - type: object
+        x-stoplight:
+          id: 5vacab4kzhkj4
         required:
-        - name
-        - type
-        - commission_amount
+        - first_name
+        - last_name
+        - schedule_on
+        - phone
+        - managed
+        - company
         properties:
-          name:
+          first_name:
             type: string
             x-stoplight:
-              id: yt5g1alyyd6fu
-          type:
-            $ref: '#/components/schemas/RateType'
-          commission_amount:
-            type: number
+              id: 4gb9hhpizab3h
+            description: First name
+          last_name:
+            type: string
             x-stoplight:
-              id: 14a1jkho85lpw
-    GpsStatusable:
-      title: GpsStatusable
+              id: my6q150nen1kb
+            description: Last name
+          company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-User-Nested'
+          equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+          default_equipment:
+            $ref: '#/components/schemas/Equipment-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 7dq6dvne8bqcr
+          company_day_driver_stat:
+            $ref: '#/components/schemas/CompanyDayDriverStat-Read'
+          phone:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: y4l44re1zfaa9
+            description: User's E.164 formatted phone number
+          managed:
+            type: boolean
+            x-stoplight:
+              id: k8m3xq0sz6wt4
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Label-Read-Nested'
+            description: Labels assigned to this driver
+      - $ref: '#/components/schemas/GpsStatusable'
+      title: Driver-Read-Typeahead
+    StateError-Response:
+      title: StateError-Response
       x-stoplight:
-        id: o6oprcupw6ep7
+        id: i0wsk2gmnaqup
       type: object
       required:
-      - gps_status
+      - error
       properties:
-        gps_status:
-          $ref: '#/components/schemas/GpsStatus'
+        error:
+          $ref: '#/components/schemas/StateError'
       additionalProperties: false
     User-Read-Minimal:
       title: User-Read-Minimal
@@ -1868,51 +2198,333 @@ components:
         properties:
           company:
             $ref: '#/components/schemas/Company-Read-Nested'
-    EquipmentType-Read-Nested:
-      title: EquipmentType-Read-Nested
+    CompanyShare-Read-User-Nested:
+      title: CompanyShare-Read-User-Nested
       x-stoplight:
-        id: em46i5kysysdh
+        id: 8czythac5qhgz
+      allOf:
+      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
+      - type: object
+        properties:
+          default_equipment:
+            $ref: '#/components/schemas/Equipment-Read-Default-Nested'
+    Account-Read-Nested:
+      title: Account-Read-Nested
+      x-stoplight:
+        id: zo8r3gsz1tm5h
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Discardable'
+      - type: object
+        x-stoplight:
+          id: gl7hua7pv8xka
+        required:
+        - name
+        - account_types
+        - external_id
+        - accounting_id
+        - company
+        - schedule_on
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: a7g065w5byfcf
+          account_types:
+            type: array
+            x-stoplight:
+              id: a0e9c3lpr1wad
+            items:
+              $ref: '#/components/schemas/AccountType'
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: yfrec4y0a90cb
+          accounting_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: yfsec5y0a91cb
+          company:
+            type: object
+            x-stoplight:
+              id: 9loqtu14mvlnq
+            required:
+            - id
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: udjkdjrz08pzr
+                format: uuid
+          billing_address:
+            $ref: '#/components/schemas/Address-Read-Nested'
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: 0g9kx77zym4ok
+          connected_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          billing_contact:
+            $ref: '#/components/schemas/Contact-Read-Nested'
+    Project-Read-Nested:
+      title: Project-Read-Nested
+      x-stoplight:
+        id: 9ene929zmvaog
+      allOf:
+      - $ref: '#/components/schemas/Project-Read-Typeahead'
+      - type: object
+        x-stoplight:
+          id: 8t1ly6sefwmit
+        required:
+        - po_job_number
+        - internal_notes
+        - job_notes
+        - notes
+        - order_notes
+        properties:
+          po_job_number:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: w5ajmms5o1rjq
+          internal_notes:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 3hbaltdu1u159
+          job_notes:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: fupx5op0cmel2
+          notes:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 96qr64lmtj36s
+          order_notes:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: o38gpshallijh
+    Destroyable:
+      title: Destroyable
+      x-stoplight:
+        id: 2uftzhptd2l14
       type: object
-      required:
-      - id
-      - name
-      - system
-      - external_id
-      - accounting_id
       properties:
         id:
           type: string
           x-stoplight:
-            id: 835oy22o6h24z
+            id: gx1ww996hmzqm
           format: uuid
-        name:
+          description: Required if `_destroy` is set
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 0xjwztkz4fmcr
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
+      type: object
+      required:
+      - model
+      - field
+      - message
+      properties:
+        model:
           type: string
           x-stoplight:
-            id: tnszefd7lypln
-        system:
-          type: boolean
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
           x-stoplight:
-            id: vimoqz5e8x6gx
-        external_id:
-          type:
-          - string
-          - 'null'
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
           x-stoplight:
-            id: ttaijg77qmbgk
-        accounting_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: s4rscgptv68x3
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
-    Invoiceable-Read-Nested:
-      title: Invoiceable-Read-Nested
+    RateCommission-Read-Nested:
+      title: RateCommission-Read-Nested
       x-stoplight:
-        id: 24cpelap9yh3h
-      anyOf:
-      - $ref: '#/components/schemas/Invoice-Job-Read-Nested'
-      - $ref: '#/components/schemas/DriverDay-Read-Nested'
+        id: rfosxiu0rajbx
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - commission_percentage
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: uquhf0pc3ydpf
+          type:
+            $ref: '#/components/schemas/RateType'
+          commission_percentage:
+            type: number
+            x-stoplight:
+              id: 44e2kldfzbxdj
+    Contact-Read-Nested:
+      title: Contact-Read-Nested
+      x-stoplight:
+        id: 3u6d8qhsz5ehn
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - email
+        - phone
+        properties:
+          name:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: sd80y9pbgvkok
+          email:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 883fmt34pdeaj
+          phone:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: wdtqyju4t4u06
+            example: '+18885551234'
+      description: ''
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+      additionalProperties: false
+    Equipment-Read-Nested:
+      title: Equipment-Read-Nested
+      x-stoplight:
+        id: 7ezenec7ycv5l
+      allOf:
+      - $ref: '#/components/schemas/Equipment-Read-Typeahead'
+      - type: object
+        required:
+        - license_number
+        - zone
+        - accounting_id
+        - equipment_id
+        properties:
+          license_number:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: hw1ooa17wsadq
+          zone:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 81hr4p8yp8btv
+          accounting_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: ere9qhs4cuwhi
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: gt7r3iqzx2w0u
+    GeofenceTag:
+      title: GeofenceTag
+      x-stoplight:
+        id: anytkmb3ydi6c
+      enum:
+      - scaling
+      - site
+      - loading
+      - unloading
+      - check_in
+      - ticketing
+    Settlement-Read-Nested:
+      title: Settlement-Read-Nested
+      x-stoplight:
+        id: b0g75f7r9nprp
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 8dtolmjnu2anj
+        required:
+        - settlement_id
+        properties:
+          settlement_id:
+            type: string
+            x-stoplight:
+              id: ma5w6k43cajtr
+          ar_settlement_id:
+            type: string
+            description: Accounts Receivable settlement identifier (e.g., AR-123)
+          ap_settlement_id:
+            type: string
+            description: Accounts Payable settlement identifier (e.g., AP-123)
+    GpsStatusable:
+      title: GpsStatusable
+      x-stoplight:
+        id: o6oprcupw6ep7
+      type: object
+      required:
+      - gps_status
+      properties:
+        gps_status:
+          $ref: '#/components/schemas/GpsStatus'
+      additionalProperties: false
     Invoice-Read:
       title: Invoice-Read
       x-stoplight:
@@ -2116,506 +2728,6 @@ components:
         - `truck_id` is deprecated in favor of `equipment_external_ids`
 
         '
-    Destroyable:
-      title: Destroyable
-      x-stoplight:
-        id: 2uftzhptd2l14
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: gx1ww996hmzqm
-          format: uuid
-          description: Required if `_destroy` is set
-        _destroy:
-          type: integer
-          x-stoplight:
-            id: 0xjwztkz4fmcr
-          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
-      additionalProperties: false
-    Project-Read-Nested:
-      title: Project-Read-Nested
-      x-stoplight:
-        id: 9ene929zmvaog
-      allOf:
-      - $ref: '#/components/schemas/Project-Read-Typeahead'
-      - type: object
-        x-stoplight:
-          id: 8t1ly6sefwmit
-        required:
-        - po_job_number
-        - internal_notes
-        - job_notes
-        - notes
-        - order_notes
-        properties:
-          po_job_number:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: w5ajmms5o1rjq
-          internal_notes:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 3hbaltdu1u159
-          job_notes:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: fupx5op0cmel2
-          notes:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 96qr64lmtj36s
-          order_notes:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: o38gpshallijh
-    Invoice-Job-Read-Nested:
-      title: Invoice-Job-Read-Nested
-      x-stoplight:
-        id: rq1csqrap8fr
-      allOf:
-      - $ref: '#/components/schemas/Job-Read-Nested'
-      - type: object
-        properties:
-          driver:
-            $ref: '#/components/schemas/User-Read-Minimal'
-          vendor_job_assignment:
-            x-stoplight:
-              id: k8m3nv2qwp7x9
-            $ref: '#/components/schemas/JobAssignment-Read-Nested'
-    Settlement-Read-Nested:
-      title: Settlement-Read-Nested
-      x-stoplight:
-        id: b0g75f7r9nprp
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: 8dtolmjnu2anj
-        required:
-        - settlement_id
-        properties:
-          settlement_id:
-            type: string
-            x-stoplight:
-              id: ma5w6k43cajtr
-          ar_settlement_id:
-            type: string
-            description: Accounts Receivable settlement identifier (e.g., AR-123)
-          ap_settlement_id:
-            type: string
-            description: Accounts Payable settlement identifier (e.g., AP-123)
-    Rate-Read-Nested:
-      title: Rate-Read-Nested
-      x-stoplight:
-        id: 1e88o8oi36nft
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - type
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: zj6ioiudweh1e
-          type:
-            $ref: '#/components/schemas/RateType'
-    CompanyDayDriverStat-Read:
-      title: CompanyDayDriverStat-Read
-      x-stoplight:
-        id: 3grxlvq5qo470
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Timestamps'
-      - type: object
-        x-stoplight:
-          id: e0k1y5lyccj7x
-        properties:
-          day:
-            type: string
-            x-stoplight:
-              id: tq2kbgspesbyq
-            format: date
-          jobs_count:
-            type: integer
-            x-stoplight:
-              id: lq3o1iorx79vx
-      description: CompanyDayDriverStat
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    AccountType:
-      title: AccountType
-      x-stoplight:
-        id: i4vfmd4rwrq8p
-      enum:
-      - customer
-      - vendor
-      example: customer
-    Job-Read-Nested:
-      title: Job-Read-Nested
-      x-stoplight:
-        id: qxb3a764a1hxf
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - job_id
-        - loads_count
-        - job_start_at
-        - unit_of_measure
-        properties:
-          job_id:
-            type: string
-            x-stoplight:
-              id: 692lxpafrrxpl
-          loads_count:
-            type: integer
-            x-stoplight:
-              id: 1fh2mqq1z7l8k
-            description: Count of `Loads` under this `Job`
-          job_start_at:
-            type: string
-            x-stoplight:
-              id: w4o47yoyesm9u
-            format: date-time
-          unit_of_measure:
-            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
-    Invoice-Read-Nested:
-      title: Invoice-Read-Nested
-      x-stoplight:
-        id: 0525dchkpowb4
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - rate_value
-        - rate_type
-        - total_amount
-        - add_on_charges_total_amount
-        - add_on_charges_count
-        - invoice_line_items_total_amount
-        - invoice_id
-        - state_events
-        - state
-        - approved
-        - approvable
-        - unapprovable
-        - billing_approved_at
-        - tax_pretax_amount
-        - tax_total_amount
-        - tax_rate
-        - tax_description
-        properties:
-          rate_value:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 0wfmhvpihc7j6
-          rate_type:
-            $ref: '#/components/schemas/NullableRateType'
-          total_amount:
-            type: string
-            x-stoplight:
-              id: 23xlnfsn2ptyr
-          add_on_charges_total_amount:
-            type: string
-            x-stoplight:
-              id: mkzwn7og9nbjz
-          add_on_charges_count:
-            type: integer
-            x-stoplight:
-              id: avp0fywku8t5l
-          invoice_line_items_total_amount:
-            type: string
-            x-stoplight:
-              id: j9ndl5bftvae6
-          invoice_id:
-            type: string
-            x-stoplight:
-              id: dl998g3qajtn5
-          state_events:
-            type: array
-            x-stoplight:
-              id: mgi3t11cazoxb
-            items:
-              $ref: '#/components/schemas/InvoiceStateEvent'
-          state:
-            $ref: '#/components/schemas/InvoiceState'
-          approved:
-            type: boolean
-            x-stoplight:
-              id: l6wcqkh500hax
-          approvable:
-            type: boolean
-            x-stoplight:
-              id: 2amn5g39apfvm
-          unapprovable:
-            type: boolean
-            x-stoplight:
-              id: e9udldzfmf7kg
-          billing_approved_at:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: bdvp0dbzp234t
-            format: date-time
-          tax_pretax_amount:
-            type:
-            - string
-            - 'null'
-            description: Pre-tax amount of the invoice
-          tax_total_amount:
-            type:
-            - string
-            - 'null'
-            description: Total tax amount applied to the invoice
-          tax_rate:
-            type:
-            - string
-            - 'null'
-            description: Tax rate percentage applied to the invoice
-          tax_description:
-            type:
-            - string
-            - 'null'
-            description: Description of what was taxed
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    Geofence-Data:
-      title: Geofence-Data
-      x-stoplight:
-        id: ay73k76oae8gm
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          x-stoplight:
-            id: m9n8p7q6r5s4t
-          description: NextBillionGeofence ID
-        geofence:
-          type: object
-          x-stoplight:
-            id: bo67u046r1ibk
-          required:
-          - name
-          - type
-          properties:
-            id:
-              type: string
-              x-stoplight:
-                id: nm2o97jli2zqm
-              format: uuid
-              description: NextBillion Geofence ID
-            name:
-              type: string
-              x-stoplight:
-                id: x5sp8wq8d2ack
-            type:
-              type: string
-              x-stoplight:
-                id: d91rv1gbtfkm0
-              description: '`circle` or `polygon`'
-            geojson:
-              type: object
-              x-stoplight:
-                id: vk7dx7ipdbuxa
-              required:
-              - type
-              - coordinates
-              properties:
-                type:
-                  type: string
-                  x-stoplight:
-                    id: 65qatpxdox3e9
-                  description: type should be `Polygon`
-                coordinates:
-                  type: array
-                  x-stoplight:
-                    id: 3an8g587wblcs
-                  description: 'This should be an enclosed polygon.
-
-
-                    Example format:
-
-                    [[[-118.226140484,34.048200454],[-118.22616052,34.046872766],[-118.226198738,34.04952736],[-118.226140484,34.048200454]]]'
-                  items:
-                    x-stoplight:
-                      id: 2kltvjxl5xks6
-                    type: array
-                    items:
-                      x-stoplight:
-                        id: k93dt39dghru4
-                      type: array
-                      items: {}
-            circle_center:
-              type: object
-              x-stoplight:
-                id: 6xr3h683f7cl9
-              required:
-              - lat
-              - lon
-              properties:
-                lat:
-                  type: number
-                  x-stoplight:
-                    id: y70xc1ptapv1g
-                lon:
-                  type: number
-                  x-stoplight:
-                    id: uy3twrpcueq9m
-            circle_radius:
-              type: number
-              x-stoplight:
-                id: qrnq301sqfl3d
-            tag:
-              x-stoplight:
-                id: debfy3x1l48zc
-              enum:
-              - pickup
-              - loading
-              - drop_off
-              - unloading
-              - check_in
-              - scaling
-              - ticketing
-              deprecated: true
-        moving_geofence:
-          type: boolean
-          x-stoplight:
-            id: y15533dbr62js
-          default: false
-        tag:
-          $ref: '#/components/schemas/GeofenceTag'
-        geofence_type:
-          $ref: '#/components/schemas/NullableGeofenceType'
-      additionalProperties: false
-    Site-Read-Nested:
-      title: Site-Read-Nested
-      x-stoplight:
-        id: rt6xqxsfzf4iv
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - lat
-        - lon
-        - full_address
-        - routable
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: 7r0x7wicrvwyy
-          lat:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: cr6y5v0hdl5oo
-          lon:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: f23mkvamncbuw
-          address:
-            $ref: '#/components/schemas/Address-Read-Nested'
-          full_address:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: uxixxnmgfi47i
-          routable:
-            type: boolean
-            x-stoplight:
-              id: uobfxkm0hujhv
-          next_billion_geofence:
-            $ref: '#/components/schemas/NextBillionGeofence-Read'
-      - $ref: '#/components/schemas/Discardable'
-    GeofenceTag:
-      title: GeofenceTag
-      x-stoplight:
-        id: anytkmb3ydi6c
-      enum:
-      - scaling
-      - site
-      - loading
-      - unloading
-      - check_in
-      - ticketing
-    NullableRateType:
-      title: NullableRateType
-      x-stoplight:
-        id: rajiobym5ovlp
-      allOf:
-      - $ref: '#/components/schemas/RateType'
-      type:
-      - string
-      - 'null'
-    OrderUnitOfMeasure:
-      title: OrderUnitOfMeasure
-      x-stoplight:
-        id: kahcgn7w8swdv
-      enum:
-      - Load
-      - Tonne
-      - Ton
-      - Yard
-      - Meter
-      - Foot
-      - Liter
-      - Hour
-      - Bushel
-      - Gallon
-      - CubicMeter
-      - Mile
-      - Kilometer
-      - Barrel
-      - Bag
-      - Pallet
-      example: Load
     Project-Read-Typeahead:
       title: Project-Read-Typeahead
       x-stoplight:
@@ -2636,6 +2748,121 @@ components:
             - 'null'
             x-stoplight:
               id: 7kipqxvhrgvk0
+    GeofenceType:
+      title: GeofenceType
+      x-stoplight:
+        id: geahowr9r8ly1
+      enum:
+      - moving
+      - circle
+      - polygon
+      readOnly: true
+    DispatchNumber-Read-Nested:
+      title: DispatchNumber-Read-Nested
+      x-stoplight:
+        id: 5oe6kw6t82gnr
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        properties:
+          name:
+            type: string
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    Equipment-Read-Default-Nested:
+      title: Equipment-Read-Default-Nested
+      x-stoplight:
+        id: kojte9y4g6t9v
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - external_id
+        - equipment_type
+        - equipment_id
+        properties:
+          name:
+            type: string
+            description: Equipment name
+          external_id:
+            type:
+            - string
+            - 'null'
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          company_share:
+            $ref: '#/components/schemas/CompanyShare-Read-Nested'
+          equipment_id:
+            type: string
+            x-stoplight:
+              id: v25n5jka8apv0
+    User-Read-Typeahead:
+      title: User-Read-Typeahead
+      x-stoplight:
+        id: ttbbss5b5k66f
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - first_name
+        - last_name
+        properties:
+          first_name:
+            type: string
+            description: First name
+            x-stoplight:
+              id: gwo999rcdahmg
+          last_name:
+            type: string
+            description: Last name
+            x-stoplight:
+              id: l9omnnsq644bh
+      description: ''
+    Ticket-Read-Nested:
+      title: Ticket-Read-Nested
+      x-stoplight:
+        id: sxhhxkcgkj6ep
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: u7esfoogq8q49
+        required:
+        - ticket_number
+        - preview_url
+        properties:
+          ticket_number:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: kzx5yw8vvwbra
+          preview_url:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: h1do11irp24bw
+            format: uri
+    NextBillionGeofence-Read:
+      title: NextBillionGeofence-Read
+      x-stoplight:
+        id: 60y0z4bb3pu6m
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Geofence-Data'
     InvoiceState:
       title: InvoiceState
       x-stoplight:
@@ -2653,215 +2880,98 @@ components:
       - customer_paid
       example: created
       default: created
-    DeliveredQuantity-Read:
-      title: DeliveredQuantity-Read
+    OrderState:
+      title: OrderState
       x-stoplight:
-        id: trwwil0vsjrtn
-      type: object
-      required:
-      - delivered
-      - unit_of_measure
-      - material_name
-      - total
-      - ticketed
-      properties:
-        delivered:
-          type: string
-          x-stoplight:
-            id: xqo11su8z94my
-        unit_of_measure:
-          $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
-        material_name:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: h7jmwwi6jx02h
-        total:
-          type: string
-          x-stoplight:
-            id: 8ghxe07yz102y
-        ticketed:
-          type:
-          - boolean
-          - 'null'
-          x-stoplight:
-            id: hxg8e07yz102y
-      additionalProperties: false
-    GpsStatus:
-      title: GpsStatus
+        id: vns4k5u34s0dg
+      enum:
+      - created
+      - pending_request
+      - accepted
+      - rejected
+      - in_progress
+      - completed
+      - canceled
+      - hold
+      - weather_hold
+      example: created
+      default: created
+    Label-Read-Nested:
+      title: Label-Read-Nested
       x-stoplight:
-        id: 3b02180lfd6ve
-      description: GPS Ping status for a record
-      type: object
-      required:
-      - status
-      - last_ping_at
-      properties:
-        status:
-          x-stoplight:
-            id: 7f6aqydupq3ac
-          enum:
-          - online
-          - offline
-          - idle
-          - no_signal
-        last_ping_at:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: 1ikh7blmxdqcz
-          format: date-time
-      additionalProperties: false
-    RateFlatRate-Read-Nested:
-      title: RateFlatRate-Read-Nested
-      x-stoplight:
-        id: l2to0mrxz6ndu
+        id: lbl1readnest01
       allOf:
       - $ref: '#/components/schemas/Identifier'
       - type: object
-        x-stoplight:
-          id: khly9g5a3tgap
-        required:
-        - name
-        - type
-        - flat_amount
         properties:
           name:
             type: string
             x-stoplight:
-              id: 0h0s2w3tathgv
-          type:
-            $ref: '#/components/schemas/RateType'
-          flat_amount:
-            type: number
-            x-stoplight:
-              id: 3s2pycb09j6ph
-    NullableGeofenceType:
-      title: NullableGeofenceType
-      x-stoplight:
-        id: ii94t82oqh5xo
-      allOf:
-      - $ref: '#/components/schemas/GeofenceType'
-      type:
-      - string
-      - 'null'
-    InvoiceLineItem-Update:
-      title: InvoiceLineItem-Update
-      x-stoplight:
-        id: bqeqs6grf9mkb
-      allOf:
-      - $ref: '#/components/schemas/Destroyable'
-      - type: object
-        properties:
-          quantity:
-            type: number
-            x-stoplight:
-              id: 7blob4b6rlg8z
-          rate:
-            type: number
-            x-stoplight:
-              id: erb5hyci036n8
-          pay_start_time:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: kyf9icu2pmkx9
-            format: date-time
-          pay_end_time:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: vsmc30j8j8t2n
-            format: date-time
-          billing_adjustment_minutes:
-            type: integer
-            x-stoplight:
-              id: o792d7cilq8g7
-          load_id:
+              id: lbl1nestnm0001
+            description: Label name
+          color:
             type: string
             x-stoplight:
-              id: yc4s45yy1dpx0
-            format: uuid
-    Company-Read-Nested:
-      title: Company-Read-Nested
-      x-stoplight:
-        id: cb2kn77qmf1l7
-      description: Compact Company model for nested reads.
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-        x-stoplight:
-          id: jwsufva4znm91
-      - $ref: '#/components/schemas/TreadId'
-      - type: object
-        properties:
-          legal_name:
-            type: string
-            x-stoplight:
-              id: yc10t8hieecwk
-            description: The Company's name. Must be globally unique.
-          company_type:
-            $ref: '#/components/schemas/CompanyType'
-        required:
-        - legal_name
-        - company_type
-    Contact-Read-Nested:
-      title: Contact-Read-Nested
-      x-stoplight:
-        id: 3u6d8qhsz5ehn
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
+              id: lbl1nestcol001
+            description: Hex color code for the label
+            pattern: ^#[0-9A-Fa-f]{6}$
         required:
         - name
+        - color
+    InvoiceLineItemType:
+      title: InvoiceLineItemType
+      x-stoplight:
+        id: clkyxnscmds4j
+      enum:
+      - InvoiceLineItem
+      - MaterialRateLineItem
+      - FreightRateLineItem
+      default: InvoiceLineItem
+    CompanyType:
+      title: CompanyType
+      x-stoplight:
+        id: dkzo7gjbtb1b3
+      enum:
+      - broker
+      - contractor
+      - hauler
+      - owner_operator
+      - producer
+      - super
+      example: hauler
+      description: Company Type
+    Driver-Read-Nested:
+      title: Driver-Read-Nested
+      x-stoplight:
+        id: lcevfprple1sa
+      allOf:
+      - $ref: '#/components/schemas/Driver-Read-Typeahead'
+      - type: object
+        x-stoplight:
+          id: 19sn21xqtmd0w
+        required:
         - email
-        - phone
         properties:
-          name:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: sd80y9pbgvkok
           email:
             type:
             - string
             - 'null'
             x-stoplight:
-              id: 883fmt34pdeaj
-          phone:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: wdtqyju4t4u06
-            example: '+18885551234'
-      description: ''
-    RateCommission-Read-Nested:
-      title: RateCommission-Read-Nested
+              id: ekvo9chmdhjkp
+    Error:
+      title: Error
       x-stoplight:
-        id: rfosxiu0rajbx
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - type
-        - commission_percentage
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: uquhf0pc3ydpf
-          type:
-            $ref: '#/components/schemas/RateType'
-          commission_percentage:
-            type: number
-            x-stoplight:
-              id: 44e2kldfzbxdj
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
     Address-Read:
       title: Address-Read
       x-stoplight:
@@ -2930,253 +3040,99 @@ components:
             id: im1fdq7qqxdij
           description: NextBillion placeID
       additionalProperties: false
-    JobAssignment-Read-Nested:
-      title: JobAssignment-Read-Nested
+    Identifier:
+      title: Identifier
       x-stoplight:
-        id: mg7965bt1bm8u
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: 7cm7nl6s8xho7
-        required:
-        - rate_value
-        - rate_type
-        - commission_rate_value
-        - commission_rate_type
-        properties:
-          customer_account:
-            $ref: '#/components/schemas/Account-Read-Nested'
-          vendor_account:
-            $ref: '#/components/schemas/Account-Read-Nested'
-          rate:
-            x-stoplight:
-              id: dbq76i8yjcmwt
-            anyOf:
-            - $ref: '#/components/schemas/RateTime-Read-Nested'
-            - $ref: '#/components/schemas/RateCommission-Read-Nested'
-            - $ref: '#/components/schemas/RatePerUnit-Read-Nested'
-            - $ref: '#/components/schemas/RateFlatCommission-Read-Nested'
-            - $ref: '#/components/schemas/RateFlatRate-Read-Nested'
-          rate_value:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 1vstlgt31c0wg
-          rate_type:
-            $ref: '#/components/schemas/NullableRateType'
-          commission_rate_value:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: kl1p5p4ii7nyy
-            description: This is the applied value when the `rate_type` is commission-based.
-          commission_rate_type:
-            $ref: '#/components/schemas/NullableRateType'
-    CompanyShare-Read-User-Nested:
-      title: CompanyShare-Read-User-Nested
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
       x-stoplight:
-        id: 8czythac5qhgz
-      allOf:
-      - $ref: '#/components/schemas/CompanyShare-Read-Nested'
-      - type: object
-        properties:
-          default_equipment:
-            $ref: '#/components/schemas/Equipment-Read-Default-Nested'
-    OrderState:
-      title: OrderState
-      x-stoplight:
-        id: vns4k5u34s0dg
+        id: kahcgn7w8swdv
       enum:
-      - created
-      - pending_request
-      - accepted
-      - rejected
-      - in_progress
-      - completed
-      - canceled
-      - hold
-      - weather_hold
-      example: created
-      default: created
-    InvoiceLineItem-Read:
-      title: InvoiceLineItem-Read
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: lbb9n9hfx009r
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    Invoice-Update:
+      title: Invoice-Update
+      x-stoplight:
+        id: iczefh3dwzi9z
+      type: object
+      properties:
+        rate_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 497k59qqxopps
+          format: uuid
+        rate_value:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: t0k1lqv968zqx
+        rate_type:
+          $ref: '#/components/schemas/NullableRateType'
+      additionalProperties: false
+    Rate-Read-Nested:
+      title: Rate-Read-Nested
+      x-stoplight:
+        id: 1e88o8oi36nft
       allOf:
       - $ref: '#/components/schemas/Identifier'
       - type: object
         required:
-        - quantity
-        - total_amount
-        - revenue_rate_value
-        - revenue_cost_rate_type
-        - billing_adjustment_minutes
-        - pay_start_time
-        - pay_end_time
-        - invoice_id
         - name
-        - delivered_quantity
-        - line_item_type
-        - rate
-        - rate_type
-        - material_rate_unit_of_measure
+        - type
         properties:
-          quantity:
-            type: string
-            x-stoplight:
-              id: vja2bsq172org
-          total_amount:
-            type: string
-            x-stoplight:
-              id: fwmhuuc6afo05
-          revenue_rate_value:
-            type: string
-            x-stoplight:
-              id: w8kyneeororyn
-            description: The revenue rate or sell price of the invoice line item
-          revenue_cost_rate_type:
-            $ref: '#/components/schemas/AddOnRateType'
-          billing_adjustment_minutes:
-            type: integer
-            x-stoplight:
-              id: 7kzoo1b5fjcua
-          pay_start_time:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: 5hk8kdv3tf7fu
-            format: date-time
-          pay_end_time:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: frlpnr1dsx6xk
-            format: date-time
-          invoice_id:
-            type: string
-            x-stoplight:
-              id: cxgoc5hzxs0hm
-            format: uuid
-          load:
-            $ref: '#/components/schemas/Load-Read-Nested'
           name:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: p4gxwco1xm5f4
-          delivered_quantity:
             type: string
             x-stoplight:
-              id: n36bkwjaot8f6
-          line_item_type:
-            $ref: '#/components/schemas/InvoiceLineItemType'
-          rate:
-            type: string
-            x-stoplight:
-              id: 17aohzilbnz8d
-            deprecated: true
-            description: Deprecated in favor of `revenue_rate_value`.
-          rate_type:
-            type: string
-            x-stoplight:
-              id: h454x8xipq8gm
-            deprecated: true
-            description: Deprecated in favor of `revenue_cost_rate_type`.
-          material_rate_unit_of_measure:
-            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
-    Order-Read-Nested:
-      title: Order-Read-Nested
+              id: zj6ioiudweh1e
+          type:
+            $ref: '#/components/schemas/RateType'
+    Invoiceable-Read-Nested:
+      title: Invoiceable-Read-Nested
       x-stoplight:
-        id: r53ko3b3esvvf
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: e0ahzgn4xwxu1
-        required:
-        - account
-        - job_time
-        - equipment_type
-        - name
-        - po_job_number
-        - zone
-        - notes
-        - charge_to_account
-        - state
-        - editable
-        - geofence_delay_seconds
-        properties:
-          order_id:
-            type: string
-            x-stoplight:
-              id: rum48z3rdg42f
-          dispatch_number:
-            $ref: '#/components/schemas/DispatchNumber-Read-Nested'
-          account:
-            $ref: '#/components/schemas/Account-Read-Nested'
-          job_time:
-            type:
-            - integer
-            - 'null'
-            x-stoplight:
-              id: 4h34cu14jafd2
-          equipment_type:
-            $ref: '#/components/schemas/EquipmentType-Read-Nested'
-          name:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: dobl4n9be89ew
-          po_job_number:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: kv5zezw4bcj3q
-          zone:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: p32eix6l65ka4
-          notes:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: rq1csqrap8fr
-          charge_to_account:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: qsgspqzxb3fgo
-          state:
-            $ref: '#/components/schemas/OrderState'
-          editable:
-            type: boolean
-            x-stoplight:
-              id: 118ydqcue5lua
-            readOnly: true
-          geofence_delay_seconds:
-            type:
-            - integer
-            - 'null'
-            x-stoplight:
-              id: 9jtzn85f51ol4
-          default_digital_ticket_view:
-            type: boolean
-            default: false
-            x-stoplight:
-              id: ddtv6ordnested
-            description: Use the default digital ticket view for jobs in this order
+        id: 24cpelap9yh3h
+      anyOf:
+      - $ref: '#/components/schemas/Invoice-Job-Read-Nested'
+      - $ref: '#/components/schemas/DriverDay-Read-Nested'
     Equipment-Read-Typeahead:
       title: Equipment-Read-Typeahead
       x-stoplight:
@@ -3207,164 +3163,149 @@ components:
             type: string
             x-stoplight:
               id: fkr9fkdtl996f
-    StateError-Response:
-      title: StateError-Response
+    CompanyDayDriverStat-Read:
+      title: CompanyDayDriverStat-Read
       x-stoplight:
-        id: i0wsk2gmnaqup
+        id: 3grxlvq5qo470
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - $ref: '#/components/schemas/Timestamps'
+      - type: object
+        x-stoplight:
+          id: e0k1y5lyccj7x
+        properties:
+          day:
+            type: string
+            x-stoplight:
+              id: tq2kbgspesbyq
+            format: date
+          jobs_count:
+            type: integer
+            x-stoplight:
+              id: lq3o1iorx79vx
+      description: CompanyDayDriverStat
+    InvoiceStateEvent:
+      title: InvoiceStateEvent
+      x-stoplight:
+        id: 1a2ulz2srbdfc
+      enum:
+      - approve
+      - customer_pay
+      - export
+      - pay
+      - send_invoice
+      - unapprove
+      - void
+    NullableRateType:
+      title: NullableRateType
+      x-stoplight:
+        id: rajiobym5ovlp
+      allOf:
+      - $ref: '#/components/schemas/RateType'
+      type:
+      - string
+      - 'null'
+    Job-Read-Nested:
+      title: Job-Read-Nested
+      x-stoplight:
+        id: qxb3a764a1hxf
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - job_id
+        - loads_count
+        - job_start_at
+        - unit_of_measure
+        properties:
+          job_id:
+            type: string
+            x-stoplight:
+              id: 692lxpafrrxpl
+          loads_count:
+            type: integer
+            x-stoplight:
+              id: 1fh2mqq1z7l8k
+            description: Count of `Loads` under this `Job`
+          job_start_at:
+            type: string
+            x-stoplight:
+              id: w4o47yoyesm9u
+            format: date-time
+          unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+    StateError-Item:
+      title: StateError-Item
+      x-stoplight:
+        id: dgw2jdmi7ozjj
+      allOf:
+      - $ref: '#/components/schemas/ModelError-Item'
+      - type: object
+        x-stoplight:
+          id: jrgi7oapao3e5
+        required:
+        - state
+        - event
+        properties:
+          state:
+            type: string
+            x-stoplight:
+              id: mah8jye43io32
+            description: The current state value of the field on this Model
+          event:
+            type: string
+            x-stoplight:
+              id: dtgu62ni9ofuh
+            description: The failed state event called on the Model
+    RateTime-Read-Nested:
+      title: RateTime-Read-Nested
+      x-stoplight:
+        id: k3z13rbtdojcq
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - type
+        - time_rate
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: s5zmmpgpw8ykn
+          type:
+            $ref: '#/components/schemas/RateType'
+          time_rate:
+            type: number
+            x-stoplight:
+              id: yzbg76z9oflup
+    TreadId:
+      title: TreadId
+      x-stoplight:
+        id: 43k4t5tl359m4
       type: object
       required:
-      - error
+      - tread_id
       properties:
-        error:
-          $ref: '#/components/schemas/StateError'
+        tread_id:
+          type: string
+          x-stoplight:
+            id: zi3ld7djflw6f
+          pattern: ^[0-9A-F]{6}$
+          minLength: 6
+          maxLength: 6
+          example: ABC123
+          description: Tread ID
       additionalProperties: false
-    Account-Read-Nested:
-      title: Account-Read-Nested
+    NullableOrderUnitOfMeasure:
+      title: NullableOrderUnitOfMeasure
       x-stoplight:
-        id: zo8r3gsz1tm5h
+        id: rtlna368z495u
       allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Discardable'
-      - type: object
-        x-stoplight:
-          id: gl7hua7pv8xka
-        required:
-        - name
-        - account_types
-        - external_id
-        - accounting_id
-        - company
-        - schedule_on
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: a7g065w5byfcf
-          account_types:
-            type: array
-            x-stoplight:
-              id: a0e9c3lpr1wad
-            items:
-              $ref: '#/components/schemas/AccountType'
-          external_id:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: yfrec4y0a90cb
-          accounting_id:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: yfsec5y0a91cb
-          company:
-            type: object
-            x-stoplight:
-              id: 9loqtu14mvlnq
-            required:
-            - id
-            properties:
-              id:
-                type: string
-                x-stoplight:
-                  id: udjkdjrz08pzr
-                format: uuid
-          billing_address:
-            $ref: '#/components/schemas/Address-Read-Nested'
-          schedule_on:
-            type: boolean
-            x-stoplight:
-              id: 0g9kx77zym4ok
-          connected_company:
-            $ref: '#/components/schemas/Company-Read-Nested'
-          billing_contact:
-            $ref: '#/components/schemas/Contact-Read-Nested'
-    Driver-Read-Nested:
-      title: Driver-Read-Nested
-      x-stoplight:
-        id: lcevfprple1sa
-      allOf:
-      - $ref: '#/components/schemas/Driver-Read-Typeahead'
-      - type: object
-        x-stoplight:
-          id: 19sn21xqtmd0w
-        required:
-        - email
-        properties:
-          email:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: ekvo9chmdhjkp
-    DispatchNumber-Read-Nested:
-      title: DispatchNumber-Read-Nested
-      x-stoplight:
-        id: 5oe6kw6t82gnr
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        properties:
-          name:
-            type: string
-    NextBillionGeofence-Read:
-      title: NextBillionGeofence-Read
-      x-stoplight:
-        id: 60y0z4bb3pu6m
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - $ref: '#/components/schemas/Geofence-Data'
-    Label-Read-Nested:
-      title: Label-Read-Nested
-      x-stoplight:
-        id: lbl1readnest01
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: lbl1nestnm0001
-            description: Label name
-          color:
-            type: string
-            x-stoplight:
-              id: lbl1nestcol001
-            description: Hex color code for the label
-            pattern: ^#[0-9A-Fa-f]{6}$
-        required:
-        - name
-        - color
-    Ticket-Read-Nested:
-      title: Ticket-Read-Nested
-      x-stoplight:
-        id: sxhhxkcgkj6ep
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: u7esfoogq8q49
-        required:
-        - ticket_number
-        - preview_url
-        properties:
-          ticket_number:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: kzx5yw8vvwbra
-          preview_url:
-            type:
-            - string
-            - 'null'
-            x-stoplight:
-              id: h1do11irp24bw
-            format: uri
+      - $ref: '#/components/schemas/OrderUnitOfMeasure'
+      type:
+      - string
+      - 'null'
     JobSummary-Read:
       title: JobSummary-Read
       x-stoplight:
@@ -3627,28 +3568,178 @@ components:
           - low
           description: GPS tracking confidence level based on coverage and gap analysis
       additionalProperties: false
-    RateTime-Read-Nested:
-      title: RateTime-Read-Nested
+    NullableGeofenceType:
+      title: NullableGeofenceType
       x-stoplight:
-        id: k3z13rbtdojcq
+        id: ii94t82oqh5xo
+      allOf:
+      - $ref: '#/components/schemas/GeofenceType'
+      type:
+      - string
+      - 'null'
+    CompanyShare-Read-Nested:
+      title: CompanyShare-Read-Nested
+      x-stoplight:
+        id: makajouqsb7jq
       allOf:
       - $ref: '#/components/schemas/Identifier'
       - type: object
+        x-stoplight:
+          id: s6h0nfzt2fjry
+        required:
+        - external_id
+        - ticket_match_id
+        - sender_company
+        - dispatchable
+        - schedule_on
+        - rate_override
+        - expires_at
+        properties:
+          external_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: c9ls3nrhbih3v
+          ticket_match_id:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: a1cd3nrhbih3v
+          sender_company:
+            $ref: '#/components/schemas/Company-Read-Nested'
+          dispatchable:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz6qi6w
+          schedule_on:
+            type: boolean
+            x-stoplight:
+              id: kd884ihz61234
+          rate_override:
+            type: boolean
+            x-stoplight:
+              id: mq4osazzielxo
+          expires_at:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: aaa111jpq0ga9
+            format: date-time
+            description: ISO8601 timestamp with local timezone
+    Order-Read-Nested:
+      title: Order-Read-Nested
+      x-stoplight:
+        id: r53ko3b3esvvf
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: e0ahzgn4xwxu1
+        required:
+        - account
+        - job_time
+        - equipment_type
+        - name
+        - po_job_number
+        - zone
+        - notes
+        - charge_to_account
+        - state
+        - editable
+        - geofence_delay_seconds
+        properties:
+          order_id:
+            type: string
+            x-stoplight:
+              id: rum48z3rdg42f
+          dispatch_number:
+            $ref: '#/components/schemas/DispatchNumber-Read-Nested'
+          account:
+            $ref: '#/components/schemas/Account-Read-Nested'
+          job_time:
+            type:
+            - integer
+            - 'null'
+            x-stoplight:
+              id: 4h34cu14jafd2
+          equipment_type:
+            $ref: '#/components/schemas/EquipmentType-Read-Nested'
+          name:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: dobl4n9be89ew
+          po_job_number:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: kv5zezw4bcj3q
+          zone:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: p32eix6l65ka4
+          notes:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: rq1csqrap8fr
+          charge_to_account:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: qsgspqzxb3fgo
+          state:
+            $ref: '#/components/schemas/OrderState'
+          editable:
+            type: boolean
+            x-stoplight:
+              id: 118ydqcue5lua
+            readOnly: true
+          geofence_delay_seconds:
+            type:
+            - integer
+            - 'null'
+            x-stoplight:
+              id: 9jtzn85f51ol4
+          default_digital_ticket_view:
+            type: boolean
+            default: false
+            x-stoplight:
+              id: ddtv6ordnested
+            description: Use the default digital ticket view for jobs in this order
+    RateFlatRate-Read-Nested:
+      title: RateFlatRate-Read-Nested
+      x-stoplight:
+        id: l2to0mrxz6ndu
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: khly9g5a3tgap
         required:
         - name
         - type
-        - time_rate
+        - flat_amount
         properties:
           name:
             type: string
             x-stoplight:
-              id: s5zmmpgpw8ykn
+              id: 0h0s2w3tathgv
           type:
             $ref: '#/components/schemas/RateType'
-          time_rate:
+          flat_amount:
             type: number
             x-stoplight:
-              id: yzbg76z9oflup
+              id: 3s2pycb09j6ph
     Material-Read-Nested:
       title: Material-Read-Nested
       x-stoplight:
@@ -3676,146 +3767,55 @@ components:
           x-stoplight:
             id: ab0l0yvuz5u6d
       additionalProperties: false
-  parameters:
-    filter-company_id:
-      name: filter[company_id]
-      in: query
-      required: false
-      schema:
-        type: string
-        format: uuid
-      description: The associated Company ID
-    filter-vendor_account_ids:
-      name: filter[vendor_account_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Vendor Account IDs
-    filter-invoiceable_type:
-      name: filter[invoiceable_type]
-      in: query
-      required: false
-      schema:
-        type: string
-        enum:
-        - Job
-        - DriverDay
-      description: InvoiceableType enum filter (e.g. Job, DriverDay)
-    search-datagrid:
-      name: search[datagrid]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for datagrid queries
-    filter-driver_ids:
-      name: filter[driver_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The assigned Driver IDs
-    filter-end_date:
-      name: filter[end_date]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: End date range
-    filter-customer_account_ids:
-      name: filter[customer_account_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Customer Account IDs
-    filter-grouped:
-      name: filter[grouped]
-      in: query
-      required: false
-      schema:
-        type: boolean
-      description: Only show Invoices that are part of a Settlement
-    filter-start_date:
-      name: filter[start_date]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Start date range
-    filter-invoice_category:
-      name: filter[invoice_category]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The Invoice category filter. See InvoiceCategoryFilter for accepted values.
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    filter-project_ids:
-      name: filter[project_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Project IDs
-    filter-dropoff_site_ids:
-      name: filter[dropoff_site_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Dropoff Site IDs
-    filter-states:
-      name: filter[states]
-      in: query
-      schema:
-        type: array
-      description: States based on the resource (e.g. Order states or Job states)
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    filter-rate_types:
-      name: filter[rate_types]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: Array of rate types to filter by
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    filter-pickup_site_ids:
-      name: filter[pickup_site_ids]
-      in: query
-      required: false
-      schema:
-        type: array
-      description: The associated Pickup Site IDs
+    Load-Read-Nested:
+      title: Load-Read-Nested
+      x-stoplight:
+        id: zpc98ohudvz2m
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: 4rcl2v4mcwxe5
+        required:
+        - quantity
+        - unit_of_measure
+        - load_id
+        - ordinality
+        properties:
+          quantity:
+            type:
+            - string
+            - 'null'
+            x-stoplight:
+              id: 3crm24cakhqhf
+          unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+          load_id:
+            type: string
+            x-stoplight:
+              id: xwweeqwdfh9pg
+          ordinality:
+            type: integer
+            x-stoplight:
+              id: 4xdv8c9e9p4o8
+          ticket:
+            $ref: '#/components/schemas/Ticket-Read-Nested'
+    RateType:
+      title: RateType
+      x-stoplight:
+        id: zn2jb7gsifkk3
+      enum:
+      - RatePerHour
+      - RatePerDay
+      - RatePerLoad
+      - RatePerTon
+      - RatePerTonne
+      - RatePerYard
+      - RatePerBushel
+      - RateCommission
+      - RateFlatCommission
+      - RateFlatRate
+      example: RatePerHour
   securitySchemes:
     bearerAuth:
       type: http

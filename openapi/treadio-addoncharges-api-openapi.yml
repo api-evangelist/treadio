@@ -1314,14 +1314,39 @@ paths:
                     - $ref: '#/components/schemas/AddOnCharge-Create'
                     - $ref: '#/components/schemas/AddOnCharge-Update-Destroyable'
 components:
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
   responses:
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
     ModelError:
       description: ''
       content:
@@ -1329,6 +1354,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/ModelError-Response'
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     Error:
       description: Error response
       content:
@@ -1337,15 +1369,35 @@ components:
             type: object
             $ref: '#/components/schemas/Error-Response'
   schemas:
-    NullableOrderUnitOfMeasure:
-      title: NullableOrderUnitOfMeasure
+    Error-Response:
+      title: Error-Response
       x-stoplight:
-        id: rtlna368z495u
-      allOf:
-      - $ref: '#/components/schemas/OrderUnitOfMeasure'
-      type:
-      - string
-      - 'null'
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    Destroyable:
+      title: Destroyable
+      x-stoplight:
+        id: 2uftzhptd2l14
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: gx1ww996hmzqm
+          format: uuid
+          description: Required if `_destroy` is set
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 0xjwztkz4fmcr
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
+      additionalProperties: false
     AddOnRateType:
       title: AddOnRateType
       x-stoplight:
@@ -1357,6 +1409,22 @@ components:
       - FuelSurcharge
       example: RateForEach
       default: RateForEach
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
     ModelError-Item:
       title: ModelError-Item
       x-stoplight:
@@ -1383,46 +1451,170 @@ components:
             id: bmgbrtmw17qsj
           description: The Error message
       additionalProperties: false
-    ModelError:
-      title: ModelError
+    AddOnRequestableType:
+      title: AddOnRequestableType
       x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
+        id: cmjs5zi8b8ejj
+      enum:
+      - Job
+      - DriverDay
+    Job-Read-Nested:
+      title: Job-Read-Nested
+      x-stoplight:
+        id: qxb3a764a1hxf
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Identifier'
       - type: object
         required:
-        - errors
+        - job_id
+        - loads_count
+        - job_start_at
+        - unit_of_measure
         properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    AddOnApplicableType:
-      title: AddOnApplicableType
-      x-stoplight:
-        id: ya40711rhz1dj
-      enum:
-      - Invoice
-      - Settlement
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
+          job_id:
             type: string
             x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
+              id: 692lxpafrrxpl
+          loads_count:
+            type: integer
+            x-stoplight:
+              id: 1fh2mqq1z7l8k
+            description: Count of `Loads` under this `Job`
+          job_start_at:
+            type: string
+            x-stoplight:
+              id: w4o47yoyesm9u
+            format: date-time
+          unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+    NullableAddOnApplicableType:
+      title: NullableAddOnApplicableType
+      x-stoplight:
+        id: iy7f8dnx4g1zp
+      allOf:
+      - $ref: '#/components/schemas/AddOnApplicableType'
+      type:
+      - string
+      - 'null'
+    NullableOrderUnitOfMeasure:
+      title: NullableOrderUnitOfMeasure
+      x-stoplight:
+        id: rtlna368z495u
+      allOf:
+      - $ref: '#/components/schemas/OrderUnitOfMeasure'
+      type:
+      - string
+      - 'null'
+    NullableAddOnRequestableType:
+      title: NullableAddOnRequestableType
+      x-stoplight:
+        id: jlbtlz8rtw77s
+      allOf:
+      - $ref: '#/components/schemas/AddOnRequestableType'
+      type:
+      - string
+      - 'null'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    AddOnCharge-Create:
+      title: AddOnCharge-Create
+      x-stoplight:
+        id: qaxj9zriu4qic
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: eu4ikmqxz0uhi
+        percentage:
+          type: number
+          x-stoplight:
+            id: bconrirkf3v7w
+          minimum: -100
+          maximum: 100
+        quantity:
+          type: number
+          x-stoplight:
+            id: 3muzrhygt8fxc
+        rate:
+          type: number
+          x-stoplight:
+            id: 95srshuk7r4uk
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        add_on_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: ogjl6lwfu5bi2
+          format: uuid
+        invoice_id:
+          type: string
+          x-stoplight:
+            id: 35pucziaq6pfm
+          format: uuid
+          deprecated: true
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: gxftfsiuujera
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: q9dmpj8zoqg5s
+        load_id:
+          type: string
+          x-stoplight:
+            id: durt2lwgl8p36
+          format: uuid
+        revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: dbc9wcoiorot9
+          description: The cost rate or buy price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        rebill_revenue_rate_value:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: 1ujqtxpv3l88g
+        rebill_percentage:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: 16xhc04qcup8d
+        cost_rate_value:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: sj881cp6tx9v8
+          description: The cost rate or buy price of the add on.
+      additionalProperties: false
     AddOnCharge-Update:
       title: AddOnCharge-Update
       x-stoplight:
@@ -1490,56 +1682,19 @@ components:
           x-stoplight:
             id: guajxqjnam0r2
       additionalProperties: false
-    OrderUnitOfMeasure:
-      title: OrderUnitOfMeasure
+    Identifier:
+      title: Identifier
       x-stoplight:
-        id: kahcgn7w8swdv
-      enum:
-      - Load
-      - Tonne
-      - Ton
-      - Yard
-      - Meter
-      - Foot
-      - Liter
-      - Hour
-      - Bushel
-      - Gallon
-      - CubicMeter
-      - Mile
-      - Kilometer
-      - Barrel
-      - Bag
-      - Pallet
-      example: Load
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
+        id: gnd39lue5v7ol
       type: object
       required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    Destroyable:
-      title: Destroyable
-      x-stoplight:
-        id: 2uftzhptd2l14
-      type: object
+      - id
       properties:
         id:
           type: string
           x-stoplight:
-            id: gx1ww996hmzqm
+            id: 2e38hjk4zd58m
           format: uuid
-          description: Required if `_destroy` is set
-        _destroy:
-          type: integer
-          x-stoplight:
-            id: 0xjwztkz4fmcr
-          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
       additionalProperties: false
     AddOnCharge-Read:
       title: AddOnCharge-Read
@@ -1682,6 +1837,13 @@ components:
             - 'null'
             x-stoplight:
               id: c25guuq8lau3w
+    AddOnApplicableType:
+      title: AddOnApplicableType
+      x-stoplight:
+        id: ya40711rhz1dj
+      enum:
+      - Invoice
+      - Settlement
     ModelError-Response:
       title: ModelError-Response
       x-stoplight:
@@ -1693,15 +1855,23 @@ components:
         error:
           $ref: '#/components/schemas/ModelError'
       additionalProperties: false
-    NullableAddOnRequestableType:
-      title: NullableAddOnRequestableType
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: jlbtlz8rtw77s
+        id: nhp6714o4j1qt
+      description: A Model-specific error
       allOf:
-      - $ref: '#/components/schemas/AddOnRequestableType'
-      type:
-      - string
-      - 'null'
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     UnauthenticatedError-Response:
       title: UnauthenticatedError-Response
       x-stoplight:
@@ -1713,166 +1883,28 @@ components:
         error:
           $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
-    NullableAddOnApplicableType:
-      title: NullableAddOnApplicableType
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
       x-stoplight:
-        id: iy7f8dnx4g1zp
-      allOf:
-      - $ref: '#/components/schemas/AddOnApplicableType'
-      type:
-      - string
-      - 'null'
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    AddOnRequestableType:
-      title: AddOnRequestableType
-      x-stoplight:
-        id: cmjs5zi8b8ejj
+        id: kahcgn7w8swdv
       enum:
-      - Job
-      - DriverDay
-    AddOnCharge-Create:
-      title: AddOnCharge-Create
-      x-stoplight:
-        id: qaxj9zriu4qic
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: eu4ikmqxz0uhi
-        percentage:
-          type: number
-          x-stoplight:
-            id: bconrirkf3v7w
-          minimum: -100
-          maximum: 100
-        quantity:
-          type: number
-          x-stoplight:
-            id: 3muzrhygt8fxc
-        rate:
-          type: number
-          x-stoplight:
-            id: 95srshuk7r4uk
-          deprecated: true
-          description: Deprecated in favor of `revenue_rate_value`.
-        add_on_rate_type:
-          $ref: '#/components/schemas/AddOnRateType'
-        add_on_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: ogjl6lwfu5bi2
-          format: uuid
-        invoice_id:
-          type: string
-          x-stoplight:
-            id: 35pucziaq6pfm
-          format: uuid
-          deprecated: true
-        external_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: gxftfsiuujera
-        accounting_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: q9dmpj8zoqg5s
-        load_id:
-          type: string
-          x-stoplight:
-            id: durt2lwgl8p36
-          format: uuid
-        revenue_rate_value:
-          type: number
-          x-stoplight:
-            id: dbc9wcoiorot9
-          description: The cost rate or buy price of the add on.
-        revenue_cost_rate_type:
-          $ref: '#/components/schemas/AddOnRateType'
-        rebill_revenue_rate_value:
-          type:
-          - number
-          - 'null'
-          x-stoplight:
-            id: 1ujqtxpv3l88g
-        rebill_percentage:
-          type:
-          - number
-          - 'null'
-          x-stoplight:
-            id: 16xhc04qcup8d
-        cost_rate_value:
-          type:
-          - number
-          - 'null'
-          x-stoplight:
-            id: sj881cp6tx9v8
-          description: The cost rate or buy price of the add on.
-      additionalProperties: false
-    Job-Read-Nested:
-      title: Job-Read-Nested
-      x-stoplight:
-        id: qxb3a764a1hxf
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - job_id
-        - loads_count
-        - job_start_at
-        - unit_of_measure
-        properties:
-          job_id:
-            type: string
-            x-stoplight:
-              id: 692lxpafrrxpl
-          loads_count:
-            type: integer
-            x-stoplight:
-              id: 1fh2mqq1z7l8k
-            description: Count of `Loads` under this `Job`
-          job_start_at:
-            type: string
-            x-stoplight:
-              id: w4o47yoyesm9u
-            format: date-time
-          unit_of_measure:
-            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
     AddOnCharge-Update-Destroyable:
       title: AddOnCharge-Update-Destroyable
       x-stoplight:
@@ -1880,38 +1912,6 @@ components:
       allOf:
       - $ref: '#/components/schemas/AddOnCharge-Update'
       - $ref: '#/components/schemas/Destroyable'
-  parameters:
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
   securitySchemes:
     bearerAuth:
       type: http
