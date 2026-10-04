@@ -94,50 +94,17 @@ paths:
       description: Retrieve the current `Version`
       security: []
 components:
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-  responses:
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
-    HealthCheck:
-      description: Health check response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                $ref: '#/components/schemas/HealthCheck-Read'
-            required:
-            - data
   schemas:
-    MobileContext-Read:
-      title: MobileContext-Read
+    Error-Response:
+      title: Error-Response
       x-stoplight:
-        id: uqex0xkxbrkmi
+        id: 52cydhphee3qe
       type: object
-      description: Read model for MobileContext
-      x-internal: true
       required:
-      - minimum_supported_version
+      - error
       properties:
-        minimum_supported_version:
-          type: integer
-          x-stoplight:
-            id: mpdt6xld98sfi
-          description: minimum supported version of the mobile app
+        error:
+          $ref: '#/components/schemas/Error'
       additionalProperties: false
     Version-Read:
       title: Version-Read
@@ -158,6 +125,22 @@ components:
           x-stoplight:
             id: ui2uehdkrw33p
           format: date-time
+      additionalProperties: false
+    MobileContext-Read:
+      title: MobileContext-Read
+      x-stoplight:
+        id: uqex0xkxbrkmi
+      type: object
+      description: Read model for MobileContext
+      x-internal: true
+      required:
+      - minimum_supported_version
+      properties:
+        minimum_supported_version:
+          type: integer
+          x-stoplight:
+            id: mpdt6xld98sfi
+          description: minimum supported version of the mobile app
       additionalProperties: false
     HealthCheck-Read:
       title: HealthCheck-Read
@@ -223,17 +206,6 @@ components:
             id: idx85wwz6ty6a
           description: Can we connect to the Redis instance used by Sidekiq?
       additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
     Error:
       title: Error
       x-stoplight:
@@ -248,6 +220,34 @@ components:
           x-stoplight:
             id: 7o9x1t8v0bgfo
       additionalProperties: false
+  responses:
+    HealthCheck:
+      description: Health check response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/HealthCheck-Read'
+            required:
+            - data
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
   securitySchemes:
     bearerAuth:
       type: http

@@ -190,53 +190,7 @@ paths:
       x-internal: true
       description: Delete a `KMLFile` by `ID`
 components:
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
   schemas:
-    KMLFile-Update:
-      title: KMLFile-Update
-      x-stoplight:
-        id: 7fz259ifcoo0c
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: 50w95tkilhwpb
-      x-internal: true
-      additionalProperties: false
     Error-Response:
       title: Error-Response
       x-stoplight:
@@ -248,84 +202,30 @@ components:
         error:
           $ref: '#/components/schemas/Error'
       additionalProperties: false
-    KMLFile-Create:
-      title: KMLFile-Create
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: v8fizunl8c4zg
+        id: o477eph7ttbzt
       type: object
       required:
-      - file
+      - error
       properties:
-        file:
-          x-stoplight:
-            id: fjzner83vvd4z
-          anyOf:
-          - x-stoplight:
-              id: 2vnsvq1cyr2en
-            format: binary
-          - x-stoplight:
-              id: b8scg1fk08oed
-          type: string
-        name:
-          type: string
-          x-stoplight:
-            id: fh11vr7g2ltt7
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    Identifier:
+      title: Identifier
       x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError-Item:
-      title: ModelError-Item
-      x-stoplight:
-        id: b93chwval2t8d
+        id: gnd39lue5v7ol
       type: object
       required:
-      - model
-      - field
-      - message
+      - id
       properties:
-        model:
+        id:
           type: string
           x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
+            id: 2e38hjk4zd58m
+          format: uuid
       additionalProperties: false
     KMLFile-Read:
       title: KMLFile-Read
@@ -357,19 +257,19 @@ components:
               id: 6wngh6szemo44
       - $ref: '#/components/schemas/Timestamps'
       x-internal: true
-    Identifier:
-      title: Identifier
+    Error:
+      title: Error
       x-stoplight:
-        id: gnd39lue5v7ol
+        id: 3g57kkik3l464
       type: object
+      description: An Error.
       required:
-      - id
+      - code
       properties:
-        id:
+        code:
           type: string
           x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
+            id: 7o9x1t8v0bgfo
       additionalProperties: false
     Timestamps:
       title: Timestamps
@@ -404,6 +304,45 @@ components:
         error:
           $ref: '#/components/schemas/ModelError'
       additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    KMLFile-Create:
+      title: KMLFile-Create
+      x-stoplight:
+        id: v8fizunl8c4zg
+      type: object
+      required:
+      - file
+      properties:
+        file:
+          x-stoplight:
+            id: fjzner83vvd4z
+          anyOf:
+          - x-stoplight:
+              id: 2vnsvq1cyr2en
+            format: binary
+          - x-stoplight:
+              id: b8scg1fk08oed
+          type: string
+        name:
+          type: string
+          x-stoplight:
+            id: fh11vr7g2ltt7
+      additionalProperties: false
     ModelError:
       title: ModelError
       x-stoplight:
@@ -421,25 +360,79 @@ components:
               id: m4ul9vcq2deh6
             items:
               $ref: '#/components/schemas/ModelError-Item'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
+    ModelError-Item:
+      title: ModelError-Item
       x-stoplight:
-        id: o477eph7ttbzt
+        id: b93chwval2t8d
       type: object
       required:
-      - error
+      - model
+      - field
+      - message
       properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
+    KMLFile-Update:
+      title: KMLFile-Update
+      x-stoplight:
+        id: 7fz259ifcoo0c
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 50w95tkilhwpb
+      x-internal: true
+      additionalProperties: false
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
   responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
     UnauthenticatedError:
       description: Example response
       content:
@@ -447,6 +440,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
     Error:
       description: Error response
       content:

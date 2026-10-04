@@ -240,24 +240,6 @@ paths:
       - $ref: '#/components/parameters/Accept-Language'
 components:
   schemas:
-    Label-Update:
-      title: Label-Update
-      x-stoplight:
-        id: lbl1update0001
-      type: object
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: lbl1updname001
-          description: Label name. Must be unique for a company.
-        color:
-          type: string
-          x-stoplight:
-            id: lbl1updcolor01
-          description: Hex color code for the label (e.g., '#FF5733')
-          pattern: ^#[0-9A-Fa-f]{6}$
-      additionalProperties: false
     Error-Response:
       title: Error-Response
       x-stoplight:
@@ -269,71 +251,17 @@ components:
         error:
           $ref: '#/components/schemas/Error'
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError-Item:
-      title: ModelError-Item
-      x-stoplight:
-        id: b93chwval2t8d
+        id: o477eph7ttbzt
       type: object
       required:
-      - model
-      - field
-      - message
+      - error
       properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
-    Label-Read:
-      title: Label-Read
-      x-stoplight:
-        id: lbl1read000001
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: lbl1readname01
-            description: Label name
-          color:
-            type: string
-            x-stoplight:
-              id: lbl1readcolor1
-            description: Hex color code for the label
-            pattern: ^#[0-9A-Fa-f]{6}$
-        required:
-        - name
-        - color
-      - $ref: '#/components/schemas/Timestamps'
     Label-Create:
       title: Label-Create
       x-stoplight:
@@ -355,20 +283,6 @@ components:
           pattern: ^#[0-9A-Fa-f]{6}$
           default: '#6B7280'
       additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
     Identifier:
       title: Identifier
       x-stoplight:
@@ -382,6 +296,20 @@ components:
           x-stoplight:
             id: 2e38hjk4zd58m
           format: uuid
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
       additionalProperties: false
     Timestamps:
       title: Timestamps
@@ -416,6 +344,63 @@ components:
         error:
           $ref: '#/components/schemas/ModelError'
       additionalProperties: false
+    Label-Read:
+      title: Label-Read
+      x-stoplight:
+        id: lbl1read000001
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: lbl1readname01
+            description: Label name
+          color:
+            type: string
+            x-stoplight:
+              id: lbl1readcolor1
+            description: Hex color code for the label
+            pattern: ^#[0-9A-Fa-f]{6}$
+        required:
+        - name
+        - color
+      - $ref: '#/components/schemas/Timestamps'
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Label-Update:
+      title: Label-Update
+      x-stoplight:
+        id: lbl1update0001
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: lbl1updname001
+          description: Label name. Must be unique for a company.
+        color:
+          type: string
+          x-stoplight:
+            id: lbl1updcolor01
+          description: Hex color code for the label (e.g., '#FF5733')
+          pattern: ^#[0-9A-Fa-f]{6}$
+      additionalProperties: false
     ModelError:
       title: ModelError
       x-stoplight:
@@ -433,16 +418,31 @@ components:
               id: m4ul9vcq2deh6
             items:
               $ref: '#/components/schemas/ModelError-Item'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
+    ModelError-Item:
+      title: ModelError-Item
       x-stoplight:
-        id: o477eph7ttbzt
+        id: b93chwval2t8d
       type: object
       required:
-      - error
+      - model
+      - field
+      - message
       properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
   parameters:
     Accept-Language:
@@ -460,6 +460,13 @@ components:
       schema:
         type: string
       description: The cursor to start paginating after
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
     page-limit:
       name: page[limit]
       in: query
@@ -469,21 +476,7 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
   responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
     UnauthenticatedError:
       description: Example response
       content:
@@ -491,6 +484,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
     Error:
       description: Error response
       content:

@@ -1314,90 +1314,7 @@ paths:
                     - $ref: '#/components/schemas/AddOnCharge-Create'
                     - $ref: '#/components/schemas/AddOnCharge-Update-Destroyable'
 components:
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-  responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
-    UnauthenticatedError:
-      description: Example response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/UnauthenticatedError-Response'
-    Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
   schemas:
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    Destroyable:
-      title: Destroyable
-      x-stoplight:
-        id: 2uftzhptd2l14
-      type: object
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: gx1ww996hmzqm
-          format: uuid
-          description: Required if `_destroy` is set
-        _destroy:
-          type: integer
-          x-stoplight:
-            id: 0xjwztkz4fmcr
-          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
-      additionalProperties: false
     AddOnRateType:
       title: AddOnRateType
       x-stoplight:
@@ -1409,102 +1326,17 @@ components:
       - FuelSurcharge
       example: RateForEach
       default: RateForEach
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    Error-Response:
+      title: Error-Response
       x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError-Item:
-      title: ModelError-Item
-      x-stoplight:
-        id: b93chwval2t8d
+        id: 52cydhphee3qe
       type: object
       required:
-      - model
-      - field
-      - message
+      - error
       properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
+        error:
+          $ref: '#/components/schemas/Error'
       additionalProperties: false
-    AddOnRequestableType:
-      title: AddOnRequestableType
-      x-stoplight:
-        id: cmjs5zi8b8ejj
-      enum:
-      - Job
-      - DriverDay
-    Job-Read-Nested:
-      title: Job-Read-Nested
-      x-stoplight:
-        id: qxb3a764a1hxf
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - job_id
-        - loads_count
-        - job_start_at
-        - unit_of_measure
-        properties:
-          job_id:
-            type: string
-            x-stoplight:
-              id: 692lxpafrrxpl
-          loads_count:
-            type: integer
-            x-stoplight:
-              id: 1fh2mqq1z7l8k
-            description: Count of `Loads` under this `Job`
-          job_start_at:
-            type: string
-            x-stoplight:
-              id: w4o47yoyesm9u
-            format: date-time
-          unit_of_measure:
-            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
-    NullableAddOnApplicableType:
-      title: NullableAddOnApplicableType
-      x-stoplight:
-        id: iy7f8dnx4g1zp
-      allOf:
-      - $ref: '#/components/schemas/AddOnApplicableType'
-      type:
-      - string
-      - 'null'
-    NullableOrderUnitOfMeasure:
-      title: NullableOrderUnitOfMeasure
-      x-stoplight:
-        id: rtlna368z495u
-      allOf:
-      - $ref: '#/components/schemas/OrderUnitOfMeasure'
-      type:
-      - string
-      - 'null'
     NullableAddOnRequestableType:
       title: NullableAddOnRequestableType
       x-stoplight:
@@ -1514,20 +1346,6 @@ components:
       type:
       - string
       - 'null'
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
     AddOnCharge-Create:
       title: AddOnCharge-Create
       x-stoplight:
@@ -1615,73 +1433,53 @@ components:
             id: sj881cp6tx9v8
           description: The cost rate or buy price of the add on.
       additionalProperties: false
-    AddOnCharge-Update:
-      title: AddOnCharge-Update
+    Job-Read-Nested:
+      title: Job-Read-Nested
       x-stoplight:
-        id: 60xqncbbobhdt
+        id: qxb3a764a1hxf
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - job_id
+        - loads_count
+        - job_start_at
+        - unit_of_measure
+        properties:
+          job_id:
+            type: string
+            x-stoplight:
+              id: 692lxpafrrxpl
+          loads_count:
+            type: integer
+            x-stoplight:
+              id: 1fh2mqq1z7l8k
+            description: Count of `Loads` under this `Job`
+          job_start_at:
+            type: string
+            x-stoplight:
+              id: w4o47yoyesm9u
+            format: date-time
+          unit_of_measure:
+            $ref: '#/components/schemas/NullableOrderUnitOfMeasure'
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
       type: object
+      required:
+      - error
       properties:
-        name:
-          type: string
-          x-stoplight:
-            id: sdrteeih2f5ef
-        percentage:
-          type: number
-          x-stoplight:
-            id: 2d0so3qv1y6gb
-          minimum: -100
-          maximum: 100
-        quantity:
-          type: number
-          x-stoplight:
-            id: 6dh4gnh91kzdc
-        rate:
-          type: number
-          x-stoplight:
-            id: 7quwi593vqe1j
-          deprecated: true
-          description: Deprecated in favor of `revenue_rate_value`.
-        add_on_rate_type:
-          $ref: '#/components/schemas/AddOnRateType'
-        add_on_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: xadjpeuivo54i
-          format: uuid
-        external_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: vt46ss6zjf04a
-        accounting_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: b3dq6kqlgcbm5
-        revenue_rate_value:
-          type: number
-          x-stoplight:
-            id: tps5oztw4p2xn
-          description: The cost rate or buy price of the add on.
-        revenue_cost_rate_type:
-          $ref: '#/components/schemas/AddOnRateType'
-        rebill_revenue_rate_value:
-          type:
-          - number
-          - 'null'
-          x-stoplight:
-            id: 9d1ov81cnxbos
-        rebill_percentage:
-          type:
-          - number
-          - 'null'
-          x-stoplight:
-            id: guajxqjnam0r2
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
+    AddOnRequestableType:
+      title: AddOnRequestableType
+      x-stoplight:
+        id: cmjs5zi8b8ejj
+      enum:
+      - Job
+      - DriverDay
     Identifier:
       title: Identifier
       x-stoplight:
@@ -1696,6 +1494,129 @@ components:
             id: 2e38hjk4zd58m
           format: uuid
       additionalProperties: false
+    AddOnCharge-Update-Destroyable:
+      title: AddOnCharge-Update-Destroyable
+      x-stoplight:
+        id: 18c6y7jy30z4l
+      allOf:
+      - $ref: '#/components/schemas/AddOnCharge-Update'
+      - $ref: '#/components/schemas/Destroyable'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    NullableAddOnApplicableType:
+      title: NullableAddOnApplicableType
+      x-stoplight:
+        id: iy7f8dnx4g1zp
+      allOf:
+      - $ref: '#/components/schemas/AddOnApplicableType'
+      type:
+      - string
+      - 'null'
+    Destroyable:
+      title: Destroyable
+      x-stoplight:
+        id: 2uftzhptd2l14
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: gx1ww996hmzqm
+          format: uuid
+          description: Required if `_destroy` is set
+        _destroy:
+          type: integer
+          x-stoplight:
+            id: 0xjwztkz4fmcr
+          description: 'If this is provided with value of `1` like so `_destroy: 1` then this model will be deleted. The `id` must be set.'
+      additionalProperties: false
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
+      x-stoplight:
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    NullableOrderUnitOfMeasure:
+      title: NullableOrderUnitOfMeasure
+      x-stoplight:
+        id: rtlna368z495u
+      allOf:
+      - $ref: '#/components/schemas/OrderUnitOfMeasure'
+      type:
+      - string
+      - 'null'
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     AddOnCharge-Read:
       title: AddOnCharge-Read
       x-stoplight:
@@ -1844,74 +1765,153 @@ components:
       enum:
       - Invoice
       - Settlement
-    ModelError-Response:
-      title: ModelError-Response
+    ModelError-Item:
+      title: ModelError-Item
       x-stoplight:
-        id: payf9ndh3l6np
+        id: b93chwval2t8d
       type: object
       required:
-      - error
+      - model
+      - field
+      - message
       properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
+    AddOnCharge-Update:
+      title: AddOnCharge-Update
+      x-stoplight:
+        id: 60xqncbbobhdt
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: sdrteeih2f5ef
+        percentage:
+          type: number
+          x-stoplight:
+            id: 2d0so3qv1y6gb
+          minimum: -100
+          maximum: 100
+        quantity:
+          type: number
+          x-stoplight:
+            id: 6dh4gnh91kzdc
+        rate:
+          type: number
+          x-stoplight:
+            id: 7quwi593vqe1j
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        add_on_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: xadjpeuivo54i
+          format: uuid
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: vt46ss6zjf04a
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: b3dq6kqlgcbm5
+        revenue_rate_value:
+          type: number
+          x-stoplight:
+            id: tps5oztw4p2xn
+          description: The cost rate or buy price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        rebill_revenue_rate_value:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: 9d1ov81cnxbos
+        rebill_percentage:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: guajxqjnam0r2
+      additionalProperties: false
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
+  responses:
+    UnauthenticatedError:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/UnauthenticatedError-Response'
     ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    OrderUnitOfMeasure:
-      title: OrderUnitOfMeasure
-      x-stoplight:
-        id: kahcgn7w8swdv
-      enum:
-      - Load
-      - Tonne
-      - Ton
-      - Yard
-      - Meter
-      - Foot
-      - Liter
-      - Hour
-      - Bushel
-      - Gallon
-      - CubicMeter
-      - Mile
-      - Kilometer
-      - Barrel
-      - Bag
-      - Pallet
-      example: Load
-    AddOnCharge-Update-Destroyable:
-      title: AddOnCharge-Update-Destroyable
-      x-stoplight:
-        id: 18c6y7jy30z4l
-      allOf:
-      - $ref: '#/components/schemas/AddOnCharge-Update'
-      - $ref: '#/components/schemas/Destroyable'
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   securitySchemes:
     bearerAuth:
       type: http

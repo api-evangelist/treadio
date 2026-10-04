@@ -63,18 +63,30 @@ paths:
               $ref: '#/components/schemas/UserDevicePermission-Update'
 components:
   schemas:
-    DevicePermissionState:
-      title: DevicePermissionState
+    Error-Response:
+      title: Error-Response
       x-stoplight:
-        id: 3c1p4ft9qi1uj
-      description: These are the list of permission states a permission can have
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    DevicePermission:
+      title: DevicePermission
+      x-stoplight:
+        id: fog1bzwo59bxy
+      description: These are the list of permissions an app user can set
       enum:
-      - denied
-      - granted
-      - restricted
-      - limited
-      - permanently_denied
-      - provisional
+      - location_while_using
+      - location_always
+      - notifications
+      - motion_and_fitness
+      - physical_activity
+      - ignore_battery_optimizations
+      - background_refresh
     UserDevicePermission-Update:
       title: UserDevicePermission-Update
       x-stoplight:
@@ -96,55 +108,6 @@ components:
           items:
             $ref: '#/components/schemas/UserDevicePermissionCombined'
       additionalProperties: false
-    DevicePermission:
-      title: DevicePermission
-      x-stoplight:
-        id: fog1bzwo59bxy
-      description: These are the list of permissions an app user can set
-      enum:
-      - location_while_using
-      - location_always
-      - notifications
-      - motion_and_fitness
-      - physical_activity
-      - ignore_battery_optimizations
-      - background_refresh
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
     UserDevicePermissionCombined:
       title: UserDevicePermissionCombined
       x-stoplight:
@@ -159,6 +122,17 @@ components:
           $ref: '#/components/schemas/DevicePermission'
         user_device_permission_state:
           $ref: '#/components/schemas/DevicePermissionState'
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
     UnauthenticatedError:
       title: UnauthenticatedError
@@ -176,14 +150,33 @@ components:
               id: wvq8c0qsym4hz
         required:
         - error_type
-  responses:
     Error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/Error-Response'
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    DevicePermissionState:
+      title: DevicePermissionState
+      x-stoplight:
+        id: 3c1p4ft9qi1uj
+      description: These are the list of permission states a permission can have
+      enum:
+      - denied
+      - granted
+      - restricted
+      - limited
+      - permanently_denied
+      - provisional
+  responses:
     UnauthenticatedError:
       description: Example response
       content:
@@ -191,6 +184,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/UnauthenticatedError-Response'
+    Error:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/Error-Response'
   parameters:
     Accept-Language:
       name: Accept-Language

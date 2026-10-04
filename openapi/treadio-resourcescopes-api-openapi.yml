@@ -297,93 +297,7 @@ paths:
       - $ref: '#/components/parameters/page-before'
       - $ref: '#/components/parameters/filter-resource_type'
 components:
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    filter-resource_type:
-      name: filter[resource_type]
-      in: query
-      required: false
-      schema:
-        type: string
-        enum:
-        - Site
-      description: Resource Type
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
   schemas:
-    ResourceType:
-      title: ResourceType
-      x-stoplight:
-        id: 20tmbtxmlreh3
-      enum:
-      - Site
-    ResourceScope-Create:
-      title: ResourceScope-Create
-      x-stoplight:
-        id: 41ox6ewfjpo0r
-      type: object
-      required:
-      - resource_id
-      - resource_type
-      properties:
-        resource_id:
-          type: string
-          x-stoplight:
-            id: rxl9bwb4ol3s8
-          format: uuid
-        resource_type:
-          $ref: '#/components/schemas/ResourceType'
-      additionalProperties: false
-    User-Read-Typeahead:
-      title: User-Read-Typeahead
-      x-stoplight:
-        id: ttbbss5b5k66f
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - first_name
-        - last_name
-        properties:
-          first_name:
-            type: string
-            description: First name
-            x-stoplight:
-              id: gwo999rcdahmg
-          last_name:
-            type: string
-            description: Last name
-            x-stoplight:
-              id: l9omnnsq644bh
-      description: ''
     Error-Response:
       title: Error-Response
       x-stoplight:
@@ -394,48 +308,6 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/Error'
-      additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
-      x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
-    ModelError-Item:
-      title: ModelError-Item
-      x-stoplight:
-        id: b93chwval2t8d
-      type: object
-      required:
-      - model
-      - field
-      - message
-      properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
       additionalProperties: false
     ResourceScope-Read:
       title: ResourceScope-Read
@@ -454,52 +326,16 @@ components:
           resource:
             $ref: '#/components/schemas/Resource-Read-Nested'
       - $ref: '#/components/schemas/Timestamps'
-    Discardable:
-      title: Discardable
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: 46axlb8u5wjay
+        id: o477eph7ttbzt
       type: object
       required:
-      - discarded_at
+      - error
       properties:
-        discarded_at:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: cy8t6fecoyxbo
-          format: date-time
-      additionalProperties: false
-    Resource-Read-Nested:
-      title: Resource-Read-Nested
-      x-stoplight:
-        id: zsxrcvafomwu1
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - type
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: lz8ri4iufqzwq
-          type:
-            $ref: '#/components/schemas/ResourceType'
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
     Identifier:
       title: Identifier
@@ -514,6 +350,26 @@ components:
           x-stoplight:
             id: 2e38hjk4zd58m
           format: uuid
+      additionalProperties: false
+    ResourceType:
+      title: ResourceType
+      x-stoplight:
+        id: 20tmbtxmlreh3
+      enum:
+      - Site
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
       additionalProperties: false
     Timestamps:
       title: Timestamps
@@ -537,6 +393,83 @@ components:
           format: date-time
           description: ISO8601 timestamp with local timezone
       additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
+    Discardable:
+      title: Discardable
+      x-stoplight:
+        id: 46axlb8u5wjay
+      type: object
+      required:
+      - discarded_at
+      properties:
+        discarded_at:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: cy8t6fecoyxbo
+          format: date-time
+      additionalProperties: false
+    ResourceScope-Create:
+      title: ResourceScope-Create
+      x-stoplight:
+        id: 41ox6ewfjpo0r
+      type: object
+      required:
+      - resource_id
+      - resource_type
+      properties:
+        resource_id:
+          type: string
+          x-stoplight:
+            id: rxl9bwb4ol3s8
+          format: uuid
+        resource_type:
+          $ref: '#/components/schemas/ResourceType'
+      additionalProperties: false
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     User-Read-Nested:
       title: User-Read-Nested
       x-stoplight:
@@ -576,53 +509,113 @@ components:
             type: boolean
             x-stoplight:
               id: 5l8bajmm29c31
-    ModelError-Response:
-      title: ModelError-Response
+    Resource-Read-Nested:
+      title: Resource-Read-Nested
       x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
+        id: zsxrcvafomwu1
       allOf:
-      - $ref: '#/components/schemas/Error'
+      - $ref: '#/components/schemas/Identifier'
       - type: object
         required:
-        - errors
+        - name
+        - type
         properties:
-          errors:
-            type: array
+          name:
+            type: string
             x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
+              id: lz8ri4iufqzwq
+          type:
+            $ref: '#/components/schemas/ResourceType'
+    User-Read-Typeahead:
+      title: User-Read-Typeahead
       x-stoplight:
-        id: o477eph7ttbzt
+        id: ttbbss5b5k66f
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - first_name
+        - last_name
+        properties:
+          first_name:
+            type: string
+            description: First name
+            x-stoplight:
+              id: gwo999rcdahmg
+          last_name:
+            type: string
+            description: Last name
+            x-stoplight:
+              id: l9omnnsq644bh
+      description: ''
+    ModelError-Item:
+      title: ModelError-Item
+      x-stoplight:
+        id: b93chwval2t8d
       type: object
       required:
-      - error
+      - model
+      - field
+      - message
       properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    filter-resource_type:
+      name: filter[resource_type]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - Site
+      description: Resource Type
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
   responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
     UnauthenticatedError:
       description: Example response
       content:
@@ -630,6 +623,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
     Error:
       description: Error response
       content:

@@ -911,62 +911,106 @@ paths:
       - $ref: '#/components/parameters/page-before'
       - $ref: '#/components/parameters/filter-account_type'
 components:
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
-    filter-account_type:
-      name: filter[account_type]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: AccountType filter. See `AccountType` enum for accepted values.
   schemas:
-    FuelSurchargeSchedule-Read-Nested:
-      title: FuelSurchargeSchedule-Read-Nested
+    AddOnRateType:
+      title: AddOnRateType
       x-stoplight:
-        id: cfxi1bfv03rdl
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        x-stoplight:
-          id: ug5goi9re1abe
-        required:
-        - name
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: 2izdii9s4bcmr
+        id: 1c3m0qj0ofdao
+      enum:
+      - RateForEach
+      - RatePercentOfTotal
+      - PerLoad
+      - FuelSurcharge
+      example: RateForEach
+      default: RateForEach
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    AutoAddOnAssignment-Update:
+      title: AutoAddOnAssignment-Update
+      x-stoplight:
+        id: z49ocol7q9nxb
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: xi0d4uvzp78hu
+        quantity:
+          type: number
+          x-stoplight:
+            id: nvcxlm30o5buv
+        rate:
+          type: number
+          x-stoplight:
+            id: zaazomdius88t
+          deprecated: true
+          description: Deprecated in favor of `revenue_rate_value`.
+        percentage:
+          type: number
+          x-stoplight:
+            id: a59636fzf3gn2
+        add_on_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+          deprecated: true
+          description: Deprecated in favor of `revenue_cost_rate_type`.
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: opzbsqbjgv1gi
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: 32lqnkmlhd7oo
+        add_on_types:
+          type: array
+          x-stoplight:
+            id: djk0y5y7x9nta
+          items:
+            $ref: '#/components/schemas/AddOnType'
+        total_installments:
+          type: integer
+          x-stoplight:
+            id: skwymk99sjn00
+          minimum: 0
+        revenue_rate_value:
+          type: string
+          x-stoplight:
+            id: w99z2qdprcg5b
+          description: The cost rate or buy price of the add on.
+        revenue_cost_rate_type:
+          $ref: '#/components/schemas/AddOnRateType'
+        cost_rate_value:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: naanql8rzlamb
+          description: The cost rate or buy price of the add on.
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
     AutoAddOnAssignment-Read:
       title: AutoAddOnAssignment-Read
       x-stoplight:
@@ -1095,28 +1139,131 @@ components:
       description: 'Note:
 
         - `add_on_id` is deprecated'
-    Error-Response:
-      title: Error-Response
+    FuelSurchargeSchedule-Read-Nested:
+      title: FuelSurchargeSchedule-Read-Nested
       x-stoplight:
-        id: 52cydhphee3qe
+        id: cfxi1bfv03rdl
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        x-stoplight:
+          id: ug5goi9re1abe
+        required:
+        - name
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 2izdii9s4bcmr
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    AddOn-Read-Nested:
+      title: AddOn-Read-Nested
+      x-stoplight:
+        id: v8dl5yn30kkc1
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        required:
+        - name
+        - quantity
+        - rate
+        - percentage
+        - add_on_rate_type
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: 050zd8kz0vgbs
+          quantity:
+            type: string
+            x-stoplight:
+              id: c3va13nna81jo
+          rate:
+            type: string
+            x-stoplight:
+              id: 9j3huo3cmv9hx
+          percentage:
+            type: string
+            x-stoplight:
+              id: qrfrr46gebj4h
+          add_on_rate_type:
+            $ref: '#/components/schemas/AddOnRateType'
+            deprecated: true
+            description: Deprecated in favor of `revenue_cost_rate_type`.
+          fuel_surcharge_schedule:
+            $ref: '#/components/schemas/FuelSurchargeSchedule-Read-Nested'
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
       type: object
       required:
       - error
       properties:
         error:
-          $ref: '#/components/schemas/Error'
+          $ref: '#/components/schemas/ModelError'
       additionalProperties: false
-    AddOnRateType:
-      title: AddOnRateType
+    AddOnType:
+      title: AddOnType
       x-stoplight:
-        id: 1c3m0qj0ofdao
+        id: d2h2dx8n8qui8
       enum:
-      - RateForEach
-      - RatePercentOfTotal
-      - PerLoad
-      - FuelSurcharge
-      example: RateForEach
-      default: RateForEach
+      - driver_pay
+      - invoicing
+      - job
+      - settlement
+      - driver_day
+      example: driver_pay
+      default: driver_pay
     UnauthenticatedError:
       title: UnauthenticatedError
       x-stoplight:
@@ -1133,51 +1280,49 @@ components:
               id: wvq8c0qsym4hz
         required:
         - error_type
-    ModelError-Item:
-      title: ModelError-Item
+    NullableAccountType:
+      title: NullableAccountType
       x-stoplight:
-        id: b93chwval2t8d
-      type: object
-      required:
-      - model
-      - field
-      - message
-      properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
-      additionalProperties: false
-    AddOnType:
-      title: AddOnType
+        id: 62smrzi6tzz39
+      allOf:
+      - $ref: '#/components/schemas/AccountType'
+      type:
+      - string
+      - 'null'
+    AccountType:
+      title: AccountType
       x-stoplight:
-        id: d2h2dx8n8qui8
+        id: i4vfmd4rwrq8p
       enum:
-      - driver_pay
-      - invoicing
-      - job
-      - settlement
-      - driver_day
-      example: driver_pay
-      default: driver_pay
-    AutoAddOnAssignmentSourceType:
-      title: AutoAddOnAssignmentSourceType
+      - customer
+      - vendor
+      example: customer
+    NullableAutoAddOnAssignmentSourceType:
+      title: NullableAutoAddOnAssignmentSourceType
       x-stoplight:
-        id: tp0kpvtzwhimb
-      enum:
-      - Settlement
-      example: Settlement
+        id: iuykjw9ua72oe
+      allOf:
+      - $ref: '#/components/schemas/AutoAddOnAssignmentSourceType'
+      type:
+      - string
+      - 'null'
+    ModelError:
+      title: ModelError
+      x-stoplight:
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     AutoAddOnAssignment-Create:
       title: AutoAddOnAssignment-Create
       x-stoplight:
@@ -1302,15 +1447,13 @@ components:
         source_type:
           $ref: '#/components/schemas/NullableAutoAddOnAssignmentSourceType'
       additionalProperties: false
-    NullableAutoAddOnAssignmentSourceType:
-      title: NullableAutoAddOnAssignmentSourceType
+    AutoAddOnAssignmentSourceType:
+      title: AutoAddOnAssignmentSourceType
       x-stoplight:
-        id: iuykjw9ua72oe
-      allOf:
-      - $ref: '#/components/schemas/AutoAddOnAssignmentSourceType'
-      type:
-      - string
-      - 'null'
+        id: tp0kpvtzwhimb
+      enum:
+      - Settlement
+      example: Settlement
     NullableAddOnRateType:
       title: NullableAddOnRateType
       x-stoplight:
@@ -1320,222 +1463,72 @@ components:
       type:
       - string
       - 'null'
-    Error:
-      title: Error
+    ModelError-Item:
+      title: ModelError-Item
       x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    AddOn-Read-Nested:
-      title: AddOn-Read-Nested
-      x-stoplight:
-        id: v8dl5yn30kkc1
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        required:
-        - name
-        - quantity
-        - rate
-        - percentage
-        - add_on_rate_type
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: 050zd8kz0vgbs
-          quantity:
-            type: string
-            x-stoplight:
-              id: c3va13nna81jo
-          rate:
-            type: string
-            x-stoplight:
-              id: 9j3huo3cmv9hx
-          percentage:
-            type: string
-            x-stoplight:
-              id: qrfrr46gebj4h
-          add_on_rate_type:
-            $ref: '#/components/schemas/AddOnRateType'
-            deprecated: true
-            description: Deprecated in favor of `revenue_cost_rate_type`.
-          fuel_surcharge_schedule:
-            $ref: '#/components/schemas/FuelSurchargeSchedule-Read-Nested'
-    AccountType:
-      title: AccountType
-      x-stoplight:
-        id: i4vfmd4rwrq8p
-      enum:
-      - customer
-      - vendor
-      example: customer
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
+        id: b93chwval2t8d
       type: object
       required:
-      - id
+      - model
+      - field
+      - message
       properties:
-        id:
+        model:
           type: string
           x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    AutoAddOnAssignment-Update:
-      title: AutoAddOnAssignment-Update
-      x-stoplight:
-        id: z49ocol7q9nxb
-      type: object
-      properties:
-        name:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
           type: string
           x-stoplight:
-            id: xi0d4uvzp78hu
-        quantity:
-          type: number
-          x-stoplight:
-            id: nvcxlm30o5buv
-        rate:
-          type: number
-          x-stoplight:
-            id: zaazomdius88t
-          deprecated: true
-          description: Deprecated in favor of `revenue_rate_value`.
-        percentage:
-          type: number
-          x-stoplight:
-            id: a59636fzf3gn2
-        add_on_rate_type:
-          $ref: '#/components/schemas/AddOnRateType'
-          deprecated: true
-          description: Deprecated in favor of `revenue_cost_rate_type`.
-        external_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: opzbsqbjgv1gi
-        accounting_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: 32lqnkmlhd7oo
-        add_on_types:
-          type: array
-          x-stoplight:
-            id: djk0y5y7x9nta
-          items:
-            $ref: '#/components/schemas/AddOnType'
-        total_installments:
-          type: integer
-          x-stoplight:
-            id: skwymk99sjn00
-          minimum: 0
-        revenue_rate_value:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
           type: string
           x-stoplight:
-            id: w99z2qdprcg5b
-          description: The cost rate or buy price of the add on.
-        revenue_cost_rate_type:
-          $ref: '#/components/schemas/AddOnRateType'
-        cost_rate_value:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: naanql8rzlamb
-          description: The cost rate or buy price of the add on.
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
-    NullableAccountType:
-      title: NullableAccountType
-      x-stoplight:
-        id: 62smrzi6tzz39
-      allOf:
-      - $ref: '#/components/schemas/AccountType'
-      type:
-      - string
-      - 'null'
+  parameters:
+    filter-account_type:
+      name: filter[account_type]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: AccountType filter. See `AccountType` enum for accepted values.
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
   responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
     UnauthenticatedError:
       description: Example response
       content:
@@ -1543,6 +1536,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
     Error:
       description: Error response
       content:

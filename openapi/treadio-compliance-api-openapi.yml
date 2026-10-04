@@ -285,39 +285,154 @@ paths:
 
         Requires `compliance_write` permission.'
 components:
-  parameters:
-    Accept-Language:
-      name: Accept-Language
-      in: header
-      schema:
-        type: string
-        default: en
-        example: en
-      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
-    page-after:
-      name: page[after]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to start paginating after
-    page-limit:
-      name: page[limit]
-      in: query
-      schema:
-        type: integer
-        format: int32
-        default: 25
-        maximum: 100
-      description: The maximum number of paginated results to return
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
   schemas:
+    Error-Response:
+      title: Error-Response
+      x-stoplight:
+        id: 52cydhphee3qe
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+      additionalProperties: false
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
+      x-stoplight:
+        id: o477eph7ttbzt
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
+      additionalProperties: false
+    ComplianceCheck-Read:
+      title: ComplianceCheck-Read
+      x-stoplight:
+        id: cc1read000001
+      type: object
+      properties:
+        has_issues:
+          type: boolean
+          x-stoplight:
+            id: cc1readissue01
+        warnings:
+          type: array
+          x-stoplight:
+            id: cc1readwarn001
+          items:
+            $ref: '#/components/schemas/ComplianceIssue'
+        blocking:
+          type: array
+          x-stoplight:
+            id: cc1readblock01
+          items:
+            $ref: '#/components/schemas/ComplianceIssue'
+      required:
+      - has_issues
+      - warnings
+      - blocking
+      additionalProperties: false
+    ComplianceIssue:
+      title: ComplianceIssue
+      x-stoplight:
+        id: cc1issue00001
+      type: object
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: cc1isstype0001
+        entity:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: cc1issentity01
+        document_type:
+          type: string
+          x-stoplight:
+            id: cc1issdoctyp01
+        document_type_id:
+          type: string
+          format: uuid
+          x-stoplight:
+            id: cc1issdoctid01
+        expires_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          x-stoplight:
+            id: cc1issexpire01
+      required:
+      - type
+      - document_type
+      - document_type_id
+      additionalProperties: false
+    Identifier:
+      title: Identifier
+      x-stoplight:
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
     ComplianceDocumentType-Create:
       title: ComplianceDocumentType-Create
       x-stoplight:
@@ -383,44 +498,6 @@ components:
             id: cdt1crre000001
           default: false
       additionalProperties: false
-    ComplianceCheck-Read:
-      title: ComplianceCheck-Read
-      x-stoplight:
-        id: cc1read000001
-      type: object
-      properties:
-        has_issues:
-          type: boolean
-          x-stoplight:
-            id: cc1readissue01
-        warnings:
-          type: array
-          x-stoplight:
-            id: cc1readwarn001
-          items:
-            $ref: '#/components/schemas/ComplianceIssue'
-        blocking:
-          type: array
-          x-stoplight:
-            id: cc1readblock01
-          items:
-            $ref: '#/components/schemas/ComplianceIssue'
-      required:
-      - has_issues
-      - warnings
-      - blocking
-      additionalProperties: false
-    Error-Response:
-      title: Error-Response
-      x-stoplight:
-        id: 52cydhphee3qe
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/Error'
-      additionalProperties: false
     UnauthenticatedError:
       title: UnauthenticatedError
       x-stoplight:
@@ -437,97 +514,23 @@ components:
               id: wvq8c0qsym4hz
         required:
         - error_type
-    ModelError-Item:
-      title: ModelError-Item
+    ModelError:
+      title: ModelError
       x-stoplight:
-        id: b93chwval2t8d
-      type: object
-      required:
-      - model
-      - field
-      - message
-      properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
-      additionalProperties: false
-    ComplianceIssue:
-      title: ComplianceIssue
-      x-stoplight:
-        id: cc1issue00001
-      type: object
-      properties:
-        type:
-          type: string
-          x-stoplight:
-            id: cc1isstype0001
-        entity:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: cc1issentity01
-        document_type:
-          type: string
-          x-stoplight:
-            id: cc1issdoctyp01
-        document_type_id:
-          type: string
-          format: uuid
-          x-stoplight:
-            id: cc1issdoctid01
-        expires_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          x-stoplight:
-            id: cc1issexpire01
-      required:
-      - type
-      - document_type
-      - document_type_id
-      additionalProperties: false
-    Error:
-      title: Error
-      x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    Identifier:
-      title: Identifier
-      x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
+        id: nhp6714o4j1qt
+      description: A Model-specific error
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        required:
+        - errors
+        properties:
+          errors:
+            type: array
+            x-stoplight:
+              id: m4ul9vcq2deh6
+            items:
+              $ref: '#/components/schemas/ModelError-Item'
     ComplianceDocumentType-Update:
       title: ComplianceDocumentType-Update
       x-stoplight:
@@ -583,28 +586,6 @@ components:
           type: boolean
           x-stoplight:
             id: cdt1upre000001
-      additionalProperties: false
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
       additionalProperties: false
     ComplianceDocumentType-Read:
       title: ComplianceDocumentType-Read
@@ -684,53 +665,65 @@ components:
         - required_shared_drivers
         - required_equipment
       - $ref: '#/components/schemas/Timestamps'
-    ModelError-Response:
-      title: ModelError-Response
+    ModelError-Item:
+      title: ModelError-Item
       x-stoplight:
-        id: payf9ndh3l6np
+        id: b93chwval2t8d
       type: object
       required:
-      - error
+      - model
+      - field
+      - message
       properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
-    ModelError:
-      title: ModelError
-      x-stoplight:
-        id: nhp6714o4j1qt
-      description: A Model-specific error
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        required:
-        - errors
-        properties:
-          errors:
-            type: array
-            x-stoplight:
-              id: m4ul9vcq2deh6
-            items:
-              $ref: '#/components/schemas/ModelError-Item'
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
-      additionalProperties: false
+  parameters:
+    Accept-Language:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en
+        example: en
+      description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    page-after:
+      name: page[after]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to start paginating after
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
+    page-limit:
+      name: page[limit]
+      in: query
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        maximum: 100
+      description: The maximum number of paginated results to return
   responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
     UnauthenticatedError:
       description: Example response
       content:
@@ -738,6 +731,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
     Error:
       description: Error response
       content:

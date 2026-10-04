@@ -453,18 +453,52 @@ paths:
         This endpoint requires the `delete_equipment_type` permission'
 components:
   schemas:
-    TicketSource:
-      title: TicketSource
+    EquipmentType-Create:
+      title: EquipmentType-Create
       x-stoplight:
-        id: z52hto616mgx1
-      enum:
-      - driver_app
-      - web
-      - api_integration
-      - agent
-      example: driver_app
-      default: driver_app
-      readOnly: true
+        id: a8n3muqeklf15
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: nf5b9iy6b0ve0
+        external_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: jtt0dgtonxogr
+        gross_capacity:
+          type:
+          - number
+          - 'null'
+          x-stoplight:
+            id: 65y5x4v0o1sjb
+        gross_capacity_unit_of_measure:
+          $ref: '#/components/schemas/OrderUnitOfMeasure'
+        accounting_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: c89poagtxhk7z
+        additional_gross_capacities:
+          type: array
+          x-stoplight:
+            id: zll76adj5zhh8
+          items:
+            $ref: '#/components/schemas/GrossCapacity'
+        company_id:
+          type:
+          - string
+          - 'null'
+          x-stoplight:
+            id: vi6xr68lbj7ln
+          format: uuid
+      additionalProperties: false
     Error-Response:
       title: Error-Response
       x-stoplight:
@@ -476,48 +510,31 @@ components:
         error:
           $ref: '#/components/schemas/Error'
       additionalProperties: false
-    ModelError-Item:
-      title: ModelError-Item
+    UnauthenticatedError-Response:
+      title: UnauthenticatedError-Response
       x-stoplight:
-        id: b93chwval2t8d
+        id: o477eph7ttbzt
       type: object
       required:
-      - model
-      - field
-      - message
+      - error
       properties:
-        model:
-          type: string
-          x-stoplight:
-            id: 30myfyjkno8ao
-          description: The Model associated with this Error
-        field:
-          type: string
-          x-stoplight:
-            id: 8gl4ed3uxhdws
-          description: The field associated with this Error
-        message:
-          type: string
-          x-stoplight:
-            id: bmgbrtmw17qsj
-          description: The Error message
+        error:
+          $ref: '#/components/schemas/UnauthenticatedError'
       additionalProperties: false
-    UnauthenticatedError:
-      title: UnauthenticatedError
+    Identifier:
+      title: Identifier
       x-stoplight:
-        id: 202o69l0fs40h
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - type: object
-        x-stoplight:
-          id: tg10dt7s0l6bw
-        properties:
-          error_type:
-            type: string
-            x-stoplight:
-              id: wvq8c0qsym4hz
-        required:
-        - error_type
+        id: gnd39lue5v7ol
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2e38hjk4zd58m
+          format: uuid
+      additionalProperties: false
     GrossCapacity:
       title: GrossCapacity
       x-stoplight:
@@ -535,6 +552,91 @@ components:
         unit_of_measure:
           $ref: '#/components/schemas/OrderUnitOfMeasure'
       additionalProperties: false
+    Error:
+      title: Error
+      x-stoplight:
+        id: 3g57kkik3l464
+      type: object
+      description: An Error.
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 7o9x1t8v0bgfo
+      additionalProperties: false
+    Timestamps:
+      title: Timestamps
+      x-stoplight:
+        id: t82ecgfu0oj00
+      type: object
+      required:
+      - created_at
+      - updated_at
+      properties:
+        created_at:
+          type: string
+          x-stoplight:
+            id: gjj950jpq0ga9
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+        updated_at:
+          type: string
+          x-stoplight:
+            id: bwcuyfwc7aj0e
+          format: date-time
+          description: ISO8601 timestamp with local timezone
+      additionalProperties: false
+    ModelError-Response:
+      title: ModelError-Response
+      x-stoplight:
+        id: payf9ndh3l6np
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          $ref: '#/components/schemas/ModelError'
+      additionalProperties: false
+    OrderUnitOfMeasure:
+      title: OrderUnitOfMeasure
+      x-stoplight:
+        id: kahcgn7w8swdv
+      enum:
+      - Load
+      - Tonne
+      - Ton
+      - Yard
+      - Meter
+      - Foot
+      - Liter
+      - Hour
+      - Bushel
+      - Gallon
+      - CubicMeter
+      - Mile
+      - Kilometer
+      - Barrel
+      - Bag
+      - Pallet
+      example: Load
+    UnauthenticatedError:
+      title: UnauthenticatedError
+      x-stoplight:
+        id: 202o69l0fs40h
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        x-stoplight:
+          id: tg10dt7s0l6bw
+        properties:
+          error_type:
+            type: string
+            x-stoplight:
+              id: wvq8c0qsym4hz
+        required:
+        - error_type
     EquipmentType-Read:
       title: EquipmentType-Read
       x-stoplight:
@@ -586,113 +688,32 @@ components:
             items:
               $ref: '#/components/schemas/GrossCapacity'
       - $ref: '#/components/schemas/Timestamps'
-    Error:
-      title: Error
+    TicketSource:
+      title: TicketSource
       x-stoplight:
-        id: 3g57kkik3l464
-      type: object
-      description: An Error.
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          x-stoplight:
-            id: 7o9x1t8v0bgfo
-      additionalProperties: false
-    Identifier:
-      title: Identifier
+        id: z52hto616mgx1
+      enum:
+      - driver_app
+      - web
+      - api_integration
+      - agent
+      example: driver_app
+      default: driver_app
+      readOnly: true
+    EquipmentType-Read-Typeahead:
+      title: EquipmentType-Read-Typeahead
       x-stoplight:
-        id: gnd39lue5v7ol
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: string
-          x-stoplight:
-            id: 2e38hjk4zd58m
-          format: uuid
-      additionalProperties: false
-    EquipmentType-Create:
-      title: EquipmentType-Create
-      x-stoplight:
-        id: a8n3muqeklf15
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          x-stoplight:
-            id: nf5b9iy6b0ve0
-        external_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: jtt0dgtonxogr
-        gross_capacity:
-          type:
-          - number
-          - 'null'
-          x-stoplight:
-            id: 65y5x4v0o1sjb
-        gross_capacity_unit_of_measure:
-          $ref: '#/components/schemas/OrderUnitOfMeasure'
-        accounting_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: c89poagtxhk7z
-        additional_gross_capacities:
-          type: array
-          x-stoplight:
-            id: zll76adj5zhh8
-          items:
-            $ref: '#/components/schemas/GrossCapacity'
-        company_id:
-          type:
-          - string
-          - 'null'
-          x-stoplight:
-            id: vi6xr68lbj7ln
-          format: uuid
-      additionalProperties: false
-    Timestamps:
-      title: Timestamps
-      x-stoplight:
-        id: t82ecgfu0oj00
-      type: object
-      required:
-      - created_at
-      - updated_at
-      properties:
-        created_at:
-          type: string
-          x-stoplight:
-            id: gjj950jpq0ga9
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-        updated_at:
-          type: string
-          x-stoplight:
-            id: bwcuyfwc7aj0e
-          format: date-time
-          description: ISO8601 timestamp with local timezone
-      additionalProperties: false
-    ModelError-Response:
-      title: ModelError-Response
-      x-stoplight:
-        id: payf9ndh3l6np
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          $ref: '#/components/schemas/ModelError'
-      additionalProperties: false
+        id: e6i4vca40gozl
+      allOf:
+      - $ref: '#/components/schemas/Identifier'
+      - type: object
+        properties:
+          name:
+            type: string
+            x-stoplight:
+              id: c78zqsegfn4u4
+        required:
+        - name
     ModelError:
       title: ModelError
       x-stoplight:
@@ -710,38 +731,31 @@ components:
               id: m4ul9vcq2deh6
             items:
               $ref: '#/components/schemas/ModelError-Item'
-    OrderUnitOfMeasure:
-      title: OrderUnitOfMeasure
+    ModelError-Item:
+      title: ModelError-Item
       x-stoplight:
-        id: kahcgn7w8swdv
-      enum:
-      - Load
-      - Tonne
-      - Ton
-      - Yard
-      - Meter
-      - Foot
-      - Liter
-      - Hour
-      - Bushel
-      - Gallon
-      - CubicMeter
-      - Mile
-      - Kilometer
-      - Barrel
-      - Bag
-      - Pallet
-      example: Load
-    UnauthenticatedError-Response:
-      title: UnauthenticatedError-Response
-      x-stoplight:
-        id: o477eph7ttbzt
+        id: b93chwval2t8d
       type: object
       required:
-      - error
+      - model
+      - field
+      - message
       properties:
-        error:
-          $ref: '#/components/schemas/UnauthenticatedError'
+        model:
+          type: string
+          x-stoplight:
+            id: 30myfyjkno8ao
+          description: The Model associated with this Error
+        field:
+          type: string
+          x-stoplight:
+            id: 8gl4ed3uxhdws
+          description: The field associated with this Error
+        message:
+          type: string
+          x-stoplight:
+            id: bmgbrtmw17qsj
+          description: The Error message
       additionalProperties: false
     EquipmentType-Update:
       title: EquipmentType-Update
@@ -780,20 +794,6 @@ components:
           items:
             $ref: '#/components/schemas/GrossCapacity'
       additionalProperties: false
-    EquipmentType-Read-Typeahead:
-      title: EquipmentType-Read-Typeahead
-      x-stoplight:
-        id: e6i4vca40gozl
-      allOf:
-      - $ref: '#/components/schemas/Identifier'
-      - type: object
-        properties:
-          name:
-            type: string
-            x-stoplight:
-              id: c78zqsegfn4u4
-        required:
-        - name
   parameters:
     Accept-Language:
       name: Accept-Language
@@ -803,6 +803,13 @@ components:
         default: en
         example: en
       description: 'The Accept-Language request HTTP header indicates the natural language and locale that the client prefers. '
+    search-query:
+      name: search[query]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Search string for queries
     page-after:
       name: page[after]
       in: query
@@ -810,6 +817,13 @@ components:
       schema:
         type: string
       description: The cursor to start paginating after
+    page-before:
+      name: page[before]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor to stop paginating at
     page-limit:
       name: page[limit]
       in: query
@@ -819,28 +833,7 @@ components:
         default: 25
         maximum: 100
       description: The maximum number of paginated results to return
-    search-query:
-      name: search[query]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Search string for queries
-    page-before:
-      name: page[before]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor to stop paginating at
   responses:
-    ModelError:
-      description: ''
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: '#/components/schemas/ModelError-Response'
     UnauthenticatedError:
       description: Example response
       content:
@@ -848,6 +841,13 @@ components:
           schema:
             type: object
             $ref: '#/components/schemas/UnauthenticatedError-Response'
+    ModelError:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ModelError-Response'
     Error:
       description: Error response
       content:
